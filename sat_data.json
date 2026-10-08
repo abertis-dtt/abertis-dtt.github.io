@@ -2523,6 +2523,14 @@
                         "apid_lang": "1503 Spa 1504 org 1505 N/A"
                     },
                     {
+                        "type": "UHD",
+                        "name": "TVE La 1",
+                        "system": "HVEC/UHD",
+                        "sid": "40003",
+                        "vpid": "4001",
+                        "apid_lang": "4002 E-AC3 Spa 4003 E-AC3 org 4004 AC4 Spa 4005 E-AC3 N/A"
+                    },
+                    {
                         "type": "HD",
                         "name": "DKISS",
                         "system": "MPEG-4",
