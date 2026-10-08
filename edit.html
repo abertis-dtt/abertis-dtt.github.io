@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Edit Transponders & PIDs — Hispasat 30.0°W</title>
+    <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
@@ -11,9 +12,13 @@
             theme: { extend: { colors: { brand: { 500: '#3b82f6', 600: '#2563eb', 700: '#1d4ed8' } } } }
         }
     </script>
+    <!-- FontAwesome CDN -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
-    <!-- Alpine JS Setup -->
+    <!-- Alpine.js Plugins & Core -->
     <script defer src="https://cdn.jsdelivr.net/npm/@alpinejs/collapse@3.x.x/dist/cdn.min.js"></script>
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
     <style>
@@ -29,6 +34,7 @@
 </head>
 <body x-data="editorApp()" x-init="init()" class="min-h-screen bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-blue-950/30 via-slate-950 to-gray-950 antialiased pb-20">
 
+    <!-- Top Sticky Navigation Bar -->
     <header class="sticky top-0 z-40 glass-nav">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
             <div class="flex items-center gap-4">
@@ -36,8 +42,8 @@
                     <i class="fa-solid fa-pen-to-square text-xl"></i>
                 </div>
                 <div>
-                    <h1 class="text-xl font-extrabold text-white tracking-tight">Transponder Editor</h1>
-                    <p class="text-xs text-slate-400 font-medium">GitHub Pages Integration Mode</p>
+                    <h1 class="text-xl font-extrabold text-white tracking-tight">Transponder & PID Editor</h1>
+                    <p class="text-xs text-slate-400 font-medium">GitHub Pages PR Creator & Channel Reorder Integration</p>
                 </div>
             </div>
 
@@ -49,26 +55,27 @@
                     <i class="fa-solid fa-download"></i><span>Export JSON</span>
                 </button>
                 <button @click="openPrModal = true" class="px-5 py-2.5 rounded-2xl bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white text-xs font-extrabold shadow-lg shadow-blue-500/25 border border-blue-400/30 transition-all flex items-center gap-2">
-                    <i class="fa-solid fa-code-pull-request"></i><span>Create PR</span>
+                    <i class="fa-solid fa-code-pull-request"></i><span>Create Pull Request</span>
                 </button>
             </div>
         </div>
     </header>
 
     <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-6">
+        <!-- Control Toolbar -->
         <div class="glass-card rounded-3xl p-4 md:p-6 flex flex-col md:flex-row items-center justify-between gap-4">
             <div class="flex items-center p-1.5 rounded-2xl bg-slate-900 border border-slate-800 w-full md:w-auto">
                 <button @click="editorMode = 'visual'" :class="editorMode === 'visual' ? 'bg-blue-600 text-white shadow' : 'text-slate-400 hover:text-slate-200'" class="px-5 py-2 rounded-xl text-xs font-bold transition-all flex items-center gap-2">
                     <i class="fa-solid fa-sitemap"></i><span>Visual Editor</span>
                 </button>
                 <button @click="syncToRawJson(); editorMode = 'raw'" :class="editorMode === 'raw' ? 'bg-blue-600 text-white shadow' : 'text-slate-400 hover:text-slate-200'" class="px-5 py-2 rounded-xl text-xs font-bold transition-all flex items-center gap-2">
-                    <i class="fa-solid fa-code"></i><span>Raw JSON</span>
+                    <i class="fa-solid fa-code"></i><span>Raw JSON Editor</span>
                 </button>
             </div>
 
             <div x-show="editorMode === 'visual'" class="relative w-full md:w-80">
                 <i class="fa-solid fa-magnifying-glass absolute left-4 top-1/2 -translate-y-1/2 text-slate-500 text-xs"></i>
-                <input type="text" x-model="search" placeholder="Filter parameters..." class="w-full pl-10 pr-4 py-2.5 rounded-2xl bg-slate-900 border border-slate-800 text-xs text-slate-200 placeholder-slate-500 focus:outline-none focus:border-blue-500">
+                <input type="text" x-model="search" placeholder="Filter transponders, frequencies, PIDs..." class="w-full pl-10 pr-4 py-2.5 rounded-2xl bg-slate-900 border border-slate-800 text-xs text-slate-200 placeholder-slate-500 focus:outline-none focus:border-blue-500">
             </div>
 
             <button x-show="editorMode === 'visual'" @click="addTransponder()" class="w-full md:w-auto px-5 py-2.5 rounded-2xl bg-emerald-600/10 hover:bg-emerald-600/20 text-emerald-400 text-xs font-bold border border-emerald-500/30 transition-all flex items-center justify-center gap-2">
@@ -82,7 +89,7 @@
                 <!-- Wrapper for Accordion Functionality -->
                 <div x-data="{ expanded: false }" class="glass-card rounded-3xl overflow-hidden border border-slate-800 transition-all">
                     
-                    <!-- Accordion Header -->
+                    <!-- Accordion Header Bar -->
                     <div class="p-5 bg-slate-900/90 border-b border-slate-800 flex flex-col xl:flex-row xl:items-center justify-between gap-4">
                         <div class="flex items-center gap-4 cursor-pointer w-full xl:w-auto group" @click="expanded = !expanded">
                             <button class="w-8 h-8 rounded-full bg-slate-800 flex items-center justify-center text-slate-400 group-hover:bg-slate-700 transition-colors">
@@ -97,7 +104,7 @@
                             </div>
                         </div>
 
-                        <!-- Editable Settings Grid -->
+                        <!-- Granular Settings Input Grid -->
                         <div class="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-9 gap-3 flex-1 xl:max-w-6xl">
                             <div>
                                 <label class="block text-[9px] font-bold text-slate-400 uppercase mb-1">Txp No.</label>
@@ -126,7 +133,6 @@
                                 <label class="block text-[9px] font-bold text-slate-400 uppercase mb-1">FEC</label>
                                 <input type="text" x-model="txp.fec" @input="updateSrFec(txp)" class="w-full px-2 py-1.5 rounded-lg bg-slate-950 border border-slate-800 text-xs text-slate-200 focus:border-blue-500 focus:outline-none">
                             </div>
-                            <!-- ADDED ONID/NID/TID FIELD -->
                             <div>
                                 <label class="block text-[9px] font-bold text-slate-400 uppercase mb-1">ONID/NID/TID</label>
                                 <input type="text" x-model="txp.onid_nid_tid" class="w-full px-2 py-1.5 rounded-lg bg-slate-950 border border-slate-800 text-[11px] code-font text-indigo-300 focus:border-blue-500 focus:outline-none">
@@ -170,15 +176,23 @@
                                         <input type="text" x-model="stream.encryption" placeholder="BISS / FTA" class="w-full px-3 py-1.5 rounded-xl bg-slate-950 border border-slate-800 text-xs text-amber-400 font-bold focus:border-blue-500 focus:outline-none">
                                     </div>
                                     <div class="md:col-span-2 flex items-center justify-end gap-2 pt-4 md:pt-0">
+                                        <!-- Stream Reorder Controls -->
+                                        <button @click="moveStreamUp(tIdx, sIdx)" :disabled="sIdx === 0" class="p-1.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 disabled:opacity-30 transition-all text-xs" title="Move Stream Up">
+                                            <i class="fa-solid fa-arrow-up text-[10px]"></i>
+                                        </button>
+                                        <button @click="moveStreamDown(tIdx, sIdx)" :disabled="sIdx === txp.streams.length - 1" class="p-1.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 disabled:opacity-30 transition-all text-xs" title="Move Stream Down">
+                                            <i class="fa-solid fa-arrow-down text-[10px]"></i>
+                                        </button>
                                         <button @click="addChannel(tIdx, sIdx)" class="px-3 py-1.5 rounded-xl bg-indigo-500/10 hover:bg-indigo-500/20 text-indigo-400 border border-indigo-500/30 text-xs font-bold transition-all flex items-center gap-1.5">
                                             <i class="fa-solid fa-plus text-[10px]"></i><span>Channel</span>
                                         </button>
-                                        <button @click="deleteStream(tIdx, sIdx)" class="p-2 rounded-xl bg-red-500/10 hover:bg-red-500/20 text-red-400 border border-red-500/30 transition-all text-xs">
+                                        <button @click="deleteStream(tIdx, sIdx)" class="p-1.5 rounded-xl bg-red-500/10 hover:bg-red-500/20 text-red-400 border border-red-500/30 transition-all text-xs">
                                             <i class="fa-solid fa-trash-can"></i>
                                         </button>
                                     </div>
                                 </div>
 
+                                <!-- Editable Channels Table with Reordering Controls -->
                                 <div x-show="stream.channels && stream.channels.length > 0" class="overflow-x-auto rounded-xl border border-slate-800/80">
                                     <table class="w-full text-left text-xs">
                                         <thead class="bg-slate-950/80 text-slate-400 uppercase font-bold tracking-wider border-b border-slate-800">
@@ -189,12 +203,12 @@
                                                 <th class="py-2.5 px-3 w-24">SID</th>
                                                 <th class="py-2.5 px-3 w-24">V.PID</th>
                                                 <th class="py-2.5 px-3">A.PID / Lang</th>
-                                                <th class="py-2.5 px-3 text-right w-16">Act</th>
+                                                <th class="py-2.5 px-3 text-right w-28">Actions</th>
                                             </tr>
                                         </thead>
                                         <tbody class="divide-y divide-slate-800/60 bg-slate-950/40">
                                             <template x-for="(ch, cIdx) in stream.channels" :key="cIdx">
-                                                <tr class="hover:bg-slate-900 transition-colors">
+                                                <tr class="hover:bg-slate-900 transition-colors group">
                                                     <td class="py-2 px-3">
                                                         <select x-model="ch.type" class="w-full px-2 py-1.5 rounded-lg bg-slate-900 border border-slate-800 text-[11px] font-bold focus:outline-none"
                                                                 :class="{'text-purple-300': ch.type === 'UHD', 'text-cyan-300': ch.type === 'HD', 'text-slate-300': ch.type === 'SD', 'text-emerald-300': ch.type === 'Radio'}">
@@ -206,10 +220,23 @@
                                                     <td class="py-2 px-3"><input type="text" x-model="ch.sid" class="w-full px-2.5 py-1.5 rounded-lg bg-slate-900 border border-slate-800 text-xs code-font text-blue-400 font-bold focus:outline-none"></td>
                                                     <td class="py-2 px-3"><input type="text" x-model="ch.vpid" class="w-full px-2.5 py-1.5 rounded-lg bg-slate-900 border border-slate-800 text-xs code-font text-indigo-300 font-bold focus:outline-none"></td>
                                                     <td class="py-2 px-3"><input type="text" x-model="ch.apid_lang" class="w-full px-2.5 py-1.5 rounded-lg bg-slate-900 border border-slate-800 text-xs code-font text-slate-300 focus:outline-none"></td>
+                                                    
+                                                    <!-- Actions & Reorder Column -->
                                                     <td class="py-2 px-3 text-right">
-                                                        <button @click="deleteChannel(tIdx, sIdx, cIdx)" class="p-1.5 rounded-lg text-slate-500 hover:text-red-400 hover:bg-slate-800 transition-colors">
-                                                            <i class="fa-solid fa-xmark"></i>
-                                                        </button>
+                                                        <div class="flex items-center justify-end gap-1">
+                                                            <!-- Move Channel Up -->
+                                                            <button @click="moveChannelUp(tIdx, sIdx, cIdx)" :disabled="cIdx === 0" class="p-1 px-1.5 rounded-lg bg-slate-900 hover:bg-slate-800 text-slate-400 hover:text-blue-400 border border-slate-800 disabled:opacity-20 transition-all" title="Move Channel Up">
+                                                                <i class="fa-solid fa-arrow-up text-[10px]"></i>
+                                                            </button>
+                                                            <!-- Move Channel Down -->
+                                                            <button @click="moveChannelDown(tIdx, sIdx, cIdx)" :disabled="cIdx === stream.channels.length - 1" class="p-1 px-1.5 rounded-lg bg-slate-900 hover:bg-slate-800 text-slate-400 hover:text-blue-400 border border-slate-800 disabled:opacity-20 transition-all" title="Move Channel Down">
+                                                                <i class="fa-solid fa-arrow-down text-[10px]"></i>
+                                                            </button>
+                                                            <!-- Delete Channel -->
+                                                            <button @click="deleteChannel(tIdx, sIdx, cIdx)" class="p-1 px-1.5 rounded-lg text-slate-500 hover:text-red-400 hover:bg-slate-800 transition-colors" title="Delete Channel">
+                                                                <i class="fa-solid fa-xmark text-xs"></i>
+                                                            </button>
+                                                        </div>
                                                     </td>
                                                 </tr>
                                             </template>
@@ -223,20 +250,105 @@
             </template>
         </div>
 
-        <!-- RAW JSON EDITOR -->
+        <!-- RAW JSON EDITOR MODE -->
         <div x-show="editorMode === 'raw'" class="glass-card rounded-3xl p-6 space-y-4">
             <div class="flex items-center justify-between">
                 <label for="rawJsonArea" class="text-xs font-bold text-slate-300 uppercase tracking-wider flex items-center gap-2">
-                    <i class="fa-solid fa-code text-blue-400"></i><span>Raw JSON Editor</span>
+                    <i class="fa-solid fa-code text-blue-400"></i><span>Raw JSON Code Editor</span>
                 </label>
-                <button @click="formatRawJson()" class="px-3 py-1 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs font-semibold transition-all">Format JSON</button>
+                <button @click="formatRawJson()" class="px-3 py-1 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs font-semibold transition-all">Format & Prettify JSON</button>
             </div>
             <textarea id="rawJsonArea" x-model="rawJsonText" rows="28" class="w-full p-4 rounded-2xl bg-slate-950 border border-slate-800 text-xs text-slate-200 code-font focus:outline-none focus:border-blue-500 leading-relaxed"></textarea>
         </div>
     </main>
 
-    <!-- PR Modal omitted for brevity, structurally identical but kept active in your local code -->
-    
+    <!-- GitHub Pull Request Modal Dialog -->
+    <div x-show="openPrModal" 
+         x-transition:enter="transition ease-out duration-300"
+         x-transition:enter-start="opacity-0"
+         x-transition:enter-end="opacity-100"
+         x-transition:leave="transition ease-in duration-200"
+         x-transition:leave-start="opacity-100"
+         x-transition:leave-end="opacity-0"
+         class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-md"
+         style="display: none;">
+        
+        <div class="glass-card rounded-3xl max-w-xl w-full p-6 space-y-6 border border-slate-700 shadow-2xl relative">
+            <div class="flex items-center justify-between border-b border-slate-800 pb-4">
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 rounded-xl bg-blue-600/20 text-blue-400 flex items-center justify-center text-lg border border-blue-500/30">
+                        <i class="fa-solid fa-code-pull-request"></i>
+                    </div>
+                    <div>
+                        <h3 class="text-base font-bold text-white">Create GitHub Pull Request</h3>
+                        <p class="text-xs text-slate-400">Propose changes directly to abertis-dtt/abertis-dtt.github.io</p>
+                    </div>
+                </div>
+                <button @click="openPrModal = false" class="text-slate-400 hover:text-white text-lg">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+
+            <div class="space-y-4">
+                <div class="p-3.5 rounded-2xl bg-blue-950/40 border border-blue-800/50 text-xs text-slate-300 space-y-1.5">
+                    <div class="font-bold text-blue-300 flex items-center gap-2">
+                        <i class="fa-solid fa-circle-info"></i>
+                        <span>No GitHub Access Token required!</span>
+                    </div>
+                    <p class="text-slate-400 leading-relaxed">
+                        Leaving the token blank will automatically copy your updated JSON data to your clipboard and open GitHub's native web editor where you can propose your changes in 1 click.
+                    </p>
+                </div>
+
+                <div class="grid grid-cols-2 gap-3">
+                    <div>
+                        <label class="block text-[11px] font-bold text-slate-400 uppercase mb-1">Target Repo Owner</label>
+                        <input type="text" x-model="github.owner" placeholder="abertis-dtt" class="w-full px-3 py-2 rounded-xl bg-slate-950 border border-slate-800 text-xs text-slate-200 focus:outline-none focus:border-blue-500">
+                    </div>
+                    <div>
+                        <label class="block text-[11px] font-bold text-slate-400 uppercase mb-1">Target Repo Name</label>
+                        <input type="text" x-model="github.repo" placeholder="abertis-dtt.github.io" class="w-full px-3 py-2 rounded-xl bg-slate-950 border border-slate-800 text-xs text-slate-200 focus:outline-none focus:border-blue-500">
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-2 gap-3">
+                    <div>
+                        <label class="block text-[11px] font-bold text-slate-400 uppercase mb-1">Target Branch</label>
+                        <input type="text" x-model="github.branch" placeholder="main" class="w-full px-3 py-2 rounded-xl bg-slate-950 border border-slate-800 text-xs text-slate-200 focus:outline-none focus:border-blue-500">
+                    </div>
+                    <div>
+                        <label class="block text-[11px] font-bold text-slate-400 uppercase mb-1">
+                            GitHub Access Token <span class="text-slate-500 font-normal lowercase">(optional)</span>
+                        </label>
+                        <input type="password" x-model="github.token" placeholder="Leave empty for web editor PR" class="w-full px-3 py-2 rounded-xl bg-slate-950 border border-slate-800 text-xs text-slate-200 focus:outline-none focus:border-blue-500">
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block text-[11px] font-bold text-slate-400 uppercase mb-1">Pull Request Title</label>
+                    <input type="text" x-model="github.prTitle" class="w-full px-3 py-2 rounded-xl bg-slate-950 border border-slate-800 text-xs text-slate-200 focus:outline-none focus:border-blue-500">
+                </div>
+
+                <div x-show="prStatus.message" class="p-3 rounded-xl text-xs font-semibold flex items-center gap-2"
+                     :class="prStatus.error ? 'bg-red-950/80 border border-red-800 text-red-300' : 'bg-emerald-950/80 border border-emerald-800 text-emerald-300'">
+                    <i :class="prStatus.error ? 'fa-solid fa-triangle-exclamation' : 'fa-solid fa-circle-check'"></i>
+                    <span x-html="prStatus.message"></span>
+                </div>
+            </div>
+
+            <div class="flex items-center justify-end gap-3 border-t border-slate-800 pt-4">
+                <button @click="openPrModal = false" class="px-4 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs font-bold transition-all">
+                    Cancel
+                </button>
+                <button @click="submitPullRequest()" :disabled="prLoading" class="px-5 py-2 rounded-xl bg-blue-600 hover:bg-blue-500 text-white text-xs font-bold shadow-lg transition-all flex items-center gap-2">
+                    <i x-show="prLoading" class="fa-solid fa-spinner animate-spin"></i>
+                    <span x-text="prLoading ? 'Processing...' : (github.token.trim() ? 'Submit Pull Request' : 'Copy JSON & Open GitHub PR')"></span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript Application Logic -->
     <script>
         function editorApp() {
             return {
@@ -244,8 +356,12 @@
                 search: '',
                 transponders: [],
                 rawJsonText: '',
-                openPrModal: false, prLoading: false, prStatus: { error: false, message: '' },
-                github: { owner: '', repo: '', branch: 'main', token: '', prTitle: 'Update satellite transponder dataset' },
+                openPrModal: false, 
+                prLoading: false, 
+                prStatus: { error: false, message: '' },
+                
+                // Defaults modified to point to target repo
+                github: { owner: 'abertis-dtt', repo: 'abertis-dtt.github.io', branch: 'main', token: '', prTitle: 'Update satellite transponder dataset (sat_data.json)' },
 
                 async init() {
                     try {
@@ -255,6 +371,7 @@
                         this.syncToRawJson();
                     } catch (e) { console.error("Could not fetch sat_data.json", e); }
                 },
+
                 parseTxpFields(txp) {
                     let freq = '', pol = 'H', mode = 'DVB-S2/8PSK', sr = '', fec = '';
                     if (txp.freq_pol_mode) {
@@ -267,20 +384,30 @@
                     }
                     return { ...txp, freq, pol, mode, symbol_rate: sr, fec };
                 },
-                formatFreqPolMode(txp) { return `${txp.freq || ''} ${txp.pol || 'H'} ${txp.mode || ''}`.trim(); },
-                updateFreqPolMode(txp) { txp.freq_pol_mode = this.formatFreqPolMode(txp); },
-                updateSrFec(txp) { txp.sr_fec = `${txp.symbol_rate || ''} ${txp.fec || ''}`.trim(); },
-                
+
+                formatFreqPolMode(txp) { 
+                    return `${txp.freq || ''} ${txp.pol || 'H'} ${txp.mode || ''}`.trim(); 
+                },
+
+                updateFreqPolMode(txp) { 
+                    txp.freq_pol_mode = this.formatFreqPolMode(txp); 
+                },
+
+                updateSrFec(txp) { 
+                    txp.sr_fec = `${txp.symbol_rate || ''} ${txp.fec || ''}`.trim(); 
+                },
+
                 syncToRawJson() {
                     let cleaned = this.transponders.map(txp => {
-                        let clone = { ...txp };
-                        // Remove temporary UI layout state variables
+                        let clone = JSON.parse(JSON.stringify(txp));
+                        // Clean up temporary UI layout variables before exporting JSON
                         delete clone.freq; delete clone.pol; delete clone.mode; 
                         delete clone.symbol_rate; delete clone.fec;
                         return clone;
                     });
                     this.rawJsonText = JSON.stringify(cleaned, null, 4);
                 },
+
                 syncFromRawJson() {
                     try {
                         let parsed = JSON.parse(this.rawJsonText);
@@ -290,6 +417,7 @@
                         }
                     } catch (e) { alert("Invalid JSON: " + e.message); return false; }
                 },
+
                 get filteredTransponders() {
                     if (!this.search.trim()) return this.transponders;
                     let q = this.search.toLowerCase().trim();
@@ -297,7 +425,7 @@
                         let matchTxp = (txp.txp_no && txp.txp_no.toLowerCase().includes(q)) ||
                                        (txp.freq_pol_mode && txp.freq_pol_mode.toLowerCase().includes(q)) ||
                                        (txp.provider && txp.provider.toLowerCase().includes(q)) ||
-                                       (txp.onid_nid_tid && txp.onid_nid_tid.toLowerCase().includes(q)); // Ensure ID search works
+                                       (txp.onid_nid_tid && txp.onid_nid_tid.toLowerCase().includes(q));
                         let matchStream = (txp.streams || []).some(s => 
                             (s.title && s.title.toLowerCase().includes(q)) ||
                             (s.pid_info && s.pid_info.toLowerCase().includes(q)) ||
@@ -306,35 +434,261 @@
                         return matchTxp || matchStream;
                     });
                 },
+
                 addTransponder() {
                     this.transponders.unshift({
-                        txp_no: "NEW", freq: "11000.00", pol: "H", mode: "DVB-S2", freq_pol_mode: "11000.00 H DVB-S2",
+                        txp_no: "NEW", freq: "11000.00", pol: "H", mode: "DVB-S2/8PSK", freq_pol_mode: "11000.00 H DVB-S2/8PSK",
                         provider: "New Provider", symbol_rate: "30000", fec: "3/4", sr_fec: "30000 3/4",
-                        onid_nid_tid: "1/1/1", date: new Date().toLocaleDateString('de-DE'), streams: []
+                        onid_nid_tid: "1/60000/60000", date: new Date().toLocaleDateString('de-DE'), streams: []
                     });
                 },
-                deleteTransponder(tIdx) { if (confirm(`Delete Transponder #${this.transponders[tIdx].txp_no}?`)) this.transponders.splice(tIdx, 1); },
+
+                deleteTransponder(tIdx) { 
+                    if (confirm(`Delete Transponder #${this.transponders[tIdx].txp_no}?`)) this.transponders.splice(tIdx, 1); 
+                },
+
                 addStream(tIdx) {
                     if (!this.transponders[tIdx].streams) this.transponders[tIdx].streams = [];
-                    this.transponders[tIdx].streams.push({ title: "New Stream Pipe", pid_info: "0-0--0", encryption: "BISS", channels: [] });
+                    this.transponders[tIdx].streams.push({ title: "New Stream Pipe", pid_info: "8916-0000--0000", encryption: "BISS", channels: [] });
                 },
-                deleteStream(tIdx, sIdx) { if (confirm("Delete Stream?")) this.transponders[tIdx].streams.splice(sIdx, 1); },
+
+                moveStreamUp(tIdx, sIdx) {
+                    if (sIdx > 0) {
+                        let streams = this.transponders[tIdx].streams;
+                        let temp = streams[sIdx];
+                        streams[sIdx] = streams[sIdx - 1];
+                        streams[sIdx - 1] = temp;
+                    }
+                },
+
+                moveStreamDown(tIdx, sIdx) {
+                    let streams = this.transponders[tIdx].streams;
+                    if (sIdx < streams.length - 1) {
+                        let temp = streams[sIdx];
+                        streams[sIdx] = streams[sIdx + 1];
+                        streams[sIdx + 1] = temp;
+                    }
+                },
+
+                deleteStream(tIdx, sIdx) { 
+                    if (confirm("Delete Stream multiplex pipe?")) this.transponders[tIdx].streams.splice(sIdx, 1); 
+                },
+
                 addChannel(tIdx, sIdx) {
                     if (!this.transponders[tIdx].streams[sIdx].channels) this.transponders[tIdx].streams[sIdx].channels = [];
-                    this.transponders[tIdx].streams[sIdx].channels.push({ type: "HD", name: "New Channel", system: "MPEG-4", sid: "1", vpid: "101", apid_lang: "102 Spa" });
+                    this.transponders[tIdx].streams[sIdx].channels.push({ type: "HD", name: "New Channel", system: "MPEG-4", sid: "100", vpid: "101", apid_lang: "102 Spa" });
                 },
-                deleteChannel(tIdx, sIdx, cIdx) { this.transponders[tIdx].streams[sIdx].channels.splice(cIdx, 1); },
-                formatRawJson() { try { this.rawJsonText = JSON.stringify(JSON.parse(this.rawJsonText), null, 4); } catch (e) { alert("Invalid JSON"); } },
+
+                moveChannelUp(tIdx, sIdx, cIdx) {
+                    if (cIdx > 0) {
+                        let channels = this.transponders[tIdx].streams[sIdx].channels;
+                        let temp = channels[cIdx];
+                        channels[cIdx] = channels[cIdx - 1];
+                        channels[cIdx - 1] = temp;
+                    }
+                },
+
+                moveChannelDown(tIdx, sIdx, cIdx) {
+                    let channels = this.transponders[tIdx].streams[sIdx].channels;
+                    if (cIdx < channels.length - 1) {
+                        let temp = channels[cIdx];
+                        channels[cIdx] = channels[cIdx + 1];
+                        channels[cIdx + 1] = temp;
+                    }
+                },
+
+                deleteChannel(tIdx, sIdx, cIdx) { 
+                    this.transponders[tIdx].streams[sIdx].channels.splice(cIdx, 1); 
+                },
+
+                formatRawJson() { 
+                    try { this.rawJsonText = JSON.stringify(JSON.parse(this.rawJsonText), null, 4); } catch (e) { alert("Invalid JSON"); } 
+                },
+
                 getExportJson() {
-                    if (this.editorMode === 'raw') this.syncFromRawJson();
-                    this.syncToRawJson();
+                    if (this.editorMode === 'raw') {
+                        this.syncFromRawJson();
+                    } else {
+                        // Ensure all granular fields are baked into composite fields across all transponders
+                        this.transponders.forEach(txp => {
+                            this.updateFreqPolMode(txp);
+                            this.updateSrFec(txp);
+                        });
+                        this.syncToRawJson();
+                    }
                     return this.rawJsonText;
                 },
+
                 downloadJson() {
+                    let jsonStr = this.getExportJson();
                     let a = document.createElement('a');
-                    a.href = URL.createObjectURL(new Blob([this.getExportJson()], { type: "application/json" }));
+                    a.href = URL.createObjectURL(new Blob([jsonStr], { type: "application/json" }));
                     a.download = 'sat_data.json';
                     a.click();
+                },
+
+                // Converts UTF-8 string reliably to Base64
+                encodeUtf8Base64(str) {
+                    return btoa(encodeURIComponent(str).replace(/%([0-9A-F]{2})/g, function(match, p1) {
+                        return String.fromCharCode('0x' + p1);
+                    }));
+                },
+
+                // Safely decodes base64 content received from GitHub API back to UTF-8 string
+                decodeUtf8Base64(base64) {
+                    const binString = atob(base64.replace(/\s/g, ''));
+                    const bytes = new Uint8Array(binString.length);
+                    for (let i = 0; i < binString.length; i++) {
+                        bytes[i] = binString.charCodeAt(i);
+                    }
+                    return new TextDecoder('utf-8').decode(bytes);
+                },
+
+                async checkHasChanges() {
+                    let jsonContent = this.getExportJson();
+                    let currentJsonStr = JSON.stringify(JSON.parse(jsonContent), null, 4);
+
+                    // Fetch original file from UPSTREAM target repo to check if any changes exist
+                    let rawUrl = `https://raw.githubusercontent.com/${this.github.owner}/${this.github.repo}/${this.github.branch}/sat_data.json`;
+                    let fileRes = await fetch(rawUrl);
+                    if (!fileRes.ok) throw new Error("Failed to fetch current sat_data.json from target repository.");
+                    
+                    let upstreamJsonStr = await fileRes.text();
+                    let upstreamJsonFormatted = JSON.stringify(JSON.parse(upstreamJsonStr), null, 4);
+
+                    // NO CHANGES CHECK
+                    if (currentJsonStr === upstreamJsonFormatted) {
+                        let msg = "Can't make PR because no changes have been done to the file.";
+                        alert(msg);
+                        return { hasChanges: false, msg, currentJsonStr };
+                    }
+                    return { hasChanges: true, currentJsonStr };
+                },
+
+                async submitPullRequest() {
+                    if (!this.github.owner || !this.github.repo) {
+                        this.prStatus = { error: true, message: "Please enter Target Repo Owner and Repo Name." };
+                        return;
+                    }
+
+                    this.prLoading = true;
+                    this.prStatus = { error: false, message: "Checking for changes in sat_data.json..." };
+
+                    try {
+                        let checkResult = await this.checkHasChanges();
+                        if (!checkResult.hasChanges) {
+                            this.prStatus = { error: true, message: checkResult.msg };
+                            this.prLoading = false;
+                            return;
+                        }
+
+                        let currentJsonStr = checkResult.currentJsonStr;
+
+                        // ZERO-TOKEN / EXTERNAL USER FLOW: Copy to clipboard & redirect to GitHub native Web Editor
+                        if (!this.github.token.trim()) {
+                            this.prStatus.message = "Copying updated JSON to clipboard...";
+                            
+                            try {
+                                await navigator.clipboard.writeText(currentJsonStr);
+                            } catch (e) {
+                                console.warn("Could not copy directly to clipboard:", e);
+                            }
+
+                            let githubEditorUrl = `https://github.com/${this.github.owner}/${this.github.repo}/edit/${this.github.branch}/sat_data.json`;
+                            window.open(githubEditorUrl, '_blank');
+
+                            this.prStatus = {
+                                error: false,
+                                message: `Updated <code>sat_data.json</code> copied to clipboard! Opening GitHub web editor in a new tab... Simply paste the new JSON and click "Propose changes".`
+                            };
+                            this.prLoading = false;
+                            return;
+                        }
+
+                        // AUTOMATED TOKEN FLOW: Executed when a PAT is supplied
+                        let encodedContent = this.encodeUtf8Base64(currentJsonStr);
+                        let headers = {
+                            "Authorization": `token ${this.github.token.trim()}`,
+                            "Accept": "application/vnd.github.v3+json",
+                            "Content-Type": "application/json"
+                        };
+
+                        // 1. Get Authentication user identity
+                        this.prStatus.message = "Authenticating user...";
+                        let userRes = await fetch('https://api.github.com/user', { headers });
+                        let userData = await userRes.json();
+                        if (!userRes.ok) throw new Error(userData.message || "Invalid Personal Access Token");
+                        let authUsername = userData.login;
+
+                        // 2. Create or access Fork
+                        this.prStatus.message = `Preparing fork for @${authUsername}...`;
+                        let forkRes = await fetch(`https://api.github.com/repos/${this.github.owner}/${this.github.repo}/forks`, { method: "POST", headers });
+                        if (!forkRes.ok) throw new Error("Failed to prepare repository fork");
+                        
+                        await new Promise(r => setTimeout(r, 2500));
+
+                        // 3. Fetch Base SHA from UPSTREAM branch
+                        this.prStatus.message = "Fetching branch references...";
+                        let refRes = await fetch(`https://api.github.com/repos/${this.github.owner}/${this.github.repo}/git/ref/heads/${this.github.branch}`, { headers });
+                        let refData = await refRes.json();
+                        if (!refRes.ok) throw new Error("Failed to fetch upstream base branch reference");
+                        let baseSha = refData.object.sha;
+
+                        // 4. Create new branch on User's FORK
+                        let newBranchName = `patch-satdata-${Date.now()}`;
+                        this.prStatus.message = "Creating commit branch on fork...";
+                        let branchRes = await fetch(`https://api.github.com/repos/${authUsername}/${this.github.repo}/git/refs`, {
+                            method: "POST",
+                            headers,
+                            body: JSON.stringify({ ref: `refs/heads/${newBranchName}`, sha: baseSha })
+                        });
+                        if (!branchRes.ok) throw new Error("Failed to create working branch on fork");
+
+                        // 5. Get Blob SHA of the file inside the newly created fork branch
+                        let forkFileRes = await fetch(`https://api.github.com/repos/${authUsername}/${this.github.repo}/contents/sat_data.json?ref=${newBranchName}`, { headers });
+                        let forkFileData = await forkFileRes.json();
+                        let fileSha = forkFileData.sha;
+
+                        // 6. Update file on FORK branch
+                        this.prStatus.message = "Committing file changes...";
+                        let updateRes = await fetch(`https://api.github.com/repos/${authUsername}/${this.github.repo}/contents/sat_data.json`, {
+                            method: "PUT",
+                            headers,
+                            body: JSON.stringify({
+                                message: "Update satellite transponder dataset via Web Editor",
+                                content: encodedContent,
+                                sha: fileSha,
+                                branch: newBranchName
+                            })
+                        });
+                        if (!updateRes.ok) throw new Error("Failed to commit changes to fork repository");
+
+                        // 7. Open Cross-Repository Pull Request on UPSTREAM
+                        this.prStatus.message = "Opening Pull Request...";
+                        let prRes = await fetch(`https://api.github.com/repos/${this.github.owner}/${this.github.repo}/pulls`, {
+                            method: "POST",
+                            headers,
+                            body: JSON.stringify({
+                                title: this.github.prTitle,
+                                head: `${authUsername}:${newBranchName}`,
+                                base: this.github.branch,
+                                body: "Automated Pull Request submitted from the web dashboard.",
+                                maintainer_can_modify: true
+                            })
+                        });
+                        
+                        let prData = await prRes.json();
+                        if (!prRes.ok) throw new Error(prData.message || "Failed to finalize Pull Request");
+
+                        this.prStatus = {
+                            error: false,
+                            message: `Pull Request successfully created! <a href="${prData.html_url}" target="_blank" class="underline font-bold text-blue-300">View PR #${prData.number}</a>`
+                        };
+                    } catch (err) {
+                        this.prStatus = { error: true, message: err.message };
+                    } finally {
+                        this.prLoading = false;
+                    }
                 }
             };
         }
