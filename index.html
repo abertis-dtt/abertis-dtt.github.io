@@ -13,11 +13,11 @@
     </script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
-    
+
     <!-- Alpine Plugins MUST be included before Alpine Core for x-collapse to work -->
     <script defer src="https://cdn.jsdelivr.net/npm/@alpinejs/collapse@3.x.x/dist/cdn.min.js"></script>
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
-    
+
     <style>
         body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #030712; color: #f3f4f6; }
         .code-font { font-family: 'JetBrains Mono', monospace; }
@@ -28,6 +28,12 @@
         ::-webkit-scrollbar-track { background: #030712; }
         ::-webkit-scrollbar-thumb { background: #1f2937; border-radius: 4px; }
         ::-webkit-scrollbar-thumb:hover { background: #3b82f6; }
+
+        /* ── PID / SID display animations ─────────────────────── */
+        .pid-row { animation: pidSlideIn 0.3s cubic-bezier(0.21, 1.02, 0.73, 1) both; }
+        @keyframes pidSlideIn { from { opacity: 0; transform: translateX(-8px); } to { opacity: 1; transform: translateX(0); } }
+        .sid-badge { animation: sidPop 0.35s cubic-bezier(0.34, 1.56, 0.64, 1) both; }
+        @keyframes sidPop { from { opacity: 0; transform: scale(0.85); } to { opacity: 1; transform: scale(1); } }
     </style>
 </head>
 <body x-data="appData()" x-init="init()" class="min-h-screen bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-blue-950/40 via-slate-950 to-black antialiased selection:bg-blue-500 selection:text-white pb-20">
@@ -84,7 +90,7 @@
         <section class="glass-card rounded-3xl p-2 md:p-3 flex items-center bg-slate-900/80 shadow-[0_4px_20px_rgba(0,0,0,0.3)]">
             <div class="relative w-full">
                 <i class="fa-solid fa-magnifying-glass absolute left-5 top-1/2 -translate-y-1/2 text-blue-500 text-lg"></i>
-                <input type="text" x-model="search" placeholder="Search channels, PIDs, SIDs, streams, frequencies..." 
+                <input type="text" x-model="search" placeholder="Search channels, PIDs, SIDs, streams, frequencies..."
                        class="w-full pl-14 pr-4 py-4 rounded-2xl bg-transparent border-none text-slate-100 placeholder-slate-500 focus:outline-none focus:ring-0 text-sm font-medium transition-colors">
             </div>
         </section>
@@ -94,12 +100,12 @@
             <template x-for="(txp, index) in filteredData" :key="index">
                 <!-- Dropdown TXP State -->
                 <div x-data="{ txpExpanded: true }" class="glass-card rounded-3xl overflow-hidden border border-slate-800/80 shadow-xl shadow-black/40">
-                    
+
                     <!-- TXP Header (Clickable) -->
-                    <div @click="txpExpanded = !txpExpanded" 
+                    <div @click="txpExpanded = !txpExpanded"
                          class="p-5 md:p-6 bg-gradient-to-r from-slate-900 via-slate-900/95 to-slate-800/50 border-b border-slate-800/80 flex flex-col md:flex-row md:items-center justify-between gap-4 relative overflow-hidden cursor-pointer hover:bg-slate-800/60 transition-colors group/header">
                         <div class="absolute top-0 left-0 w-1.5 h-full bg-gradient-to-b from-blue-400 to-blue-600 shadow-[0_0_15px_rgba(59,130,246,0.6)]"></div>
-                        
+
                         <div>
                             <div class="flex items-center gap-3 mb-2">
                                 <span class="px-3 py-1 rounded-lg bg-blue-600/20 border border-blue-500/30 text-blue-400 font-extrabold text-xs shadow-[0_0_10px_rgba(59,130,246,0.15)]" x-text="`TXP ${txp.txp_no}`"></span>
@@ -111,7 +117,7 @@
                                 <span class="flex items-center gap-2 code-font bg-slate-950/50 px-2.5 py-1 rounded-md text-slate-300 border border-slate-800" x-text="`ID: ${txp.onid_nid_tid}`"></span>
                             </div>
                         </div>
-                        
+
                         <div class="flex items-center gap-4 self-start md:self-center">
                             <div class="text-xs font-bold text-emerald-400 bg-emerald-500/10 px-3 py-1.5 rounded-xl border border-emerald-500/20 shadow-[0_0_10px_rgba(16,185,129,0.1)] flex items-center gap-2">
                                 <i class="fa-solid fa-clock-rotate-left"></i>
@@ -130,9 +136,9 @@
                             <template x-for="(stream, sIndex) in txp.streams" :key="sIndex">
                                 <!-- Dropdown Stream State -->
                                 <div x-data="{ streamExpanded: true }" class="rounded-2xl border border-slate-800/60 bg-slate-900/40 overflow-hidden group/stream hover:border-slate-700 transition-colors shadow-lg shadow-black/20">
-                                    
+
                                     <!-- Stream Header (Clickable) -->
-                                    <div @click="streamExpanded = !streamExpanded" 
+                                    <div @click="streamExpanded = !streamExpanded"
                                          class="px-5 py-3.5 bg-slate-900/90 border-b border-slate-800/60 flex flex-wrap items-center justify-between gap-3 cursor-pointer hover:bg-slate-800/80 transition-colors">
                                         <div class="flex items-center gap-3">
                                             <div class="w-2 h-2 rounded-full bg-indigo-500 shadow-[0_0_8px_rgba(99,102,241,0.8)]"></div>
@@ -144,7 +150,10 @@
                                             </template>
                                         </div>
                                         <div class="flex items-center gap-4">
-                                            <span class="text-xs code-font text-blue-400 font-bold bg-blue-500/10 px-2.5 py-1 rounded-lg border border-blue-500/20" x-text="`PID: ${stream.pid_info}`"></span>
+                                            <span class="inline-flex items-center gap-1.5 text-xs code-font text-blue-300 font-bold bg-blue-500/10 border border-blue-400/25 px-2.5 py-1 rounded-lg shadow-[0_0_10px_rgba(59,130,246,0.2)]">
+                                                <i class="fa-solid fa-tags text-[9px] opacity-60"></i>
+                                                <span x-text="`PID: ${stream.pid_info}`"></span>
+                                            </span>
                                             <!-- Expand Arrow -->
                                             <i class="fa-solid fa-chevron-down text-slate-500 transition-transform duration-300" :class="streamExpanded ? 'rotate-180' : ''"></i>
                                         </div>
@@ -153,20 +162,20 @@
                                     <!-- Stream Body / Channels Table (Collapsible) -->
                                     <div x-show="streamExpanded" x-collapse class="overflow-x-auto">
                                         <table class="w-full text-left text-xs whitespace-nowrap">
-                                            <thead class="bg-slate-950/80 text-slate-400 uppercase font-bold tracking-wider border-b border-slate-800">
+                                            <thead class="bg-slate-950/80 text-slate-400 uppercase font-bold tracking-wider border-b border-slate-800 text-[10px]">
                                                 <tr>
-                                                    <th class="py-4 px-5 w-24">Type</th>
-                                                    <th class="py-4 px-5">Channel Name</th>
-                                                    <th class="py-4 px-5">Codec</th>
-                                                    <th class="py-4 px-5">SID</th>
-                                                    <th class="py-4 px-5">V.PID</th>
-                                                    <th class="py-4 px-5">A.PID / Lang</th>
+                                                    <th class="py-4 px-5 w-24"><span class="inline-flex items-center gap-1.5"><i class="fa-solid fa-shapes text-blue-500/50"></i>Type</span></th>
+                                                    <th class="py-4 px-5"><span class="inline-flex items-center gap-1.5"><i class="fa-solid fa-tower-broadcast text-blue-500/50"></i>Channel Name</span></th>
+                                                    <th class="py-4 px-5"><span class="inline-flex items-center gap-1.5"><i class="fa-solid fa-microchip text-blue-500/50"></i>Codec</span></th>
+                                                    <th class="py-4 px-5"><span class="inline-flex items-center gap-1.5"><i class="fa-solid fa-fingerprint text-cyan-500/50"></i>SID</span></th>
+                                                    <th class="py-4 px-5"><span class="inline-flex items-center gap-1.5"><i class="fa-solid fa-film text-indigo-500/50"></i>V.PID</span></th>
+                                                    <th class="py-4 px-5"><span class="inline-flex items-center gap-1.5"><i class="fa-solid fa-volume-high text-amber-500/50"></i>A.PID / Codec / Lang</span></th>
                                                 </tr>
                                             </thead>
                                             <tbody class="divide-y divide-slate-800/40 text-slate-300">
                                                 <template x-for="(ch, cIndex) in stream.channels" :key="cIndex">
                                                     <tr class="hover:bg-slate-800/60 transition-all duration-200 group/row border-l-2 border-transparent hover:border-blue-500">
-                                                        
+
                                                         <td class="py-4 px-5 align-top">
                                                             <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md border font-black text-[10px] tracking-wide"
                                                                   :class="{
@@ -179,26 +188,35 @@
                                                                   <span x-text="ch.type"></span>
                                                             </span>
                                                         </td>
-                                                        
+
                                                         <td class="py-4 px-5 align-top whitespace-normal min-w-[180px]">
                                                             <span class="font-extrabold text-slate-100 group-hover/row:text-blue-400 transition-colors text-[13px]" x-text="formatChannelName(ch.name)"></span>
                                                         </td>
-                                                        
+
                                                         <td class="py-4 px-5 align-top">
                                                             <template x-if="ch.system">
                                                                 <span class="bg-slate-800 border border-slate-700 text-slate-300 font-bold px-2 py-1 rounded text-[10px] tracking-wider" x-text="ch.system"></span>
                                                             </template>
                                                             <template x-if="!ch.system"><span class="text-slate-600">—</span></template>
                                                         </td>
-                                                        
+
+                                                        <!-- Enhanced SID display -->
                                                         <td class="py-4 px-5 align-top">
-                                                            <span class="code-font text-blue-300 font-bold bg-blue-900/20 px-2 py-0.5 rounded" x-text="ch.sid || '—'"></span>
+                                                            <div class="flex flex-col items-start gap-1">
+                                                                <span class="sid-badge inline-flex items-center gap-1.5 code-font font-bold text-[11px] tracking-wide text-cyan-200 bg-gradient-to-r from-cyan-500/20 to-blue-500/10 border border-cyan-400/30 px-2.5 py-1 rounded-lg shadow-[0_0_12px_rgba(6,182,212,0.25)] hover:border-cyan-400/60 hover:shadow-[0_0_16px_rgba(6,182,212,0.4)] transition-all cursor-default" title="Service ID">
+                                                                    <i class="fa-solid fa-fingerprint text-[9px] opacity-60"></i>
+                                                                    <span x-text="ch.sid || '—'"></span>
+                                                                </span>
+                                                                <span class="text-[8px] font-extrabold uppercase tracking-[0.2em] text-slate-600 pl-1" x-text="formatSidLabel(ch.sid)"></span>
+                                                            </div>
                                                         </td>
-                                                        
+
+                                                        <!-- V.PID — one row per PID -->
                                                         <td class="py-4 px-5 align-top">
                                                             <div x-html="formatPids(ch.vpid, 'vpid')"></div>
                                                         </td>
-                                                        
+
+                                                        <!-- A.PID — one row per PID -->
                                                         <td class="py-4 px-5 align-top">
                                                             <div x-html="formatPids(ch.apid_lang, 'apid')"></div>
                                                         </td>
@@ -220,6 +238,71 @@
     </main>
 
     <script>
+        /* ═══════════════ PID / SID DISPLAY HELPERS ═══════════════ */
+
+        // Escapes unsafe characters before injecting into x-html
+        function escHtml(s) {
+            return String(s)
+                .replace(/&/g, '&amp;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;')
+                .replace(/"/g, '&quot;');
+        }
+
+        // Splits a continuous PID string such as
+        // "4002 E-AC3 Spa 4003 E-AC3 org 4004 AC4 Spa 4005 E-AC3 N/A"
+        // into structured rows → [{ pid:'4002', codec:'E-AC3', lang:'SPA' }, …]
+        // A PID is a *standalone* number token (bounded by spaces / string edges),
+        // so digits inside codec names like "E-AC3" or "AC4" are correctly ignored.
+        function parsePidList(pidStr) {
+            if (pidStr === null || pidStr === undefined) return null;
+            const str = String(pidStr).trim();
+            if (!str || str === '—' || /^n\/?a$/i.test(str)) return null;
+
+            const numRegex = /(?:^|\s)(\d+)(?=\s|$)/g;
+            const marks = [];
+            let m;
+            while ((m = numRegex.exec(str)) !== null) {
+                marks.push({
+                    pid: m[1],
+                    pidStart: m.index + (m[0].length - m[1].length),
+                    textStart: m.index + m[0].length
+                });
+            }
+            if (marks.length === 0) return null;
+
+            return marks.map((mark, i) => {
+                const end = (i + 1 < marks.length) ? marks[i + 1].pidStart : str.length;
+                const rawText = str.slice(mark.textStart, end).replace(/\s+/g, ' ').trim();
+                return { pid: escHtml(mark.pid), ...splitCodecLang(rawText) };
+            });
+        }
+
+        // Separates the codec ("E-AC3", "AC4", "MPEG"…) from the language ("Spa", "Eng"…)
+        function splitCodecLang(text) {
+            if (!text) return { codec: '', lang: '' };
+            const codecPattern = /(HE-?AAC(?:\s*\d+)?|E-?AC-?3|DD\+|AC-?4|AC-?3|AAC(?:-?LC)?|HEVC|H\.?26[45]|AVC|MPEG-?\d?(?:\s?Layer\s*(?:I{1,3}|\d+))?|MP3|MP2|DTS(?:-HD)?|LPCM|PCM)/i;
+            const m = text.match(codecPattern);
+            if (!m) return { codec: '', lang: escHtml(text) };
+            const lang = (text.slice(0, m.index) + ' ' + text.slice(m.index + m[0].length)).replace(/\s+/g, ' ').trim();
+            return { codec: m[0].toUpperCase(), lang: escHtml(lang) };
+        }
+
+        // Colour-codes each codec family
+        function getCodecStyle(codec) {
+            const c = (codec || '').toUpperCase();
+            if (/E-?AC-?3|DD\+|DDP|DOLBY DIGITAL PLUS/.test(c)) return 'bg-violet-500/15 text-violet-300 border-violet-400/30 shadow-[0_0_8px_rgba(139,92,246,0.25)]';
+            if (/AC-?4/.test(c)) return 'bg-rose-500/15 text-rose-300 border-rose-400/30 shadow-[0_0_8px_rgba(244,63,94,0.25)]';
+            if (/HE-?AAC/.test(c)) return 'bg-teal-500/15 text-teal-300 border-teal-400/30 shadow-[0_0_8px_rgba(20,184,166,0.25)]';
+            if (/AAC/.test(c)) return 'bg-cyan-500/15 text-cyan-300 border-cyan-400/30 shadow-[0_0_8px_rgba(6,182,212,0.25)]';
+            if (/AC-?3|DOLBY/.test(c)) return 'bg-sky-500/15 text-sky-300 border-sky-400/30 shadow-[0_0_8px_rgba(14,165,233,0.25)]';
+            if (/HEVC|AVC|H\.?26[45]/.test(c)) return 'bg-emerald-500/15 text-emerald-300 border-emerald-400/30 shadow-[0_0_8px_rgba(16,185,129,0.25)]';
+            if (/MPEG|MP[23]/.test(c)) return 'bg-orange-500/15 text-orange-300 border-orange-400/30 shadow-[0_0_8px_rgba(249,115,22,0.25)]';
+            if (/DTS/.test(c)) return 'bg-fuchsia-500/15 text-fuchsia-300 border-fuchsia-400/30 shadow-[0_0_8px_rgba(217,70,239,0.25)]';
+            if (/PCM/.test(c)) return 'bg-lime-500/15 text-lime-300 border-lime-400/30 shadow-[0_0_8px_rgba(132,204,22,0.25)]';
+            return 'bg-slate-700/30 text-slate-300 border-slate-500/30';
+        }
+
         function appData() {
             return {
                 rawData: [],
@@ -230,43 +313,71 @@
                         this.rawData = await res.json();
                     } catch (e) { console.error("Failed to load JSON", e); }
                 },
-                
+
                 // Formats camelCase and interconnected names into proper capitalized, spaced labels
                 formatChannelName(name) {
                     if (!name) return '—';
                     return name
-                        .replace(/([a-z])([A-Z])/g, '$1 $2')         // Add space between lowercase and uppercase
-                        .replace(/([A-Z]+)([A-Z][a-z])/g, '$1 $2')    // Add space between uppercase words (e.g. TVCanarias -> TV Canarias)
-                        .replace(/([a-zA-Z])(\d)/g, '$1 $2')          // Add space between letter and number
-                        .replace(/(\d)([a-zA-Z])/g, '$1 $2')          // Add space between number and letter
-                        .replace(/_/g, ' ')                           // Replace underscores with spaces
-                        .replace(/\b\w/g, char => char.toUpperCase()) // Capitalize each word
+                        .replace(/([a-z])([A-Z])/g, '$1 $2')
+                        .replace(/([A-Z]+)([A-Z][a-z])/g, '$1 $2')
+                        .replace(/([a-zA-Z])(\d)/g, '$1 $2')
+                        .replace(/(\d)([a-zA-Z])/g, '$1 $2')
+                        .replace(/_/g, ' ')
+                        .replace(/\b\w/g, char => char.toUpperCase())
                         .trim();
                 },
 
-                // Transforms continuous PID strings (e.g. '1503 Spa 1504 org') into structured vertical columns
+                // Micro-label under the SID badge (adds hex representation when numeric)
+                formatSidLabel(sid) {
+                    if (sid === null || sid === undefined || sid === '') return 'Service ID';
+                    const n = parseInt(sid, 10);
+                    if (isNaN(n)) return 'Service ID';
+                    return `Service ID · 0x${n.toString(16).toUpperCase().padStart(4, '0')}`;
+                },
+
+                // Builds ONE ROW PER PID with enhanced graphics
                 formatPids(pidStr, type = 'vpid') {
-                    if (!pidStr || pidStr === '—' || pidStr === 'N/A') return '<span class="text-slate-600 font-medium">—</span>';
-                    
-                    let str = String(pidStr);
-                    let matches = str.match(/\d+[^0-9]*/g); // Matches the numeric PID alongside any following alphabet identifiers
-                    
-                    let badgeClass = type === 'vpid' 
-                        ? 'text-indigo-300 bg-indigo-500/10 border-indigo-500/20 shadow-[0_0_8px_rgba(99,102,241,0.15)]' 
-                        : 'text-amber-300 bg-amber-500/10 border-amber-500/20 shadow-[0_0_8px_rgba(245,158,11,0.15)]';
-                    
-                    if (matches) {
-                        return `<div class="flex flex-col gap-2">` + matches.map(m => {
-                            let parts = m.trim().split(' ');
-                            let pid = parts.shift();
-                            let lang = parts.join(' ');
-                            return `<div class="flex items-center gap-2">
-                                        <span class="font-bold border px-2 py-0.5 rounded text-[11px] code-font ${badgeClass}">${pid}</span>
-                                        ${lang ? `<span class="text-slate-300 text-[10px] font-bold uppercase tracking-widest bg-slate-800/80 border border-slate-700 px-2 py-0.5 rounded shadow-sm">${lang}</span>` : ''}
-                                    </div>`;
-                        }).join('') + `</div>`;
-                    }
-                    return `<span class="text-slate-400 code-font">${str}</span>`;
+                    if (pidStr === null || pidStr === undefined) return '<span class="inline-block text-slate-600 font-medium px-1">—</span>';
+                    const str = String(pidStr).trim();
+                    if (!str || str === '—' || /^n\/?a$/i.test(str)) return '<span class="inline-block text-slate-600 font-medium px-1">—</span>';
+
+                    const items = parsePidList(str);
+                    if (!items) return `<span class="code-font text-slate-400 text-[11px]">${escHtml(str)}</span>`;
+
+                    const isVideo = type === 'vpid';
+
+                    // PID number chip: indigo for video, amber for audio
+                    const pidChip = isVideo
+                        ? 'text-indigo-200 bg-gradient-to-r from-indigo-500/30 to-indigo-600/10 border-indigo-400/40 shadow-[0_0_12px_rgba(99,102,241,0.3)]'
+                        : 'text-amber-200 bg-gradient-to-r from-amber-500/30 to-amber-600/10 border-amber-400/40 shadow-[0_0_12px_rgba(245,158,11,0.3)]';
+                    const hoverRow = isVideo ? 'hover:border-indigo-500/50' : 'hover:border-amber-500/50';
+                    const icon = isVideo ? 'fa-film' : 'fa-volume-high';
+
+                    // Counter shown when a channel carries multiple PIDs
+                    const countLabel = items.length > 1
+                        ? `<div class="flex items-center gap-1.5 mb-1 pl-1 text-[8.5px] font-extrabold uppercase tracking-[0.18em] ${isVideo ? 'text-indigo-400/80' : 'text-amber-500/80'}">
+                               <i class="fa-solid fa-layer-group text-[8px]"></i>${items.length} ${isVideo ? 'Video Streams' : 'Audio Tracks'}
+                           </div>`
+                        : '';
+
+                    const rows = items.map((item, i) => {
+                        const hex = `0x${parseInt(item.pid, 10).toString(16).toUpperCase().padStart(4, '0')}`;
+                        const codecTag = item.codec
+                            ? `<span class="inline-flex items-center px-2 py-[3px] rounded-md border text-[9.5px] font-extrabold tracking-wider ${getCodecStyle(item.codec)}">${item.codec}</span>`
+                            : '';
+                        const isNA = /^(n\/?a|-|—)$/i.test(item.lang);
+                        const langTag = item.lang
+                            ? `<span class="px-2 py-[3px] rounded-md border text-[9.5px] font-bold uppercase tracking-[0.12em] ${isNA ? 'bg-slate-800/40 text-slate-500 border-slate-700/50 italic' : 'bg-slate-800/80 text-slate-200 border-slate-600/60 shadow-sm'}">${item.lang}</span>`
+                            : '';
+                        return `<div class="pid-row flex items-center gap-2 px-2 py-1.5 rounded-xl bg-slate-900/70 border border-slate-700/50 ${hoverRow} hover:bg-slate-800/70 transition-all duration-200 w-max" style="animation-delay:${i * 45}ms" title="PID ${item.pid} · ${hex}">
+                                    <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg border font-extrabold code-font text-[11px] tracking-wider ${pidChip}">
+                                        <i class="fa-solid ${icon} text-[9px] opacity-60"></i>${item.pid}
+                                    </span>
+                                    ${codecTag}${langTag}
+                                </div>`;
+                    }).join('');
+
+                    return `<div class="flex flex-col gap-1.5">${countLabel}${rows}</div>`;
                 },
 
                 get stats() {
@@ -286,36 +397,31 @@
                 get filteredData() {
                     let q = this.search.toLowerCase().trim();
                     if (!q) return this.rawData;
-                    
+
                     return this.rawData.map(txp => {
-                        // Check if the overall transponder matches the search string
                         let txpMatches = txp.freq_pol_mode.toLowerCase().includes(q) || (txp.onid_nid_tid && txp.onid_nid_tid.toLowerCase().includes(q));
-                        
+
                         let matchingStreams = (txp.streams || []).map(stream => {
-                            // Check if the parent stream title/PID matches the search string
                             let streamMatches = stream.title.toLowerCase().includes(q) || (stream.pid_info && stream.pid_info.toLowerCase().includes(q));
-                            
-                            let matchingChannels = (stream.channels || []).filter(ch => 
-                                (ch.name && ch.name.toLowerCase().includes(q)) || 
-                                (ch.sid && ch.sid.toString().includes(q)) || 
+
+                            let matchingChannels = (stream.channels || []).filter(ch =>
+                                (ch.name && ch.name.toLowerCase().includes(q)) ||
+                                (ch.sid && ch.sid.toString().includes(q)) ||
                                 (ch.vpid && ch.vpid.toString().includes(q)) ||
                                 (ch.apid_lang && ch.apid_lang.toLowerCase().includes(q))
                             );
 
-                            // FIX: If stream or transponder matches the search term directly, display the stream with ALL of its channels intact
                             if (streamMatches || txpMatches) {
                                 return { ...stream };
                             }
-                            
-                            // Otherwise, filter to only the exact channels matched inside the stream
+
                             if (matchingChannels.length > 0) {
                                 return { ...stream, channels: matchingChannels };
                             }
-                            
+
                             return null;
                         }).filter(Boolean);
 
-                        // Return the matched transponder containing correctly filtered streams
                         if (txpMatches || matchingStreams.length > 0) {
                             return { ...txp, streams: matchingStreams };
                         }
