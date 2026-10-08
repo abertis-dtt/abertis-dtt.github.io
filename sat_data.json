@@ -1,0 +1,3006 @@
+[
+    {
+        "txp_no": "125",
+        "freq_pol_mode": "11222.00 H DVB-S2/8PSK",
+        "provider": "Abertis DTT",
+        "sr_fec": "30000 3/4",
+        "onid_nid_tid": "1/60000/60020",
+        "date": "25.04.2026",
+        "streams": [
+            {
+                "title": "Stream 2025 - (HS125.25) - RGE Extremadura",
+                "pid_info": "8916-1109--12566",
+                "encryption": "BISS",
+                "channels": [
+                    {
+                        "type": "HD",
+                        "name": "TVE La 1 Extremadura",
+                        "system": "MPEG-4",
+                        "sid": "504",
+                        "vpid": "301",
+                        "apid_lang": "302 Spa 303 org 304 N/A"
+                    },
+                    {
+                        "type": "Radio",
+                        "name": "RNE Radio 1 Extremadura",
+                        "system": "",
+                        "sid": "505",
+                        "vpid": "",
+                        "apid_lang": "2001 Spa"
+                    },
+                    {
+                        "type": "Radio",
+                        "name": "RNE Radio 5 Extremadura",
+                        "system": "",
+                        "sid": "506",
+                        "vpid": "",
+                        "apid_lang": "2031 Spa"
+                    },
+                    {
+                        "type": "Radio",
+                        "name": "RNE Radio 4 Extremadura",
+                        "system": "",
+                        "sid": "507",
+                        "vpid": "",
+                        "apid_lang": "2041 Spa"
+                    }
+                ]
+            },
+            {
+                "title": "Stream 2026 - (HS125.26) - RGE La Rioja",
+                "pid_info": "8916-1011--12567",
+                "encryption": "BISS",
+                "channels": [
+                    {
+                        "type": "HD",
+                        "name": "TVE La 1 La Rioja",
+                        "system": "MPEG-4",
+                        "sid": "524",
+                        "vpid": "301",
+                        "apid_lang": "302 Spa 303 org 304 N/A"
+                    },
+                    {
+                        "type": "Radio",
+                        "name": "RNE Radio 1 La Rioja",
+                        "system": "",
+                        "sid": "525",
+                        "vpid": "",
+                        "apid_lang": "2001 Spa"
+                    },
+                    {
+                        "type": "Radio",
+                        "name": "RNE Radio 5 La Rioja",
+                        "system": "",
+                        "sid": "526",
+                        "vpid": "",
+                        "apid_lang": "2031 Spa"
+                    },
+                    {
+                        "type": "Radio",
+                        "name": "RNE Radio 4 La Rioja",
+                        "system": "",
+                        "sid": "527",
+                        "vpid": "",
+                        "apid_lang": "2041 Spa"
+                    }
+                ]
+            },
+            {
+                "title": "Stream 2027 - (HS125.27) - RGE Murcia",
+                "pid_info": "8916-1013--12564",
+                "encryption": "BISS",
+                "channels": [
+                    {
+                        "type": "HD",
+                        "name": "TVE La 1 Murcia",
+                        "system": "MPEG-4",
+                        "sid": "544",
+                        "vpid": "301",
+                        "apid_lang": "302 Spa 303 org 304 N/A"
+                    },
+                    {
+                        "type": "Radio",
+                        "name": "RNE Radio 1 Murcia",
+                        "system": "",
+                        "sid": "545",
+                        "vpid": "",
+                        "apid_lang": "2001 Spa"
+                    },
+                    {
+                        "type": "Radio",
+                        "name": "RNE Radio 5 Murcia",
+                        "system": "",
+                        "sid": "546",
+                        "vpid": "",
+                        "apid_lang": "2031 Spa"
+                    },
+                    {
+                        "type": "Radio",
+                        "name": "RNE Radio 4 Murcia",
+                        "system": "",
+                        "sid": "547",
+                        "vpid": "",
+                        "apid_lang": "2041 Spa"
+                    }
+                ]
+            },
+            {
+                "title": "Stream 2028 - (HS125.28) - RGE Valencia",
+                "pid_info": "8916-1016--12561",
+                "encryption": "BISS",
+                "channels": [
+                    {
+                        "type": "HD",
+                        "name": "TVE La 1 Valencia",
+                        "system": "MPEG-4",
+                        "sid": "574",
+                        "vpid": "301",
+                        "apid_lang": "302 Spa 303 org 304 N/A"
+                    },
+                    {
+                        "type": "Radio",
+                        "name": "RNE Radio 1 Valencia",
+                        "system": "",
+                        "sid": "575",
+                        "vpid": "",
+                        "apid_lang": "2001 Spa"
+                    },
+                    {
+                        "type": "Radio",
+                        "name": "RNE Radio 5 Valencia",
+                        "system": "",
+                        "sid": "576",
+                        "vpid": "",
+                        "apid_lang": "2031 Spa"
+                    },
+                    {
+                        "type": "Radio",
+                        "name": "RNE Radio 4 Valencia",
+                        "system": "",
+                        "sid": "577",
+                        "vpid": "",
+                        "apid_lang": "2041 Spa"
+                    }
+                ]
+            },
+            {
+                "title": "Stream 2035 - (HS125.35) - RGE Extremadura",
+                "pid_info": "8916-1109--12566",
+                "encryption": "BISS",
+                "channels": []
+            },
+            {
+                "title": "Stream 2036 - (HS125.36) - RGE La Rioja",
+                "pid_info": "8916-1011--12567",
+                "encryption": "BISS",
+                "channels": []
+            },
+            {
+                "title": "Stream 2037 - (HS125.37) - RGE Murcia",
+                "pid_info": "8916-1013--12564",
+                "encryption": "BISS",
+                "channels": []
+            },
+            {
+                "title": "Stream 2038 - (HS125.38) - RGE Valencia",
+                "pid_info": "8916-1016--12561",
+                "encryption": "BISS",
+                "channels": []
+            },
+            {
+                "title": "Stream 2050 - (HS125.50) - RGE Nac",
+                "pid_info": "8916-1051--",
+                "encryption": "BISS",
+                "channels": [
+                    {
+                        "type": "HD",
+                        "name": "Teledeporte",
+                        "system": "MPEG-4",
+                        "sid": "380",
+                        "vpid": "4001",
+                        "apid_lang": "4002 Spa 4003 org 4004 N/A"
+                    },
+                    {
+                        "type": "HD",
+                        "name": "Canal 24 Horas",
+                        "system": "MPEG-4",
+                        "sid": "383",
+                        "vpid": "1501",
+                        "apid_lang": "1503 Spa 1504 org 1505 N/A"
+                    },
+                    {
+                        "type": "HD",
+                        "name": "TVE La 2",
+                        "system": "MPEG-4",
+                        "sid": "388",
+                        "vpid": "401",
+                        "apid_lang": "402 Spa 403 org 404 N/A"
+                    }
+                ]
+            },
+            {
+                "title": "Stream 2060 - (HS125.60) - RTVE/SAPEC",
+                "pid_info": "1-1--",
+                "encryption": "BISS",
+                "channels": [
+                    {
+                        "type": "HD",
+                        "name": "Canal 24 Horas",
+                        "system": "HEVC",
+                        "sid": "1",
+                        "vpid": "49",
+                        "apid_lang": "50 Spa 51 org 52 org"
+                    },
+                    {
+                        "type": "HD",
+                        "name": "TVE La 1",
+                        "system": "HEVC",
+                        "sid": "534",
+                        "vpid": "301",
+                        "apid_lang": "302 Spa 303 org 304 N/A"
+                    },
+                    {
+                        "type": "HD",
+                        "name": "TVE La 2",
+                        "system": "HEVC",
+                        "sid": "538",
+                        "vpid": "401",
+                        "apid_lang": "402 Spa 403 org 404 N/A"
+                    }
+                ]
+            },
+            {
+                "title": "RNE",
+                "pid_info": "1-60020--60000",
+                "encryption": "",
+                "channels": [
+                    {
+                        "type": "Radio",
+                        "name": "RNE Radio 2 Nacion",
+                        "system": "",
+                        "sid": "200",
+                        "vpid": "",
+                        "apid_lang": "201 Spa"
+                    },
+                    {
+                        "type": "Radio",
+                        "name": "RNE Radio 3 Nacion",
+                        "system": "",
+                        "sid": "300",
+                        "vpid": "",
+                        "apid_lang": "301 Spa"
+                    },
+                    {
+                        "type": "Radio",
+                        "name": "RNE Radio 5 Valencia",
+                        "system": "",
+                        "sid": "470",
+                        "vpid": "",
+                        "apid_lang": "471 Spa"
+                    },
+                    {
+                        "type": "Radio",
+                        "name": "RNE Radio 1 Valencia",
+                        "system": "",
+                        "sid": "570",
+                        "vpid": "",
+                        "apid_lang": "571 Spa"
+                    },
+                    {
+                        "type": "Radio",
+                        "name": "RNE Radio 1 Alican",
+                        "system": "",
+                        "sid": "1140",
+                        "vpid": "",
+                        "apid_lang": "1141 Spa"
+                    },
+                    {
+                        "type": "Radio",
+                        "name": "RNE Radio 1 Castel",
+                        "system": "",
+                        "sid": "1150",
+                        "vpid": "",
+                        "apid_lang": "1151 Spa"
+                    },
+                    {
+                        "type": "Radio",
+                        "name": "RNE Radio 5 Alican",
+                        "system": "",
+                        "sid": "1660",
+                        "vpid": "",
+                        "apid_lang": "1661 Spa"
+                    },
+                    {
+                        "type": "Radio",
+                        "name": "RNE Radio 5 Castel",
+                        "system": "",
+                        "sid": "1670",
+                        "vpid": "",
+                        "apid_lang": "1671 Spa"
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "txp_no": "127",
+        "freq_pol_mode": "11302.00 H DVB-S2/8PSK",
+        "provider": "Abertis DTT",
+        "sr_fec": "30000 3/4",
+        "onid_nid_tid": "1/60000/60022",
+        "date": "24.04.2026",
+        "streams": [
+            {
+                "title": "Stream 2270 - (HS127.70) - RGE Nac",
+                "pid_info": "8916-1051--",
+                "encryption": "BISS",
+                "channels": [
+                    {
+                        "type": "HD",
+                        "name": "Teledeporte",
+                        "system": "MPEG-4",
+                        "sid": "380",
+                        "vpid": "4001",
+                        "apid_lang": "4002 Spa 4003 org 4004 N/A"
+                    },
+                    {
+                        "type": "HD",
+                        "name": "Canal 24 Horas",
+                        "system": "MPEG-4",
+                        "sid": "383",
+                        "vpid": "1501",
+                        "apid_lang": "1503 Spa 1504 org 1505 N/A"
+                    },
+                    {
+                        "type": "HD",
+                        "name": "TVE La 2",
+                        "system": "MPEG-4",
+                        "sid": "388",
+                        "vpid": "401",
+                        "apid_lang": "402 Spa 403 org 404 N/A"
+                    }
+                ]
+            },
+            {
+                "title": "Stream 2271 - (HS127.71) - RGE Navarra",
+                "pid_info": "8916-1014--12562",
+                "encryption": "BISS",
+                "channels": [
+                    {
+                        "type": "HD",
+                        "name": "TVE La 1 Navarra",
+                        "system": "MPEG-4",
+                        "sid": "554",
+                        "vpid": "301",
+                        "apid_lang": "302 Spa 303 org 304 N/A"
+                    },
+                    {
+                        "type": "Radio",
+                        "name": "RNE Radio 1 Navarra",
+                        "system": "",
+                        "sid": "555",
+                        "vpid": "",
+                        "apid_lang": "2001 Spa"
+                    },
+                    {
+                        "type": "Radio",
+                        "name": "RNE Radio 5 Navarra",
+                        "system": "",
+                        "sid": "556",
+                        "vpid": "",
+                        "apid_lang": "2031 Spa"
+                    },
+                    {
+                        "type": "Radio",
+                        "name": "RNE Radio 4 Navarra",
+                        "system": "",
+                        "sid": "557",
+                        "vpid": "",
+                        "apid_lang": "2041 Spa"
+                    }
+                ]
+            },
+            {
+                "title": "Stream 2272 - (HS127.72) - RGE Asturias",
+                "pid_info": "8916-1002--12567",
+                "encryption": "BISS",
+                "channels": [
+                    {
+                        "type": "HD",
+                        "name": "TVE La 1 Asturias",
+                        "system": "MPEG-4",
+                        "sid": "434",
+                        "vpid": "301",
+                        "apid_lang": "302 Spa 303 org 304 N/A"
+                    },
+                    {
+                        "type": "Radio",
+                        "name": "RNE Radio 1 Asturias",
+                        "system": "",
+                        "sid": "435",
+                        "vpid": "",
+                        "apid_lang": "2001 Spa"
+                    },
+                    {
+                        "type": "Radio",
+                        "name": "RNE Radio 5 Asturias",
+                        "system": "",
+                        "sid": "436",
+                        "vpid": "",
+                        "apid_lang": "2031 Spa"
+                    },
+                    {
+                        "type": "Radio",
+                        "name": "RNE Radio 4 Asturias",
+                        "system": "",
+                        "sid": "437",
+                        "vpid": "",
+                        "apid_lang": "2041 Spa"
+                    }
+                ]
+            },
+            {
+                "title": "Stream 2273 - (HS127.73) - RGE Aragon",
+                "pid_info": "8916-1101--12564",
+                "encryption": "BISS",
+                "channels": [
+                    {
+                        "type": "HD",
+                        "name": "TVE La 1 Aragon",
+                        "system": "MPEG-4",
+                        "sid": "424",
+                        "vpid": "301",
+                        "apid_lang": "302 Spa 303 org 304 N/A"
+                    },
+                    {
+                        "type": "Radio",
+                        "name": "RNE Radio 1 Aragon",
+                        "system": "",
+                        "sid": "425",
+                        "vpid": "",
+                        "apid_lang": "2001 Spa"
+                    },
+                    {
+                        "type": "Radio",
+                        "name": "RNE Radio 5 Aragon",
+                        "system": "",
+                        "sid": "426",
+                        "vpid": "",
+                        "apid_lang": "2031 Spa"
+                    },
+                    {
+                        "type": "Radio",
+                        "name": "RNE Radio 4 Aragon",
+                        "system": "",
+                        "sid": "427",
+                        "vpid": "",
+                        "apid_lang": "2041 Spa"
+                    }
+                ]
+            },
+            {
+                "title": "Stream 2274 - (HS127.74) - RGE Cantabria",
+                "pid_info": "8916-1006--12561",
+                "encryption": "BISS",
+                "channels": [
+                    {
+                        "type": "HD",
+                        "name": "TVE La 1 Cantabria",
+                        "system": "MPEG-4",
+                        "sid": "474",
+                        "vpid": "301",
+                        "apid_lang": "302 Spa 303 org 304 N/A"
+                    },
+                    {
+                        "type": "Radio",
+                        "name": "RNE Radio 1 Cantabria",
+                        "system": "",
+                        "sid": "475",
+                        "vpid": "",
+                        "apid_lang": "2001 Spa"
+                    },
+                    {
+                        "type": "Radio",
+                        "name": "RNE Radio 5 Cantabria",
+                        "system": "",
+                        "sid": "476",
+                        "vpid": "",
+                        "apid_lang": "2031 Spa"
+                    },
+                    {
+                        "type": "Radio",
+                        "name": "RNE Radio 4 Cantabria",
+                        "system": "",
+                        "sid": "477",
+                        "vpid": "",
+                        "apid_lang": "2041 Spa"
+                    }
+                ]
+            },
+            {
+                "title": "Stream 2281 - (HS127.81) - RGE Navarra",
+                "pid_info": "8916-1014--12562",
+                "encryption": "BISS",
+                "channels": []
+            },
+            {
+                "title": "Stream 2282 - (HS127.82) - RGE Asturias",
+                "pid_info": "8916-1002--12567",
+                "encryption": "BISS",
+                "channels": []
+            },
+            {
+                "title": "Stream 2283 - (HS127.83) - RGE Aragon",
+                "pid_info": "8916-1101--12564",
+                "encryption": "BISS",
+                "channels": []
+            },
+            {
+                "title": "Stream 2284 - (HS127.84) - RGE Cantabria",
+                "pid_info": "8916-1006--12561",
+                "encryption": "BISS",
+                "channels": []
+            },
+            {
+                "title": "RNE",
+                "pid_info": "1-60022--60000",
+                "encryption": "",
+                "channels": [
+                    {
+                        "type": "Radio",
+                        "name": "RNE Radio 1 Nacion",
+                        "system": "",
+                        "sid": "100",
+                        "vpid": "",
+                        "apid_lang": "101 Spa"
+                    },
+                    {
+                        "type": "Radio",
+                        "name": "RNE Radio 5 Cyleon",
+                        "system": "",
+                        "sid": "140",
+                        "vpid": "",
+                        "apid_lang": "141 Spa"
+                    },
+                    {
+                        "type": "Radio",
+                        "name": "RNE Radio 5 Extrem",
+                        "system": "",
+                        "sid": "150",
+                        "vpid": "",
+                        "apid_lang": "151 Spa"
+                    },
+                    {
+                        "type": "Radio",
+                        "name": "RNE Radio 5 Galici",
+                        "system": "",
+                        "sid": "160",
+                        "vpid": "",
+                        "apid_lang": "161 Spa"
+                    },
+                    {
+                        "type": "Radio",
+                        "name": "RNE Radio 2 Nacion",
+                        "system": "",
+                        "sid": "200",
+                        "vpid": "",
+                        "apid_lang": "201 Spa"
+                    },
+                    {
+                        "type": "Radio",
+                        "name": "RNE Radio 5 Asturi",
+                        "system": "",
+                        "sid": "220",
+                        "vpid": "",
+                        "apid_lang": "221 Spa"
+                    },
+                    {
+                        "type": "Radio",
+                        "name": "RNE Radio 1 Cyleon",
+                        "system": "",
+                        "sid": "250",
+                        "vpid": "",
+                        "apid_lang": "251 Spa"
+                    },
+                    {
+                        "type": "Radio",
+                        "name": "RNE Radio 1 Galici",
+                        "system": "",
+                        "sid": "260",
+                        "vpid": "",
+                        "apid_lang": "261 Spa"
+                    },
+                    {
+                        "type": "Radio",
+                        "name": "RNE Radio 3 Nacion",
+                        "system": "",
+                        "sid": "300",
+                        "vpid": "",
+                        "apid_lang": "301 Spa"
+                    },
+                    {
+                        "type": "Radio",
+                        "name": "RNE Radio 1 Cantab",
+                        "system": "",
+                        "sid": "330",
+                        "vpid": "",
+                        "apid_lang": "331 Spa"
+                    },
+                    {
+                        "type": "Radio",
+                        "name": "RNE Radio 1 Extrem",
+                        "system": "",
+                        "sid": "340",
+                        "vpid": "",
+                        "apid_lang": "341 Spa"
+                    },
+                    {
+                        "type": "Radio",
+                        "name": "RNE Radio 1 Navarr",
+                        "system": "",
+                        "sid": "350",
+                        "vpid": "",
+                        "apid_lang": "351 Spa"
+                    },
+                    {
+                        "type": "Radio",
+                        "name": "RNE Radio 1 Vitori",
+                        "system": "",
+                        "sid": "360",
+                        "vpid": "",
+                        "apid_lang": "361 Spa"
+                    },
+                    {
+                        "type": "Radio",
+                        "name": "RNE Radio 4 Catalu",
+                        "system": "",
+                        "sid": "400",
+                        "vpid": "",
+                        "apid_lang": "401 Spa"
+                    },
+                    {
+                        "type": "Radio",
+                        "name": "RNE Radio 1 Asturi",
+                        "system": "",
+                        "sid": "410",
+                        "vpid": "",
+                        "apid_lang": "411 Spa"
+                    },
+                    {
+                        "type": "Radio",
+                        "name": "RNE Radio 5 Laroj",
+                        "system": "",
+                        "sid": "440",
+                        "vpid": "",
+                        "apid_lang": "441 Spa"
+                    },
+                    {
+                        "type": "Radio",
+                        "name": "RNE Radio 5 Vitori",
+                        "system": "",
+                        "sid": "460",
+                        "vpid": "",
+                        "apid_lang": "461 Spa"
+                    },
+                    {
+                        "type": "Radio",
+                        "name": "RNE Radio 5 Nacion",
+                        "system": "",
+                        "sid": "500",
+                        "vpid": "",
+                        "apid_lang": "501 Spa"
+                    },
+                    {
+                        "type": "Radio",
+                        "name": "RNE Radio 5 Cantab",
+                        "system": "",
+                        "sid": "520",
+                        "vpid": "",
+                        "apid_lang": "521 Spa"
+                    },
+                    {
+                        "type": "Radio",
+                        "name": "RNE Radio 1 Laroj",
+                        "system": "",
+                        "sid": "540",
+                        "vpid": "",
+                        "apid_lang": "541 Spa"
+                    },
+                    {
+                        "type": "Radio",
+                        "name": "RNE Radio 5 Navarr",
+                        "system": "",
+                        "sid": "560",
+                        "vpid": "",
+                        "apid_lang": "561 Spa"
+                    },
+                    {
+                        "type": "Radio",
+                        "name": "RNE Radio 1 Gijon",
+                        "system": "",
+                        "sid": "750",
+                        "vpid": "",
+                        "apid_lang": "751 Spa"
+                    },
+                    {
+                        "type": "Radio",
+                        "name": "RNE Radio 1 Avila",
+                        "system": "",
+                        "sid": "840",
+                        "vpid": "",
+                        "apid_lang": "841 Spa"
+                    },
+                    {
+                        "type": "Radio",
+                        "name": "RNE Radio 1 Burgos",
+                        "system": "",
+                        "sid": "850",
+                        "vpid": "",
+                        "apid_lang": "851 Spa"
+                    },
+                    {
+                        "type": "Radio",
+                        "name": "RNE Radio 1 Leon",
+                        "system": "",
+                        "sid": "860",
+                        "vpid": "",
+                        "apid_lang": "861 Spa"
+                    },
+                    {
+                        "type": "Radio",
+                        "name": "RNE Radio 1 Ponfer",
+                        "system": "",
+                        "sid": "870",
+                        "vpid": "",
+                        "apid_lang": "871 Spa"
+                    },
+                    {
+                        "type": "Radio",
+                        "name": "RNE Radio 1 Palenc",
+                        "system": "",
+                        "sid": "910",
+                        "vpid": "",
+                        "apid_lang": "911 Spa"
+                    },
+                    {
+                        "type": "Radio",
+                        "name": "RNE Radio 1 Salama",
+                        "system": "",
+                        "sid": "920",
+                        "vpid": "",
+                        "apid_lang": "921 Spa"
+                    },
+                    {
+                        "type": "Radio",
+                        "name": "RNE Radio 1 Segovi",
+                        "system": "",
+                        "sid": "930",
+                        "vpid": "",
+                        "apid_lang": "931 Spa"
+                    },
+                    {
+                        "type": "Radio",
+                        "name": "RNE Radio 1 Soria",
+                        "system": "",
+                        "sid": "940",
+                        "vpid": "",
+                        "apid_lang": "941 Spa"
+                    },
+                    {
+                        "type": "Radio",
+                        "name": "RNE Radio 1 Zamora",
+                        "system": "",
+                        "sid": "950",
+                        "vpid": "",
+                        "apid_lang": "951 Spa"
+                    },
+                    {
+                        "type": "Radio",
+                        "name": "RNE Radio 1 Merida",
+                        "system": "",
+                        "sid": "1020",
+                        "vpid": "",
+                        "apid_lang": "1021 Spa"
+                    },
+                    {
+                        "type": "Radio",
+                        "name": "RNE Radio 1 Santia",
+                        "system": "",
+                        "sid": "1030",
+                        "vpid": "",
+                        "apid_lang": "1031 Spa"
+                    },
+                    {
+                        "type": "Radio",
+                        "name": "RNE Radio 1 Lugo",
+                        "system": "",
+                        "sid": "1040",
+                        "vpid": "",
+                        "apid_lang": "1041 Spa"
+                    },
+                    {
+                        "type": "Radio",
+                        "name": "RNE Radio 1 Orense",
+                        "system": "",
+                        "sid": "1050",
+                        "vpid": "",
+                        "apid_lang": "1051 Spa"
+                    },
+                    {
+                        "type": "Radio",
+                        "name": "RNE Radio 1 Pontev",
+                        "system": "",
+                        "sid": "1060",
+                        "vpid": "",
+                        "apid_lang": "1061 Spa"
+                    },
+                    {
+                        "type": "Radio",
+                        "name": "RNE Radio 1 Vigo",
+                        "system": "",
+                        "sid": "1070",
+                        "vpid": "",
+                        "apid_lang": "1071 Spa"
+                    },
+                    {
+                        "type": "Radio",
+                        "name": "RNE Radio 1 Bilbao",
+                        "system": "",
+                        "sid": "1120",
+                        "vpid": "",
+                        "apid_lang": "1121 Spa"
+                    },
+                    {
+                        "type": "Radio",
+                        "name": "RNE Radio 1 Sanseb",
+                        "system": "",
+                        "sid": "1130",
+                        "vpid": "",
+                        "apid_lang": "1131 Spa"
+                    },
+                    {
+                        "type": "Radio",
+                        "name": "RNE Radio 5 Gijon",
+                        "system": "",
+                        "sid": "1330",
+                        "vpid": "",
+                        "apid_lang": "1331 Spa"
+                    },
+                    {
+                        "type": "Radio",
+                        "name": "RNE Radio 5 Avila",
+                        "system": "",
+                        "sid": "1410",
+                        "vpid": "",
+                        "apid_lang": "1411 Spa"
+                    },
+                    {
+                        "type": "Radio",
+                        "name": "RNE Radio 5 Burgos",
+                        "system": "",
+                        "sid": "1420",
+                        "vpid": "",
+                        "apid_lang": "1421 Spa"
+                    },
+                    {
+                        "type": "Radio",
+                        "name": "RNE Radio 5 Leon",
+                        "system": "",
+                        "sid": "1430",
+                        "vpid": "",
+                        "apid_lang": "1431 Spa"
+                    },
+                    {
+                        "type": "Radio",
+                        "name": "RNE Radio 5 Ponfer",
+                        "system": "",
+                        "sid": "1440",
+                        "vpid": "",
+                        "apid_lang": "1441 Spa"
+                    },
+                    {
+                        "type": "Radio",
+                        "name": "RNE Radio 5 Palenc",
+                        "system": "",
+                        "sid": "1450",
+                        "vpid": "",
+                        "apid_lang": "1451 Spa"
+                    },
+                    {
+                        "type": "Radio",
+                        "name": "RNE Radio 5 Salama",
+                        "system": "",
+                        "sid": "1460",
+                        "vpid": "",
+                        "apid_lang": "1461 Spa"
+                    },
+                    {
+                        "type": "Radio",
+                        "name": "RNE Radio 5 Segov",
+                        "system": "",
+                        "sid": "1470",
+                        "vpid": "",
+                        "apid_lang": "1471 Spa"
+                    },
+                    {
+                        "type": "Radio",
+                        "name": "RNE Radio 5 Soria",
+                        "system": "",
+                        "sid": "1500",
+                        "vpid": "",
+                        "apid_lang": "1501 Spa"
+                    },
+                    {
+                        "type": "Radio",
+                        "name": "RNE Radio 5 Zamora",
+                        "system": "",
+                        "sid": "1510",
+                        "vpid": "",
+                        "apid_lang": "1511 Spa"
+                    },
+                    {
+                        "type": "Radio",
+                        "name": "RNE Radio 5 Merida",
+                        "system": "",
+                        "sid": "1550",
+                        "vpid": "",
+                        "apid_lang": "1551 Spa"
+                    },
+                    {
+                        "type": "Radio",
+                        "name": "RNE Radio 5 Santia",
+                        "system": "",
+                        "sid": "1560",
+                        "vpid": "",
+                        "apid_lang": "1561 Spa"
+                    },
+                    {
+                        "type": "Radio",
+                        "name": "RNE Radio 5 Lugo",
+                        "system": "",
+                        "sid": "1570",
+                        "vpid": "",
+                        "apid_lang": "1571 Spa"
+                    },
+                    {
+                        "type": "Radio",
+                        "name": "RNE Radio 5 Orense",
+                        "system": "",
+                        "sid": "1600",
+                        "vpid": "",
+                        "apid_lang": "1601 Spa"
+                    },
+                    {
+                        "type": "Radio",
+                        "name": "RNE Radio 5 Pontev",
+                        "system": "",
+                        "sid": "1610",
+                        "vpid": "",
+                        "apid_lang": "1611 Spa"
+                    },
+                    {
+                        "type": "Radio",
+                        "name": "RNE Radio 5 Vigo",
+                        "system": "",
+                        "sid": "1620",
+                        "vpid": "",
+                        "apid_lang": "1621 Spa"
+                    },
+                    {
+                        "type": "Radio",
+                        "name": "RNE Radio 5 Bilbao",
+                        "system": "",
+                        "sid": "1640",
+                        "vpid": "",
+                        "apid_lang": "1641 Spa"
+                    },
+                    {
+                        "type": "Radio",
+                        "name": "RNE Radio 5 Sanseb",
+                        "system": "",
+                        "sid": "1650",
+                        "vpid": "",
+                        "apid_lang": "1651 Spa"
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "txp_no": "128",
+        "freq_pol_mode": "11329.50 H DVB-S2/QPSK",
+        "provider": "Cellnex DTT",
+        "sr_fec": "9142 3/4",
+        "onid_nid_tid": "12574/8916/1001",
+        "date": "24.04.2026",
+        "streams": [
+            {
+                "title": "TDT Aragon",
+                "pid_info": "8916-1001--12574",
+                "encryption": "",
+                "channels": [
+                    {
+                        "type": "HD",
+                        "name": "Aragon TV",
+                        "system": "MPEG-4",
+                        "sid": "10162",
+                        "vpid": "32",
+                        "apid_lang": "33 Spa 34 org 35 N/A"
+                    },
+                    {
+                        "type": "Radio",
+                        "name": "Aragon Radio Zaragoza",
+                        "system": "",
+                        "sid": "10161",
+                        "vpid": "",
+                        "apid_lang": "1003 Spa"
+                    },
+                    {
+                        "type": "Radio",
+                        "name": "Aragon Radio Huesca",
+                        "system": "",
+                        "sid": "10165",
+                        "vpid": "",
+                        "apid_lang": "4003 Spa"
+                    },
+                    {
+                        "type": "Radio",
+                        "name": "Aragon Radio Teruel",
+                        "system": "",
+                        "sid": "10166",
+                        "vpid": "",
+                        "apid_lang": "5003 Spa"
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "txp_no": "128",
+        "freq_pol_mode": "11347.49 H DVB-S2/8PSK",
+        "provider": "Abertis DTT",
+        "sr_fec": "20858 3/4",
+        "onid_nid_tid": "-/60000/60023",
+        "date": "24.04.2026",
+        "streams": [
+            {
+                "title": "Stream 2301 - (HS128.1) - UNACTIVE",
+                "pid_info": "",
+                "encryption": "",
+                "channels": []
+            },
+            {
+                "title": "Stream 2302 - (HS128.2) - TDT Extremadura",
+                "pid_info": "8916-1009--12576",
+                "encryption": "BISS",
+                "channels": [
+                    {
+                        "type": "HD",
+                        "name": "Canal Extremadura TV",
+                        "system": "MPEG-4",
+                        "sid": "10680",
+                        "vpid": "101",
+                        "apid_lang": "103 Spa 104 org"
+                    },
+                    {
+                        "type": "Radio",
+                        "name": "Canal Extremadura Radio",
+                        "system": "",
+                        "sid": "10682",
+                        "vpid": "",
+                        "apid_lang": "301 Spa"
+                    }
+                ]
+            },
+            {
+                "title": "Stream 2303 - (HS128.3) - TPA",
+                "pid_info": "8916-5200--12568",
+                "encryption": "BISS",
+                "channels": [
+                    {
+                        "type": "SD",
+                        "name": "A7 (Televisión del Principáu d'Asturies 7)",
+                        "system": "MPEG-2",
+                        "sid": "10220",
+                        "vpid": "1010",
+                        "apid_lang": "1011 Spa"
+                    }
+                ]
+            },
+            {
+                "title": "Stream 2304 - (HS128.4) - UNACTIVE",
+                "pid_info": "",
+                "encryption": "",
+                "channels": []
+            },
+            {
+                "title": "Stream 2305 - (HS128.5) - Abertis Telecom",
+                "pid_info": "1-1--",
+                "encryption": "BISS",
+                "channels": [
+                    {
+                        "type": "HD",
+                        "name": "TVG (Televisión de Galicia)",
+                        "system": "MPEG-4",
+                        "sid": "1",
+                        "vpid": "3001",
+                        "apid_lang": "3002 Spa"
+                    }
+                ]
+            },
+            {
+                "title": "Stream 2306 - (HS128.6) - TDT.Envio SAT",
+                "pid_info": "1-1--",
+                "encryption": "BISS",
+                "channels": [
+                    {
+                        "type": "HD",
+                        "name": "CyL7 (Castilla y León TV7)",
+                        "system": "MPEG-4",
+                        "sid": "1",
+                        "vpid": "8000",
+                        "apid_lang": "8001 Spa"
+                    }
+                ]
+            },
+            {
+                "title": "Stream 2308 - (HS128.8) - Televisió de Catalunya",
+                "pid_info": "8916-101--12674",
+                "encryption": "BISS",
+                "channels": [
+                    {
+                        "type": "HD",
+                        "name": "SX3/33",
+                        "system": "MPEG-4",
+                        "sid": "806",
+                        "vpid": "121",
+                        "apid_lang": "122 Cat 124 org 126 N/A"
+                    },
+                    {
+                        "type": "HD",
+                        "name": "3Cat Info",
+                        "system": "MPEG-4",
+                        "sid": "807",
+                        "vpid": "131",
+                        "apid_lang": "132 Cat 134 org 136 N/A"
+                    },
+                    {
+                        "type": "HD",
+                        "name": "Esport 3",
+                        "system": "MPEG-4",
+                        "sid": "808",
+                        "vpid": "141",
+                        "apid_lang": "142 Cat 144 org 146 N/A"
+                    },
+                    {
+                        "type": "HD",
+                        "name": "TV3 Catalunya",
+                        "system": "MPEG-4",
+                        "sid": "813",
+                        "vpid": "111",
+                        "apid_lang": "112 Cat 114 org 116 N/A"
+                    },
+                    {
+                        "type": "HD",
+                        "name": "IB3 Global",
+                        "system": "MPEG-4",
+                        "sid": "815",
+                        "vpid": "311",
+                        "apid_lang": "312 AC3 Cat"
+                    },
+                    {
+                        "type": "Radio",
+                        "name": "Catalunya Ràdio",
+                        "system": "",
+                        "sid": "809",
+                        "vpid": "",
+                        "apid_lang": "151 AAC Cat"
+                    },
+                    {
+                        "type": "Radio",
+                        "name": "Catalunya Informacio",
+                        "system": "",
+                        "sid": "810",
+                        "vpid": "",
+                        "apid_lang": "161 AAC Cat"
+                    },
+                    {
+                        "type": "Radio",
+                        "name": "Catalunya Musica",
+                        "system": "",
+                        "sid": "811",
+                        "vpid": "",
+                        "apid_lang": "171 AAC Cat"
+                    },
+                    {
+                        "type": "Radio",
+                        "name": "ICat Catalunya",
+                        "system": "",
+                        "sid": "812",
+                        "vpid": "",
+                        "apid_lang": "181 AAC Cat"
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "txp_no": "129",
+        "freq_pol_mode": "11382.00 H DVB-S2/8PSK",
+        "provider": "Abertis DTT",
+        "sr_fec": "30000 3/4",
+        "onid_nid_tid": "1/60000/60025",
+        "date": "24.04.2026",
+        "streams": [
+            {
+                "title": "Stream 2520 - (HS129.20) - RGE N/Ac",
+                "pid_info": "8916-1051--",
+                "encryption": "BISS",
+                "channels": [
+                    {
+                        "type": "HD",
+                        "name": "Teledeporte",
+                        "system": "MPEG-4",
+                        "sid": "380",
+                        "vpid": "4001",
+                        "apid_lang": "4002 Spa 4003 org 4004 N/A"
+                    },
+                    {
+                        "type": "HD",
+                        "name": "Canal 24 Horas",
+                        "system": "MPEG-4",
+                        "sid": "383",
+                        "vpid": "1501",
+                        "apid_lang": "1503 Spa 1504 org 1505 N/A"
+                    },
+                    {
+                        "type": "Radio",
+                        "name": "RNE Radio 4",
+                        "system": "",
+                        "sid": "387",
+                        "vpid": "",
+                        "apid_lang": "2041 Spa"
+                    }
+                ]
+            },
+            {
+                "title": "Stream 2521 - (HS129.21) - RGE Baleares",
+                "pid_info": "8916-1003--12566",
+                "encryption": "BISS",
+                "channels": [
+                    {
+                        "type": "HD",
+                        "name": "TVE La 1 Baleares",
+                        "system": "MPEG-4",
+                        "sid": "444",
+                        "vpid": "301",
+                        "apid_lang": "302 Spa 303 org 304 N/A"
+                    },
+                    {
+                        "type": "HD",
+                        "name": "TVE La 2 Baleares",
+                        "system": "MPEG-4",
+                        "sid": "448",
+                        "vpid": "401",
+                        "apid_lang": "402 Spa 403 org 404 N/A"
+                    },
+                    {
+                        "type": "Radio",
+                        "name": "RNE Radio 1 Baleares",
+                        "system": "",
+                        "sid": "445",
+                        "vpid": "",
+                        "apid_lang": "2001 Spa"
+                    },
+                    {
+                        "type": "Radio",
+                        "name": "RNE Radio 5 Baleares",
+                        "system": "",
+                        "sid": "446",
+                        "vpid": "",
+                        "apid_lang": "2031 Spa"
+                    }
+                ]
+            },
+            {
+                "title": "Stream 2522 - (HS129.22) - RGE Castilla La Mancha",
+                "pid_info": "8916-1005--12562",
+                "encryption": "BISS",
+                "channels": [
+                    {
+                        "type": "HD",
+                        "name": "TVE La 1 Castilla La Mancha",
+                        "system": "MPEG-4",
+                        "sid": "464",
+                        "vpid": "301",
+                        "apid_lang": "302 Spa 303 org 304 N/A"
+                    },
+                    {
+                        "type": "HD",
+                        "name": "TVE La 2 Castilla La Mancha",
+                        "system": "MPEG-4",
+                        "sid": "468",
+                        "vpid": "401",
+                        "apid_lang": "402 Spa 403 org 404 N/A"
+                    },
+                    {
+                        "type": "Radio",
+                        "name": "RNE Radio 1 Castilla La Mancha",
+                        "system": "",
+                        "sid": "465",
+                        "vpid": "",
+                        "apid_lang": "2001 Spa"
+                    },
+                    {
+                        "type": "Radio",
+                        "name": "RNE Radio 5 Castilla La Mancha",
+                        "system": "",
+                        "sid": "466",
+                        "vpid": "",
+                        "apid_lang": "2031 Spa"
+                    }
+                ]
+            },
+            {
+                "title": "Stream 2523 - (HS129.23) - RGE Andalucia",
+                "pid_info": "8916-1000--12560",
+                "encryption": "BISS",
+                "channels": [
+                    {
+                        "type": "HD",
+                        "name": "TVE La 1 Andalucia",
+                        "system": "MPEG-4",
+                        "sid": "414",
+                        "vpid": "301",
+                        "apid_lang": "302 Spa 303 org 304 N/A"
+                    },
+                    {
+                        "type": "HD",
+                        "name": "TVE La 2 Andalucia",
+                        "system": "MPEG-4",
+                        "sid": "418",
+                        "vpid": "401",
+                        "apid_lang": "402 Spa 403 org 404 N/A"
+                    },
+                    {
+                        "type": "Radio",
+                        "name": "RNE Radio 1 Andalucia",
+                        "system": "",
+                        "sid": "415",
+                        "vpid": "",
+                        "apid_lang": "2001 Spa"
+                    },
+                    {
+                        "type": "Radio",
+                        "name": "RNE Radio 5 Andalucia",
+                        "system": "",
+                        "sid": "416",
+                        "vpid": "",
+                        "apid_lang": "2031 Spa"
+                    }
+                ]
+            },
+            {
+                "title": "Stream 2524 - (HS129.24) - RGE Castilla y Leon",
+                "pid_info": "8916-1004--12560",
+                "encryption": "BISS",
+                "channels": [
+                    {
+                        "type": "HD",
+                        "name": "TVE La 1 Castilla y Leon",
+                        "system": "MPEG-4",
+                        "sid": "454",
+                        "vpid": "301",
+                        "apid_lang": "302 Spa 303 org 304 N/A"
+                    },
+                    {
+                        "type": "HD",
+                        "name": "TVE La 2 Castilla y Leon",
+                        "system": "MPEG-4",
+                        "sid": "458",
+                        "vpid": "401",
+                        "apid_lang": "402 Spa 403 org 404 N/A"
+                    },
+                    {
+                        "type": "Radio",
+                        "name": "RNE Radio 1 Castilla y Leon",
+                        "system": "",
+                        "sid": "455",
+                        "vpid": "",
+                        "apid_lang": "2001 Spa"
+                    },
+                    {
+                        "type": "Radio",
+                        "name": "RNE Radio 5 Castilla y Leon",
+                        "system": "",
+                        "sid": "456",
+                        "vpid": "",
+                        "apid_lang": "2031 Spa"
+                    }
+                ]
+            },
+            {
+                "title": "Stream 2531 - (HS129.31) - RGE Baleares",
+                "pid_info": "8916-1003--12566",
+                "encryption": "BISS",
+                "channels": []
+            },
+            {
+                "title": "Stream 2532 - (HS129.32) - RGE Castilla La Mancha",
+                "pid_info": "8916-1005--12562",
+                "encryption": "BISS",
+                "channels": []
+            },
+            {
+                "title": "Stream 2533 - (HS129.33) - RGE Andalucia",
+                "pid_info": "8916-1000--12560",
+                "encryption": "BISS",
+                "channels": []
+            },
+            {
+                "title": "Stream 2534 - (HS129.34) - RGE Castilla y Leon",
+                "pid_info": "8916-1004--12560",
+                "encryption": "BISS",
+                "channels": []
+            },
+            {
+                "title": "RNE",
+                "pid_info": "1-60025--60000",
+                "encryption": "",
+                "channels": [
+                    {
+                        "type": "Radio",
+                        "name": "RNE Radio 1 Nacion",
+                        "system": "",
+                        "sid": "100",
+                        "vpid": "",
+                        "apid_lang": "101 Spa"
+                    },
+                    {
+                        "type": "Radio",
+                        "name": "RNE Radio 5 Andalu",
+                        "system": "",
+                        "sid": "110",
+                        "vpid": "",
+                        "apid_lang": "111 Spa"
+                    },
+                    {
+                        "type": "Radio",
+                        "name": "RNE Radio 5 Balear",
+                        "system": "",
+                        "sid": "120",
+                        "vpid": "",
+                        "apid_lang": "121 Spa"
+                    },
+                    {
+                        "type": "Radio",
+                        "name": "RNE Radio 1 Clmanc",
+                        "system": "",
+                        "sid": "130",
+                        "vpid": "",
+                        "apid_lang": "131 Spa"
+                    },
+                    {
+                        "type": "Radio",
+                        "name": "RNE Radio 2 Nacion",
+                        "system": "",
+                        "sid": "200",
+                        "vpid": "",
+                        "apid_lang": "201 Spa"
+                    },
+                    {
+                        "type": "Radio",
+                        "name": "RNE Radio 1 Madrid",
+                        "system": "",
+                        "sid": "210",
+                        "vpid": "",
+                        "apid_lang": "211 Spa"
+                    },
+                    {
+                        "type": "Radio",
+                        "name": "RNE Radio 1 Balear",
+                        "system": "",
+                        "sid": "230",
+                        "vpid": "",
+                        "apid_lang": "231 Spa"
+                    },
+                    {
+                        "type": "Radio",
+                        "name": "RNE Radio 5 Clmanc",
+                        "system": "",
+                        "sid": "240",
+                        "vpid": "",
+                        "apid_lang": "241 Spa"
+                    },
+                    {
+                        "type": "Radio",
+                        "name": "RNE Radio 3 Nacion",
+                        "system": "",
+                        "sid": "300",
+                        "vpid": "",
+                        "apid_lang": "301 Spa"
+                    },
+                    {
+                        "type": "Radio",
+                        "name": "RNE Radio 5 Madrid",
+                        "system": "",
+                        "sid": "310",
+                        "vpid": "",
+                        "apid_lang": "311 Spa"
+                    },
+                    {
+                        "type": "Radio",
+                        "name": "RNE Radio 1 Andalu",
+                        "system": "",
+                        "sid": "320",
+                        "vpid": "",
+                        "apid_lang": "321 Spa"
+                    },
+                    {
+                        "type": "Radio",
+                        "name": "RNE Radio 4 Catalu",
+                        "system": "",
+                        "sid": "400",
+                        "vpid": "",
+                        "apid_lang": "401 Spa"
+                    },
+                    {
+                        "type": "Radio",
+                        "name": "RNE Radio 5 Aragon",
+                        "system": "",
+                        "sid": "420",
+                        "vpid": "",
+                        "apid_lang": "421 Spa"
+                    },
+                    {
+                        "type": "Radio",
+                        "name": "RNE Radio 1 Catalu",
+                        "system": "",
+                        "sid": "430",
+                        "vpid": "",
+                        "apid_lang": "431 Spa"
+                    },
+                    {
+                        "type": "Radio",
+                        "name": "RNE Radio 1 Murcia",
+                        "system": "",
+                        "sid": "450",
+                        "vpid": "",
+                        "apid_lang": "451 Spa"
+                    },
+                    {
+                        "type": "Radio",
+                        "name": "RNE Radio 5 Nacion",
+                        "system": "",
+                        "sid": "500",
+                        "vpid": "",
+                        "apid_lang": "501 Spa"
+                    },
+                    {
+                        "type": "Radio",
+                        "name": "RNE Radio 1 Aragon",
+                        "system": "",
+                        "sid": "510",
+                        "vpid": "",
+                        "apid_lang": "511 Spa"
+                    },
+                    {
+                        "type": "Radio",
+                        "name": "RNE Radio 5 Catalu",
+                        "system": "",
+                        "sid": "530",
+                        "vpid": "",
+                        "apid_lang": "531 Spa"
+                    },
+                    {
+                        "type": "Radio",
+                        "name": "RNE Radio 5 Murcia",
+                        "system": "",
+                        "sid": "550",
+                        "vpid": "",
+                        "apid_lang": "551 Spa"
+                    },
+                    {
+                        "type": "Radio",
+                        "name": "RNE Radio 1 Almeri",
+                        "system": "",
+                        "sid": "610",
+                        "vpid": "",
+                        "apid_lang": "611 Spa"
+                    },
+                    {
+                        "type": "Radio",
+                        "name": "RNE Radio 1 Cadiz",
+                        "system": "",
+                        "sid": "620",
+                        "vpid": "",
+                        "apid_lang": "621 Spa"
+                    },
+                    {
+                        "type": "Radio",
+                        "name": "RNE Radio 1 Malaga",
+                        "system": "",
+                        "sid": "630",
+                        "vpid": "",
+                        "apid_lang": "631 Spa"
+                    },
+                    {
+                        "type": "Radio",
+                        "name": "RNE Radio 1 Cordob",
+                        "system": "",
+                        "sid": "640",
+                        "vpid": "",
+                        "apid_lang": "641 Spa"
+                    },
+                    {
+                        "type": "Radio",
+                        "name": "RNE Radio 1 Granad",
+                        "system": "",
+                        "sid": "650",
+                        "vpid": "",
+                        "apid_lang": "651 Spa"
+                    },
+                    {
+                        "type": "Radio",
+                        "name": "RNE Radio 1 Huelva",
+                        "system": "",
+                        "sid": "660",
+                        "vpid": "",
+                        "apid_lang": "661 Spa"
+                    },
+                    {
+                        "type": "Radio",
+                        "name": "RNE Radio 1 Jean",
+                        "system": "",
+                        "sid": "670",
+                        "vpid": "",
+                        "apid_lang": "671 Spa"
+                    },
+                    {
+                        "type": "Radio",
+                        "name": "RNE Radio 1 Ceuta",
+                        "system": "",
+                        "sid": "710",
+                        "vpid": "",
+                        "apid_lang": "711 Spa"
+                    },
+                    {
+                        "type": "Radio",
+                        "name": "RNE Radio 1 Melill",
+                        "system": "",
+                        "sid": "720",
+                        "vpid": "",
+                        "apid_lang": "721 Spa"
+                    },
+                    {
+                        "type": "Radio",
+                        "name": "RNE Radio 1 Huesca",
+                        "system": "",
+                        "sid": "730",
+                        "vpid": "",
+                        "apid_lang": "731 Spa"
+                    },
+                    {
+                        "type": "Radio",
+                        "name": "RNE Radio 1 Teruel",
+                        "system": "",
+                        "sid": "740",
+                        "vpid": "",
+                        "apid_lang": "741 Spa"
+                    },
+                    {
+                        "type": "Radio",
+                        "name": "RNE Radio 1 Albace",
+                        "system": "",
+                        "sid": "770",
+                        "vpid": "",
+                        "apid_lang": "771 Spa"
+                    },
+                    {
+                        "type": "Radio",
+                        "name": "RNE Radio 1 C Real",
+                        "system": "",
+                        "sid": "810",
+                        "vpid": "",
+                        "apid_lang": "811 Spa"
+                    },
+                    {
+                        "type": "Radio",
+                        "name": "RNE Radio 1 Cuenca",
+                        "system": "",
+                        "sid": "820",
+                        "vpid": "",
+                        "apid_lang": "821 Spa"
+                    },
+                    {
+                        "type": "Radio",
+                        "name": "RNE Radio 1 Guadal",
+                        "system": "",
+                        "sid": "830",
+                        "vpid": "",
+                        "apid_lang": "831 Spa"
+                    },
+                    {
+                        "type": "Radio",
+                        "name": "RNE Radio 1 Tarrag",
+                        "system": "",
+                        "sid": "960",
+                        "vpid": "",
+                        "apid_lang": "961 Spa"
+                    },
+                    {
+                        "type": "Radio",
+                        "name": "RNE Radio 1 Girona",
+                        "system": "",
+                        "sid": "970",
+                        "vpid": "",
+                        "apid_lang": "971 Spa"
+                    },
+                    {
+                        "type": "Radio",
+                        "name": "RNE Radio 1 Lleida",
+                        "system": "",
+                        "sid": "1010",
+                        "vpid": "",
+                        "apid_lang": "1011 Spa"
+                    },
+                    {
+                        "type": "Radio",
+                        "name": "RNE Radio 1 Cartag",
+                        "system": "",
+                        "sid": "1110",
+                        "vpid": "",
+                        "apid_lang": "1111 Spa"
+                    },
+                    {
+                        "type": "Radio",
+                        "name": "RNE Radio 5 Almeri",
+                        "system": "",
+                        "sid": "1160",
+                        "vpid": "",
+                        "apid_lang": "1161 Spa"
+                    },
+                    {
+                        "type": "Radio",
+                        "name": "RNE Radio 5 Cadiz",
+                        "system": "",
+                        "sid": "1170",
+                        "vpid": "",
+                        "apid_lang": "1171 Spa"
+                    },
+                    {
+                        "type": "Radio",
+                        "name": "RNE Radio 5 Malaga",
+                        "system": "",
+                        "sid": "1210",
+                        "vpid": "",
+                        "apid_lang": "1211 Spa"
+                    },
+                    {
+                        "type": "Radio",
+                        "name": "RNE Radio 5 Cordob",
+                        "system": "",
+                        "sid": "1220",
+                        "vpid": "",
+                        "apid_lang": "1221 Spa"
+                    },
+                    {
+                        "type": "Radio",
+                        "name": "RNE Radio 5 Granad",
+                        "system": "",
+                        "sid": "1230",
+                        "vpid": "",
+                        "apid_lang": "1231 Spa"
+                    },
+                    {
+                        "type": "Radio",
+                        "name": "RNE Radio 5 Huelva",
+                        "system": "",
+                        "sid": "1240",
+                        "vpid": "",
+                        "apid_lang": "1241 Spa"
+                    },
+                    {
+                        "type": "Radio",
+                        "name": "RNE Radio 5 Jean",
+                        "system": "",
+                        "sid": "1250",
+                        "vpid": "",
+                        "apid_lang": "1251 Spa"
+                    },
+                    {
+                        "type": "Radio",
+                        "name": "RNE Radio 5 Ceuta",
+                        "system": "",
+                        "sid": "1260",
+                        "vpid": "",
+                        "apid_lang": "1261 Spa"
+                    },
+                    {
+                        "type": "Radio",
+                        "name": "RNE Radio 5 Melill",
+                        "system": "",
+                        "sid": "1270",
+                        "vpid": "",
+                        "apid_lang": "1271 Spa"
+                    },
+                    {
+                        "type": "Radio",
+                        "name": "RNE Radio 5 Huesca",
+                        "system": "",
+                        "sid": "1310",
+                        "vpid": "",
+                        "apid_lang": "1311 Spa"
+                    },
+                    {
+                        "type": "Radio",
+                        "name": "RNE Radio 5 Teruel",
+                        "system": "",
+                        "sid": "1320",
+                        "vpid": "",
+                        "apid_lang": "1321 Spa"
+                    },
+                    {
+                        "type": "Radio",
+                        "name": "RNE Radio 5 Albace",
+                        "system": "",
+                        "sid": "1340",
+                        "vpid": "",
+                        "apid_lang": "1341 Spa"
+                    },
+                    {
+                        "type": "Radio",
+                        "name": "RNE Radio 5 C Real",
+                        "system": "",
+                        "sid": "1350",
+                        "vpid": "",
+                        "apid_lang": "1351 Spa"
+                    },
+                    {
+                        "type": "Radio",
+                        "name": "RNE Radio 5 Cuenca",
+                        "system": "",
+                        "sid": "1360",
+                        "vpid": "",
+                        "apid_lang": "1361 Spa"
+                    },
+                    {
+                        "type": "Radio",
+                        "name": "RNE Radio 5 Guadal",
+                        "system": "",
+                        "sid": "1370",
+                        "vpid": "",
+                        "apid_lang": "1371 Spa"
+                    },
+                    {
+                        "type": "Radio",
+                        "name": "RNE Radio 5 Tarrag",
+                        "system": "",
+                        "sid": "1520",
+                        "vpid": "",
+                        "apid_lang": "1521 Spa"
+                    },
+                    {
+                        "type": "Radio",
+                        "name": "RNE Radio 5 Girona",
+                        "system": "",
+                        "sid": "1530",
+                        "vpid": "",
+                        "apid_lang": "1531 Spa"
+                    },
+                    {
+                        "type": "Radio",
+                        "name": "RNE Radio 5 Lleida",
+                        "system": "",
+                        "sid": "1540",
+                        "vpid": "",
+                        "apid_lang": "1541 Spa"
+                    },
+                    {
+                        "type": "Radio",
+                        "name": "RNE Radio 5 Cartag",
+                        "system": "",
+                        "sid": "1630",
+                        "vpid": "",
+                        "apid_lang": "1631 Spa"
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "txp_no": "199",
+        "freq_pol_mode": "11491.00 V DVB-S2/8PSK PLS Gold 79463 PLS Root 32879",
+        "provider": "Cellnex DTT",
+        "sr_fec": "7522 8/9",
+        "onid_nid_tid": "12572/8916/1",
+        "date": "24.04.2026",
+        "streams": [
+            {
+                "title": "MAUT-CLM TDT",
+                "pid_info": "8916-1--12572",
+                "encryption": "",
+                "channels": [
+                    {
+                        "type": "HD",
+                        "name": "CMM TV (Televisión Castilla-La Mancha)",
+                        "system": "MPEG-4",
+                        "sid": "2",
+                        "vpid": "408",
+                        "apid_lang": "456 Spa 457 orig 458 N/A"
+                    },
+                    {
+                        "type": "Radio",
+                        "name": "Radio Castilla-La Mancha Toledo",
+                        "system": "",
+                        "sid": "3",
+                        "vpid": "",
+                        "apid_lang": "557 Spa"
+                    },
+                    {
+                        "type": "Radio",
+                        "name": "Radio Castilla-La Mancha Albacete",
+                        "system": "",
+                        "sid": "4",
+                        "vpid": "",
+                        "apid_lang": "558 Spa"
+                    },
+                    {
+                        "type": "Radio",
+                        "name": "Radio Castilla-La Mancha Cludad Real",
+                        "system": "",
+                        "sid": "6",
+                        "vpid": "",
+                        "apid_lang": "560 Spa"
+                    },
+                    {
+                        "type": "Radio",
+                        "name": "Radio Castilla-La Mancha Cuenca",
+                        "system": "",
+                        "sid": "7",
+                        "vpid": "",
+                        "apid_lang": "561 Spa"
+                    },
+                    {
+                        "type": "Radio",
+                        "name": "Radio Castilla-La Mancha Guadalajara",
+                        "system": "",
+                        "sid": "8",
+                        "vpid": "",
+                        "apid_lang": "562 Spa"
+                    },
+                    {
+                        "type": "Radio",
+                        "name": "Radio Castilla-La Mancha Talavera",
+                        "system": "",
+                        "sid": "10",
+                        "vpid": "",
+                        "apid_lang": "564 Spa"
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "txp_no": "199",
+        "freq_pol_mode": "11502.12 V DVB-S2/8PSK",
+        "provider": "Abertis DTT",
+        "sr_fec": "10200 3/4",
+        "onid_nid_tid": "-/60000/60028",
+        "date": "24.04.2026",
+        "streams": [
+            {
+                "title": "Stream 801 - (HS199.1) - Asturias TDT",
+                "pid_info": "8916-5200--12568",
+                "encryption": "BISS",
+                "channels": [
+                    {
+                        "type": "HD",
+                        "name": "A7 (Televisión del Principáu d'Asturies 7)",
+                        "system": "MPEG-4",
+                        "sid": "10220",
+                        "vpid": "1010",
+                        "apid_lang": "1011 Spa 1012 orig 1013 N/A"
+                    },
+                    {
+                        "type": "HD",
+                        "name": "A8 (Televisión del Principáu d'Asturies 8)",
+                        "system": "MPEG-4",
+                        "sid": "10225",
+                        "vpid": "1020",
+                        "apid_lang": "1021 Spa 1022 orig 1023 N/A"
+                    },
+                    {
+                        "type": "Radio",
+                        "name": "Radio Langreo",
+                        "system": "",
+                        "sid": "10234",
+                        "vpid": "",
+                        "apid_lang": "1051 Spa"
+                    },
+                    {
+                        "type": "Radio",
+                        "name": "Radio RPA",
+                        "system": "",
+                        "sid": "10235",
+                        "vpid": "",
+                        "apid_lang": "1041 Spa"
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "txp_no": "206L",
+        "freq_pol_mode": "11653.10 H DVB-S2/8PSK",
+        "provider": "Abertis DTT",
+        "sr_fec": "19680 3/4",
+        "onid_nid_tid": "-/60000/60003",
+        "date": "24.04.2026",
+        "streams": [
+            {
+                "title": "Stream 301 - (HSA-88L.1) - RGE Canarias",
+                "pid_info": "8916-1007--12563",
+                "encryption": "BISS",
+                "channels": [
+                    {
+                        "type": "HD",
+                        "name": "Teledeporte Canarias",
+                        "system": "MPEG-4",
+                        "sid": "480",
+                        "vpid": "4001",
+                        "apid_lang": "4002 Spa 4003 org 4004 N/A"
+                    },
+                    {
+                        "type": "HD",
+                        "name": "Canal 24 Horas Canarias",
+                        "system": "MPEG-4",
+                        "sid": "483",
+                        "vpid": "1501",
+                        "apid_lang": "1503 Spa 1504 org 1505 N/A"
+                    },
+                    {
+                        "type": "HD",
+                        "name": "TVE La 1 Canarias",
+                        "system": "MPEG-4",
+                        "sid": "484",
+                        "vpid": "301",
+                        "apid_lang": "302 Spa 303 org 304 N/A"
+                    },
+                    {
+                        "type": "HD",
+                        "name": "TVE La 2 Canarias",
+                        "system": "MPEG-4",
+                        "sid": "488",
+                        "vpid": "401",
+                        "apid_lang": "402 Spa 403 org 405 N/A"
+                    },
+                    {
+                        "type": "Radio",
+                        "name": "RNE Radio 4 Canarias",
+                        "system": "",
+                        "sid": "482",
+                        "vpid": "",
+                        "apid_lang": "2041 Spa"
+                    },
+                    {
+                        "type": "Radio",
+                        "name": "RNE Radio 1 Canarias",
+                        "system": "",
+                        "sid": "485",
+                        "vpid": "",
+                        "apid_lang": "2001 Spa"
+                    },
+                    {
+                        "type": "Radio",
+                        "name": "RNE Radio 5 Tenerife",
+                        "system": "",
+                        "sid": "486",
+                        "vpid": "",
+                        "apid_lang": "2031 Spa"
+                    },
+                    {
+                        "type": "Radio",
+                        "name": "RNE Radio 5 Las Palmas",
+                        "system": "",
+                        "sid": "487",
+                        "vpid": "",
+                        "apid_lang": "2051 Spa"
+                    }
+                ]
+            },
+            {
+                "title": "Stream 303 - (HSA-88L.3) - MPE2",
+                "pid_info": "8916-15--12547",
+                "encryption": "BISS",
+                "channels": [
+                    {
+                        "type": "HD",
+                        "name": "Antena 3",
+                        "system": "MPEG-4",
+                        "sid": "149",
+                        "vpid": "101",
+                        "apid_lang": "103 Spa 104 org 105 N/A"
+                    },
+                    {
+                        "type": "HD",
+                        "name": "La Sexta",
+                        "system": "MPEG-4",
+                        "sid": "151",
+                        "vpid": "301",
+                        "apid_lang": "303 Spa 304 org 305 N/A"
+                    },
+                    {
+                        "type": "HD",
+                        "name": "Neox",
+                        "system": "MPEG-4",
+                        "sid": "153",
+                        "vpid": "501",
+                        "apid_lang": "503 Spa 504 org 505 N/A"
+                    },
+                    {
+                        "type": "HD",
+                        "name": "Nova España",
+                        "system": "MPEG-4",
+                        "sid": "154",
+                        "vpid": "601",
+                        "apid_lang": "603 Spa 604 org 605 N/A"
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "txp_no": "206U",
+        "freq_pol_mode": "11674.85 H DVB-S2/8PSK",
+        "provider": "Abertis DTT",
+        "sr_fec": "15750 3/4",
+        "onid_nid_tid": "-/60000/60004",
+        "date": "24.04.2026",
+        "streams": [
+            {
+                "title": "Stream 420 - (HS88U.20) - RGE Nac",
+                "pid_info": "8916-1051--",
+                "encryption": "BISS",
+                "channels": [
+                    {
+                        "type": "HD",
+                        "name": "Teledeporte",
+                        "system": "MPEG-4",
+                        "sid": "380",
+                        "vpid": "4001",
+                        "apid_lang": "4002 Spa 4003 org 4004 N/A"
+                    },
+                    {
+                        "type": "HD",
+                        "name": "Canal 24 Horas",
+                        "system": "MPEG-4",
+                        "sid": "383",
+                        "vpid": "1501",
+                        "apid_lang": "1503 Spa 1504 org 1505 N/A"
+                    },
+                    {
+                        "type": "HD",
+                        "name": "TVE La 2",
+                        "system": "MPEG-4",
+                        "sid": "388",
+                        "vpid": "401",
+                        "apid_lang": "402 Spa 403 org 404 N/A"
+                    }
+                ]
+            },
+            {
+                "title": "Stream 421 - (HS88U.21) - RGE Pais Vasco",
+                "pid_info": "8916-1015--12566",
+                "encryption": "BISS",
+                "channels": [
+                    {
+                        "type": "HD",
+                        "name": "TVE La 1 Pais Vasco",
+                        "system": "MPEG-4",
+                        "sid": "564",
+                        "vpid": "301",
+                        "apid_lang": "302 Spa 303 org 304 N/A"
+                    },
+                    {
+                        "type": "Radio",
+                        "name": "RNE Radio 1 Pais Vasco",
+                        "system": "",
+                        "sid": "565",
+                        "vpid": "",
+                        "apid_lang": "2001 Spa"
+                    },
+                    {
+                        "type": "Radio",
+                        "name": "RNE Radio 5 Pais Vasco",
+                        "system": "",
+                        "sid": "566",
+                        "vpid": "",
+                        "apid_lang": "2031 Spa"
+                    },
+                    {
+                        "type": "Radio",
+                        "name": "RNE Radio 4 Pais Vasco",
+                        "system": "",
+                        "sid": "567",
+                        "vpid": "",
+                        "apid_lang": "2041 Spa"
+                    }
+                ]
+            },
+            {
+                "title": "Stream 423 - (HS88U.23) - RGE Galicia",
+                "pid_info": "8916-1010--12566",
+                "encryption": "BISS",
+                "channels": [
+                    {
+                        "type": "HD",
+                        "name": "TVE La 1 Galicia",
+                        "system": "MPEG-4",
+                        "sid": "514",
+                        "vpid": "301",
+                        "apid_lang": "302 Spa 303 org 304 N/A"
+                    },
+                    {
+                        "type": "Radio",
+                        "name": "RNE Radio 1 Galicia",
+                        "system": "",
+                        "sid": "515",
+                        "vpid": "",
+                        "apid_lang": "2001 Glg"
+                    },
+                    {
+                        "type": "Radio",
+                        "name": "RNE Radio 5 Galicia",
+                        "system": "",
+                        "sid": "516",
+                        "vpid": "",
+                        "apid_lang": "2031 Spa"
+                    },
+                    {
+                        "type": "Radio",
+                        "name": "RNE Radio 4 Galicia",
+                        "system": "",
+                        "sid": "517",
+                        "vpid": "",
+                        "apid_lang": "2041 Spa"
+                    }
+                ]
+            },
+            {
+                "title": "Stream 431 - (HS88U.31) - RGE Pais Vasco",
+                "pid_info": "8916-1015--12566",
+                "encryption": "BISS",
+                "channels": []
+            },
+            {
+                "title": "Stream 433 - (HS88U.33) - RGE Galicia",
+                "pid_info": "8916-1010--12566",
+                "encryption": "BISS",
+                "channels": []
+            },
+            {
+                "title": "Stream 440 - (HS88U.40) - UNACTIVE",
+                "pid_info": "",
+                "encryption": "",
+                "channels": []
+            },
+            {
+                "title": "RNE -60004--60000",
+                "pid_info": "",
+                "encryption": "",
+                "channels": [
+                    {
+                        "type": "Radio",
+                        "name": "RNE Radio 5 ...",
+                        "system": "",
+                        "sid": "170",
+                        "vpid": "",
+                        "apid_lang": "171 Spa"
+                    },
+                    {
+                        "type": "Radio",
+                        "name": "RNE Radio 2 ...",
+                        "system": "",
+                        "sid": "200",
+                        "vpid": "",
+                        "apid_lang": "201 Spa"
+                    },
+                    {
+                        "type": "Radio",
+                        "name": "RNE Radio 1 ...",
+                        "system": "",
+                        "sid": "270",
+                        "vpid": "",
+                        "apid_lang": "271 Spa"
+                    },
+                    {
+                        "type": "Radio",
+                        "name": "RNE Radio 3 ...",
+                        "system": "",
+                        "sid": "300",
+                        "vpid": "",
+                        "apid_lang": "301 Spa"
+                    },
+                    {
+                        "type": "Radio",
+                        "name": "RNE Radio 5 ...",
+                        "system": "",
+                        "sid": "370",
+                        "vpid": "",
+                        "apid_lang": "371 Spa"
+                    },
+                    {
+                        "type": "Radio",
+                        "name": "RNE Radio 1 ...",
+                        "system": "",
+                        "sid": "760",
+                        "vpid": "",
+                        "apid_lang": "761 Spa"
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "txp_no": "189U",
+        "freq_pol_mode": "12548.50 V DVB-S2/8PSK",
+        "provider": "Abertis DTT",
+        "sr_fec": "29600 3/4",
+        "onid_nid_tid": "-/60000/60007",
+        "date": "24.04.2026",
+        "streams": [
+            {
+                "title": "Stream 701 - (HSA-65U1) - MPE1",
+                "pid_info": "8916-14--12546",
+                "encryption": "BISS",
+                "channels": [
+                    {
+                        "type": "HD",
+                        "name": "Squirrel",
+                        "system": "MPEG-4",
+                        "sid": "201",
+                        "vpid": "101",
+                        "apid_lang": "103 Spa 104 org 105 N/A"
+                    },
+                    {
+                        "type": "HD",
+                        "name": "Squirrel 2",
+                        "system": "MPEG-4",
+                        "sid": "202",
+                        "vpid": "1501",
+                        "apid_lang": "1503 Spa 1504 org 1505 N/A"
+                    },
+                    {
+                        "type": "HD",
+                        "name": "DMAX España",
+                        "system": "MPEG-4",
+                        "sid": "277",
+                        "vpid": "301",
+                        "apid_lang": "303 Spa 304 org 305 N/A"
+                    },
+                    {
+                        "type": "HD",
+                        "name": "Veo 7",
+                        "system": "MPEG-4",
+                        "sid": "278",
+                        "vpid": "401",
+                        "apid_lang": "403 Spa 404 Eng 406 org 407 N/A 408 Spa"
+                    },
+                    {
+                        "type": "Radio",
+                        "name": "Radio Marca",
+                        "system": "",
+                        "sid": "280",
+                        "vpid": "",
+                        "apid_lang": "603 Spa"
+                    },
+                    {
+                        "type": "Radio",
+                        "name": "Cadena 100",
+                        "system": "",
+                        "sid": "282",
+                        "vpid": "",
+                        "apid_lang": "803 Spa"
+                    },
+                    {
+                        "type": "Radio",
+                        "name": "Radio María España",
+                        "system": "",
+                        "sid": "283",
+                        "vpid": "",
+                        "apid_lang": "903 Spa"
+                    },
+                    {
+                        "type": "Radio",
+                        "name": "BOM Radio",
+                        "system": "",
+                        "sid": "306",
+                        "vpid": "",
+                        "apid_lang": "703 Spa"
+                    }
+                ]
+            },
+            {
+                "title": "Stream 702 - (HSA-65U2) - MPE2",
+                "pid_info": "8916-15--12547",
+                "encryption": "BISS",
+                "channels": [
+                    {
+                        "type": "HD",
+                        "name": "Antena 3",
+                        "system": "MPEG-4",
+                        "sid": "149",
+                        "vpid": "101",
+                        "apid_lang": "103 Spa 104 org 105 N/A"
+                    },
+                    {
+                        "type": "HD",
+                        "name": "La Sexta",
+                        "system": "MPEG-4",
+                        "sid": "151",
+                        "vpid": "301",
+                        "apid_lang": "303 Spa 304 org 305 N/A"
+                    },
+                    {
+                        "type": "HD",
+                        "name": "Neox",
+                        "system": "MPEG-4",
+                        "sid": "153",
+                        "vpid": "501",
+                        "apid_lang": "503 Spa 504 org 505 N/A"
+                    },
+                    {
+                        "type": "HD",
+                        "name": "Nova España",
+                        "system": "MPEG-4",
+                        "sid": "154",
+                        "vpid": "601",
+                        "apid_lang": "603 Spa 604 org 605 N/A"
+                    }
+                ]
+            },
+            {
+                "title": "Stream 703 - (HSA-65U3) - MPE3",
+                "pid_info": "8916-16--12548",
+                "encryption": "BISS",
+                "channels": [
+                    {
+                        "type": "HD",
+                        "name": "FDF (Factoría de Ficción)",
+                        "system": "MPEG-4",
+                        "sid": "188",
+                        "vpid": "1301",
+                        "apid_lang": "1303 Spa 1304 org 1305 N/A"
+                    },
+                    {
+                        "type": "HD",
+                        "name": "Divinity",
+                        "system": "MPEG-4",
+                        "sid": "189",
+                        "vpid": "1401",
+                        "apid_lang": "1403 Spa 1404 org 1405 N/A"
+                    },
+                    {
+                        "type": "HD",
+                        "name": "Telecinco",
+                        "system": "MPEG-4",
+                        "sid": "190",
+                        "vpid": "1501",
+                        "apid_lang": "1503 Spa 1504 org 1505 N/A"
+                    },
+                    {
+                        "type": "HD",
+                        "name": "Cuatro",
+                        "system": "MPEG-4",
+                        "sid": "191",
+                        "vpid": "1701",
+                        "apid_lang": "1703 Spa 1704 org 1705 N/A"
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "txp_no": "190",
+        "freq_pol_mode": "12583.14 V DVB-S2/8PSK",
+        "provider": "Abertis DTT",
+        "sr_fec": "16900 3/4",
+        "onid_nid_tid": "-/60000/60008",
+        "date": "24.04.2026",
+        "streams": [
+            {
+                "title": "Stream 8008 - (HS190.1) - RGE2",
+                "pid_info": "8916-40000--12549",
+                "encryption": "BISS",
+                "channels": [
+                    {
+                        "type": "HD",
+                        "name": "Clan TVE",
+                        "system": "MPEG-4",
+                        "sid": "40001",
+                        "vpid": "1501",
+                        "apid_lang": "1503 Spa 1504 org 1505 N/A"
+                    },
+                    {
+                        "type": "HD",
+                        "name": "DKISS",
+                        "system": "MPEG-4",
+                        "sid": "41001",
+                        "vpid": "1001",
+                        "apid_lang": "1002 Spa 1003 org 1004 N/A"
+                    },
+                    {
+                        "type": "Radio",
+                        "name": "RNE Radio Clásica",
+                        "system": "",
+                        "sid": "40005",
+                        "vpid": "",
+                        "apid_lang": "2012 Spa 2010 Spa"
+                    },
+                    {
+                        "type": "Radio",
+                        "name": "RNE Radio 3",
+                        "system": "",
+                        "sid": "40006",
+                        "vpid": "",
+                        "apid_lang": "3010 Spa"
+                    },
+                    {
+                        "type": "Radio",
+                        "name": "Radio Exterior",
+                        "system": "",
+                        "sid": "40007",
+                        "vpid": "",
+                        "apid_lang": "2511 Spa"
+                    },
+                    {
+                        "type": "Radio",
+                        "name": "Kiss FM España",
+                        "system": "",
+                        "sid": "41002",
+                        "vpid": "",
+                        "apid_lang": "1101 Spa"
+                    },
+                    {
+                        "type": "Radio",
+                        "name": "Hit FM España",
+                        "system": "",
+                        "sid": "41003",
+                        "vpid": "",
+                        "apid_lang": "1601 Spa"
+                    },
+                    {
+                        "type": "Radio",
+                        "name": "esRadio",
+                        "system": "",
+                        "sid": "41004",
+                        "vpid": "",
+                        "apid_lang": "1701 Spa"
+                    },
+                    {
+                        "type": "Radio",
+                        "name": "Cadena SER",
+                        "system": "",
+                        "sid": "41005",
+                        "vpid": "",
+                        "apid_lang": "1201 Spa"
+                    },
+                    {
+                        "type": "Radio",
+                        "name": "Los 40",
+                        "system": "",
+                        "sid": "41006",
+                        "vpid": "",
+                        "apid_lang": "1301 Spa"
+                    },
+                    {
+                        "type": "Radio",
+                        "name": "Cadéna Dial",
+                        "system": "",
+                        "sid": "41007",
+                        "vpid": "",
+                        "apid_lang": "1401 Spa"
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "txp_no": "190",
+        "freq_pol_mode": "12599.76 V DVB-S2/8PSK",
+        "provider": "Abertis DTT",
+        "sr_fec": "10200 3/4",
+        "onid_nid_tid": "-/60000/60009",
+        "date": "24.04.2026",
+        "streams": [
+            {
+                "title": "Stream 8009 - (HS190m.1) - TDT-CAM",
+                "pid_info": "8916-6200--12571",
+                "encryption": "BISS",
+                "channels": [
+                    {
+                        "type": "HD",
+                        "name": "BOM",
+                        "system": "MPEG-4",
+                        "sid": "423",
+                        "vpid": "311",
+                        "apid_lang": "312 Spa 214 orig"
+                    },
+                    {
+                        "type": "HD",
+                        "name": "Telemadrid",
+                        "system": "MPEG-4",
+                        "sid": "425",
+                        "vpid": "611",
+                        "apid_lang": "612 Spa 613 orig 614 N/A"
+                    },
+                    {
+                        "type": "HD",
+                        "name": "La Otra",
+                        "system": "MPEG-4",
+                        "sid": "15240",
+                        "vpid": "711",
+                        "apid_lang": "712 Spa 713 orig 714 N/A"
+                    },
+                    {
+                        "type": "Radio",
+                        "name": "Onda Madrid",
+                        "system": "",
+                        "sid": "10068",
+                        "vpid": "",
+                        "apid_lang": "511 Spa"
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "txp_no": "191",
+        "freq_pol_mode": "12631.00 V DVB-S2/8PSK",
+        "provider": "Abertis DTT",
+        "sr_fec": "30000 3/4",
+        "onid_nid_tid": "-/60000/60002",
+        "date": "29.04.2026",
+        "streams": [
+            {
+                "title": "Stream 8001 - (HSA-67.1) - RGE Madrid",
+                "pid_info": "8916-1012--12561",
+                "encryption": "BISS",
+                "channels": [
+                    {
+                        "type": "HD",
+                        "name": "Teledeporte Madrid",
+                        "system": "MPEG-4",
+                        "sid": "530",
+                        "vpid": "4001",
+                        "apid_lang": "4002 Spa 4003 org 4004 N/A"
+                    },
+                    {
+                        "type": "HD",
+                        "name": "Canal 24 Horas Madrid",
+                        "system": "MPEG-4",
+                        "sid": "533",
+                        "vpid": "1501",
+                        "apid_lang": "1503 Spa 1504 org 1005 N/A"
+                    },
+                    {
+                        "type": "HD",
+                        "name": "TVE La 1 Madrid",
+                        "system": "MPEG-4",
+                        "sid": "534",
+                        "vpid": "301",
+                        "apid_lang": "302 Spa 303 org 304 N/A"
+                    },
+                    {
+                        "type": "HD",
+                        "name": "TVE La 2 Madrid",
+                        "system": "MPEG-4",
+                        "sid": "538",
+                        "vpid": "401",
+                        "apid_lang": "402 Spa 403 org 404 N/A"
+                    },
+                    {
+                        "type": "Radio",
+                        "name": "RNE Radio Nacional de España",
+                        "system": "",
+                        "sid": "535",
+                        "vpid": "",
+                        "apid_lang": "2001 Spa"
+                    },
+                    {
+                        "type": "Radio",
+                        "name": "RNE Radio 5",
+                        "system": "",
+                        "sid": "536",
+                        "vpid": "",
+                        "apid_lang": "2031 Spa"
+                    },
+                    {
+                        "type": "Radio",
+                        "name": "RNE Radio 4",
+                        "system": "",
+                        "sid": "537",
+                        "vpid": "",
+                        "apid_lang": "2041 Spa"
+                    }
+                ]
+            },
+            {
+                "title": "Stream 8002 - (HSA-67.2) - UNACTIVE",
+                "pid_info": "",
+                "encryption": "",
+                "channels": []
+            },
+            {
+                "title": "Stream 8003 - (HSA-67.3) - MPE4",
+                "pid_info": "8916-17--12550",
+                "encryption": "BISS",
+                "channels": [
+                    {
+                        "type": "HD",
+                        "name": "Mega España",
+                        "system": "MPEG-4",
+                        "sid": "155",
+                        "vpid": "1301",
+                        "apid_lang": "1303 Spa 1034 org 1305 N/A"
+                    },
+                    {
+                        "type": "HD",
+                        "name": "Trece España",
+                        "system": "MPEG-4",
+                        "sid": "170",
+                        "vpid": "2001",
+                        "apid_lang": "2003 Spa 2004 org 2005 N/A"
+                    },
+                    {
+                        "type": "HD",
+                        "name": "Energy España",
+                        "system": "MPEG-4",
+                        "sid": "192",
+                        "vpid": "1101",
+                        "apid_lang": "1103 Spa 1104 org 1105 N/A"
+                    },
+                    {
+                        "type": "HD",
+                        "name": "Boing España",
+                        "system": "MPEG-4",
+                        "sid": "193",
+                        "vpid": "1201",
+                        "apid_lang": "1203 Spa 1204 org 1205 N/A"
+                    },
+                    {
+                        "type": "Radio",
+                        "name": "Onda Cero",
+                        "system": "",
+                        "sid": "156",
+                        "vpid": "",
+                        "apid_lang": "1401 Spa"
+                    },
+                    {
+                        "type": "Radio",
+                        "name": "Europa FM España",
+                        "system": "",
+                        "sid": "157",
+                        "vpid": "",
+                        "apid_lang": "1501 Spa"
+                    },
+                    {
+                        "type": "Radio",
+                        "name": "Melodía FM",
+                        "system": "",
+                        "sid": "158",
+                        "vpid": "",
+                        "apid_lang": "1601 Spa"
+                    },
+                    {
+                        "type": "Radio",
+                        "name": "COPE Radio",
+                        "system": "",
+                        "sid": "171",
+                        "vpid": "",
+                        "apid_lang": "2101 Spa"
+                    },
+                    {
+                        "type": "Radio",
+                        "name": "Rock FM Definitivo",
+                        "system": "",
+                        "sid": "172",
+                        "vpid": "",
+                        "apid_lang": "2201 Spa"
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "txp_no": "192",
+        "freq_pol_mode": "12671.00 V DVB-S2/8PSK",
+        "provider": "Abertis DTT",
+        "sr_fec": "30000 3/4",
+        "onid_nid_tid": "-/60000/60001",
+        "date": "24.04.2026",
+        "streams": [
+            {
+                "title": "Stream 8000 - (HSA-68.0) - Cellnex",
+                "pid_info": "1-1--",
+                "encryption": "BISS",
+                "channels": [
+                    {
+                        "type": "SD",
+                        "name": "ALERTA",
+                        "system": "MPEG-2",
+                        "sid": "110",
+                        "vpid": "256",
+                        "apid_lang": "257 Spa"
+                    }
+                ]
+            },
+            {
+                "title": "Stream 8004 - (HSA-68.1) - MPE5",
+                "pid_info": "8916-18--12551",
+                "encryption": "BISS",
+                "channels": [
+                    {
+                        "type": "HD",
+                        "name": "Atreseries",
+                        "system": "MPEG-4",
+                        "sid": "101",
+                        "vpid": "101",
+                        "apid_lang": "103 Spa 104 org 105 N/A"
+                    },
+                    {
+                        "type": "HD",
+                        "name": "Be Mad",
+                        "system": "MPEG-4",
+                        "sid": "102",
+                        "vpid": "201",
+                        "apid_lang": "203 Spa 204 org 205 N/A"
+                    },
+                    {
+                        "type": "HD",
+                        "name": "Real Madrid TV Español",
+                        "system": "MPEG-4",
+                        "sid": "103",
+                        "vpid": "301",
+                        "apid_lang": "303 Spa 304 org 305 N/A"
+                    },
+                    {
+                        "type": "HD",
+                        "name": "Ten",
+                        "system": "MPEG-4",
+                        "sid": "104",
+                        "vpid": "401",
+                        "apid_lang": "402 Spa 403 org 404 N/A"
+                    },
+                    {
+                        "type": "Radio",
+                        "name": "Los 40 Classic",
+                        "system": "",
+                        "sid": "105",
+                        "vpid": "",
+                        "apid_lang": "510 Spa"
+                    },
+                    {
+                        "type": "Radio",
+                        "name": "Los 40 Urban",
+                        "system": "",
+                        "sid": "106",
+                        "vpid": "",
+                        "apid_lang": "610 Spa"
+                    },
+                    {
+                        "type": "Radio",
+                        "name": "Radiolé",
+                        "system": "",
+                        "sid": "107",
+                        "vpid": "",
+                        "apid_lang": "710 Spa"
+                    }
+                ]
+            },
+            {
+                "title": "Stream 8005 - (HSA-68.2) - MPE3",
+                "pid_info": "8916-16--12548",
+                "encryption": "BISS",
+                "channels": [
+                    {
+                        "type": "HD",
+                        "name": "FDF (Factoría de Ficción)",
+                        "system": "MPEG-4",
+                        "sid": "188",
+                        "vpid": "1301",
+                        "apid_lang": "1303 Spa 1304 org 1305 N/A"
+                    },
+                    {
+                        "type": "HD",
+                        "name": "Divinity",
+                        "system": "MPEG-4",
+                        "sid": "189",
+                        "vpid": "1401",
+                        "apid_lang": "1403 Spa 1404 org 1405 N/A"
+                    },
+                    {
+                        "type": "HD",
+                        "name": "Telecinco",
+                        "system": "MPEG-4",
+                        "sid": "190",
+                        "vpid": "1501",
+                        "apid_lang": "1503 Spa 1504 org 1505 N/A"
+                    },
+                    {
+                        "type": "HD",
+                        "name": "Cuatro",
+                        "system": "MPEG-4",
+                        "sid": "191",
+                        "vpid": "1701",
+                        "apid_lang": "1703 Spa 1704 org 1705 N/A"
+                    }
+                ]
+            },
+            {
+                "title": "Stream 8006 - (HSA-68.3) - RGE Catalunya",
+                "pid_info": "8916-1008--12567",
+                "encryption": "BISS",
+                "channels": [
+                    {
+                        "type": "HD",
+                        "name": "Teledeporte Cataluña",
+                        "system": "MPEG-4",
+                        "sid": "490",
+                        "vpid": "4001",
+                        "apid_lang": "4002 Spa 4003 org 4004 N/A"
+                    },
+                    {
+                        "type": "HD",
+                        "name": "Canal 24 Horas Cataluña",
+                        "system": "MPEG-4",
+                        "sid": "493",
+                        "vpid": "1501",
+                        "apid_lang": "1503 Spa 1504 org 1505 N/A"
+                    },
+                    {
+                        "type": "HD",
+                        "name": "TVE La 1 Cataluña",
+                        "system": "MPEG-4",
+                        "sid": "494",
+                        "vpid": "301",
+                        "apid_lang": "302 Spa 303 org 304 N/A"
+                    },
+                    {
+                        "type": "HD",
+                        "name": "TVE La 2 Cataluña",
+                        "system": "MPEG-4",
+                        "sid": "498",
+                        "vpid": "401",
+                        "apid_lang": "402 Spa 403 org 404 N/A"
+                    },
+                    {
+                        "type": "Radio",
+                        "name": "RNE Radio 1 Cataluña",
+                        "system": "",
+                        "sid": "495",
+                        "vpid": "",
+                        "apid_lang": "2001 Spa"
+                    },
+                    {
+                        "type": "Radio",
+                        "name": "RNE Radio 5 Cataluña",
+                        "system": "",
+                        "sid": "496",
+                        "vpid": "",
+                        "apid_lang": "2031 Spa"
+                    },
+                    {
+                        "type": "Radio",
+                        "name": "RNE Radio 4 Cataluña",
+                        "system": "",
+                        "sid": "497",
+                        "vpid": "",
+                        "apid_lang": "2041 Spa"
+                    }
+                ]
+            }
+        ]
+    }
+]
