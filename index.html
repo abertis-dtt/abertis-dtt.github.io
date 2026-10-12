@@ -161,6 +161,22 @@
                                                 <i class="fa-solid fa-tags text-[9px] opacity-60"></i>
                                                 <span x-text="`PID: ${stream.pid_info}`"></span>
                                             </span>
+
+                                            <!-- Stream-level identifiers: SID of the feed service + component data PID (decimal, hex in tooltip) -->
+                                            <template x-if="stream.sid">
+                                                <span class="inline-flex items-center gap-1.5 text-xs code-font text-cyan-300 font-bold bg-cyan-500/10 border border-cyan-400/25 px-2.5 py-1 rounded-lg shadow-[0_0_10px_rgba(6,182,212,0.2)]"
+                                                      :title="`SID of the stream feed service (lamedb) · hex 0x${(parseInt(stream.sid, 10) || 0).toString(16).toUpperCase().padStart(4, '0')}`">
+                                                    <i class="fa-solid fa-fingerprint text-[9px] opacity-60"></i>
+                                                    <span x-text="`SID: ${stream.sid}`"></span>
+                                                </span>
+                                            </template>
+                                            <template x-if="stream.cpid">
+                                                <span class="inline-flex items-center gap-1.5 text-xs code-font text-rose-300 font-bold bg-rose-500/10 border border-rose-400/25 px-2.5 py-1 rounded-lg shadow-[0_0_10px_rgba(244,63,94,0.2)]"
+                                                      :title="`Component data PID (c:19 entry of the lamedb service flags) · hex 0x${(parseInt(stream.cpid, 10) || 0).toString(16).toUpperCase().padStart(4, '0')}`">
+                                                    <i class="fa-solid fa-diagram-project text-[9px] opacity-60"></i>
+                                                    <span x-text="`CPID: ${stream.cpid}`"></span>
+                                                </span>
+                                            </template>
                                             <!-- Expand Arrow -->
                                             <i class="fa-solid fa-chevron-down text-slate-500 transition-transform duration-300" :class="streamExpanded ? 'rotate-180' : ''"></i>
                                         </div>
@@ -409,7 +425,10 @@
                         let txpMatches = txp.freq_pol_mode.toLowerCase().includes(q) || (txp.onid_nid_tid && txp.onid_nid_tid.toLowerCase().includes(q));
 
                         let matchingStreams = (txp.streams || []).map(stream => {
-                            let streamMatches = stream.title.toLowerCase().includes(q) || (stream.pid_info && stream.pid_info.toLowerCase().includes(q));
+                            let streamMatches = stream.title.toLowerCase().includes(q)
+                                || (stream.pid_info && stream.pid_info.toLowerCase().includes(q))
+                                || (stream.sid && stream.sid.toString().toLowerCase().includes(q))
+                                || (stream.cpid && stream.cpid.toString().toLowerCase().includes(q));
 
                             let matchingChannels = (stream.channels || []).filter(ch =>
                                 (ch.name && ch.name.toLowerCase().includes(q)) ||

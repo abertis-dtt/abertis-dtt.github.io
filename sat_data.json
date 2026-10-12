@@ -11,6 +11,8 @@
                 "title": "Stream 2025 - (HS125.25) - RGE Extremadura",
                 "pid_info": "8916-1109--12566",
                 "encryption": "BISS",
+                "sid": "3025",
+                "cpid": "7025",
                 "channels": [
                     {
                         "type": "HD",
@@ -42,6 +44,8 @@
                 "title": "Stream 2026 - (HS125.26) - RGE La Rioja",
                 "pid_info": "8916-1011--12567",
                 "encryption": "BISS",
+                "sid": "3026",
+                "cpid": "7026",
                 "channels": [
                     {
                         "type": "HD",
@@ -73,6 +77,8 @@
                 "title": "Stream 2027 - (HS125.27) - RGE Murcia",
                 "pid_info": "8916-1013--12564",
                 "encryption": "BISS",
+                "sid": "3027",
+                "cpid": "7027",
                 "channels": [
                     {
                         "type": "HD",
@@ -104,6 +110,8 @@
                 "title": "Stream 2028 - (HS125.28) - RGE Valencia",
                 "pid_info": "8916-1016--12561",
                 "encryption": "BISS",
+                "sid": "3028",
+                "cpid": "7028",
                 "channels": [
                     {
                         "type": "HD",
@@ -135,30 +143,40 @@
                 "title": "Stream 2035 - (HS125.35) - RGE Extremadura",
                 "pid_info": "8916-1109--12566",
                 "encryption": "BISS",
+                "sid": "3035",
+                "cpid": "7035",
                 "channels": []
             },
             {
                 "title": "Stream 2036 - (HS125.36) - RGE La Rioja",
                 "pid_info": "8916-1011--12567",
                 "encryption": "BISS",
+                "sid": "3036",
+                "cpid": "7036",
                 "channels": []
             },
             {
                 "title": "Stream 2037 - (HS125.37) - RGE Murcia",
                 "pid_info": "8916-1013--12564",
                 "encryption": "BISS",
+                "sid": "3037",
+                "cpid": "7037",
                 "channels": []
             },
             {
                 "title": "Stream 2038 - (HS125.38) - RGE Valencia",
                 "pid_info": "8916-1016--12561",
                 "encryption": "BISS",
+                "sid": "3038",
+                "cpid": "7038",
                 "channels": []
             },
             {
                 "title": "Stream 2050 - (HS125.50) - RGE Nac",
                 "pid_info": "8916-1051--",
                 "encryption": "BISS",
+                "sid": "3050",
+                "cpid": "7050",
                 "channels": [
                     {
                         "type": "HD",
@@ -198,6 +216,8 @@
                 "title": "Stream 2060 - (HS125.60) - RTVE/SAPEC",
                 "pid_info": "1-1--",
                 "encryption": "BISS",
+                "sid": "3060",
+                "cpid": "7060",
                 "channels": [
                     {
                         "type": "HD",
@@ -310,6 +330,8 @@
                 "title": "Stream 2270 - (HS127.70) - RGE Nac",
                 "pid_info": "8916-1051--",
                 "encryption": "BISS",
+                "sid": "3270",
+                "cpid": "7270",
                 "channels": [
                     {
                         "type": "HD",
@@ -341,6 +363,8 @@
                 "title": "Stream 2271 - (HS127.71) - RGE Navarra",
                 "pid_info": "8916-1014--12562",
                 "encryption": "BISS",
+                "sid": "3271",
+                "cpid": "7271",
                 "channels": [
                     {
                         "type": "HD",
@@ -372,6 +396,8 @@
                 "title": "Stream 2272 - (HS127.72) - RGE Asturias",
                 "pid_info": "8916-1002--12567",
                 "encryption": "BISS",
+                "sid": "3272",
+                "cpid": "7272",
                 "channels": [
                     {
                         "type": "HD",
@@ -403,6 +429,8 @@
                 "title": "Stream 2273 - (HS127.73) - RGE Aragon",
                 "pid_info": "8916-1101--12564",
                 "encryption": "BISS",
+                "sid": "3273",
+                "cpid": "7273",
                 "channels": [
                     {
                         "type": "HD",
@@ -434,6 +462,8 @@
                 "title": "Stream 2274 - (HS127.74) - RGE Cantabria",
                 "pid_info": "8916-1006--12561",
                 "encryption": "BISS",
+                "sid": "3274",
+                "cpid": "7274",
                 "channels": [
                     {
                         "type": "HD",
@@ -465,24 +495,32 @@
                 "title": "Stream 2281 - (HS127.81) - RGE Navarra",
                 "pid_info": "8916-1014--12562",
                 "encryption": "BISS",
+                "sid": "3281",
+                "cpid": "7281",
                 "channels": []
             },
             {
                 "title": "Stream 2282 - (HS127.82) - RGE Asturias",
                 "pid_info": "8916-1002--12567",
                 "encryption": "BISS",
+                "sid": "3282",
+                "cpid": "7282",
                 "channels": []
             },
             {
                 "title": "Stream 2283 - (HS127.83) - RGE Aragon",
                 "pid_info": "8916-1101--12564",
                 "encryption": "BISS",
+                "sid": "3283",
+                "cpid": "7283",
                 "channels": []
             },
             {
                 "title": "Stream 2284 - (HS127.84) - RGE Cantabria",
                 "pid_info": "8916-1006--12561",
                 "encryption": "BISS",
+                "sid": "3284",
+                "cpid": "7284",
                 "channels": []
             },
             {
@@ -1011,12 +1049,16 @@
                 "title": "Stream 2301 - (HS128.1) - UNACTIVE",
                 "pid_info": "",
                 "encryption": "",
+                "sid": "3301",
+                "cpid": "7301",
                 "channels": []
             },
             {
                 "title": "Stream 2302 - (HS128.2) - TDT Extremadura",
                 "pid_info": "8916-1009--12576",
                 "encryption": "BISS",
+                "sid": "3302",
+                "cpid": "7302",
                 "channels": [
                     {
                         "type": "HD",
@@ -1040,6 +1082,8 @@
                 "title": "Stream 2303 - (HS128.3) - TPA",
                 "pid_info": "8916-5200--12568",
                 "encryption": "BISS",
+                "sid": "3303",
+                "cpid": "7303",
                 "channels": [
                     {
                         "type": "SD",
@@ -1055,12 +1099,16 @@
                 "title": "Stream 2304 - (HS128.4) - UNACTIVE",
                 "pid_info": "",
                 "encryption": "",
+                "sid": "3304",
+                "cpid": "7304",
                 "channels": []
             },
             {
                 "title": "Stream 2305 - (HS128.5) - Abertis Telecom",
                 "pid_info": "1-1--",
                 "encryption": "BISS",
+                "sid": "3305",
+                "cpid": "7305",
                 "channels": [
                     {
                         "type": "HD",
@@ -1076,6 +1124,8 @@
                 "title": "Stream 2306 - (HS128.6) - TDT.Envio SAT",
                 "pid_info": "1-1--",
                 "encryption": "BISS",
+                "sid": "3306",
+                "cpid": "7306",
                 "channels": [
                     {
                         "type": "HD",
@@ -1091,6 +1141,8 @@
                 "title": "Stream 2308 - (HS128.8) - Televisió de Catalunya",
                 "pid_info": "8916-101--12674",
                 "encryption": "BISS",
+                "sid": "3308",
+                "cpid": "7308",
                 "channels": [
                     {
                         "type": "HD",
@@ -1180,6 +1232,8 @@
                 "title": "Stream 2520 - (HS129.20) - RGE N/Ac",
                 "pid_info": "8916-1051--",
                 "encryption": "BISS",
+                "sid": "3520",
+                "cpid": "7520",
                 "channels": [
                     {
                         "type": "HD",
@@ -1211,6 +1265,8 @@
                 "title": "Stream 2521 - (HS129.21) - RGE Baleares",
                 "pid_info": "8916-1003--12566",
                 "encryption": "BISS",
+                "sid": "3521",
+                "cpid": "7521",
                 "channels": [
                     {
                         "type": "HD",
@@ -1250,6 +1306,8 @@
                 "title": "Stream 2522 - (HS129.22) - RGE Castilla La Mancha",
                 "pid_info": "8916-1005--12562",
                 "encryption": "BISS",
+                "sid": "3522",
+                "cpid": "7522",
                 "channels": [
                     {
                         "type": "HD",
@@ -1289,6 +1347,8 @@
                 "title": "Stream 2523 - (HS129.23) - RGE Andalucia",
                 "pid_info": "8916-1000--12560",
                 "encryption": "BISS",
+                "sid": "3523",
+                "cpid": "7523",
                 "channels": [
                     {
                         "type": "HD",
@@ -1328,6 +1388,8 @@
                 "title": "Stream 2524 - (HS129.24) - RGE Castilla y Leon",
                 "pid_info": "8916-1004--12560",
                 "encryption": "BISS",
+                "sid": "3524",
+                "cpid": "7524",
                 "channels": [
                     {
                         "type": "HD",
@@ -1367,24 +1429,32 @@
                 "title": "Stream 2531 - (HS129.31) - RGE Baleares",
                 "pid_info": "8916-1003--12566",
                 "encryption": "BISS",
+                "sid": "3531",
+                "cpid": "7531",
                 "channels": []
             },
             {
                 "title": "Stream 2532 - (HS129.32) - RGE Castilla La Mancha",
                 "pid_info": "8916-1005--12562",
                 "encryption": "BISS",
+                "sid": "3532",
+                "cpid": "7532",
                 "channels": []
             },
             {
                 "title": "Stream 2533 - (HS129.33) - RGE Andalucia",
                 "pid_info": "8916-1000--12560",
                 "encryption": "BISS",
+                "sid": "3533",
+                "cpid": "7533",
                 "channels": []
             },
             {
                 "title": "Stream 2534 - (HS129.34) - RGE Castilla y Leon",
                 "pid_info": "8916-1004--12560",
                 "encryption": "BISS",
+                "sid": "3534",
+                "cpid": "7534",
                 "channels": []
             },
             {
@@ -1937,6 +2007,8 @@
                 "title": "Stream 801 - (HS199.1) - Asturias TDT",
                 "pid_info": "8916-5200--12568",
                 "encryption": "BISS",
+                "sid": "1801",
+                "cpid": "5801",
                 "channels": [
                     {
                         "type": "HD",
@@ -1986,6 +2058,8 @@
                 "title": "Stream 301 - (HSA-88L.1) - RGE Canarias",
                 "pid_info": "8916-1007--12563",
                 "encryption": "BISS",
+                "sid": "1301",
+                "cpid": "5301",
                 "channels": [
                     {
                         "type": "HD",
@@ -2057,6 +2131,8 @@
                 "title": "Stream 303 - (HSA-88L.3) - MPE2",
                 "pid_info": "8916-15--12547",
                 "encryption": "BISS",
+                "sid": "1303",
+                "cpid": "5303",
                 "channels": [
                     {
                         "type": "HD",
@@ -2106,6 +2182,8 @@
                 "title": "Stream 420 - (HS88U.20) - RGE Nac",
                 "pid_info": "8916-1051--",
                 "encryption": "BISS",
+                "sid": "1420",
+                "cpid": "5420",
                 "channels": [
                     {
                         "type": "HD",
@@ -2145,6 +2223,8 @@
                 "title": "Stream 421 - (HS88U.21) - RGE Pais Vasco",
                 "pid_info": "8916-1015--12566",
                 "encryption": "BISS",
+                "sid": "1421",
+                "cpid": "5421",
                 "channels": [
                     {
                         "type": "HD",
@@ -2176,6 +2256,8 @@
                 "title": "Stream 423 - (HS88U.23) - RGE Galicia",
                 "pid_info": "8916-1010--12566",
                 "encryption": "BISS",
+                "sid": "1423",
+                "cpid": "5423",
                 "channels": [
                     {
                         "type": "HD",
@@ -2207,18 +2289,24 @@
                 "title": "Stream 431 - (HS88U.31) - RGE Pais Vasco",
                 "pid_info": "8916-1015--12566",
                 "encryption": "BISS",
+                "sid": "1431",
+                "cpid": "5431",
                 "channels": []
             },
             {
                 "title": "Stream 433 - (HS88U.33) - RGE Galicia",
                 "pid_info": "8916-1010--12566",
                 "encryption": "BISS",
+                "sid": "1433",
+                "cpid": "5433",
                 "channels": []
             },
             {
                 "title": "Stream 440 - (HS88U.40) - UNACTIVE",
                 "pid_info": "",
                 "encryption": "",
+                "sid": "1440",
+                "cpid": "5440",
                 "channels": []
             },
             {
@@ -2290,6 +2378,8 @@
                 "title": "Stream 701 - (HSA-65U1) - MPE1",
                 "pid_info": "8916-14--12546",
                 "encryption": "BISS",
+                "sid": "1701",
+                "cpid": "5701",
                 "channels": [
                     {
                         "type": "HD",
@@ -2361,6 +2451,8 @@
                 "title": "Stream 702 - (HSA-65U2) - MPE2",
                 "pid_info": "8916-15--12547",
                 "encryption": "BISS",
+                "sid": "1702",
+                "cpid": "5702",
                 "channels": [
                     {
                         "type": "HD",
@@ -2400,6 +2492,8 @@
                 "title": "Stream 703 - (HSA-65U3) - MPE3",
                 "pid_info": "8916-16--12548",
                 "encryption": "BISS",
+                "sid": "1703",
+                "cpid": "5703",
                 "channels": [
                     {
                         "type": "HD",
@@ -2449,6 +2543,8 @@
                 "title": "Stream 8008 - (HS190.1) - RGE2",
                 "pid_info": "8916-40000--12549",
                 "encryption": "BISS",
+                "sid": "9008",
+                "cpid": "13008",
                 "channels": [
                     {
                         "type": "HD",
@@ -2562,6 +2658,8 @@
                 "title": "Stream 8001 - (HSA-67.1) - RGE Madrid",
                 "pid_info": "8916-1012--12561",
                 "encryption": "BISS",
+                "sid": "9001",
+                "cpid": "13001",
                 "channels": [
                     {
                         "type": "HD",
@@ -2672,6 +2770,8 @@
                 "title": "Stream 8003 - (HSA-67.3) - MPE4",
                 "pid_info": "8916-17--12550",
                 "encryption": "BISS",
+                "sid": "9003",
+                "cpid": "13003",
                 "channels": [
                     {
                         "type": "HD",
@@ -2761,6 +2861,8 @@
                 "title": "Stream 8000 - (HSA-68.0) - Cellnex",
                 "pid_info": "1-1--",
                 "encryption": "BISS",
+                "sid": "9000",
+                "cpid": "13000",
                 "channels": [
                     {
                         "type": "SD",
@@ -2776,6 +2878,8 @@
                 "title": "Stream 8004 - (HSA-68.1) - MPE5",
                 "pid_info": "8916-18--12551",
                 "encryption": "BISS",
+                "sid": "9004",
+                "cpid": "13004",
                 "channels": [
                     {
                         "type": "HD",
@@ -2839,6 +2943,8 @@
                 "title": "Stream 8005 - (HSA-68.2) - MPE3",
                 "pid_info": "8916-16--12548",
                 "encryption": "BISS",
+                "sid": "9005",
+                "cpid": "13005",
                 "channels": [
                     {
                         "type": "HD",
@@ -2878,6 +2984,8 @@
                 "title": "Stream 8006 - (HSA-68.3) - RGE Catalunya",
                 "pid_info": "8916-1008--12567",
                 "encryption": "BISS",
+                "sid": "9006",
+                "cpid": "13006",
                 "channels": [
                     {
                         "type": "HD",

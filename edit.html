@@ -192,6 +192,22 @@
                                     </div>
                                 </div>
 
+                                <!-- Stream-level identifiers: SID of the lamedb feed service + component data PID (both decimal) -->
+                                <div class="grid grid-cols-2 md:grid-cols-12 gap-3 items-center">
+                                    <div class="md:col-span-2">
+                                        <label class="block text-[10px] font-bold text-slate-400 uppercase mb-1">Stream SID</label>
+                                        <input type="text" inputmode="numeric" x-model="stream.sid" placeholder="auto" title="SID of the stream feed service in the lamedb (decimal). Empty = automatic (PID + 1000)." class="w-full px-3 py-1.5 rounded-xl bg-slate-950 border border-slate-800 text-xs code-font text-cyan-400 font-bold focus:border-blue-500 focus:outline-none">
+                                    </div>
+                                    <div class="md:col-span-2">
+                                        <label class="block text-[10px] font-bold text-slate-400 uppercase mb-1">Component PID</label>
+                                        <input type="text" inputmode="numeric" x-model="stream.cpid" placeholder="auto" title="Component data PID that goes into the c:19<xxxx> cache entry of the lamedb service (decimal). Empty = automatic (PID + 5000)." class="w-full px-3 py-1.5 rounded-xl bg-slate-950 border border-slate-800 text-xs code-font text-rose-400 font-bold focus:border-blue-500 focus:outline-none">
+                                    </div>
+                                    <div class="col-span-2 md:col-span-8 flex items-center gap-2 px-1 min-h-[30px]">
+                                        <i class="fa-solid fa-circle-info text-slate-500 text-xs shrink-0"></i>
+                                        <span class="text-[10px] text-slate-400 code-font leading-relaxed" x-text="streamIdsHint(stream)"></span>
+                                    </div>
+                                </div>
+
                                 <!-- Editable Channels Table with Reordering Controls -->
                                 <div x-show="stream.channels && stream.channels.length > 0" class="overflow-x-auto rounded-xl border border-slate-800/80">
                                     <table class="w-full text-left text-xs">
@@ -385,8 +401,43 @@
                     return { ...txp, freq, pol, mode, symbol_rate: sr, fec };
                 },
 
-                formatFreqPolMode(txp) { 
-                    return `${txp.freq || ''} ${txp.pol || 'H'} ${txp.mode || ''}`.trim(); 
+                formatFreqPolMode(txp) {
+                    return `${txp.freq || ''} ${txp.pol || 'H'} ${txp.mode || ''}`.trim();
+                },
+
+                // PID number carried by a stream title like "Stream 2025 - (HS125.25) - ..."
+                streamPid(stream) {
+                    let m = (stream.title || '').match(/Stream\s+(\d+)/i);
+                    return m ? parseInt(m[1], 10) : null;
+                },
+
+                hex4(n) {
+                    return (n >>> 0).toString(16).toUpperCase().padStart(4, '0');
+                },
+
+                // Live preview of the stream identifiers: shows the decimal values,
+                // their hex form and what the suite falls back to when left empty.
+                streamIdsHint(stream) {
+                    let pid = this.streamPid(stream);
+                    let sid = parseInt(stream.sid, 10);
+                    let cpid = parseInt(stream.cpid, 10);
+                    let parts = [];
+                    if (stream.sid && stream.sid.toString().trim() !== '' && !isNaN(sid)) {
+                        parts.push(`SID ${sid} · lamedb 0x${this.hex4(sid)}`);
+                    } else if (pid !== null) {
+                        parts.push(`SID auto = PID ${pid} + 1000 = ${pid + 1000} (0x${this.hex4(pid + 1000)})`);
+                    } else {
+                        parts.push('SID: enter manually (no "Stream <pid>" in title)');
+                    }
+                    if (stream.cpid && stream.cpid.toString().trim() !== '' && !isNaN(cpid)) {
+                        parts.push(`CPID ${cpid} · c:19${this.hex4(cpid)}`);
+                    } else if (pid !== null) {
+                        parts.push(`CPID auto = PID ${pid} + 5000 = ${pid + 5000} (c:19${this.hex4(pid + 5000)})`);
+                    } else {
+                        parts.push('CPID: enter manually (no "Stream <pid>" in title)');
+                    }
+                    if (pid !== null) parts.push(`PMT cache c:15${this.hex4(pid)}`);
+                    return parts.join('   ·   ');
                 },
 
                 updateFreqPolMode(txp) { 
@@ -426,9 +477,11 @@
                                        (txp.freq_pol_mode && txp.freq_pol_mode.toLowerCase().includes(q)) ||
                                        (txp.provider && txp.provider.toLowerCase().includes(q)) ||
                                        (txp.onid_nid_tid && txp.onid_nid_tid.toLowerCase().includes(q));
-                        let matchStream = (txp.streams || []).some(s => 
+                        let matchStream = (txp.streams || []).some(s =>
                             (s.title && s.title.toLowerCase().includes(q)) ||
                             (s.pid_info && s.pid_info.toLowerCase().includes(q)) ||
+                            (s.sid && s.sid.toString().toLowerCase().includes(q)) ||
+                            (s.cpid && s.cpid.toString().toLowerCase().includes(q)) ||
                             (s.channels || []).some(c => c.name && c.name.toLowerCase().includes(q))
                         );
                         return matchTxp || matchStream;
@@ -449,7 +502,7 @@
 
                 addStream(tIdx) {
                     if (!this.transponders[tIdx].streams) this.transponders[tIdx].streams = [];
-                    this.transponders[tIdx].streams.push({ title: "New Stream Pipe", pid_info: "8916-0000--0000", encryption: "BISS", channels: [] });
+                    this.transponders[tIdx].streams.push({ title: "New Stream Pipe", pid_info: "8916-0000--0000", encryption: "BISS", sid: "", cpid: "", channels: [] });
                 },
 
                 moveStreamUp(tIdx, sIdx) {
