@@ -18,7 +18,7 @@
                         "system": "MPEG-4",
                         "sid": "504",
                         "vpid": "301",
-                        "apid_lang": "302 Spa 303 org 304 N/A"
+                        "apid_lang": "302 SPA 303 QAA 304 SPA"
                     },
                     {
                         "type": "Radio",
@@ -26,7 +26,7 @@
                         "system": "",
                         "sid": "505",
                         "vpid": "",
-                        "apid_lang": "2001 Spa"
+                        "apid_lang": "2001 SPA"
                     },
                     {
                         "type": "Radio",
@@ -34,15 +34,7 @@
                         "system": "",
                         "sid": "506",
                         "vpid": "",
-                        "apid_lang": "2031 Spa"
-                    },
-                    {
-                        "type": "Radio",
-                        "name": "RNE Radio 4 Extremadura",
-                        "system": "",
-                        "sid": "507",
-                        "vpid": "",
-                        "apid_lang": "2041 Spa"
+                        "apid_lang": "2031 SPA"
                     }
                 ]
             },
@@ -57,7 +49,7 @@
                         "system": "MPEG-4",
                         "sid": "524",
                         "vpid": "301",
-                        "apid_lang": "302 Spa 303 org 304 N/A"
+                        "apid_lang": "302 SPA 303 QAA 304 SPA"
                     },
                     {
                         "type": "Radio",
@@ -65,7 +57,7 @@
                         "system": "",
                         "sid": "525",
                         "vpid": "",
-                        "apid_lang": "2001 Spa"
+                        "apid_lang": "2001 SPA"
                     },
                     {
                         "type": "Radio",
@@ -73,15 +65,7 @@
                         "system": "",
                         "sid": "526",
                         "vpid": "",
-                        "apid_lang": "2031 Spa"
-                    },
-                    {
-                        "type": "Radio",
-                        "name": "RNE Radio 4 La Rioja",
-                        "system": "",
-                        "sid": "527",
-                        "vpid": "",
-                        "apid_lang": "2041 Spa"
+                        "apid_lang": "2031 SPA"
                     }
                 ]
             },
@@ -96,7 +80,7 @@
                         "system": "MPEG-4",
                         "sid": "544",
                         "vpid": "301",
-                        "apid_lang": "302 Spa 303 org 304 N/A"
+                        "apid_lang": "302 SPA 303 QAA 304 SPA"
                     },
                     {
                         "type": "Radio",
@@ -104,7 +88,7 @@
                         "system": "",
                         "sid": "545",
                         "vpid": "",
-                        "apid_lang": "2001 Spa"
+                        "apid_lang": "2001 SPA"
                     },
                     {
                         "type": "Radio",
@@ -112,15 +96,7 @@
                         "system": "",
                         "sid": "546",
                         "vpid": "",
-                        "apid_lang": "2031 Spa"
-                    },
-                    {
-                        "type": "Radio",
-                        "name": "RNE Radio 4 Murcia",
-                        "system": "",
-                        "sid": "547",
-                        "vpid": "",
-                        "apid_lang": "2041 Spa"
+                        "apid_lang": "2031 SPA"
                     }
                 ]
             },
@@ -135,7 +111,7 @@
                         "system": "MPEG-4",
                         "sid": "574",
                         "vpid": "301",
-                        "apid_lang": "302 Spa 303 org 304 N/A"
+                        "apid_lang": "302 SPA 303 QAA 304 SPA"
                     },
                     {
                         "type": "Radio",
@@ -143,7 +119,7 @@
                         "system": "",
                         "sid": "575",
                         "vpid": "",
-                        "apid_lang": "2001 Spa"
+                        "apid_lang": "2001 SPA"
                     },
                     {
                         "type": "Radio",
@@ -151,15 +127,7 @@
                         "system": "",
                         "sid": "576",
                         "vpid": "",
-                        "apid_lang": "2031 Spa"
-                    },
-                    {
-                        "type": "Radio",
-                        "name": "RNE Radio 4 Valencia",
-                        "system": "",
-                        "sid": "577",
-                        "vpid": "",
-                        "apid_lang": "2041 Spa"
+                        "apid_lang": "2031 SPA"
                     }
                 ]
             },
@@ -198,15 +166,7 @@
                         "system": "MPEG-4",
                         "sid": "380",
                         "vpid": "4001",
-                        "apid_lang": "4002 Spa 4003 org 4004 N/A"
-                    },
-                    {
-                        "type": "HD",
-                        "name": "Canal 24 Horas",
-                        "system": "MPEG-4",
-                        "sid": "383",
-                        "vpid": "1501",
-                        "apid_lang": "1503 Spa 1504 org 1505 N/A"
+                        "apid_lang": "4002 SPA 4003 QAA 4004 SPA"
                     },
                     {
                         "type": "HD",
@@ -214,7 +174,23 @@
                         "system": "MPEG-4",
                         "sid": "388",
                         "vpid": "401",
-                        "apid_lang": "402 Spa 403 org 404 N/A"
+                        "apid_lang": "402 SPA 403 QAA 404 SPA"
+                    },
+                    {
+                        "type": "HD",
+                        "name": "Canal 24 Horas",
+                        "system": "MPEG-4",
+                        "sid": "383",
+                        "vpid": "1501",
+                        "apid_lang": "1502 SPA 1503 QAA 1504 SPA"
+                    },
+                    {
+                        "type": "Radio",
+                        "name": "Radio 4 RNE",
+                        "system": "MPEG-4",
+                        "sid": "387",
+                        "vpid": "",
+                        "apid_lang": "2041 CAT"
                     }
                 ]
             },
@@ -225,27 +201,27 @@
                 "channels": [
                     {
                         "type": "HD",
-                        "name": "Canal 24 Horas",
+                        "name": "24hHD HEVC Sat",
                         "system": "HEVC",
                         "sid": "1",
                         "vpid": "49",
-                        "apid_lang": "50 Spa 51 org 52 org"
+                        "apid_lang": "50 SPA 51 SPA 53 SPA"
                     },
                     {
                         "type": "HD",
-                        "name": "TVE La 1",
+                        "name": "La1HD HEVC Sat",
                         "system": "HEVC",
                         "sid": "534",
                         "vpid": "301",
-                        "apid_lang": "302 Spa 303 org 304 N/A"
+                        "apid_lang": "302 SPA 303 SPA 304 SPA"
                     },
                     {
                         "type": "HD",
-                        "name": "TVE La 2",
+                        "name": "La2HD HEVC Sat",
                         "system": "HEVC",
                         "sid": "538",
                         "vpid": "401",
-                        "apid_lang": "402 Spa 403 org 404 N/A"
+                        "apid_lang": "402 SPA 403 SPA 404 SPA"
                     }
                 ]
             },
@@ -337,27 +313,27 @@
                 "channels": [
                     {
                         "type": "HD",
-                        "name": "Teledeporte",
+                        "name": "tdp HD",
                         "system": "MPEG-4",
                         "sid": "380",
                         "vpid": "4001",
-                        "apid_lang": "4002 Spa 4003 org 4004 N/A"
+                        "apid_lang": "4002 SPA 4003 QAA 4004 SPA"
                     },
                     {
                         "type": "HD",
-                        "name": "Canal 24 Horas",
+                        "name": "24h HD",
                         "system": "MPEG-4",
                         "sid": "383",
                         "vpid": "1501",
-                        "apid_lang": "1503 Spa 1504 org 1505 N/A"
+                        "apid_lang": "1502 SPA 1503 QAA 1504 SPA"
                     },
                     {
                         "type": "HD",
-                        "name": "TVE La 2",
+                        "name": "La 2 HD",
                         "system": "MPEG-4",
                         "sid": "388",
                         "vpid": "401",
-                        "apid_lang": "402 Spa 403 org 404 N/A"
+                        "apid_lang": "402 SPA 403 QAA 404 SPA"
                     }
                 ]
             },
@@ -368,11 +344,11 @@
                 "channels": [
                     {
                         "type": "HD",
-                        "name": "TVE La 1 Navarra",
+                        "name": "La 1 HD Navarra",
                         "system": "MPEG-4",
                         "sid": "554",
                         "vpid": "301",
-                        "apid_lang": "302 Spa 303 org 304 N/A"
+                        "apid_lang": "302 SPA 303 QAA 304 SPA"
                     },
                     {
                         "type": "Radio",
@@ -380,7 +356,7 @@
                         "system": "",
                         "sid": "555",
                         "vpid": "",
-                        "apid_lang": "2001 Spa"
+                        "apid_lang": "2001 SPA"
                     },
                     {
                         "type": "Radio",
@@ -388,15 +364,7 @@
                         "system": "",
                         "sid": "556",
                         "vpid": "",
-                        "apid_lang": "2031 Spa"
-                    },
-                    {
-                        "type": "Radio",
-                        "name": "RNE Radio 4 Navarra",
-                        "system": "",
-                        "sid": "557",
-                        "vpid": "",
-                        "apid_lang": "2041 Spa"
+                        "apid_lang": "2031 SPA"
                     }
                 ]
             },
@@ -407,11 +375,11 @@
                 "channels": [
                     {
                         "type": "HD",
-                        "name": "TVE La 1 Asturias",
+                        "name": "La 1 HD Asturias",
                         "system": "MPEG-4",
                         "sid": "434",
                         "vpid": "301",
-                        "apid_lang": "302 Spa 303 org 304 N/A"
+                        "apid_lang": "302 SPA 303 QAA 304 SPA"
                     },
                     {
                         "type": "Radio",
@@ -419,7 +387,7 @@
                         "system": "",
                         "sid": "435",
                         "vpid": "",
-                        "apid_lang": "2001 Spa"
+                        "apid_lang": "2001 SPA"
                     },
                     {
                         "type": "Radio",
@@ -427,15 +395,7 @@
                         "system": "",
                         "sid": "436",
                         "vpid": "",
-                        "apid_lang": "2031 Spa"
-                    },
-                    {
-                        "type": "Radio",
-                        "name": "RNE Radio 4 Asturias",
-                        "system": "",
-                        "sid": "437",
-                        "vpid": "",
-                        "apid_lang": "2041 Spa"
+                        "apid_lang": "2031 SPA"
                     }
                 ]
             },
@@ -450,7 +410,7 @@
                         "system": "MPEG-4",
                         "sid": "424",
                         "vpid": "301",
-                        "apid_lang": "302 Spa 303 org 304 N/A"
+                        "apid_lang": "302 SPA 303 QAA 304 SPA"
                     },
                     {
                         "type": "Radio",
@@ -458,7 +418,7 @@
                         "system": "",
                         "sid": "425",
                         "vpid": "",
-                        "apid_lang": "2001 Spa"
+                        "apid_lang": "2001 SPA"
                     },
                     {
                         "type": "Radio",
@@ -466,15 +426,7 @@
                         "system": "",
                         "sid": "426",
                         "vpid": "",
-                        "apid_lang": "2031 Spa"
-                    },
-                    {
-                        "type": "Radio",
-                        "name": "RNE Radio 4 Aragon",
-                        "system": "",
-                        "sid": "427",
-                        "vpid": "",
-                        "apid_lang": "2041 Spa"
+                        "apid_lang": "2031 SPA"
                     }
                 ]
             },
@@ -489,7 +441,7 @@
                         "system": "MPEG-4",
                         "sid": "474",
                         "vpid": "301",
-                        "apid_lang": "302 Spa 303 org 304 N/A"
+                        "apid_lang": "302 SPA 303 QAA 304 SPA"
                     },
                     {
                         "type": "Radio",
@@ -497,7 +449,7 @@
                         "system": "",
                         "sid": "475",
                         "vpid": "",
-                        "apid_lang": "2001 Spa"
+                        "apid_lang": "2001 SPA"
                     },
                     {
                         "type": "Radio",
@@ -505,15 +457,7 @@
                         "system": "",
                         "sid": "476",
                         "vpid": "",
-                        "apid_lang": "2031 Spa"
-                    },
-                    {
-                        "type": "Radio",
-                        "name": "RNE Radio 4 Cantabria",
-                        "system": "",
-                        "sid": "477",
-                        "vpid": "",
-                        "apid_lang": "2041 Spa"
+                        "apid_lang": "2031 SPA"
                     }
                 ]
             },
@@ -1025,7 +969,7 @@
                         "system": "MPEG-4",
                         "sid": "10162",
                         "vpid": "32",
-                        "apid_lang": "33 Spa 34 org 35 N/A"
+                        "apid_lang": "33 SPA 34 V.O 35 SPA"
                     },
                     {
                         "type": "Radio",
@@ -1080,7 +1024,7 @@
                         "system": "MPEG-4",
                         "sid": "10680",
                         "vpid": "101",
-                        "apid_lang": "103 Spa 104 org"
+                        "apid_lang": "103 SPA 104 ENG"
                     },
                     {
                         "type": "Radio",
@@ -1088,7 +1032,7 @@
                         "system": "",
                         "sid": "10682",
                         "vpid": "",
-                        "apid_lang": "301 Spa"
+                        "apid_lang": "301 SPA"
                     }
                 ]
             },
@@ -1103,7 +1047,7 @@
                         "system": "MPEG-2",
                         "sid": "10220",
                         "vpid": "1010",
-                        "apid_lang": "1011 Spa"
+                        "apid_lang": "1011 SPA"
                     }
                 ]
             },
@@ -1124,7 +1068,7 @@
                         "system": "MPEG-4",
                         "sid": "1",
                         "vpid": "3001",
-                        "apid_lang": "3002 Spa"
+                        "apid_lang": "3002 GAL"
                     }
                 ]
             },
@@ -1137,9 +1081,9 @@
                         "type": "HD",
                         "name": "CyL7 (Castilla y León TV7)",
                         "system": "MPEG-4",
-                        "sid": "1",
+                        "sid": "2",
                         "vpid": "8000",
-                        "apid_lang": "8001 Spa"
+                        "apid_lang": "8001 SPA"
                     }
                 ]
             },
@@ -1154,7 +1098,7 @@
                         "system": "MPEG-4",
                         "sid": "806",
                         "vpid": "121",
-                        "apid_lang": "122 Cat 124 org 126 N/A"
+                        "apid_lang": "122 CAT 124 V.O 126 CAT"
                     },
                     {
                         "type": "HD",
@@ -1162,7 +1106,7 @@
                         "system": "MPEG-4",
                         "sid": "807",
                         "vpid": "131",
-                        "apid_lang": "132 Cat 134 org 136 N/A"
+                        "apid_lang": "132 CAT 134 V.O 136 CAT"
                     },
                     {
                         "type": "HD",
@@ -1170,7 +1114,7 @@
                         "system": "MPEG-4",
                         "sid": "808",
                         "vpid": "141",
-                        "apid_lang": "142 Cat 144 org 146 N/A"
+                        "apid_lang": "142 CAT 144 V.O 146 CAT"
                     },
                     {
                         "type": "HD",
@@ -1178,7 +1122,7 @@
                         "system": "MPEG-4",
                         "sid": "813",
                         "vpid": "111",
-                        "apid_lang": "112 Cat 114 org 116 N/A"
+                        "apid_lang": "112 CAT 114 V.O 116 CAT"
                     },
                     {
                         "type": "HD",
@@ -1186,7 +1130,7 @@
                         "system": "MPEG-4",
                         "sid": "815",
                         "vpid": "311",
-                        "apid_lang": "312 AC3 Cat"
+                        "apid_lang": "312 AC3 CAT"
                     },
                     {
                         "type": "Radio",
@@ -1194,7 +1138,7 @@
                         "system": "",
                         "sid": "809",
                         "vpid": "",
-                        "apid_lang": "151 AAC Cat"
+                        "apid_lang": "151 AAC CAT"
                     },
                     {
                         "type": "Radio",
@@ -1202,7 +1146,7 @@
                         "system": "",
                         "sid": "810",
                         "vpid": "",
-                        "apid_lang": "161 AAC Cat"
+                        "apid_lang": "161 AAC CAT"
                     },
                     {
                         "type": "Radio",
@@ -1210,7 +1154,7 @@
                         "system": "",
                         "sid": "811",
                         "vpid": "",
-                        "apid_lang": "171 AAC Cat"
+                        "apid_lang": "171 AAC CAT"
                     },
                     {
                         "type": "Radio",
@@ -1218,7 +1162,7 @@
                         "system": "",
                         "sid": "812",
                         "vpid": "",
-                        "apid_lang": "181 AAC Cat"
+                        "apid_lang": "181 AAC CAT"
                     }
                 ]
             }
@@ -1243,7 +1187,7 @@
                         "system": "MPEG-4",
                         "sid": "380",
                         "vpid": "4001",
-                        "apid_lang": "4002 Spa 4003 org 4004 N/A"
+                        "apid_lang": "4002 SPA 4003 QAA 4004 SPA"
                     },
                     {
                         "type": "HD",
@@ -1251,7 +1195,7 @@
                         "system": "MPEG-4",
                         "sid": "383",
                         "vpid": "1501",
-                        "apid_lang": "1503 Spa 1504 org 1505 N/A"
+                        "apid_lang": "1503 SPA 1504 QAA 1505 SPA"
                     },
                     {
                         "type": "Radio",
@@ -1259,7 +1203,7 @@
                         "system": "",
                         "sid": "387",
                         "vpid": "",
-                        "apid_lang": "2041 Spa"
+                        "apid_lang": "2041 CAT"
                     }
                 ]
             },
@@ -1270,19 +1214,19 @@
                 "channels": [
                     {
                         "type": "HD",
-                        "name": "TVE La 1 Baleares",
+                        "name": "La 1 HD Baleares",
                         "system": "MPEG-4",
                         "sid": "444",
                         "vpid": "301",
-                        "apid_lang": "302 Spa 303 org 304 N/A"
+                        "apid_lang": "302 SPA 303 QAA 304 SPA"
                     },
                     {
                         "type": "HD",
-                        "name": "TVE La 2 Baleares",
+                        "name": "La 2 HD  Baleares",
                         "system": "MPEG-4",
                         "sid": "448",
                         "vpid": "401",
-                        "apid_lang": "402 Spa 403 org 404 N/A"
+                        "apid_lang": "402 SPA 403 QAA 404 SPA"
                     },
                     {
                         "type": "Radio",
@@ -1290,7 +1234,7 @@
                         "system": "",
                         "sid": "445",
                         "vpid": "",
-                        "apid_lang": "2001 Spa"
+                        "apid_lang": "2001 SPA"
                     },
                     {
                         "type": "Radio",
@@ -1298,7 +1242,7 @@
                         "system": "",
                         "sid": "446",
                         "vpid": "",
-                        "apid_lang": "2031 Spa"
+                        "apid_lang": "2031 SPA"
                     }
                 ]
             },
@@ -1309,19 +1253,19 @@
                 "channels": [
                     {
                         "type": "HD",
-                        "name": "TVE La 1 Castilla La Mancha",
+                        "name": "La 1 HD Castilla La Mancha",
                         "system": "MPEG-4",
                         "sid": "464",
                         "vpid": "301",
-                        "apid_lang": "302 Spa 303 org 304 N/A"
+                        "apid_lang": "302 SPA 303 QAA 304 SPA"
                     },
                     {
                         "type": "HD",
-                        "name": "TVE La 2 Castilla La Mancha",
+                        "name": "La 2 HD Castilla La Mancha",
                         "system": "MPEG-4",
                         "sid": "468",
                         "vpid": "401",
-                        "apid_lang": "402 Spa 403 org 404 N/A"
+                        "apid_lang": "402 SPA 403 QAA 404 SPA"
                     },
                     {
                         "type": "Radio",
@@ -1329,7 +1273,7 @@
                         "system": "",
                         "sid": "465",
                         "vpid": "",
-                        "apid_lang": "2001 Spa"
+                        "apid_lang": "2001 SPA"
                     },
                     {
                         "type": "Radio",
@@ -1337,7 +1281,7 @@
                         "system": "",
                         "sid": "466",
                         "vpid": "",
-                        "apid_lang": "2031 Spa"
+                        "apid_lang": "2031 SPA"
                     }
                 ]
             },
@@ -1348,19 +1292,19 @@
                 "channels": [
                     {
                         "type": "HD",
-                        "name": "TVE La 1 Andalucia",
+                        "name": "La 1 HD Andalucia",
                         "system": "MPEG-4",
                         "sid": "414",
                         "vpid": "301",
-                        "apid_lang": "302 Spa 303 org 304 N/A"
+                        "apid_lang": "302 SPA 303 QAA 304 SPA"
                     },
                     {
                         "type": "HD",
-                        "name": "TVE La 2 Andalucia",
+                        "name": "La 2 HD Andalucia",
                         "system": "MPEG-4",
                         "sid": "418",
                         "vpid": "401",
-                        "apid_lang": "402 Spa 403 org 404 N/A"
+                        "apid_lang": "402 SPA 403 QAA 404 SPA"
                     },
                     {
                         "type": "Radio",
@@ -1368,7 +1312,7 @@
                         "system": "",
                         "sid": "415",
                         "vpid": "",
-                        "apid_lang": "2001 Spa"
+                        "apid_lang": "2001 SPA"
                     },
                     {
                         "type": "Radio",
@@ -1376,7 +1320,7 @@
                         "system": "",
                         "sid": "416",
                         "vpid": "",
-                        "apid_lang": "2031 Spa"
+                        "apid_lang": "2031 SPA"
                     }
                 ]
             },
@@ -1387,19 +1331,19 @@
                 "channels": [
                     {
                         "type": "HD",
-                        "name": "TVE La 1 Castilla y Leon",
+                        "name": "La 1 HD Castilla y Leon",
                         "system": "MPEG-4",
                         "sid": "454",
                         "vpid": "301",
-                        "apid_lang": "302 Spa 303 org 304 N/A"
+                        "apid_lang": "302 SPA 303 QAA 304 SPA"
                     },
                     {
                         "type": "HD",
-                        "name": "TVE La 2 Castilla y Leon",
+                        "name": "La 2 HD Castilla y Leon",
                         "system": "MPEG-4",
                         "sid": "458",
                         "vpid": "401",
-                        "apid_lang": "402 Spa 403 org 404 N/A"
+                        "apid_lang": "402 SPA 403 QAA 404 SPA"
                     },
                     {
                         "type": "Radio",
@@ -1407,7 +1351,7 @@
                         "system": "",
                         "sid": "455",
                         "vpid": "",
-                        "apid_lang": "2001 Spa"
+                        "apid_lang": "2001 SPA"
                     },
                     {
                         "type": "Radio",
@@ -1415,7 +1359,7 @@
                         "system": "",
                         "sid": "456",
                         "vpid": "",
-                        "apid_lang": "2031 Spa"
+                        "apid_lang": "2031 SPA"
                     }
                 ]
             },
@@ -1927,7 +1871,7 @@
                         "system": "MPEG-4",
                         "sid": "2",
                         "vpid": "408",
-                        "apid_lang": "456 Spa 457 orig 458 N/A"
+                        "apid_lang": "456 SPA 457 ENG 458 QUA"
                     },
                     {
                         "type": "Radio",
@@ -1935,7 +1879,7 @@
                         "system": "",
                         "sid": "3",
                         "vpid": "",
-                        "apid_lang": "557 Spa"
+                        "apid_lang": "557 SPA"
                     },
                     {
                         "type": "Radio",
@@ -1943,7 +1887,7 @@
                         "system": "",
                         "sid": "4",
                         "vpid": "",
-                        "apid_lang": "558 Spa"
+                        "apid_lang": "558 SPA"
                     },
                     {
                         "type": "Radio",
@@ -1951,7 +1895,7 @@
                         "system": "",
                         "sid": "6",
                         "vpid": "",
-                        "apid_lang": "560 Spa"
+                        "apid_lang": "560 SPA"
                     },
                     {
                         "type": "Radio",
@@ -1959,7 +1903,7 @@
                         "system": "",
                         "sid": "7",
                         "vpid": "",
-                        "apid_lang": "561 Spa"
+                        "apid_lang": "561 SPA"
                     },
                     {
                         "type": "Radio",
@@ -1967,7 +1911,7 @@
                         "system": "",
                         "sid": "8",
                         "vpid": "",
-                        "apid_lang": "562 Spa"
+                        "apid_lang": "562 SPA"
                     },
                     {
                         "type": "Radio",
@@ -1975,7 +1919,7 @@
                         "system": "",
                         "sid": "10",
                         "vpid": "",
-                        "apid_lang": "564 Spa"
+                        "apid_lang": "564 SPA"
                     }
                 ]
             }
@@ -2000,7 +1944,7 @@
                         "system": "MPEG-4",
                         "sid": "10220",
                         "vpid": "1010",
-                        "apid_lang": "1011 Spa 1012 orig 1013 N/A"
+                        "apid_lang": "1011 SPA 1012 QAA 1013 SPA"
                     },
                     {
                         "type": "HD",
@@ -2008,7 +1952,7 @@
                         "system": "MPEG-4",
                         "sid": "10225",
                         "vpid": "1020",
-                        "apid_lang": "1021 Spa 1022 orig 1023 N/A"
+                        "apid_lang": "1021 SPA 1022 QAA 1023 SPA"
                     },
                     {
                         "type": "Radio",
@@ -2016,7 +1960,7 @@
                         "system": "",
                         "sid": "10234",
                         "vpid": "",
-                        "apid_lang": "1051 Spa"
+                        "apid_lang": "1051 SPA"
                     },
                     {
                         "type": "Radio",
@@ -2024,7 +1968,7 @@
                         "system": "",
                         "sid": "10235",
                         "vpid": "",
-                        "apid_lang": "1041 Spa"
+                        "apid_lang": "1041 SPA"
                     }
                 ]
             }
@@ -2049,7 +1993,7 @@
                         "system": "MPEG-4",
                         "sid": "480",
                         "vpid": "4001",
-                        "apid_lang": "4002 Spa 4003 org 4004 N/A"
+                        "apid_lang": "4002 SPA 4003 QAA 4004 SPA"
                     },
                     {
                         "type": "HD",
@@ -2057,23 +2001,23 @@
                         "system": "MPEG-4",
                         "sid": "483",
                         "vpid": "1501",
-                        "apid_lang": "1503 Spa 1504 org 1505 N/A"
+                        "apid_lang": "1502 SPA 1503 QAA 1504 SPA"
                     },
                     {
                         "type": "HD",
-                        "name": "TVE La 1 Canarias",
+                        "name": "La 1 HD Canarias",
                         "system": "MPEG-4",
                         "sid": "484",
                         "vpid": "301",
-                        "apid_lang": "302 Spa 303 org 304 N/A"
+                        "apid_lang": "302 SPA 303 QAA 304 SPA"
                     },
                     {
                         "type": "HD",
-                        "name": "TVE La 2 Canarias",
+                        "name": "La 2 HD Canarias",
                         "system": "MPEG-4",
                         "sid": "488",
                         "vpid": "401",
-                        "apid_lang": "402 Spa 403 org 405 N/A"
+                        "apid_lang": "402 SPA 403 QAA 405 SPA"
                     },
                     {
                         "type": "Radio",
@@ -2081,7 +2025,7 @@
                         "system": "",
                         "sid": "482",
                         "vpid": "",
-                        "apid_lang": "2041 Spa"
+                        "apid_lang": "2041 SPA"
                     },
                     {
                         "type": "Radio",
@@ -2089,7 +2033,7 @@
                         "system": "",
                         "sid": "485",
                         "vpid": "",
-                        "apid_lang": "2001 Spa"
+                        "apid_lang": "2001 SPA"
                     },
                     {
                         "type": "Radio",
@@ -2097,7 +2041,7 @@
                         "system": "",
                         "sid": "486",
                         "vpid": "",
-                        "apid_lang": "2031 Spa"
+                        "apid_lang": "2031 SPA"
                     },
                     {
                         "type": "Radio",
@@ -2105,7 +2049,7 @@
                         "system": "",
                         "sid": "487",
                         "vpid": "",
-                        "apid_lang": "2051 Spa"
+                        "apid_lang": "2051 SPA"
                     }
                 ]
             },
@@ -2120,7 +2064,7 @@
                         "system": "MPEG-4",
                         "sid": "149",
                         "vpid": "101",
-                        "apid_lang": "103 Spa 104 org 105 N/A"
+                        "apid_lang": "103 SPA 104 QAA 105 SPA"
                     },
                     {
                         "type": "HD",
@@ -2128,7 +2072,7 @@
                         "system": "MPEG-4",
                         "sid": "151",
                         "vpid": "301",
-                        "apid_lang": "303 Spa 304 org 305 N/A"
+                        "apid_lang": "303 SPA 304 QAA 305 SPA"
                     },
                     {
                         "type": "HD",
@@ -2136,15 +2080,15 @@
                         "system": "MPEG-4",
                         "sid": "153",
                         "vpid": "501",
-                        "apid_lang": "503 Spa 504 org 505 N/A"
+                        "apid_lang": "503 SPA 504 QAA 505 SPA"
                     },
                     {
                         "type": "HD",
-                        "name": "Nova España",
+                        "name": "Nova ",
                         "system": "MPEG-4",
                         "sid": "154",
                         "vpid": "601",
-                        "apid_lang": "603 Spa 604 org 605 N/A"
+                        "apid_lang": "603 SPA 604 QAA 605 SPA"
                     }
                 ]
             }
@@ -2165,27 +2109,35 @@
                 "channels": [
                     {
                         "type": "HD",
-                        "name": "Teledeporte",
+                        "name": "TDP HD",
                         "system": "MPEG-4",
                         "sid": "380",
                         "vpid": "4001",
-                        "apid_lang": "4002 Spa 4003 org 4004 N/A"
+                        "apid_lang": "4002 SPA 4003 QAA 4004 SPA"
                     },
                     {
                         "type": "HD",
-                        "name": "Canal 24 Horas",
+                        "name": "24h HD",
                         "system": "MPEG-4",
                         "sid": "383",
                         "vpid": "1501",
-                        "apid_lang": "1503 Spa 1504 org 1505 N/A"
+                        "apid_lang": "1502 SPA 1503 QAA 1504 SPA"
                     },
                     {
                         "type": "HD",
-                        "name": "TVE La 2",
+                        "name": "La 2 HD",
                         "system": "MPEG-4",
                         "sid": "388",
                         "vpid": "401",
-                        "apid_lang": "402 Spa 403 org 404 N/A"
+                        "apid_lang": "402 SPA 403 QAA 404 SPA"
+                    },
+                    {
+                        "type": "Radio",
+                        "name": "Radio 4 RNE",
+                        "system": "MPEG-4",
+                        "sid": "387",
+                        "vpid": "",
+                        "apid_lang": "2041 SPA"
                     }
                 ]
             },
@@ -2196,11 +2148,11 @@
                 "channels": [
                     {
                         "type": "HD",
-                        "name": "TVE La 1 Pais Vasco",
+                        "name": "La 1 HD Pais Vasco",
                         "system": "MPEG-4",
                         "sid": "564",
                         "vpid": "301",
-                        "apid_lang": "302 Spa 303 org 304 N/A"
+                        "apid_lang": "302 SPA 303 QAA 304 SPA"
                     },
                     {
                         "type": "Radio",
@@ -2208,7 +2160,7 @@
                         "system": "",
                         "sid": "565",
                         "vpid": "",
-                        "apid_lang": "2001 Spa"
+                        "apid_lang": "2001 SPA"
                     },
                     {
                         "type": "Radio",
@@ -2216,15 +2168,7 @@
                         "system": "",
                         "sid": "566",
                         "vpid": "",
-                        "apid_lang": "2031 Spa"
-                    },
-                    {
-                        "type": "Radio",
-                        "name": "RNE Radio 4 Pais Vasco",
-                        "system": "",
-                        "sid": "567",
-                        "vpid": "",
-                        "apid_lang": "2041 Spa"
+                        "apid_lang": "2031 SPA"
                     }
                 ]
             },
@@ -2239,7 +2183,7 @@
                         "system": "MPEG-4",
                         "sid": "514",
                         "vpid": "301",
-                        "apid_lang": "302 Spa 303 org 304 N/A"
+                        "apid_lang": "302 SPA 303 QAA 304 SPA"
                     },
                     {
                         "type": "Radio",
@@ -2247,7 +2191,7 @@
                         "system": "",
                         "sid": "515",
                         "vpid": "",
-                        "apid_lang": "2001 Glg"
+                        "apid_lang": "2001 SPA"
                     },
                     {
                         "type": "Radio",
@@ -2255,15 +2199,7 @@
                         "system": "",
                         "sid": "516",
                         "vpid": "",
-                        "apid_lang": "2031 Spa"
-                    },
-                    {
-                        "type": "Radio",
-                        "name": "RNE Radio 4 Galicia",
-                        "system": "",
-                        "sid": "517",
-                        "vpid": "",
-                        "apid_lang": "2041 Spa"
+                        "apid_lang": "2031 SPA"
                     }
                 ]
             },
@@ -2361,7 +2297,7 @@
                         "system": "MPEG-4",
                         "sid": "201",
                         "vpid": "101",
-                        "apid_lang": "103 Spa 104 org 105 N/A"
+                        "apid_lang": "103 SPA 104 QAA 105 SPA"
                     },
                     {
                         "type": "HD",
@@ -2369,23 +2305,23 @@
                         "system": "MPEG-4",
                         "sid": "202",
                         "vpid": "1501",
-                        "apid_lang": "1503 Spa 1504 org 1505 N/A"
+                        "apid_lang": "1503 SPA 1504 QAA 1505 SPA"
                     },
                     {
                         "type": "HD",
-                        "name": "DMAX España",
+                        "name": "DMAX",
                         "system": "MPEG-4",
                         "sid": "277",
                         "vpid": "301",
-                        "apid_lang": "303 Spa 304 org 305 N/A"
+                        "apid_lang": "303 SPA 304 QAA 305 SPA"
                     },
                     {
                         "type": "HD",
-                        "name": "Veo 7",
+                        "name": "VEO7",
                         "system": "MPEG-4",
                         "sid": "278",
                         "vpid": "401",
-                        "apid_lang": "403 Spa 404 Eng 406 org 407 N/A 408 Spa"
+                        "apid_lang": "403 SPA 404 ENG 406 SPA"
                     },
                     {
                         "type": "Radio",
@@ -2393,7 +2329,7 @@
                         "system": "",
                         "sid": "280",
                         "vpid": "",
-                        "apid_lang": "603 Spa"
+                        "apid_lang": "603 SPA"
                     },
                     {
                         "type": "Radio",
@@ -2401,7 +2337,7 @@
                         "system": "",
                         "sid": "282",
                         "vpid": "",
-                        "apid_lang": "803 Spa"
+                        "apid_lang": "803 SPA"
                     },
                     {
                         "type": "Radio",
@@ -2409,7 +2345,7 @@
                         "system": "",
                         "sid": "283",
                         "vpid": "",
-                        "apid_lang": "903 Spa"
+                        "apid_lang": "903 SPA"
                     },
                     {
                         "type": "Radio",
@@ -2417,7 +2353,7 @@
                         "system": "",
                         "sid": "306",
                         "vpid": "",
-                        "apid_lang": "703 Spa"
+                        "apid_lang": "703 SPA"
                     }
                 ]
             },
@@ -2432,7 +2368,7 @@
                         "system": "MPEG-4",
                         "sid": "149",
                         "vpid": "101",
-                        "apid_lang": "103 Spa 104 org 105 N/A"
+                        "apid_lang": "103 SPA 104 QAA 105 SPA"
                     },
                     {
                         "type": "HD",
@@ -2440,7 +2376,7 @@
                         "system": "MPEG-4",
                         "sid": "151",
                         "vpid": "301",
-                        "apid_lang": "303 Spa 304 org 305 N/A"
+                        "apid_lang": "303 SPA 304 QAA 305 SPA"
                     },
                     {
                         "type": "HD",
@@ -2448,15 +2384,15 @@
                         "system": "MPEG-4",
                         "sid": "153",
                         "vpid": "501",
-                        "apid_lang": "503 Spa 504 org 505 N/A"
+                        "apid_lang": "503 SPA 504 QAA 505 SPA"
                     },
                     {
                         "type": "HD",
-                        "name": "Nova España",
+                        "name": "Nova ",
                         "system": "MPEG-4",
                         "sid": "154",
                         "vpid": "601",
-                        "apid_lang": "603 Spa 604 org 605 N/A"
+                        "apid_lang": "603 SPA 604 QAA 605 SPA"
                     }
                 ]
             },
@@ -2467,11 +2403,11 @@
                 "channels": [
                     {
                         "type": "HD",
-                        "name": "FDF (Factoría de Ficción)",
+                        "name": "FDF",
                         "system": "MPEG-4",
                         "sid": "188",
                         "vpid": "1301",
-                        "apid_lang": "1303 Spa 1304 org 1305 N/A"
+                        "apid_lang": "1303 SPA 1304 QAA 1305 SPA"
                     },
                     {
                         "type": "HD",
@@ -2479,23 +2415,23 @@
                         "system": "MPEG-4",
                         "sid": "189",
                         "vpid": "1401",
-                        "apid_lang": "1403 Spa 1404 org 1405 N/A"
+                        "apid_lang": "1403 SPA 1404 QAA 1405 SPA"
                     },
                     {
                         "type": "HD",
-                        "name": "Telecinco",
+                        "name": "Telecinco HD",
                         "system": "MPEG-4",
                         "sid": "190",
                         "vpid": "1501",
-                        "apid_lang": "1503 Spa 1504 org 1505 N/A"
+                        "apid_lang": "1503 SPA 1504 QAA 1505 SPA"
                     },
                     {
                         "type": "HD",
-                        "name": "Cuatro",
+                        "name": "Cuatro HD",
                         "system": "MPEG-4",
                         "sid": "191",
                         "vpid": "1701",
-                        "apid_lang": "1703 Spa 1704 org 1705 N/A"
+                        "apid_lang": "1703 SPA 1704 QAA 1705 SPA"
                     }
                 ]
             }
@@ -2516,19 +2452,19 @@
                 "channels": [
                     {
                         "type": "HD",
-                        "name": "Clan TVE",
+                        "name": "Clan HD",
                         "system": "MPEG-4",
                         "sid": "40001",
-                        "vpid": "1501",
-                        "apid_lang": "1503 Spa 1504 org 1505 N/A"
+                        "vpid": "2501",
+                        "apid_lang": "2502 SPA 2503 QAA 2504 SPA"
                     },
                     {
                         "type": "UHD",
-                        "name": "TVE La 1",
+                        "name": "La 1 UHD",
                         "system": "HVEC/UHD",
                         "sid": "40003",
                         "vpid": "4001",
-                        "apid_lang": "4002 E-AC3 Spa 4003 E-AC3 org 4004 AC4 Spa 4005 E-AC3 N/A"
+                        "apid_lang": "4002 SPA 4003 QAA 4005 SPA"
                     },
                     {
                         "type": "HD",
@@ -2536,47 +2472,47 @@
                         "system": "MPEG-4",
                         "sid": "41001",
                         "vpid": "1001",
-                        "apid_lang": "1002 Spa 1003 org 1004 N/A"
+                        "apid_lang": "1002 SPA 1003 QAA 1004 SPA"
                     },
                     {
                         "type": "Radio",
-                        "name": "RNE Radio Clásica",
+                        "name": "Radio Clasica HQ RNE",
                         "system": "",
                         "sid": "40005",
                         "vpid": "",
-                        "apid_lang": "2012 Spa 2010 Spa"
+                        "apid_lang": "2021 SPA "
                     },
                     {
                         "type": "Radio",
-                        "name": "RNE Radio 3",
+                        "name": "Radio3 HQ RNE",
                         "system": "",
                         "sid": "40006",
                         "vpid": "",
-                        "apid_lang": "3010 Spa"
+                        "apid_lang": "2011 SPA"
                     },
                     {
                         "type": "Radio",
-                        "name": "Radio Exterior",
+                        "name": "Radio Exterior RNE",
                         "system": "",
                         "sid": "40007",
                         "vpid": "",
-                        "apid_lang": "2511 Spa"
+                        "apid_lang": "2061 SPA"
                     },
                     {
                         "type": "Radio",
-                        "name": "Kiss FM España",
+                        "name": "Kiss FM ",
                         "system": "",
                         "sid": "41002",
                         "vpid": "",
-                        "apid_lang": "1101 Spa"
+                        "apid_lang": "1101 SPA"
                     },
                     {
                         "type": "Radio",
-                        "name": "Hit FM España",
+                        "name": "Hit FM ",
                         "system": "",
                         "sid": "41003",
                         "vpid": "",
-                        "apid_lang": "1601 Spa"
+                        "apid_lang": "1601 SPA"
                     },
                     {
                         "type": "Radio",
@@ -2584,7 +2520,7 @@
                         "system": "",
                         "sid": "41004",
                         "vpid": "",
-                        "apid_lang": "1701 Spa"
+                        "apid_lang": "1701 SPA"
                     },
                     {
                         "type": "Radio",
@@ -2592,7 +2528,7 @@
                         "system": "",
                         "sid": "41005",
                         "vpid": "",
-                        "apid_lang": "1201 Spa"
+                        "apid_lang": "1202 SPA"
                     },
                     {
                         "type": "Radio",
@@ -2600,7 +2536,7 @@
                         "system": "",
                         "sid": "41006",
                         "vpid": "",
-                        "apid_lang": "1301 Spa"
+                        "apid_lang": "1302 SPA"
                     },
                     {
                         "type": "Radio",
@@ -2608,56 +2544,7 @@
                         "system": "",
                         "sid": "41007",
                         "vpid": "",
-                        "apid_lang": "1401 Spa"
-                    }
-                ]
-            }
-        ]
-    },
-    {
-        "txp_no": "190",
-        "freq_pol_mode": "12599.76 V DVB-S2/8PSK",
-        "provider": "Abertis DTT",
-        "sr_fec": "10200 3/4",
-        "onid_nid_tid": "-/60000/60009",
-        "date": "24.04.2026",
-        "streams": [
-            {
-                "title": "Stream 8009 - (HS190m.1) - TDT-CAM",
-                "pid_info": "8916-6200--12571",
-                "encryption": "BISS",
-                "channels": [
-                    {
-                        "type": "HD",
-                        "name": "BOM",
-                        "system": "MPEG-4",
-                        "sid": "423",
-                        "vpid": "311",
-                        "apid_lang": "312 Spa 214 orig"
-                    },
-                    {
-                        "type": "HD",
-                        "name": "Telemadrid",
-                        "system": "MPEG-4",
-                        "sid": "425",
-                        "vpid": "611",
-                        "apid_lang": "612 Spa 613 orig 614 N/A"
-                    },
-                    {
-                        "type": "HD",
-                        "name": "La Otra",
-                        "system": "MPEG-4",
-                        "sid": "15240",
-                        "vpid": "711",
-                        "apid_lang": "712 Spa 713 orig 714 N/A"
-                    },
-                    {
-                        "type": "Radio",
-                        "name": "Onda Madrid",
-                        "system": "",
-                        "sid": "10068",
-                        "vpid": "",
-                        "apid_lang": "511 Spa"
+                        "apid_lang": "1402 SPA"
                     }
                 ]
             }
@@ -2678,35 +2565,35 @@
                 "channels": [
                     {
                         "type": "HD",
-                        "name": "Teledeporte Madrid",
+                        "name": "TDP HD Madrid",
                         "system": "MPEG-4",
                         "sid": "530",
                         "vpid": "4001",
-                        "apid_lang": "4002 Spa 4003 org 4004 N/A"
+                        "apid_lang": "4002 SPA 4003 QAA 4004 SPA"
                     },
                     {
                         "type": "HD",
-                        "name": "Canal 24 Horas Madrid",
+                        "name": "24h HD Madrid",
                         "system": "MPEG-4",
                         "sid": "533",
                         "vpid": "1501",
-                        "apid_lang": "1503 Spa 1504 org 1005 N/A"
+                        "apid_lang": "1502 SPA 1503 QAA 1504 SPA"
                     },
                     {
                         "type": "HD",
-                        "name": "TVE La 1 Madrid",
+                        "name": "La 1 HD Madrid",
                         "system": "MPEG-4",
                         "sid": "534",
                         "vpid": "301",
-                        "apid_lang": "302 Spa 303 org 304 N/A"
+                        "apid_lang": "302 SPA 303 QAA 304 SPA"
                     },
                     {
                         "type": "HD",
-                        "name": "TVE La 2 Madrid",
+                        "name": "La 2 HD Madrid",
                         "system": "MPEG-4",
                         "sid": "538",
                         "vpid": "401",
-                        "apid_lang": "402 Spa 403 org 404 N/A"
+                        "apid_lang": "402 SPA 403 QAA 404 SPA"
                     },
                     {
                         "type": "Radio",
@@ -2714,7 +2601,7 @@
                         "system": "",
                         "sid": "535",
                         "vpid": "",
-                        "apid_lang": "2001 Spa"
+                        "apid_lang": "2001 SPA"
                     },
                     {
                         "type": "Radio",
@@ -2722,7 +2609,7 @@
                         "system": "",
                         "sid": "536",
                         "vpid": "",
-                        "apid_lang": "2031 Spa"
+                        "apid_lang": "2031 SPA"
                     },
                     {
                         "type": "Radio",
@@ -2730,15 +2617,56 @@
                         "system": "",
                         "sid": "537",
                         "vpid": "",
-                        "apid_lang": "2041 Spa"
+                        "apid_lang": "2041 SPA"
                     }
                 ]
             },
             {
-                "title": "Stream 8002 - (HSA-67.2) - UNACTIVE",
+                "title": "Stream 8002 - (HSA-67.2) TDT-CAM",
                 "pid_info": "",
                 "encryption": "",
-                "channels": []
+                "channels": [
+                    {
+                        "type": "UHD",
+                        "name": "Telemadrid HDR",
+                        "system": "HEVC",
+                        "sid": "421",
+                        "vpid": "811",
+                        "apid_lang": "812 SPA 813 QAA 814 SPA"
+                    },
+                    {
+                        "type": "HD",
+                        "name": "BOM",
+                        "system": "MPEG-4",
+                        "sid": "423",
+                        "vpid": "311",
+                        "apid_lang": "312 SPA 314 SPA"
+                    },
+                    {
+                        "type": "HD",
+                        "name": "Telemadrid HD",
+                        "system": "MPEG-4",
+                        "sid": "425",
+                        "vpid": "611",
+                        "apid_lang": "612 SPA 613 QAA 614 SPA"
+                    },
+                    {
+                        "type": "HD",
+                        "name": "LA OTRA HD",
+                        "system": "MPEG-4",
+                        "sid": "15240",
+                        "vpid": "711",
+                        "apid_lang": "712 SPA 713 QAA 714 SPA"
+                    },
+                    {
+                        "type": "Radio",
+                        "name": "ONDA MADRID",
+                        "system": "MPEG-4",
+                        "sid": "10068",
+                        "vpid": "",
+                        "apid_lang": "511 SPA"
+                    }
+                ]
             },
             {
                 "title": "Stream 8003 - (HSA-67.3) - MPE4",
@@ -2751,7 +2679,7 @@
                         "system": "MPEG-4",
                         "sid": "155",
                         "vpid": "1301",
-                        "apid_lang": "1303 Spa 1034 org 1305 N/A"
+                        "apid_lang": "1303 SPA 1034 QAA 1305 SPA"
                     },
                     {
                         "type": "HD",
@@ -2759,7 +2687,7 @@
                         "system": "MPEG-4",
                         "sid": "170",
                         "vpid": "2001",
-                        "apid_lang": "2003 Spa 2004 org 2005 N/A"
+                        "apid_lang": "2003 SPA 2004 QAA 2005 SPA"
                     },
                     {
                         "type": "HD",
@@ -2767,7 +2695,7 @@
                         "system": "MPEG-4",
                         "sid": "192",
                         "vpid": "1101",
-                        "apid_lang": "1103 Spa 1104 org 1105 N/A"
+                        "apid_lang": "1103 SPA 1104 QAA 1105 SPA"
                     },
                     {
                         "type": "HD",
@@ -2775,7 +2703,7 @@
                         "system": "MPEG-4",
                         "sid": "193",
                         "vpid": "1201",
-                        "apid_lang": "1203 Spa 1204 org 1205 N/A"
+                        "apid_lang": "1203 SPA 1204 QAA 1205 SPA"
                     },
                     {
                         "type": "Radio",
@@ -2783,7 +2711,7 @@
                         "system": "",
                         "sid": "156",
                         "vpid": "",
-                        "apid_lang": "1401 Spa"
+                        "apid_lang": "1401 SPA"
                     },
                     {
                         "type": "Radio",
@@ -2791,7 +2719,7 @@
                         "system": "",
                         "sid": "157",
                         "vpid": "",
-                        "apid_lang": "1501 Spa"
+                        "apid_lang": "1501 SPA"
                     },
                     {
                         "type": "Radio",
@@ -2799,7 +2727,7 @@
                         "system": "",
                         "sid": "158",
                         "vpid": "",
-                        "apid_lang": "1601 Spa"
+                        "apid_lang": "1601 SPA"
                     },
                     {
                         "type": "Radio",
@@ -2807,7 +2735,7 @@
                         "system": "",
                         "sid": "171",
                         "vpid": "",
-                        "apid_lang": "2101 Spa"
+                        "apid_lang": "2101 SPA"
                     },
                     {
                         "type": "Radio",
@@ -2815,7 +2743,7 @@
                         "system": "",
                         "sid": "172",
                         "vpid": "",
-                        "apid_lang": "2201 Spa"
+                        "apid_lang": "2201 SPA"
                     }
                 ]
             }
@@ -2840,7 +2768,7 @@
                         "system": "MPEG-2",
                         "sid": "110",
                         "vpid": "256",
-                        "apid_lang": "257 Spa"
+                        "apid_lang": "257 SPA"
                     }
                 ]
             },
@@ -2851,51 +2779,51 @@
                 "channels": [
                     {
                         "type": "HD",
-                        "name": "Atreseries",
+                        "name": "A3Series",
                         "system": "MPEG-4",
                         "sid": "101",
                         "vpid": "101",
-                        "apid_lang": "103 Spa 104 org 105 N/A"
+                        "apid_lang": "103 SPA 104 QAA 105 SPA"
                     },
                     {
                         "type": "HD",
-                        "name": "Be Mad",
+                        "name": "BeMad tv HD",
                         "system": "MPEG-4",
                         "sid": "102",
                         "vpid": "201",
-                        "apid_lang": "203 Spa 204 org 205 N/A"
+                        "apid_lang": "203 SPA 204 QAA 205 SPA"
                     },
                     {
                         "type": "HD",
-                        "name": "Real Madrid TV Español",
+                        "name": "Realmadrid TV HD",
                         "system": "MPEG-4",
                         "sid": "103",
                         "vpid": "301",
-                        "apid_lang": "303 Spa 304 org 305 N/A"
+                        "apid_lang": "303 SPA 304 QAA 305 SPA"
                     },
                     {
                         "type": "HD",
-                        "name": "Ten",
+                        "name": "TEN",
                         "system": "MPEG-4",
                         "sid": "104",
                         "vpid": "401",
-                        "apid_lang": "402 Spa 403 org 404 N/A"
+                        "apid_lang": "402 SPA 403 ENG 404 SPA"
                     },
                     {
                         "type": "Radio",
-                        "name": "Los 40 Classic",
+                        "name": "LOS40 Classic",
                         "system": "",
                         "sid": "105",
                         "vpid": "",
-                        "apid_lang": "510 Spa"
+                        "apid_lang": "510 SPA"
                     },
                     {
                         "type": "Radio",
-                        "name": "Los 40 Urban",
+                        "name": "LOS40 Urban",
                         "system": "",
                         "sid": "106",
                         "vpid": "",
-                        "apid_lang": "610 Spa"
+                        "apid_lang": "610 SPA"
                     },
                     {
                         "type": "Radio",
@@ -2903,7 +2831,7 @@
                         "system": "",
                         "sid": "107",
                         "vpid": "",
-                        "apid_lang": "710 Spa"
+                        "apid_lang": "710 SPA"
                     }
                 ]
             },
@@ -2914,11 +2842,11 @@
                 "channels": [
                     {
                         "type": "HD",
-                        "name": "FDF (Factoría de Ficción)",
+                        "name": "FDF",
                         "system": "MPEG-4",
                         "sid": "188",
                         "vpid": "1301",
-                        "apid_lang": "1303 Spa 1304 org 1305 N/A"
+                        "apid_lang": "1303 SPA 1304 QAA 1305 SPA"
                     },
                     {
                         "type": "HD",
@@ -2926,23 +2854,23 @@
                         "system": "MPEG-4",
                         "sid": "189",
                         "vpid": "1401",
-                        "apid_lang": "1403 Spa 1404 org 1405 N/A"
+                        "apid_lang": "1403 SPA 1404 QAA 1405 SPA"
                     },
                     {
                         "type": "HD",
-                        "name": "Telecinco",
+                        "name": "Telecinco HD",
                         "system": "MPEG-4",
                         "sid": "190",
                         "vpid": "1501",
-                        "apid_lang": "1503 Spa 1504 org 1505 N/A"
+                        "apid_lang": "1503 SPA 1504 QAA 1505 SPA"
                     },
                     {
                         "type": "HD",
-                        "name": "Cuatro",
+                        "name": "Cuatro HD",
                         "system": "MPEG-4",
                         "sid": "191",
                         "vpid": "1701",
-                        "apid_lang": "1703 Spa 1704 org 1705 N/A"
+                        "apid_lang": "1703 SPA 1704 QAA 1705 SPA"
                     }
                 ]
             },
@@ -2953,35 +2881,35 @@
                 "channels": [
                     {
                         "type": "HD",
-                        "name": "Teledeporte Cataluña",
+                        "name": "TDP HD Cataluña",
                         "system": "MPEG-4",
                         "sid": "490",
                         "vpid": "4001",
-                        "apid_lang": "4002 Spa 4003 org 4004 N/A"
+                        "apid_lang": "4002 SPA 4003 QAA 4004 SPA"
                     },
                     {
                         "type": "HD",
-                        "name": "Canal 24 Horas Cataluña",
+                        "name": "24h HD Cataluña",
                         "system": "MPEG-4",
                         "sid": "493",
                         "vpid": "1501",
-                        "apid_lang": "1503 Spa 1504 org 1505 N/A"
+                        "apid_lang": "1502 SPA 1503 QAA 1504 SPA"
                     },
                     {
                         "type": "HD",
-                        "name": "TVE La 1 Cataluña",
+                        "name": "La 1 HD Cataluña",
                         "system": "MPEG-4",
                         "sid": "494",
                         "vpid": "301",
-                        "apid_lang": "302 Spa 303 org 304 N/A"
+                        "apid_lang": "302 SPA 303 QAA 304 SPA"
                     },
                     {
                         "type": "HD",
-                        "name": "TVE La 2 Cataluña",
+                        "name": "La 2 HD Cataluña",
                         "system": "MPEG-4",
                         "sid": "498",
                         "vpid": "401",
-                        "apid_lang": "402 Spa 403 org 404 N/A"
+                        "apid_lang": "402 SPA 403 QAA 404 SPA"
                     },
                     {
                         "type": "Radio",
@@ -2989,7 +2917,7 @@
                         "system": "",
                         "sid": "495",
                         "vpid": "",
-                        "apid_lang": "2001 Spa"
+                        "apid_lang": "2001 SPA"
                     },
                     {
                         "type": "Radio",
@@ -2997,7 +2925,7 @@
                         "system": "",
                         "sid": "496",
                         "vpid": "",
-                        "apid_lang": "2031 Spa"
+                        "apid_lang": "2031 SPA"
                     },
                     {
                         "type": "Radio",
@@ -3005,7 +2933,7 @@
                         "system": "",
                         "sid": "497",
                         "vpid": "",
-                        "apid_lang": "2041 Spa"
+                        "apid_lang": "2041 SPA"
                     }
                 ]
             }
