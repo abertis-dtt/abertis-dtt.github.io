@@ -193,6 +193,8 @@
                                                     <th class="py-4 px-5"><span class="inline-flex items-center gap-1.5"><i class="fa-solid fa-fingerprint text-cyan-500/50"></i>SID</span></th>
                                                     <th class="py-4 px-5"><span class="inline-flex items-center gap-1.5"><i class="fa-solid fa-film text-indigo-500/50"></i>V.PID</span></th>
                                                     <th class="py-4 px-5"><span class="inline-flex items-center gap-1.5"><i class="fa-solid fa-volume-high text-amber-500/50"></i>A.PID / Codec / Lang</span></th>
+                                                    <th class="py-4 px-5 w-32"><span class="inline-flex items-center gap-1.5"><i class="fa-solid fa-user-pen text-violet-500/50"></i>Changed by</span></th>
+                                                    <th class="py-4 px-5"><span class="inline-flex items-center gap-1.5"><i class="fa-solid fa-clock-rotate-left text-sky-500/50"></i>Last changes</span></th>
                                                 </tr>
                                             </thead>
                                             <tbody class="divide-y divide-slate-800/40 text-slate-300">
@@ -243,10 +245,40 @@
                                                         <td class="py-4 px-5 align-top">
                                                             <div x-html="formatPids(ch.apid_lang, 'apid')"></div>
                                                         </td>
+
+                                                        <!-- Changed by / Last changes — stream level cells spanning every channel row -->
+                                                        <template x-if="cIndex === 0">
+                                                            <td :rowspan="stream.channels.length" class="py-4 px-5 align-top border-l border-slate-800/40">
+                                                                <span x-show="stream.changed_by"
+                                                                      class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg border font-bold text-[10px] tracking-wide text-violet-200 bg-violet-500/15 border-violet-400/30 shadow-[0_0_10px_rgba(139,92,246,0.2)]"
+                                                                      :title="`Last edit by ${stream.changed_by}`">
+                                                                    <i class="fa-solid fa-user-pen text-[9px] opacity-60"></i>
+                                                                    <span x-text="stream.changed_by"></span>
+                                                                </span>
+                                                                <span x-show="!stream.changed_by" class="text-slate-600">—</span>
+                                                            </td>
+                                                        </template>
+                                                        <template x-if="cIndex === 0">
+                                                            <td :rowspan="stream.channels.length" class="py-4 px-5 align-top whitespace-normal w-[300px] max-w-[300px] break-words border-l border-slate-800/40">
+                                                                <template x-if="stream.changes">
+                                                                    <div class="flex flex-col gap-1.5">
+                                                                        <template x-for="(line, li) in (stream.changes || '').split('; ')" :key="li">
+                                                                            <div class="flex items-start gap-2">
+                                                                                <i class="fa-solid fa-angles-right text-sky-500/60 text-[9px] mt-[3px]"></i>
+                                                                                <span class="text-[11px] leading-relaxed text-slate-300 break-words min-w-0" x-text="line"></span>
+                                                                            </div>
+                                                                        </template>
+                                                                    </div>
+                                                                </template>
+                                                                <template x-if="!stream.changes">
+                                                                    <span class="text-slate-600">—</span>
+                                                                </template>
+                                                            </td>
+                                                        </template>
                                                     </tr>
                                                 </template>
                                                 <template x-if="!stream.channels || stream.channels.length === 0">
-                                                    <tr><td colspan="6" class="py-8 text-center text-slate-500 font-medium italic bg-slate-900/20">No matching channels in this multiplex stream.</td></tr>
+                                                    <tr><td colspan="8" class="py-8 text-center text-slate-500 font-medium italic bg-slate-900/20">No matching channels in this multiplex stream.</td></tr>
                                                 </template>
                                             </tbody>
                                         </table>
@@ -428,7 +460,9 @@
                             let streamMatches = stream.title.toLowerCase().includes(q)
                                 || (stream.pid_info && stream.pid_info.toLowerCase().includes(q))
                                 || (stream.sid && stream.sid.toString().toLowerCase().includes(q))
-                                || (stream.cpid && stream.cpid.toString().toLowerCase().includes(q));
+                                || (stream.cpid && stream.cpid.toString().toLowerCase().includes(q))
+                                || (stream.changed_by && stream.changed_by.toLowerCase().includes(q))
+                                || (stream.changes && stream.changes.toLowerCase().includes(q));
 
                             let matchingChannels = (stream.channels || []).filter(ch =>
                                 (ch.name && ch.name.toLowerCase().includes(q)) ||
