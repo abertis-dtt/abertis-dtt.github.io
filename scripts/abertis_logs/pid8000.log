@@ -1,0 +1,39 @@
+Oct 06 00:17:23: INFO: Starting Astra SM 0.2
+Oct 06 00:17:24: INFO: PAT: tsid: 1
+Oct 06 00:17:24: INFO: PAT: pid: 32 PMT pnr: 110
+Oct 06 00:17:24: INFO: PAT: crc32: 0xAE967DD9
+Oct 06 00:17:24: INFO: SDT: tsid: 1
+Oct 06 00:17:24: INFO: SDT: sid: 110
+Oct 06 00:17:24: INFO: SDT:    Service: ALERTA
+Oct 06 00:17:24: INFO: SDT:    Provider: Cellnex
+Oct 06 00:17:24: INFO: SDT: crc32: 0x7186D9FB
+Oct 06 00:17:24: INFO: Bitrate: 1538 Kbit/s
+Oct 06 00:17:24: INFO: PMT: pnr: 110
+Oct 06 00:17:24: INFO: PMT: pid: 256 PCR
+Oct 06 00:17:24: INFO: VIDEO: pid: 256 type: MPEG-2 video, ISO/IEC 13818-2 (0x02)
+Oct 06 00:17:24: INFO: AUDIO: pid: 257 type: MPEG-1 audio, ISO/IEC 11172-3 (0x03)
+Oct 06 00:17:24: INFO: AUDIO: descriptor: 0x030167
+Oct 06 00:17:24: INFO: AUDIO: Language: eng
+Oct 06 00:17:24: INFO: PMT: crc32: 0xB8F69EA2
+Oct 06 00:17:25: INFO: Bitrate: 1143 Kbit/s
+Oct 06 00:17:25: ERROR: CC: PID:32=1 PID:256=1 
+Oct 06 00:17:26: INFO: Bitrate: 2849 Kbit/s
+Oct 06 00:17:27: INFO: Bitrate: 1079 Kbit/s
+Oct 06 00:17:28: INFO: Bitrate: 1504 Kbit/s
+Oct 06 00:17:29: INFO: Bitrate: 4062 Kbit/s
+Oct 06 00:17:30: INFO: Bitrate: 1144 Kbit/s
+Oct 06 00:17:31: INFO: Bitrate: 2716 Kbit/s
+Oct 06 00:17:32: INFO: Bitrate: 1734 Kbit/s
+Oct 06 00:17:33: INFO: Bitrate: 2522 Kbit/s
+Oct 06 00:17:34: INFO: Bitrate: 1471 Kbit/s
+Oct 06 00:17:35: INFO: Bitrate: 2684 Kbit/s
+Oct 06 00:17:36: INFO: Bitrate: 1438 Kbit/s
+Oct 06 00:17:37: INFO: Bitrate: 3831 Kbit/s
+Oct 06 00:17:38: INFO: Bitrate: 1275 Kbit/s
+Oct 06 00:17:39: INFO: Bitrate: 3012 Kbit/s
+Oct 06 00:17:40: INFO: Bitrate: 1274 Kbit/s
+Oct 06 00:17:41: INFO: Bitrate: 3800 Kbit/s
+Oct 06 00:17:42: INFO: Bitrate: 1143 Kbit/s
+Oct 06 00:17:43: INFO: Bitrate: 2390 Kbit/s
+Oct 06 00:17:44: INFO: Bitrate: 1373 Kbit/s
+Oct 06 00:17:45: INFO: [main] shutting down

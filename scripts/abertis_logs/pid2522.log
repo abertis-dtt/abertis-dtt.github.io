@@ -1,0 +1,131 @@
+Oct 06 00:10:17: INFO: Starting Astra SM 0.2
+Oct 06 00:10:17: INFO: PAT: tsid: 1005
+Oct 06 00:10:17: INFO: PAT: pid: 16 NIT
+Oct 06 00:10:17: INFO: PAT: pid: 300 PMT pnr: 464
+Oct 06 00:10:17: INFO: PAT: pid: 2000 PMT pnr: 465
+Oct 06 00:10:17: INFO: PAT: pid: 2030 PMT pnr: 466
+Oct 06 00:10:17: INFO: PAT: pid: 400 PMT pnr: 468
+Oct 06 00:10:17: INFO: PAT: crc32: 0x40E895E2
+Oct 06 00:10:17: INFO: PMT: pnr: 466
+Oct 06 00:10:17: INFO: PMT: pid: 2031 PCR
+Oct 06 00:10:17: INFO: AUDIO: pid: 2031 type: MPEG-1 audio, ISO/IEC 11172-3 (0x03)
+Oct 06 00:10:17: INFO: AUDIO: Language: spa
+Oct 06 00:10:17: INFO: AUDIO: Stream ID: 1
+Oct 06 00:10:17: INFO: AUDIO: Maximum bitrate: 357
+Oct 06 00:10:17: INFO: DATA: pid: 2035 type: Private sections, ISO/IEC 13818-1 (0x05)
+Oct 06 00:10:17: INFO: DATA: descriptor: 0x6F030010FE
+Oct 06 00:10:17: INFO: PMT: crc32: 0x2AF806F2
+Oct 06 00:10:17: INFO: PMT: pnr: 464
+Oct 06 00:10:17: INFO: PMT: pid: 301 PCR
+Oct 06 00:10:17: INFO: PMT: descriptor: 0x050443554549
+Oct 06 00:10:17: INFO: VIDEO: pid: 301 type: MPEG-4 AVC/H.264, ISO/IEC 14496-10 (0x1B)
+Oct 06 00:10:17: INFO: VIDEO: descriptor: 0x28046400283F
+Oct 06 00:10:17: INFO: DATA: pid: 302 type: Private PES, ISO/IEC 13818-1 (0x06)
+Oct 06 00:10:17: INFO: DATA: descriptor: 0x7A04E0C41000
+Oct 06 00:10:17: INFO: DATA: descriptor: 0x050445414333
+Oct 06 00:10:17: INFO: DATA: Language: spa
+Oct 06 00:10:17: INFO: DATA: pid: 303 type: Private PES, ISO/IEC 13818-1 (0x06)
+Oct 06 00:10:17: INFO: DATA: descriptor: 0x7A04E0C41000
+Oct 06 00:10:17: INFO: DATA: descriptor: 0x050445414333
+Oct 06 00:10:17: INFO: DATA: Language: qaa
+Oct 06 00:10:17: INFO: DATA: pid: 304 type: Private PES, ISO/IEC 13818-1 (0x06)
+Oct 06 00:10:17: INFO: DATA: descriptor: 0x7A04D8901001
+Oct 06 00:10:17: INFO: DATA: descriptor: 0x050445414333
+Oct 06 00:10:17: INFO: DATA: Language: spa
+Oct 06 00:10:17: INFO: SUB: pid: 312 type: Private PES, ISO/IEC 13818-1 (0x06)
+Oct 06 00:10:17: INFO: SUB: descriptor: 0x59087370611400010001
+Oct 06 00:10:17: INFO: SUB: pid: 313 type: Private PES, ISO/IEC 13818-1 (0x06)
+Oct 06 00:10:17: INFO: SUB: descriptor: 0x59087161611400010001
+Oct 06 00:10:17: INFO: SUB: pid: 320 type: Private PES, ISO/IEC 13818-1 (0x06)
+Oct 06 00:10:17: INFO: SUB: type: teletext
+Oct 06 00:10:17: INFO: SUB:    page: 100 (initial page), language: spa
+Oct 06 00:10:17: INFO: SUB:    page: 088 (subtitle page), language: spa
+Oct 06 00:10:17: INFO: SUB:    page: 089 (subtitle page), language: qaa
+Oct 06 00:10:17: INFO: DATA: pid: 325 type: Private sections, ISO/IEC 13818-1 (0x05)
+Oct 06 00:10:17: INFO: DATA: descriptor: 0x6F030010FE
+Oct 06 00:10:17: INFO: DATA: pid: 8120 type: User private (0x86)
+Oct 06 00:10:17: INFO: PMT: crc32: 0x327FA338
+Oct 06 00:10:18: INFO: PMT: pnr: 468
+Oct 06 00:10:18: INFO: PMT: pid: 401 PCR
+Oct 06 00:10:18: INFO: VIDEO: pid: 401 type: MPEG-4 AVC/H.264, ISO/IEC 14496-10 (0x1B)
+Oct 06 00:10:18: INFO: VIDEO: descriptor: 0x28046400283F
+Oct 06 00:10:18: INFO: DATA: pid: 402 type: Private PES, ISO/IEC 13818-1 (0x06)
+Oct 06 00:10:18: INFO: DATA: descriptor: 0x7A04E0C41000
+Oct 06 00:10:18: INFO: DATA: descriptor: 0x050445414333
+Oct 06 00:10:18: INFO: DATA: Language: spa
+Oct 06 00:10:18: INFO: DATA: pid: 403 type: Private PES, ISO/IEC 13818-1 (0x06)
+Oct 06 00:10:18: INFO: DATA: descriptor: 0x7A04E0C41000
+Oct 06 00:10:18: INFO: DATA: descriptor: 0x050445414333
+Oct 06 00:10:18: INFO: DATA: Language: qaa
+Oct 06 00:10:18: INFO: DATA: pid: 404 type: Private PES, ISO/IEC 13818-1 (0x06)
+Oct 06 00:10:18: INFO: DATA: descriptor: 0x7A04D8901001
+Oct 06 00:10:18: INFO: DATA: descriptor: 0x050445414333
+Oct 06 00:10:18: INFO: DATA: Language: spa
+Oct 06 00:10:18: INFO: SUB: pid: 412 type: Private PES, ISO/IEC 13818-1 (0x06)
+Oct 06 00:10:18: INFO: SUB: descriptor: 0x59087370611400010001
+Oct 06 00:10:18: INFO: SUB: pid: 413 type: Private PES, ISO/IEC 13818-1 (0x06)
+Oct 06 00:10:18: INFO: SUB: descriptor: 0x59087161611400010001
+Oct 06 00:10:18: INFO: SUB: pid: 420 type: Private PES, ISO/IEC 13818-1 (0x06)
+Oct 06 00:10:18: INFO: SUB: type: teletext
+Oct 06 00:10:18: INFO: SUB:    page: 100 (initial page), language: spa
+Oct 06 00:10:18: INFO: SUB:    page: 088 (subtitle page), language: spa
+Oct 06 00:10:18: INFO: SUB:    page: 089 (subtitle page), language: qaa
+Oct 06 00:10:18: INFO: DATA: pid: 425 type: Private sections, ISO/IEC 13818-1 (0x05)
+Oct 06 00:10:18: INFO: DATA: descriptor: 0x6F030010FE
+Oct 06 00:10:18: INFO: PMT: crc32: 0x41C6F54B
+Oct 06 00:10:18: INFO: PMT: pnr: 465
+Oct 06 00:10:18: INFO: PMT: pid: 2001 PCR
+Oct 06 00:10:18: INFO: AUDIO: pid: 2001 type: MPEG-1 audio, ISO/IEC 11172-3 (0x03)
+Oct 06 00:10:18: INFO: AUDIO: Language: spa
+Oct 06 00:10:18: INFO: AUDIO: Stream ID: 1
+Oct 06 00:10:18: INFO: AUDIO: Maximum bitrate: 357
+Oct 06 00:10:18: INFO: DATA: pid: 2005 type: Private sections, ISO/IEC 13818-1 (0x05)
+Oct 06 00:10:18: INFO: DATA: descriptor: 0x6F030010FE
+Oct 06 00:10:18: INFO: PMT: crc32: 0x70873533
+Oct 06 00:10:18: INFO: Bitrate: 6639 Kbit/s
+Oct 06 00:10:18: INFO: SDT: tsid: 1005
+Oct 06 00:10:18: INFO: SDT: sid: 460
+Oct 06 00:10:18: INFO: SDT:    Service: tdp HD
+Oct 06 00:10:18: INFO: SDT:    Provider: RTVE
+Oct 06 00:10:18: INFO: SDT: sid: 463
+Oct 06 00:10:18: INFO: SDT:    Service: 24h HD
+Oct 06 00:10:18: INFO: SDT:    Provider: RTVE
+Oct 06 00:10:18: INFO: SDT: sid: 464
+Oct 06 00:10:18: INFO: SDT:    Service: La 1 HD
+Oct 06 00:10:18: INFO: SDT:    Provider: RTVE
+Oct 06 00:10:18: INFO: SDT: sid: 465
+Oct 06 00:10:18: INFO: SDT:    Service: RNE Castilla La Mancha
+Oct 06 00:10:18: INFO: SDT:    Provider: RTVE
+Oct 06 00:10:18: INFO: SDT: sid: 466
+Oct 06 00:10:18: INFO: SDT:    Service: Radio 5 RNE
+Oct 06 00:10:18: INFO: SDT:    Provider: RTVE
+Oct 06 00:10:18: INFO: SDT: sid: 467
+Oct 06 00:10:18: INFO: SDT:    Service: Ràdio 4 RNE
+Oct 06 00:10:18: INFO: SDT:    Provider: RTVE
+Oct 06 00:10:18: INFO: SDT: sid: 468
+Oct 06 00:10:18: INFO: SDT:    Service: La 2 HD
+Oct 06 00:10:18: INFO: SDT:    Provider: RTVE
+Oct 06 00:10:18: INFO: SDT: crc32: 0x7EC42CF2
+Oct 06 00:10:19: INFO: Bitrate: 9460 Kbit/s
+Oct 06 00:10:19: ERROR: CC: PID:17=1 PID:412=1 PID:413=1 PID:2005=1 PID:8120=1 
+Oct 06 00:10:20: INFO: Bitrate: 10933 Kbit/s
+Oct 06 00:10:21: INFO: Bitrate: 8873 Kbit/s
+Oct 06 00:10:22: INFO: Bitrate: 10118 Kbit/s
+Oct 06 00:10:23: INFO: Bitrate: 9166 Kbit/s
+Oct 06 00:10:24: INFO: Bitrate: 10934 Kbit/s
+Oct 06 00:10:25: INFO: Bitrate: 9000 Kbit/s
+Oct 06 00:10:25: ERROR: CC: PID:16=1 
+Oct 06 00:10:26: INFO: Bitrate: 10705 Kbit/s
+Oct 06 00:10:27: INFO: Bitrate: 8577 Kbit/s
+Oct 06 00:10:28: INFO: Bitrate: 10117 Kbit/s
+Oct 06 00:10:29: INFO: Bitrate: 9561 Kbit/s
+Oct 06 00:10:30: INFO: Bitrate: 10018 Kbit/s
+Oct 06 00:10:31: INFO: Bitrate: 9657 Kbit/s
+Oct 06 00:10:32: INFO: Bitrate: 10248 Kbit/s
+Oct 06 00:10:33: INFO: Bitrate: 10375 Kbit/s
+Oct 06 00:10:34: INFO: Bitrate: 8969 Kbit/s
+Oct 06 00:10:35: INFO: Bitrate: 11030 Kbit/s
+Oct 06 00:10:36: INFO: Bitrate: 8184 Kbit/s
+Oct 06 00:10:37: INFO: Bitrate: 10673 Kbit/s
+Oct 06 00:10:38: INFO: Bitrate: 9199 Kbit/s
+Oct 06 00:10:39: INFO: [main] shutting down

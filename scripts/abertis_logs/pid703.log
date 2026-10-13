@@ -1,0 +1,210 @@
+Oct 06 00:16:53: INFO: Starting Astra SM 0.2
+Oct 06 00:16:54: INFO: PAT: tsid: 16
+Oct 06 00:16:54: INFO: PAT: pid: 16 NIT
+Oct 06 00:16:54: INFO: PAT: pid: 1300 PMT pnr: 188
+Oct 06 00:16:54: INFO: PAT: pid: 1400 PMT pnr: 189
+Oct 06 00:16:54: INFO: PAT: pid: 1500 PMT pnr: 190
+Oct 06 00:16:54: INFO: PAT: pid: 1700 PMT pnr: 191
+Oct 06 00:16:54: INFO: PAT: crc32: 0xBC6AE2EF
+Oct 06 00:16:54: INFO: PMT: pnr: 188
+Oct 06 00:16:54: INFO: PMT: pid: 1301 PCR
+Oct 06 00:16:54: INFO: PMT: descriptor: 0x0C0480B48168
+Oct 06 00:16:54: INFO: PMT: Maximum bitrate: 22248
+Oct 06 00:16:54: INFO: DATA: pid: 512 type: DSM-CC stream descriptors, ISO/IEC 13818-6 (0x0C)
+Oct 06 00:16:54: INFO: DATA: Stream ID: 31
+Oct 06 00:16:54: INFO: DATA: Maximum bitrate: 25
+Oct 06 00:16:54: INFO: DATA: descriptor: 0x1405001F010000
+Oct 06 00:16:54: INFO: VIDEO: pid: 1301 type: MPEG-4 AVC/H.264, ISO/IEC 14496-10 (0x1B)
+Oct 06 00:16:54: INFO: VIDEO: Stream ID: 1
+Oct 06 00:16:54: INFO: VIDEO: descriptor: 0x02031A445F
+Oct 06 00:16:54: INFO: VIDEO: descriptor: 0x060102
+Oct 06 00:16:54: INFO: VIDEO: Maximum bitrate: 21363
+Oct 06 00:16:54: INFO: VIDEO: descriptor: 0x28046400283F
+Oct 06 00:16:54: INFO: SUB: pid: 1302 type: Private PES, ISO/IEC 13818-1 (0x06)
+Oct 06 00:16:54: INFO: SUB: Stream ID: 5
+Oct 06 00:16:54: INFO: SUB: Maximum bitrate: 185
+Oct 06 00:16:54: INFO: SUB: type: teletext
+Oct 06 00:16:54: INFO: SUB:    page: 100 (initial page), language: spa
+Oct 06 00:16:54: INFO: SUB:    page: 088 (subtitle page), language: spa
+Oct 06 00:16:54: INFO: SUB: descriptor: 0x45080106E7E8E9C7C8C9
+Oct 06 00:16:54: INFO: AUDIO: pid: 1303 type: MPEG-1 audio, ISO/IEC 11172-3 (0x03)
+Oct 06 00:16:54: INFO: AUDIO: Stream ID: 2
+Oct 06 00:16:54: INFO: AUDIO: Language: spa
+Oct 06 00:16:54: INFO: AUDIO: descriptor: 0x030167
+Oct 06 00:16:54: INFO: AUDIO: Maximum bitrate: 355
+Oct 06 00:16:54: INFO: AUDIO: pid: 1304 type: MPEG-1 audio, ISO/IEC 11172-3 (0x03)
+Oct 06 00:16:54: INFO: AUDIO: Stream ID: 3
+Oct 06 00:16:54: INFO: AUDIO: Language: qaa
+Oct 06 00:16:54: INFO: AUDIO: descriptor: 0x030167
+Oct 06 00:16:54: INFO: AUDIO: Maximum bitrate: 260
+Oct 06 00:16:54: INFO: AUDIO: pid: 1305 type: MPEG-1 audio, ISO/IEC 11172-3 (0x03)
+Oct 06 00:16:54: INFO: AUDIO: Stream ID: 4
+Oct 06 00:16:54: INFO: AUDIO: Language: spa
+Oct 06 00:16:54: INFO: AUDIO: descriptor: 0x030167
+Oct 06 00:16:54: INFO: AUDIO: Maximum bitrate: 197
+Oct 06 00:16:54: INFO: DATA: pid: 1306 type: Private sections, ISO/IEC 13818-1 (0x05)
+Oct 06 00:16:54: INFO: DATA: Stream ID: 6
+Oct 06 00:16:54: INFO: DATA: Maximum bitrate: 25
+Oct 06 00:16:54: INFO: DATA: descriptor: 0x6F00
+Oct 06 00:16:54: INFO: PMT: crc32: 0x1FF73922
+Oct 06 00:16:54: INFO: Bitrate: 6681 Kbit/s
+Oct 06 00:16:54: INFO: PMT: pnr: 191
+Oct 06 00:16:54: INFO: PMT: pid: 1701 PCR
+Oct 06 00:16:54: INFO: PMT: descriptor: 0x0C0480B48168
+Oct 06 00:16:54: INFO: PMT: Maximum bitrate: 22688
+Oct 06 00:16:54: INFO: DATA: pid: 512 type: DSM-CC stream descriptors, ISO/IEC 13818-6 (0x0C)
+Oct 06 00:16:54: INFO: DATA: Stream ID: 31
+Oct 06 00:16:54: INFO: DATA: Maximum bitrate: 25
+Oct 06 00:16:54: INFO: DATA: descriptor: 0x1405001F010000
+Oct 06 00:16:54: INFO: SUB: pid: 1202 type: Private PES, ISO/IEC 13818-1 (0x06)
+Oct 06 00:16:54: INFO: SUB: Stream ID: 5
+Oct 06 00:16:54: INFO: SUB: Maximum bitrate: 375
+Oct 06 00:16:54: INFO: SUB: type: teletext
+Oct 06 00:16:54: INFO: SUB:    page: 100 (initial page), language: spa
+Oct 06 00:16:54: INFO: SUB:    page: 088 (subtitle page), language: spa
+Oct 06 00:16:54: INFO: SUB: descriptor: 0x4510010EE7E8E9EAEBECEDC7C8C9CACBCCCD
+Oct 06 00:16:54: INFO: VIDEO: pid: 1701 type: MPEG-4 AVC/H.264, ISO/IEC 14496-10 (0x1B)
+Oct 06 00:16:54: INFO: VIDEO: Stream ID: 1
+Oct 06 00:16:54: INFO: VIDEO: descriptor: 0x02031A445F
+Oct 06 00:16:54: INFO: VIDEO: descriptor: 0x060102
+Oct 06 00:16:54: INFO: VIDEO: Maximum bitrate: 21363
+Oct 06 00:16:54: INFO: VIDEO: descriptor: 0x28046400283F
+Oct 06 00:16:54: INFO: AUDIO: pid: 1703 type: MPEG-1 audio, ISO/IEC 11172-3 (0x03)
+Oct 06 00:16:54: INFO: AUDIO: Stream ID: 2
+Oct 06 00:16:54: INFO: AUDIO: Language: spa
+Oct 06 00:16:54: INFO: AUDIO: descriptor: 0x030167
+Oct 06 00:16:54: INFO: AUDIO: Maximum bitrate: 515
+Oct 06 00:16:54: INFO: AUDIO: pid: 1704 type: MPEG-1 audio, ISO/IEC 11172-3 (0x03)
+Oct 06 00:16:54: INFO: AUDIO: Stream ID: 3
+Oct 06 00:16:54: INFO: AUDIO: Language: qaa
+Oct 06 00:16:54: INFO: AUDIO: descriptor: 0x030167
+Oct 06 00:16:54: INFO: AUDIO: Maximum bitrate: 355
+Oct 06 00:16:54: INFO: AUDIO: pid: 1705 type: MPEG-1 audio, ISO/IEC 11172-3 (0x03)
+Oct 06 00:16:54: INFO: AUDIO: Stream ID: 4
+Oct 06 00:16:54: INFO: AUDIO: Language: spa
+Oct 06 00:16:54: INFO: AUDIO: descriptor: 0x030167
+Oct 06 00:16:54: INFO: AUDIO: Maximum bitrate: 197
+Oct 06 00:16:54: INFO: DATA: pid: 1706 type: Private sections, ISO/IEC 13818-1 (0x05)
+Oct 06 00:16:54: INFO: DATA: Stream ID: 6
+Oct 06 00:16:54: INFO: DATA: Maximum bitrate: 25
+Oct 06 00:16:54: INFO: DATA: descriptor: 0x6F00
+Oct 06 00:16:54: INFO: PMT: crc32: 0xA6665437
+Oct 06 00:16:54: INFO: PMT: pnr: 190
+Oct 06 00:16:54: INFO: PMT: pid: 1501 PCR
+Oct 06 00:16:54: INFO: PMT: descriptor: 0x0C0480B48168
+Oct 06 00:16:54: INFO: PMT: Maximum bitrate: 22713
+Oct 06 00:16:54: INFO: DATA: pid: 512 type: DSM-CC stream descriptors, ISO/IEC 13818-6 (0x0C)
+Oct 06 00:16:54: INFO: DATA: Stream ID: 31
+Oct 06 00:16:54: INFO: DATA: Maximum bitrate: 25
+Oct 06 00:16:54: INFO: DATA: descriptor: 0x1405001F010000
+Oct 06 00:16:54: INFO: SUB: pid: 1102 type: Private PES, ISO/IEC 13818-1 (0x06)
+Oct 06 00:16:54: INFO: SUB: Stream ID: 5
+Oct 06 00:16:54: INFO: SUB: Maximum bitrate: 375
+Oct 06 00:16:54: INFO: SUB: descriptor: 0x4510010EE7E8E9EAEBECEDC7C8C9CACBCCCD
+Oct 06 00:16:54: INFO: SUB: type: teletext
+Oct 06 00:16:54: INFO: SUB:    page: 100 (initial page), language: spa
+Oct 06 00:16:54: INFO: SUB:    page: 088 (subtitle page), language: spa
+Oct 06 00:16:54: INFO: VIDEO: pid: 1501 type: MPEG-4 AVC/H.264, ISO/IEC 14496-10 (0x1B)
+Oct 06 00:16:54: INFO: VIDEO: Stream ID: 1
+Oct 06 00:16:54: INFO: VIDEO: descriptor: 0x02031A445F
+Oct 06 00:16:54: INFO: VIDEO: descriptor: 0x060102
+Oct 06 00:16:54: INFO: VIDEO: Maximum bitrate: 21363
+Oct 06 00:16:54: INFO: VIDEO: descriptor: 0x28046400283F
+Oct 06 00:16:54: INFO: AUDIO: pid: 1503 type: MPEG-1 audio, ISO/IEC 11172-3 (0x03)
+Oct 06 00:16:54: INFO: AUDIO: Stream ID: 2
+Oct 06 00:16:54: INFO: AUDIO: Language: spa
+Oct 06 00:16:54: INFO: AUDIO: descriptor: 0x030167
+Oct 06 00:16:54: INFO: AUDIO: Maximum bitrate: 515
+Oct 06 00:16:54: INFO: AUDIO: pid: 1504 type: MPEG-1 audio, ISO/IEC 11172-3 (0x03)
+Oct 06 00:16:54: INFO: AUDIO: Stream ID: 3
+Oct 06 00:16:54: INFO: AUDIO: Language: qaa
+Oct 06 00:16:54: INFO: AUDIO: descriptor: 0x030167
+Oct 06 00:16:54: INFO: AUDIO: Maximum bitrate: 355
+Oct 06 00:16:54: INFO: AUDIO: pid: 1505 type: MPEG-1 audio, ISO/IEC 11172-3 (0x03)
+Oct 06 00:16:54: INFO: AUDIO: Stream ID: 4
+Oct 06 00:16:54: INFO: AUDIO: Language: spa
+Oct 06 00:16:54: INFO: AUDIO: descriptor: 0x030167
+Oct 06 00:16:54: INFO: AUDIO: Maximum bitrate: 197
+Oct 06 00:16:54: INFO: DATA: pid: 1506 type: Private sections, ISO/IEC 13818-1 (0x05)
+Oct 06 00:16:54: INFO: DATA: Stream ID: 6
+Oct 06 00:16:54: INFO: DATA: Maximum bitrate: 25
+Oct 06 00:16:54: INFO: DATA: descriptor: 0x6F00
+Oct 06 00:16:54: INFO: PMT: crc32: 0xEA6D3B52
+Oct 06 00:16:55: INFO: PMT: pnr: 189
+Oct 06 00:16:55: INFO: PMT: pid: 1401 PCR
+Oct 06 00:16:55: INFO: PMT: descriptor: 0x0C0480B48168
+Oct 06 00:16:55: INFO: PMT: Maximum bitrate: 22248
+Oct 06 00:16:55: INFO: DATA: pid: 512 type: DSM-CC stream descriptors, ISO/IEC 13818-6 (0x0C)
+Oct 06 00:16:55: INFO: DATA: Stream ID: 31
+Oct 06 00:16:55: INFO: DATA: Maximum bitrate: 25
+Oct 06 00:16:55: INFO: DATA: descriptor: 0x1405001F010000
+Oct 06 00:16:55: INFO: VIDEO: pid: 1401 type: MPEG-4 AVC/H.264, ISO/IEC 14496-10 (0x1B)
+Oct 06 00:16:55: INFO: VIDEO: Stream ID: 1
+Oct 06 00:16:55: INFO: VIDEO: descriptor: 0x02031A445F
+Oct 06 00:16:55: INFO: VIDEO: descriptor: 0x060102
+Oct 06 00:16:55: INFO: VIDEO: Maximum bitrate: 21363
+Oct 06 00:16:55: INFO: VIDEO: descriptor: 0x28046400283F
+Oct 06 00:16:55: INFO: SUB: pid: 1402 type: Private PES, ISO/IEC 13818-1 (0x06)
+Oct 06 00:16:55: INFO: SUB: Stream ID: 5
+Oct 06 00:16:55: INFO: SUB: Maximum bitrate: 185
+Oct 06 00:16:55: INFO: SUB: descriptor: 0x45080106E7E8E9C7C8C9
+Oct 06 00:16:55: INFO: SUB: type: teletext
+Oct 06 00:16:55: INFO: SUB:    page: 100 (initial page), language: spa
+Oct 06 00:16:55: INFO: SUB:    page: 088 (subtitle page), language: spa
+Oct 06 00:16:55: INFO: AUDIO: pid: 1403 type: MPEG-1 audio, ISO/IEC 11172-3 (0x03)
+Oct 06 00:16:55: INFO: AUDIO: Stream ID: 2
+Oct 06 00:16:55: INFO: AUDIO: Language: spa
+Oct 06 00:16:55: INFO: AUDIO: descriptor: 0x030167
+Oct 06 00:16:55: INFO: AUDIO: Maximum bitrate: 355
+Oct 06 00:16:55: INFO: AUDIO: pid: 1404 type: MPEG-1 audio, ISO/IEC 11172-3 (0x03)
+Oct 06 00:16:55: INFO: AUDIO: Stream ID: 3
+Oct 06 00:16:55: INFO: AUDIO: Language: qaa
+Oct 06 00:16:55: INFO: AUDIO: descriptor: 0x030167
+Oct 06 00:16:55: INFO: AUDIO: Maximum bitrate: 260
+Oct 06 00:16:55: INFO: AUDIO: pid: 1405 type: MPEG-1 audio, ISO/IEC 11172-3 (0x03)
+Oct 06 00:16:55: INFO: AUDIO: Stream ID: 4
+Oct 06 00:16:55: INFO: AUDIO: Language: spa
+Oct 06 00:16:55: INFO: AUDIO: descriptor: 0x030167
+Oct 06 00:16:55: INFO: AUDIO: Maximum bitrate: 197
+Oct 06 00:16:55: INFO: DATA: pid: 1406 type: Private sections, ISO/IEC 13818-1 (0x05)
+Oct 06 00:16:55: INFO: DATA: Stream ID: 6
+Oct 06 00:16:55: INFO: DATA: Maximum bitrate: 25
+Oct 06 00:16:55: INFO: DATA: descriptor: 0x6F00
+Oct 06 00:16:55: INFO: PMT: crc32: 0x719B6CC8
+Oct 06 00:16:55: INFO: SDT: tsid: 16
+Oct 06 00:16:55: INFO: SDT: sid: 188
+Oct 06 00:16:55: INFO: SDT:    Service: FDF
+Oct 06 00:16:55: INFO: SDT:    Provider: MEDIASET
+Oct 06 00:16:55: INFO: SDT: sid: 189
+Oct 06 00:16:55: INFO: SDT:    Service: Divinity
+Oct 06 00:16:55: INFO: SDT:    Provider: MEDIASET
+Oct 06 00:16:55: INFO: SDT: sid: 190
+Oct 06 00:16:55: INFO: SDT:    Service: Telecinco HD
+Oct 06 00:16:55: INFO: SDT:    Provider: MEDIASET
+Oct 06 00:16:55: INFO: SDT: sid: 191
+Oct 06 00:16:55: INFO: SDT:    Service: Cuatro HD
+Oct 06 00:16:55: INFO: SDT:    Provider: MEDIASET
+Oct 06 00:16:55: INFO: SDT: crc32: 0x32AF0DE1
+Oct 06 00:16:55: INFO: Bitrate: 19420 Kbit/s
+Oct 06 00:16:55: ERROR: CC: PID:17=1 PID:1102=1 PID:1202=1 PID:1400=1 PID:1401=1 PID:1402=1 PID:1403=1 PID:1404=1 PID:1405=1 PID:1406=1 PID:1500=1 PID:1501=1 PID:1503=1 PID:1504=1 PID:1505=1 PID:1506=1 PID:1700=1 PID:1701=1 PID:1703=1 PID:1704=1 PID:1705=1 PID:1706=1 
+Oct 06 00:16:56: INFO: Bitrate: 19451 Kbit/s
+Oct 06 00:16:57: INFO: Bitrate: 20401 Kbit/s
+Oct 06 00:16:58: INFO: Bitrate: 18997 Kbit/s
+Oct 06 00:16:59: INFO: Bitrate: 22007 Kbit/s
+Oct 06 00:17:00: INFO: Bitrate: 19452 Kbit/s
+Oct 06 00:17:00: ERROR: CC: PID:16=1 
+Oct 06 00:17:01: INFO: Bitrate: 19418 Kbit/s
+Oct 06 00:17:02: INFO: Bitrate: 19190 Kbit/s
+Oct 06 00:17:03: INFO: Bitrate: 21057 Kbit/s
+Oct 06 00:17:04: INFO: Bitrate: 19127 Kbit/s
+Oct 06 00:17:05: INFO: Bitrate: 20305 Kbit/s
+Oct 06 00:17:06: INFO: Bitrate: 20108 Kbit/s
+Oct 06 00:17:07: INFO: Bitrate: 20697 Kbit/s
+Oct 06 00:17:08: INFO: Bitrate: 19225 Kbit/s
+Oct 06 00:17:09: INFO: Bitrate: 19319 Kbit/s
+Oct 06 00:17:10: INFO: Bitrate: 20533 Kbit/s
+Oct 06 00:17:11: INFO: Bitrate: 18996 Kbit/s
+Oct 06 00:17:12: INFO: Bitrate: 21483 Kbit/s
+Oct 06 00:17:13: INFO: Bitrate: 18602 Kbit/s
+Oct 06 00:17:14: INFO: Bitrate: 20305 Kbit/s
+Oct 06 00:17:15: INFO: [main] shutting down

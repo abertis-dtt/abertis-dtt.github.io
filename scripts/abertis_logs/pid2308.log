@@ -1,0 +1,234 @@
+Oct 06 00:09:03: INFO: Starting Astra SM 0.2
+Oct 06 00:09:04: INFO: PAT: tsid: 101
+Oct 06 00:09:04: INFO: PAT: pid: 16 NIT
+Oct 06 00:09:04: INFO: PAT: pid: 120 PMT pnr: 806
+Oct 06 00:09:04: INFO: PAT: pid: 130 PMT pnr: 807
+Oct 06 00:09:04: INFO: PAT: pid: 140 PMT pnr: 808
+Oct 06 00:09:04: INFO: PAT: pid: 150 PMT pnr: 809
+Oct 06 00:09:04: INFO: PAT: pid: 160 PMT pnr: 810
+Oct 06 00:09:04: INFO: PAT: pid: 170 PMT pnr: 811
+Oct 06 00:09:04: INFO: PAT: pid: 180 PMT pnr: 812
+Oct 06 00:09:04: INFO: PAT: pid: 110 PMT pnr: 813
+Oct 06 00:09:04: INFO: PAT: pid: 310 PMT pnr: 815
+Oct 06 00:09:04: INFO: PAT: crc32: 0xDA1F7409
+Oct 06 00:09:04: INFO: PMT: pnr: 811
+Oct 06 00:09:04: INFO: PMT: pid: 152 PCR
+Oct 06 00:09:04: INFO: AUDIO: pid: 171 type: ADTS AAC, ISO/IEC 13818-7 (0x0F)
+Oct 06 00:09:04: INFO: AUDIO: Stream ID: 1
+Oct 06 00:09:04: INFO: AUDIO: Language: cat
+Oct 06 00:09:04: INFO: AUDIO: descriptor: 0x7C025100
+Oct 06 00:09:04: INFO: DATA: pid: 993 type: Private sections, ISO/IEC 13818-1 (0x05)
+Oct 06 00:09:04: INFO: DATA: descriptor: 0x6F00
+Oct 06 00:09:04: INFO: PMT: crc32: 0x22AA22B3
+Oct 06 00:09:04: INFO: PMT: pnr: 813
+Oct 06 00:09:04: INFO: PMT: pid: 111 PCR
+Oct 06 00:09:04: INFO: VIDEO: pid: 111 type: MPEG-4 AVC/H.264, ISO/IEC 14496-10 (0x1B)
+Oct 06 00:09:04: INFO: VIDEO: Stream ID: 1
+Oct 06 00:09:04: INFO: VIDEO: descriptor: 0x28046400283F
+Oct 06 00:09:04: INFO: DATA: pid: 112 type: Private PES, ISO/IEC 13818-1 (0x06)
+Oct 06 00:09:04: INFO: DATA: Language: cat
+Oct 06 00:09:04: INFO: DATA: descriptor: 0x7A05E0C4100000
+Oct 06 00:09:04: INFO: DATA: pid: 114 type: Private PES, ISO/IEC 13818-1 (0x06)
+Oct 06 00:09:04: INFO: DATA: Stream ID: 3
+Oct 06 00:09:04: INFO: DATA: Language: v.o
+Oct 06 00:09:04: INFO: DATA: descriptor: 0x7A03C0C210
+Oct 06 00:09:04: INFO: DATA: pid: 116 type: Private PES, ISO/IEC 13818-1 (0x06)
+Oct 06 00:09:04: INFO: DATA: Stream ID: 4
+Oct 06 00:09:04: INFO: DATA: Language: cat
+Oct 06 00:09:04: INFO: DATA: descriptor: 0x7A03C09010
+Oct 06 00:09:04: INFO: DATA: pid: 117 type: User private (0x86)
+Oct 06 00:09:04: INFO: DATA: Stream ID: 5
+Oct 06 00:09:04: INFO: SUB: pid: 129 type: Private PES, ISO/IEC 13818-1 (0x06)
+Oct 06 00:09:04: INFO: SUB: Stream ID: 6
+Oct 06 00:09:04: INFO: SUB: descriptor: 0x45090107E7E8E9EAC7C8C9
+Oct 06 00:09:04: INFO: SUB: type: teletext
+Oct 06 00:09:04: INFO: SUB:    page: 100 (initial page), language: cat
+Oct 06 00:09:04: INFO: DATA: pid: 611 type: DSM-CC stream descriptors, ISO/IEC 13818-6 (0x0C)
+Oct 06 00:09:04: INFO: DATA: Stream ID: 10
+Oct 06 00:09:04: INFO: DATA: descriptor: 0x1405000A010000
+Oct 06 00:09:04: INFO: DATA: pid: 711 type: Private PES, ISO/IEC 13818-1 (0x06)
+Oct 06 00:09:04: INFO: DATA: Stream ID: 11
+Oct 06 00:09:04: INFO: SUB: pid: 801 type: Private PES, ISO/IEC 13818-1 (0x06)
+Oct 06 00:09:04: INFO: SUB: Stream ID: 7
+Oct 06 00:09:04: INFO: SUB: descriptor: 0x59086361741400010001
+Oct 06 00:09:04: INFO: SUB: pid: 811 type: Private PES, ISO/IEC 13818-1 (0x06)
+Oct 06 00:09:04: INFO: SUB: Stream ID: 8
+Oct 06 00:09:04: INFO: SUB: descriptor: 0x5908656E671400010001
+Oct 06 00:09:04: INFO: DATA: pid: 901 type: Private sections, ISO/IEC 13818-1 (0x05)
+Oct 06 00:09:04: INFO: DATA: Stream ID: 9
+Oct 06 00:09:04: INFO: DATA: descriptor: 0x6F030010E0
+Oct 06 00:09:04: INFO: PMT: crc32: 0xE4BB250A
+Oct 06 00:09:04: INFO: PMT: pnr: 808
+Oct 06 00:09:04: INFO: PMT: pid: 141 PCR
+Oct 06 00:09:04: INFO: SUB: pid: 129 type: Private PES, ISO/IEC 13818-1 (0x06)
+Oct 06 00:09:04: INFO: SUB: Stream ID: 6
+Oct 06 00:09:04: INFO: SUB: descriptor: 0x45090107E7E8E9EAC7C8C9
+Oct 06 00:09:04: INFO: SUB: type: teletext
+Oct 06 00:09:04: INFO: SUB:    page: 100 (initial page), language: cat
+Oct 06 00:09:04: INFO: VIDEO: pid: 141 type: MPEG-4 AVC/H.264, ISO/IEC 14496-10 (0x1B)
+Oct 06 00:09:04: INFO: VIDEO: Stream ID: 1
+Oct 06 00:09:04: INFO: VIDEO: descriptor: 0x28046400283F
+Oct 06 00:09:04: INFO: DATA: pid: 142 type: Private PES, ISO/IEC 13818-1 (0x06)
+Oct 06 00:09:04: INFO: DATA: Stream ID: 2
+Oct 06 00:09:04: INFO: DATA: Language: cat
+Oct 06 00:09:04: INFO: DATA: descriptor: 0x7A03C0C210
+Oct 06 00:09:04: INFO: DATA: pid: 144 type: Private PES, ISO/IEC 13818-1 (0x06)
+Oct 06 00:09:04: INFO: DATA: Stream ID: 3
+Oct 06 00:09:04: INFO: DATA: Language: v.o
+Oct 06 00:09:04: INFO: DATA: descriptor: 0x7A03C0C010
+Oct 06 00:09:04: INFO: DATA: pid: 146 type: Private PES, ISO/IEC 13818-1 (0x06)
+Oct 06 00:09:04: INFO: DATA: Stream ID: 4
+Oct 06 00:09:04: INFO: DATA: Language: cat
+Oct 06 00:09:04: INFO: DATA: descriptor: 0x7A03C09010
+Oct 06 00:09:04: INFO: SUB: pid: 804 type: Private PES, ISO/IEC 13818-1 (0x06)
+Oct 06 00:09:04: INFO: SUB: descriptor: 0x59086361741400010001
+Oct 06 00:09:04: INFO: DATA: pid: 904 type: Private sections, ISO/IEC 13818-1 (0x05)
+Oct 06 00:09:04: INFO: DATA: descriptor: 0x6F030010E0
+Oct 06 00:09:04: INFO: PMT: crc32: 0xF626C883
+Oct 06 00:09:04: INFO: PMT: pnr: 812
+Oct 06 00:09:04: INFO: PMT: pid: 152 PCR
+Oct 06 00:09:04: INFO: AUDIO: pid: 181 type: ADTS AAC, ISO/IEC 13818-7 (0x0F)
+Oct 06 00:09:04: INFO: AUDIO: Stream ID: 1
+Oct 06 00:09:04: INFO: AUDIO: Language: cat
+Oct 06 00:09:04: INFO: AUDIO: descriptor: 0x7C025100
+Oct 06 00:09:04: INFO: DATA: pid: 994 type: Private sections, ISO/IEC 13818-1 (0x05)
+Oct 06 00:09:04: INFO: DATA: descriptor: 0x6F00
+Oct 06 00:09:04: INFO: PMT: crc32: 0xE7368EC7
+Oct 06 00:09:04: INFO: PMT: pnr: 806
+Oct 06 00:09:04: INFO: PMT: pid: 121 PCR
+Oct 06 00:09:04: INFO: VIDEO: pid: 121 type: MPEG-4 AVC/H.264, ISO/IEC 14496-10 (0x1B)
+Oct 06 00:09:04: INFO: VIDEO: Stream ID: 1
+Oct 06 00:09:04: INFO: VIDEO: descriptor: 0x28046400283F
+Oct 06 00:09:04: INFO: DATA: pid: 122 type: Private PES, ISO/IEC 13818-1 (0x06)
+Oct 06 00:09:04: INFO: DATA: Stream ID: 2
+Oct 06 00:09:04: INFO: DATA: Language: cat
+Oct 06 00:09:04: INFO: DATA: descriptor: 0x7A03C0C210
+Oct 06 00:09:04: INFO: DATA: pid: 124 type: Private PES, ISO/IEC 13818-1 (0x06)
+Oct 06 00:09:04: INFO: DATA: Stream ID: 3
+Oct 06 00:09:04: INFO: DATA: Language: v.o
+Oct 06 00:09:04: INFO: DATA: descriptor: 0x7A03C0C210
+Oct 06 00:09:04: INFO: DATA: pid: 126 type: Private PES, ISO/IEC 13818-1 (0x06)
+Oct 06 00:09:04: INFO: DATA: Stream ID: 4
+Oct 06 00:09:04: INFO: DATA: Language: cat
+Oct 06 00:09:04: INFO: DATA: descriptor: 0x7A03C09010
+Oct 06 00:09:04: INFO: SUB: pid: 129 type: Private PES, ISO/IEC 13818-1 (0x06)
+Oct 06 00:09:04: INFO: SUB: Stream ID: 6
+Oct 06 00:09:04: INFO: SUB: descriptor: 0x45090107E7E8E9EAC7C8C9
+Oct 06 00:09:04: INFO: SUB: type: teletext
+Oct 06 00:09:04: INFO: SUB:    page: 100 (initial page), language: cat
+Oct 06 00:09:04: INFO: SUB: pid: 802 type: Private PES, ISO/IEC 13818-1 (0x06)
+Oct 06 00:09:04: INFO: SUB: descriptor: 0x59086361741400010001
+Oct 06 00:09:04: INFO: SUB: pid: 812 type: Private PES, ISO/IEC 13818-1 (0x06)
+Oct 06 00:09:04: INFO: SUB: descriptor: 0x5908656E671400010001
+Oct 06 00:09:04: INFO: DATA: pid: 902 type: Private sections, ISO/IEC 13818-1 (0x05)
+Oct 06 00:09:04: INFO: DATA: descriptor: 0x6F030010E0
+Oct 06 00:09:04: INFO: PMT: crc32: 0xC757B7BA
+Oct 06 00:09:04: INFO: PMT: pnr: 809
+Oct 06 00:09:04: INFO: PMT: pid: 152 PCR
+Oct 06 00:09:04: INFO: AUDIO: pid: 151 type: ADTS AAC, ISO/IEC 13818-7 (0x0F)
+Oct 06 00:09:04: INFO: AUDIO: Stream ID: 1
+Oct 06 00:09:04: INFO: AUDIO: Language: cat
+Oct 06 00:09:04: INFO: AUDIO: descriptor: 0x7C025100
+Oct 06 00:09:04: INFO: DATA: pid: 991 type: Private sections, ISO/IEC 13818-1 (0x05)
+Oct 06 00:09:04: INFO: DATA: descriptor: 0x6F00
+Oct 06 00:09:04: INFO: PMT: crc32: 0x854C5BC4
+Oct 06 00:09:04: INFO: Bitrate: 9720 Kbit/s
+Oct 06 00:09:04: INFO: PMT: pnr: 810
+Oct 06 00:09:04: INFO: PMT: pid: 152 PCR
+Oct 06 00:09:04: INFO: AUDIO: pid: 161 type: ADTS AAC, ISO/IEC 13818-7 (0x0F)
+Oct 06 00:09:04: INFO: AUDIO: Stream ID: 1
+Oct 06 00:09:04: INFO: AUDIO: Language: cat
+Oct 06 00:09:04: INFO: AUDIO: descriptor: 0x7C025100
+Oct 06 00:09:04: INFO: DATA: pid: 992 type: Private sections, ISO/IEC 13818-1 (0x05)
+Oct 06 00:09:04: INFO: DATA: descriptor: 0x6F00
+Oct 06 00:09:04: INFO: PMT: crc32: 0xFE1EEF00
+Oct 06 00:09:04: INFO: PMT: pnr: 807
+Oct 06 00:09:04: INFO: PMT: pid: 131 PCR
+Oct 06 00:09:04: INFO: SUB: pid: 129 type: Private PES, ISO/IEC 13818-1 (0x06)
+Oct 06 00:09:04: INFO: SUB: Stream ID: 6
+Oct 06 00:09:04: INFO: SUB: descriptor: 0x45090107E7E8E9EAC7C8C9
+Oct 06 00:09:04: INFO: SUB: type: teletext
+Oct 06 00:09:04: INFO: SUB:    page: 100 (initial page), language: cat
+Oct 06 00:09:04: INFO: VIDEO: pid: 131 type: MPEG-4 AVC/H.264, ISO/IEC 14496-10 (0x1B)
+Oct 06 00:09:04: INFO: VIDEO: Stream ID: 1
+Oct 06 00:09:04: INFO: VIDEO: descriptor: 0x28046400283F
+Oct 06 00:09:04: INFO: DATA: pid: 132 type: Private PES, ISO/IEC 13818-1 (0x06)
+Oct 06 00:09:04: INFO: DATA: Stream ID: 2
+Oct 06 00:09:04: INFO: DATA: Language: cat
+Oct 06 00:09:04: INFO: DATA: descriptor: 0x7A03C0C210
+Oct 06 00:09:04: INFO: DATA: pid: 134 type: Private PES, ISO/IEC 13818-1 (0x06)
+Oct 06 00:09:04: INFO: DATA: Stream ID: 3
+Oct 06 00:09:04: INFO: DATA: Language: v.o
+Oct 06 00:09:04: INFO: DATA: descriptor: 0x7A03C0C210
+Oct 06 00:09:04: INFO: DATA: pid: 136 type: Private PES, ISO/IEC 13818-1 (0x06)
+Oct 06 00:09:04: INFO: DATA: Stream ID: 4
+Oct 06 00:09:04: INFO: DATA: Language: cat
+Oct 06 00:09:04: INFO: DATA: descriptor: 0x7A03C09010
+Oct 06 00:09:04: INFO: SUB: pid: 803 type: Private PES, ISO/IEC 13818-1 (0x06)
+Oct 06 00:09:04: INFO: SUB: descriptor: 0x59086361741400010001
+Oct 06 00:09:04: INFO: DATA: pid: 903 type: Private sections, ISO/IEC 13818-1 (0x05)
+Oct 06 00:09:04: INFO: DATA: descriptor: 0x6F030010E0
+Oct 06 00:09:04: INFO: PMT: crc32: 0xFC0FE18E
+Oct 06 00:09:04: INFO: PMT: pnr: 815
+Oct 06 00:09:04: INFO: PMT: pid: 311 PCR
+Oct 06 00:09:04: INFO: VIDEO: pid: 311 type: MPEG-4 AVC/H.264, ISO/IEC 14496-10 (0x1B)
+Oct 06 00:09:04: INFO: VIDEO: Stream ID: 1
+Oct 06 00:09:04: INFO: VIDEO: descriptor: 0x28046400283F
+Oct 06 00:09:04: INFO: DATA: pid: 312 type: Private PES, ISO/IEC 13818-1 (0x06)
+Oct 06 00:09:04: INFO: DATA: Stream ID: 2
+Oct 06 00:09:04: INFO: DATA: Language: cat
+Oct 06 00:09:04: INFO: DATA: descriptor: 0x7A03C0C210
+Oct 06 00:09:04: INFO: PMT: crc32: 0xBDF2651C
+Oct 06 00:09:05: INFO: SDT: tsid: 101
+Oct 06 00:09:05: INFO: SDT: sid: 806
+Oct 06 00:09:05: INFO: SDT:    Service: SX3/33
+Oct 06 00:09:05: INFO: SDT:    Provider: 3Cat
+Oct 06 00:09:05: INFO: SDT: sid: 807
+Oct 06 00:09:05: INFO: SDT:    Service: 3CatInfo
+Oct 06 00:09:05: INFO: SDT:    Provider: 3Cat
+Oct 06 00:09:05: INFO: SDT: sid: 808
+Oct 06 00:09:05: INFO: SDT:    Service: Esport3
+Oct 06 00:09:05: INFO: SDT:    Provider: 3Cat
+Oct 06 00:09:05: INFO: SDT: sid: 809
+Oct 06 00:09:05: INFO: SDT:    Service: CatRadio
+Oct 06 00:09:05: INFO: SDT:    Provider: 3Cat
+Oct 06 00:09:05: INFO: SDT: sid: 810
+Oct 06 00:09:05: INFO: SDT:    Service: 3CatInfo
+Oct 06 00:09:05: INFO: SDT:    Provider: 3Cat
+Oct 06 00:09:05: INFO: SDT: sid: 811
+Oct 06 00:09:05: INFO: SDT:    Service: CatMusic
+Oct 06 00:09:05: INFO: SDT:    Provider: 3Cat
+Oct 06 00:09:05: INFO: SDT: sid: 812
+Oct 06 00:09:05: INFO: SDT:    Service: iCat.cat
+Oct 06 00:09:05: INFO: SDT:    Provider: 3Cat
+Oct 06 00:09:05: INFO: SDT: sid: 813
+Oct 06 00:09:05: INFO: SDT:    Service: TV3
+Oct 06 00:09:05: INFO: SDT:    Provider: 3Cat
+Oct 06 00:09:05: INFO: SDT: sid: 815
+Oct 06 00:09:05: INFO: SDT:    Service: IB3 Global
+Oct 06 00:09:05: INFO: SDT:    Provider: 3Cat
+Oct 06 00:09:05: INFO: SDT: crc32: 0x2FF89765
+Oct 06 00:09:05: INFO: Bitrate: 19775 Kbit/s
+Oct 06 00:09:05: ERROR: CC: PID:17=1 PID:130=1 PID:131=1 PID:132=1 PID:134=1 PID:136=1 PID:160=1 PID:161=1 PID:310=1 PID:311=1 PID:312=1 PID:611=1 PID:802=1 PID:902=1 PID:903=1 PID:904=1 PID:991=1 PID:992=1 PID:994=1 
+Oct 06 00:09:06: INFO: Bitrate: 19878 Kbit/s
+Oct 06 00:09:07: INFO: Bitrate: 19219 Kbit/s
+Oct 06 00:09:08: INFO: Bitrate: 21511 Kbit/s
+Oct 06 00:09:09: INFO: Bitrate: 19876 Kbit/s
+Oct 06 00:09:10: INFO: Bitrate: 18924 Kbit/s
+Oct 06 00:09:11: INFO: Bitrate: 19511 Kbit/s
+Oct 06 00:09:12: INFO: Bitrate: 19878 Kbit/s
+Oct 06 00:09:12: ERROR: CC: PID:16=1 
+Oct 06 00:09:13: INFO: Bitrate: 20725 Kbit/s
+Oct 06 00:09:13: ERROR: CC: PID:803=1 
+Oct 06 00:09:14: INFO: Bitrate: 19184 Kbit/s
+Oct 06 00:09:15: INFO: Bitrate: 20201 Kbit/s
+Oct 06 00:09:16: INFO: Bitrate: 19546 Kbit/s
+Oct 06 00:09:17: INFO: Bitrate: 21119 Kbit/s
+Oct 06 00:09:18: INFO: Bitrate: 18927 Kbit/s
+Oct 06 00:09:19: INFO: Bitrate: 20591 Kbit/s
+Oct 06 00:09:20: INFO: Bitrate: 19743 Kbit/s
+Oct 06 00:09:21: INFO: Bitrate: 18858 Kbit/s
+Oct 06 00:09:22: INFO: Bitrate: 21150 Kbit/s
+Oct 06 00:09:23: INFO: Bitrate: 19776 Kbit/s
+Oct 06 00:09:24: INFO: Bitrate: 19514 Kbit/s
+Oct 06 00:09:25: INFO: [main] shutting down

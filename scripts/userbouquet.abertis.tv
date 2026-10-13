@@ -1,0 +1,399 @@
+#NAME • 30,0 W - Abertis & Cellnex DX Suite ( streamrelay )
+#SERVICE 1:64:12D:0:0:0:0:0:0:0::##### Abertis PID 301 #####
+#DESCRIPTION ##### Abertis@11653H19680 PID 301 #####
+#SERVICE 1:0:1:1E0:2D85:12D:0:0:0:0:http%3A//0.0.0.0%3A9999/abertis/pid301:(TV) Teledeporte Canarias
+#DESCRIPTION (TV) Teledeporte Canarias
+#SERVICE 1:0:1:1E3:2D85:12D:0:0:0:0:http%3A//0.0.0.0%3A9999/abertis/pid301:(TV) Canal 24 Horas Canarias
+#DESCRIPTION (TV) Canal 24 Horas Canarias
+#SERVICE 1:0:1:1E4:2D85:12D:0:0:0:0:http%3A//0.0.0.0%3A9999/abertis/pid301:(TV) La 1 HD Canarias
+#DESCRIPTION (TV) La 1 HD Canarias
+#SERVICE 1:0:1:1E8:2D85:12D:0:0:0:0:http%3A//0.0.0.0%3A9999/abertis/pid301:(TV) La 2 HD Canarias
+#DESCRIPTION (TV) La 2 HD Canarias
+#SERVICE 1:0:2:1E2:2D85:12D:0:0:0:0:http%3A//0.0.0.0%3A9999/abertis/pid301:(RADIO) RNE Radio 4 Canarias
+#DESCRIPTION (RADIO) RNE Radio 4 Canarias
+#SERVICE 1:0:2:1E5:2D85:12D:0:0:0:0:http%3A//0.0.0.0%3A9999/abertis/pid301:(RADIO) RNE Radio 1 Canarias
+#DESCRIPTION (RADIO) RNE Radio 1 Canarias
+#SERVICE 1:0:2:1E6:2D85:12D:0:0:0:0:http%3A//0.0.0.0%3A9999/abertis/pid301:(RADIO) RNE Radio 5 Tenerife
+#DESCRIPTION (RADIO) RNE Radio 5 Tenerife
+#SERVICE 1:0:2:1E7:2D85:12D:0:0:0:0:http%3A//0.0.0.0%3A9999/abertis/pid301:(RADIO) RNE Radio 5 Las Palmas
+#DESCRIPTION (RADIO) RNE Radio 5 Las Palmas
+#SERVICE 1:64:12F:0:0:0:0:0:0:0::##### Abertis PID 303 #####
+#DESCRIPTION ##### Abertis@11653H19680 PID 303 #####
+#SERVICE 1:0:1:95:2D85:12D:0:0:0:0:http%3A//0.0.0.0%3A9999/abertis/pid303:(TV) Antena 3
+#DESCRIPTION (TV) Antena 3
+#SERVICE 1:0:1:97:2D85:12D:0:0:0:0:http%3A//0.0.0.0%3A9999/abertis/pid303:(TV) La Sexta
+#DESCRIPTION (TV) La Sexta
+#SERVICE 1:0:1:99:2D85:12D:0:0:0:0:http%3A//0.0.0.0%3A9999/abertis/pid303:(TV) Neox
+#DESCRIPTION (TV) Neox
+#SERVICE 1:0:1:9A:2D85:12D:0:0:0:0:http%3A//0.0.0.0%3A9999/abertis/pid303:(TV) Nova
+#DESCRIPTION (TV) Nova
+#SERVICE 1:64:1A4:0:0:0:0:0:0:0::##### Abertis PID 420 #####
+#DESCRIPTION ##### Abertis@11674H15750 PID 420 #####
+#SERVICE 1:0:1:17C:2D85:12D:0:0:0:0:http%3A//0.0.0.0%3A9999/abertis/pid420:(TV) TDP HD
+#DESCRIPTION (TV) TDP HD
+#SERVICE 1:0:1:17F:2D85:12D:0:0:0:0:http%3A//0.0.0.0%3A9999/abertis/pid420:(TV) 24h HD
+#DESCRIPTION (TV) 24h HD
+#SERVICE 1:0:1:184:2D85:12D:0:0:0:0:http%3A//0.0.0.0%3A9999/abertis/pid420:(TV) La 2 HD
+#DESCRIPTION (TV) La 2 HD
+#SERVICE 1:0:2:183:2D85:12D:0:0:0:0:http%3A//0.0.0.0%3A9999/abertis/pid420:(RADIO) Radio 4 RNE
+#DESCRIPTION (RADIO) Radio 4 RNE
+#SERVICE 1:64:1A5:0:0:0:0:0:0:0::##### Abertis PID 421 #####
+#DESCRIPTION ##### Abertis@11674H15750 PID 421 #####
+#SERVICE 1:0:1:234:2D85:12D:0:0:0:0:http%3A//0.0.0.0%3A9999/abertis/pid421:(TV) La 1 HD Pais Vasco
+#DESCRIPTION (TV) La 1 HD Pais Vasco
+#SERVICE 1:0:2:235:2D85:12D:0:0:0:0:http%3A//0.0.0.0%3A9999/abertis/pid421:(RADIO) RNE Radio 1 Pais Vasco
+#DESCRIPTION (RADIO) RNE Radio 1 Pais Vasco
+#SERVICE 1:0:2:236:2D85:12D:0:0:0:0:http%3A//0.0.0.0%3A9999/abertis/pid421:(RADIO) RNE Radio 5 Pais Vasco
+#DESCRIPTION (RADIO) RNE Radio 5 Pais Vasco
+#SERVICE 1:64:1A7:0:0:0:0:0:0:0::##### Abertis PID 423 #####
+#DESCRIPTION ##### Abertis@11674H15750 PID 423 #####
+#SERVICE 1:0:1:202:2D85:12D:0:0:0:0:http%3A//0.0.0.0%3A9999/abertis/pid423:(TV) TVE La 1 Galicia
+#DESCRIPTION (TV) TVE La 1 Galicia
+#SERVICE 1:0:2:203:2D85:12D:0:0:0:0:http%3A//0.0.0.0%3A9999/abertis/pid423:(RADIO) RNE Radio 1 Galicia
+#DESCRIPTION (RADIO) RNE Radio 1 Galicia
+#SERVICE 1:0:2:204:2D85:12D:0:0:0:0:http%3A//0.0.0.0%3A9999/abertis/pid423:(RADIO) RNE Radio 5 Galicia
+#DESCRIPTION (RADIO) RNE Radio 5 Galicia
+#SERVICE 1:64:2BD:0:0:0:0:0:0:0::##### Abertis PID 701 #####
+#DESCRIPTION ##### Abertis@12548V29600 PID 701 #####
+#SERVICE 1:0:1:C9:2D85:12D:0:0:0:0:http%3A//0.0.0.0%3A9999/abertis/pid701:(TV) Squirrel
+#DESCRIPTION (TV) Squirrel
+#SERVICE 1:0:1:CA:2D85:12D:0:0:0:0:http%3A//0.0.0.0%3A9999/abertis/pid701:(TV) Squirrel 2
+#DESCRIPTION (TV) Squirrel 2
+#SERVICE 1:0:1:115:2D85:12D:0:0:0:0:http%3A//0.0.0.0%3A9999/abertis/pid701:(TV) DMAX
+#DESCRIPTION (TV) DMAX
+#SERVICE 1:0:1:116:2D85:12D:0:0:0:0:http%3A//0.0.0.0%3A9999/abertis/pid701:(TV) VEO7
+#DESCRIPTION (TV) VEO7
+#SERVICE 1:0:2:118:2D85:12D:0:0:0:0:http%3A//0.0.0.0%3A9999/abertis/pid701:(RADIO) Radio Marca
+#DESCRIPTION (RADIO) Radio Marca
+#SERVICE 1:0:2:11A:2D85:12D:0:0:0:0:http%3A//0.0.0.0%3A9999/abertis/pid701:(RADIO) Cadena 100
+#DESCRIPTION (RADIO) Cadena 100
+#SERVICE 1:0:2:11B:2D85:12D:0:0:0:0:http%3A//0.0.0.0%3A9999/abertis/pid701:(RADIO) Radio María España
+#DESCRIPTION (RADIO) Radio María España
+#SERVICE 1:0:2:132:2D85:12D:0:0:0:0:http%3A//0.0.0.0%3A9999/abertis/pid701:(RADIO) BOM Radio
+#DESCRIPTION (RADIO) BOM Radio
+#SERVICE 1:64:2BE:0:0:0:0:0:0:0::##### Abertis PID 702 #####
+#DESCRIPTION ##### Abertis@12548V29600 PID 702 #####
+#SERVICE 1:0:1:95:2D85:12D:0:0:0:0:http%3A//0.0.0.0%3A9999/abertis/pid702:(TV) Antena 3
+#DESCRIPTION (TV) Antena 3
+#SERVICE 1:0:1:97:2D85:12D:0:0:0:0:http%3A//0.0.0.0%3A9999/abertis/pid702:(TV) La Sexta
+#DESCRIPTION (TV) La Sexta
+#SERVICE 1:0:1:99:2D85:12D:0:0:0:0:http%3A//0.0.0.0%3A9999/abertis/pid702:(TV) Neox
+#DESCRIPTION (TV) Neox
+#SERVICE 1:0:1:9A:2D85:12D:0:0:0:0:http%3A//0.0.0.0%3A9999/abertis/pid702:(TV) Nova
+#DESCRIPTION (TV) Nova
+#SERVICE 1:64:2BF:0:0:0:0:0:0:0::##### Abertis PID 703 #####
+#DESCRIPTION ##### Abertis@12548V29600 PID 703 #####
+#SERVICE 1:0:1:BC:2D85:12D:0:0:0:0:http%3A//0.0.0.0%3A9999/abertis/pid703:(TV) FDF
+#DESCRIPTION (TV) FDF
+#SERVICE 1:0:1:BD:2D85:12D:0:0:0:0:http%3A//0.0.0.0%3A9999/abertis/pid703:(TV) Divinity
+#DESCRIPTION (TV) Divinity
+#SERVICE 1:0:1:BE:2D85:12D:0:0:0:0:http%3A//0.0.0.0%3A9999/abertis/pid703:(TV) Telecinco HD
+#DESCRIPTION (TV) Telecinco HD
+#SERVICE 1:0:1:BF:2D85:12D:0:0:0:0:http%3A//0.0.0.0%3A9999/abertis/pid703:(TV) Cuatro HD
+#DESCRIPTION (TV) Cuatro HD
+#SERVICE 1:64:321:0:0:0:0:0:0:0::##### Abertis PID 801 #####
+#DESCRIPTION ##### Abertis@11502V10200 PID 801 #####
+#SERVICE 1:0:1:27EC:2D85:12D:0:0:0:0:http%3A//0.0.0.0%3A9999/abertis/pid801:(TV) A7 (Televisión del Principáu d'Asturies 7)
+#DESCRIPTION (TV) A7 (Televisión del Principáu d'Asturies 7)
+#SERVICE 1:0:1:27F1:2D85:12D:0:0:0:0:http%3A//0.0.0.0%3A9999/abertis/pid801:(TV) A8 (Televisión del Principáu d'Asturies 8)
+#DESCRIPTION (TV) A8 (Televisión del Principáu d'Asturies 8)
+#SERVICE 1:0:2:27FA:2D85:12D:0:0:0:0:http%3A//0.0.0.0%3A9999/abertis/pid801:(RADIO) Radio Langreo
+#DESCRIPTION (RADIO) Radio Langreo
+#SERVICE 1:0:2:27FB:2D85:12D:0:0:0:0:http%3A//0.0.0.0%3A9999/abertis/pid801:(RADIO) Radio RPA
+#DESCRIPTION (RADIO) Radio RPA
+#SERVICE 1:64:7E9:0:0:0:0:0:0:0::##### Abertis PID 2025 #####
+#DESCRIPTION ##### Abertis@11222H30000 PID 2025 #####
+#SERVICE 1:0:1:1F8:2D85:12D:0:0:0:0:http%3A//0.0.0.0%3A9999/abertis/pid2025:(TV) TVE La 1 Extremadura
+#DESCRIPTION (TV) TVE La 1 Extremadura
+#SERVICE 1:0:2:1F9:2D85:12D:0:0:0:0:http%3A//0.0.0.0%3A9999/abertis/pid2025:(RADIO) RNE Radio 1 Extremadura
+#DESCRIPTION (RADIO) RNE Radio 1 Extremadura
+#SERVICE 1:0:2:1FA:2D85:12D:0:0:0:0:http%3A//0.0.0.0%3A9999/abertis/pid2025:(RADIO) RNE Radio 5 Extremadura
+#DESCRIPTION (RADIO) RNE Radio 5 Extremadura
+#SERVICE 1:64:7EA:0:0:0:0:0:0:0::##### Abertis PID 2026 #####
+#DESCRIPTION ##### Abertis@11222H30000 PID 2026 #####
+#SERVICE 1:0:1:20C:2D85:12D:0:0:0:0:http%3A//0.0.0.0%3A9999/abertis/pid2026:(TV) TVE La 1 La Rioja
+#DESCRIPTION (TV) TVE La 1 La Rioja
+#SERVICE 1:0:2:20D:2D85:12D:0:0:0:0:http%3A//0.0.0.0%3A9999/abertis/pid2026:(RADIO) RNE Radio 1 La Rioja
+#DESCRIPTION (RADIO) RNE Radio 1 La Rioja
+#SERVICE 1:0:2:20E:2D85:12D:0:0:0:0:http%3A//0.0.0.0%3A9999/abertis/pid2026:(RADIO) RNE Radio 5 La Rioja
+#DESCRIPTION (RADIO) RNE Radio 5 La Rioja
+#SERVICE 1:64:7EB:0:0:0:0:0:0:0::##### Abertis PID 2027 #####
+#DESCRIPTION ##### Abertis@11222H30000 PID 2027 #####
+#SERVICE 1:0:1:220:2D85:12D:0:0:0:0:http%3A//0.0.0.0%3A9999/abertis/pid2027:(TV) TVE La 1 Murcia
+#DESCRIPTION (TV) TVE La 1 Murcia
+#SERVICE 1:0:2:221:2D85:12D:0:0:0:0:http%3A//0.0.0.0%3A9999/abertis/pid2027:(RADIO) RNE Radio 1 Murcia
+#DESCRIPTION (RADIO) RNE Radio 1 Murcia
+#SERVICE 1:0:2:222:2D85:12D:0:0:0:0:http%3A//0.0.0.0%3A9999/abertis/pid2027:(RADIO) RNE Radio 5 Murcia
+#DESCRIPTION (RADIO) RNE Radio 5 Murcia
+#SERVICE 1:64:7EC:0:0:0:0:0:0:0::##### Abertis PID 2028 #####
+#DESCRIPTION ##### Abertis@11222H30000 PID 2028 #####
+#SERVICE 1:0:1:23E:2D85:12D:0:0:0:0:http%3A//0.0.0.0%3A9999/abertis/pid2028:(TV) TVE La 1 Valencia
+#DESCRIPTION (TV) TVE La 1 Valencia
+#SERVICE 1:0:2:23F:2D85:12D:0:0:0:0:http%3A//0.0.0.0%3A9999/abertis/pid2028:(RADIO) RNE Radio 1 Valencia
+#DESCRIPTION (RADIO) RNE Radio 1 Valencia
+#SERVICE 1:0:2:240:2D85:12D:0:0:0:0:http%3A//0.0.0.0%3A9999/abertis/pid2028:(RADIO) RNE Radio 5 Valencia
+#DESCRIPTION (RADIO) RNE Radio 5 Valencia
+#SERVICE 1:64:802:0:0:0:0:0:0:0::##### Abertis PID 2050 #####
+#DESCRIPTION ##### Abertis@11222H30000 PID 2050 #####
+#SERVICE 1:0:1:17C:2D85:12D:0:0:0:0:http%3A//0.0.0.0%3A9999/abertis/pid2050:(TV) Teledeporte
+#DESCRIPTION (TV) Teledeporte
+#SERVICE 1:0:1:184:2D85:12D:0:0:0:0:http%3A//0.0.0.0%3A9999/abertis/pid2050:(TV) TVE La 2
+#DESCRIPTION (TV) TVE La 2
+#SERVICE 1:0:1:17F:2D85:12D:0:0:0:0:http%3A//0.0.0.0%3A9999/abertis/pid2050:(TV) Canal 24 Horas
+#DESCRIPTION (TV) Canal 24 Horas
+#SERVICE 1:0:2:183:2D85:12D:0:0:0:0:http%3A//0.0.0.0%3A9999/abertis/pid2050:(RADIO) Radio 4 RNE
+#DESCRIPTION (RADIO) Radio 4 RNE
+#SERVICE 1:64:80C:0:0:0:0:0:0:0::##### Abertis PID 2060 #####
+#DESCRIPTION ##### Abertis@11222H30000 PID 2060 #####
+#SERVICE 1:0:1:1:2D85:12D:0:0:0:0:http%3A//0.0.0.0%3A9999/abertis/pid2060:(TV) 24hHD HEVC Sat
+#DESCRIPTION (TV) 24hHD HEVC Sat
+#SERVICE 1:0:1:216:2D85:12D:0:0:0:0:http%3A//0.0.0.0%3A9999/abertis/pid2060:(TV) La1HD HEVC Sat
+#DESCRIPTION (TV) La1HD HEVC Sat
+#SERVICE 1:0:1:21A:2D85:12D:0:0:0:0:http%3A//0.0.0.0%3A9999/abertis/pid2060:(TV) La2HD HEVC Sat
+#DESCRIPTION (TV) La2HD HEVC Sat
+#SERVICE 1:64:8DE:0:0:0:0:0:0:0::##### Abertis PID 2270 #####
+#DESCRIPTION ##### Abertis@11302H30000 PID 2270 #####
+#SERVICE 1:0:1:17C:2D85:12D:0:0:0:0:http%3A//0.0.0.0%3A9999/abertis/pid2270:(TV) tdp HD
+#DESCRIPTION (TV) tdp HD
+#SERVICE 1:0:1:17F:2D85:12D:0:0:0:0:http%3A//0.0.0.0%3A9999/abertis/pid2270:(TV) 24h HD
+#DESCRIPTION (TV) 24h HD
+#SERVICE 1:0:1:184:2D85:12D:0:0:0:0:http%3A//0.0.0.0%3A9999/abertis/pid2270:(TV) La 2 HD
+#DESCRIPTION (TV) La 2 HD
+#SERVICE 1:64:8DF:0:0:0:0:0:0:0::##### Abertis PID 2271 #####
+#DESCRIPTION ##### Abertis@11302H30000 PID 2271 #####
+#SERVICE 1:0:1:22A:2D85:12D:0:0:0:0:http%3A//0.0.0.0%3A9999/abertis/pid2271:(TV) La 1 HD Navarra
+#DESCRIPTION (TV) La 1 HD Navarra
+#SERVICE 1:0:2:22B:2D85:12D:0:0:0:0:http%3A//0.0.0.0%3A9999/abertis/pid2271:(RADIO) RNE Radio 1 Navarra
+#DESCRIPTION (RADIO) RNE Radio 1 Navarra
+#SERVICE 1:0:2:22C:2D85:12D:0:0:0:0:http%3A//0.0.0.0%3A9999/abertis/pid2271:(RADIO) RNE Radio 5 Navarra
+#DESCRIPTION (RADIO) RNE Radio 5 Navarra
+#SERVICE 1:64:8E0:0:0:0:0:0:0:0::##### Abertis PID 2272 #####
+#DESCRIPTION ##### Abertis@11302H30000 PID 2272 #####
+#SERVICE 1:0:1:1B2:2D85:12D:0:0:0:0:http%3A//0.0.0.0%3A9999/abertis/pid2272:(TV) La 1 HD Asturias
+#DESCRIPTION (TV) La 1 HD Asturias
+#SERVICE 1:0:2:1B3:2D85:12D:0:0:0:0:http%3A//0.0.0.0%3A9999/abertis/pid2272:(RADIO) RNE Radio 1 Asturias
+#DESCRIPTION (RADIO) RNE Radio 1 Asturias
+#SERVICE 1:0:2:1B4:2D85:12D:0:0:0:0:http%3A//0.0.0.0%3A9999/abertis/pid2272:(RADIO) RNE Radio 5 Asturias
+#DESCRIPTION (RADIO) RNE Radio 5 Asturias
+#SERVICE 1:64:8E1:0:0:0:0:0:0:0::##### Abertis PID 2273 #####
+#DESCRIPTION ##### Abertis@11302H30000 PID 2273 #####
+#SERVICE 1:0:1:1A8:2D85:12D:0:0:0:0:http%3A//0.0.0.0%3A9999/abertis/pid2273:(TV) TVE La 1 Aragon
+#DESCRIPTION (TV) TVE La 1 Aragon
+#SERVICE 1:0:2:1A9:2D85:12D:0:0:0:0:http%3A//0.0.0.0%3A9999/abertis/pid2273:(RADIO) RNE Radio 1 Aragon
+#DESCRIPTION (RADIO) RNE Radio 1 Aragon
+#SERVICE 1:0:2:1AA:2D85:12D:0:0:0:0:http%3A//0.0.0.0%3A9999/abertis/pid2273:(RADIO) RNE Radio 5 Aragon
+#DESCRIPTION (RADIO) RNE Radio 5 Aragon
+#SERVICE 1:64:8E2:0:0:0:0:0:0:0::##### Abertis PID 2274 #####
+#DESCRIPTION ##### Abertis@11302H30000 PID 2274 #####
+#SERVICE 1:0:1:1DA:2D85:12D:0:0:0:0:http%3A//0.0.0.0%3A9999/abertis/pid2274:(TV) TVE La 1 Cantabria
+#DESCRIPTION (TV) TVE La 1 Cantabria
+#SERVICE 1:0:2:1DB:2D85:12D:0:0:0:0:http%3A//0.0.0.0%3A9999/abertis/pid2274:(RADIO) RNE Radio 1 Cantabria
+#DESCRIPTION (RADIO) RNE Radio 1 Cantabria
+#SERVICE 1:0:2:1DC:2D85:12D:0:0:0:0:http%3A//0.0.0.0%3A9999/abertis/pid2274:(RADIO) RNE Radio 5 Cantabria
+#DESCRIPTION (RADIO) RNE Radio 5 Cantabria
+#SERVICE 1:64:8FE:0:0:0:0:0:0:0::##### Abertis PID 2302 #####
+#DESCRIPTION ##### Abertis@11347H20858 PID 2302 #####
+#SERVICE 1:0:1:29B8:2D85:12D:0:0:0:0:http%3A//0.0.0.0%3A9999/abertis/pid2302:(TV) Canal Extremadura TV
+#DESCRIPTION (TV) Canal Extremadura TV
+#SERVICE 1:0:2:29BA:2D85:12D:0:0:0:0:http%3A//0.0.0.0%3A9999/abertis/pid2302:(RADIO) Canal Extremadura Radio
+#DESCRIPTION (RADIO) Canal Extremadura Radio
+#SERVICE 1:64:8FF:0:0:0:0:0:0:0::##### Abertis PID 2303 #####
+#DESCRIPTION ##### Abertis@11347H20858 PID 2303 #####
+#SERVICE 1:0:1:27EC:2D85:12D:0:0:0:0:http%3A//0.0.0.0%3A9999/abertis/pid2303:(TV) A7 (Televisión del Principáu d'Asturies 7)
+#DESCRIPTION (TV) A7 (Televisión del Principáu d'Asturies 7)
+#SERVICE 1:64:901:0:0:0:0:0:0:0::##### Abertis PID 2305 #####
+#DESCRIPTION ##### Abertis@11347H20858 PID 2305 #####
+#SERVICE 1:0:1:1:2D85:12D:0:0:0:0:http%3A//0.0.0.0%3A9999/abertis/pid2305:(TV) TVG (Televisión de Galicia)
+#DESCRIPTION (TV) TVG (Televisión de Galicia)
+#SERVICE 1:64:902:0:0:0:0:0:0:0::##### Abertis PID 2306 #####
+#DESCRIPTION ##### Abertis@11347H20858 PID 2306 #####
+#SERVICE 1:0:1:2:2D85:12D:0:0:0:0:http%3A//0.0.0.0%3A9999/abertis/pid2306:(TV) CyL7 (Castilla y León TV7)
+#DESCRIPTION (TV) CyL7 (Castilla y León TV7)
+#SERVICE 1:64:904:0:0:0:0:0:0:0::##### Abertis PID 2308 #####
+#DESCRIPTION ##### Abertis@11347H20858 PID 2308 #####
+#SERVICE 1:0:1:326:2D85:12D:0:0:0:0:http%3A//0.0.0.0%3A9999/abertis/pid2308:(TV) SX3/33
+#DESCRIPTION (TV) SX3/33
+#SERVICE 1:0:1:327:2D85:12D:0:0:0:0:http%3A//0.0.0.0%3A9999/abertis/pid2308:(TV) 3Cat Info
+#DESCRIPTION (TV) 3Cat Info
+#SERVICE 1:0:1:328:2D85:12D:0:0:0:0:http%3A//0.0.0.0%3A9999/abertis/pid2308:(TV) Esport 3
+#DESCRIPTION (TV) Esport 3
+#SERVICE 1:0:1:32D:2D85:12D:0:0:0:0:http%3A//0.0.0.0%3A9999/abertis/pid2308:(TV) TV3 Catalunya
+#DESCRIPTION (TV) TV3 Catalunya
+#SERVICE 1:0:1:32F:2D85:12D:0:0:0:0:http%3A//0.0.0.0%3A9999/abertis/pid2308:(TV) IB3 Global
+#DESCRIPTION (TV) IB3 Global
+#SERVICE 1:0:2:329:2D85:12D:0:0:0:0:http%3A//0.0.0.0%3A9999/abertis/pid2308:(RADIO) Catalunya Ràdio
+#DESCRIPTION (RADIO) Catalunya Ràdio
+#SERVICE 1:0:2:32A:2D85:12D:0:0:0:0:http%3A//0.0.0.0%3A9999/abertis/pid2308:(RADIO) Catalunya Informacio
+#DESCRIPTION (RADIO) Catalunya Informacio
+#SERVICE 1:0:2:32B:2D85:12D:0:0:0:0:http%3A//0.0.0.0%3A9999/abertis/pid2308:(RADIO) Catalunya Musica
+#DESCRIPTION (RADIO) Catalunya Musica
+#SERVICE 1:0:2:32C:2D85:12D:0:0:0:0:http%3A//0.0.0.0%3A9999/abertis/pid2308:(RADIO) ICat Catalunya
+#DESCRIPTION (RADIO) ICat Catalunya
+#SERVICE 1:64:9D8:0:0:0:0:0:0:0::##### Abertis PID 2520 #####
+#DESCRIPTION ##### Abertis@11382H30000 PID 2520 #####
+#SERVICE 1:0:1:17C:2D85:12D:0:0:0:0:http%3A//0.0.0.0%3A9999/abertis/pid2520:(TV) Teledeporte
+#DESCRIPTION (TV) Teledeporte
+#SERVICE 1:0:1:17F:2D85:12D:0:0:0:0:http%3A//0.0.0.0%3A9999/abertis/pid2520:(TV) Canal 24 Horas
+#DESCRIPTION (TV) Canal 24 Horas
+#SERVICE 1:0:2:183:2D85:12D:0:0:0:0:http%3A//0.0.0.0%3A9999/abertis/pid2520:(RADIO) RNE Radio 4
+#DESCRIPTION (RADIO) RNE Radio 4
+#SERVICE 1:64:9D9:0:0:0:0:0:0:0::##### Abertis PID 2521 #####
+#DESCRIPTION ##### Abertis@11382H30000 PID 2521 #####
+#SERVICE 1:0:1:1BC:2D85:12D:0:0:0:0:http%3A//0.0.0.0%3A9999/abertis/pid2521:(TV) La 1 HD Baleares
+#DESCRIPTION (TV) La 1 HD Baleares
+#SERVICE 1:0:1:1C0:2D85:12D:0:0:0:0:http%3A//0.0.0.0%3A9999/abertis/pid2521:(TV) La 2 HD  Baleares
+#DESCRIPTION (TV) La 2 HD  Baleares
+#SERVICE 1:0:2:1BD:2D85:12D:0:0:0:0:http%3A//0.0.0.0%3A9999/abertis/pid2521:(RADIO) RNE Radio 1 Baleares
+#DESCRIPTION (RADIO) RNE Radio 1 Baleares
+#SERVICE 1:0:2:1BE:2D85:12D:0:0:0:0:http%3A//0.0.0.0%3A9999/abertis/pid2521:(RADIO) RNE Radio 5 Baleares
+#DESCRIPTION (RADIO) RNE Radio 5 Baleares
+#SERVICE 1:64:9DA:0:0:0:0:0:0:0::##### Abertis PID 2522 #####
+#DESCRIPTION ##### Abertis@11382H30000 PID 2522 #####
+#SERVICE 1:0:1:1D0:2D85:12D:0:0:0:0:http%3A//0.0.0.0%3A9999/abertis/pid2522:(TV) La 1 HD Castilla La Mancha
+#DESCRIPTION (TV) La 1 HD Castilla La Mancha
+#SERVICE 1:0:1:1D4:2D85:12D:0:0:0:0:http%3A//0.0.0.0%3A9999/abertis/pid2522:(TV) La 2 HD Castilla La Mancha
+#DESCRIPTION (TV) La 2 HD Castilla La Mancha
+#SERVICE 1:0:2:1D1:2D85:12D:0:0:0:0:http%3A//0.0.0.0%3A9999/abertis/pid2522:(RADIO) RNE Radio 1 Castilla La Mancha
+#DESCRIPTION (RADIO) RNE Radio 1 Castilla La Mancha
+#SERVICE 1:0:2:1D2:2D85:12D:0:0:0:0:http%3A//0.0.0.0%3A9999/abertis/pid2522:(RADIO) RNE Radio 5 Castilla La Mancha
+#DESCRIPTION (RADIO) RNE Radio 5 Castilla La Mancha
+#SERVICE 1:64:9DB:0:0:0:0:0:0:0::##### Abertis PID 2523 #####
+#DESCRIPTION ##### Abertis@11382H30000 PID 2523 #####
+#SERVICE 1:0:1:19E:2D85:12D:0:0:0:0:http%3A//0.0.0.0%3A9999/abertis/pid2523:(TV) La 1 HD Andalucia
+#DESCRIPTION (TV) La 1 HD Andalucia
+#SERVICE 1:0:1:1A2:2D85:12D:0:0:0:0:http%3A//0.0.0.0%3A9999/abertis/pid2523:(TV) La 2 HD Andalucia
+#DESCRIPTION (TV) La 2 HD Andalucia
+#SERVICE 1:0:2:19F:2D85:12D:0:0:0:0:http%3A//0.0.0.0%3A9999/abertis/pid2523:(RADIO) RNE Radio 1 Andalucia
+#DESCRIPTION (RADIO) RNE Radio 1 Andalucia
+#SERVICE 1:0:2:1A0:2D85:12D:0:0:0:0:http%3A//0.0.0.0%3A9999/abertis/pid2523:(RADIO) RNE Radio 5 Andalucia
+#DESCRIPTION (RADIO) RNE Radio 5 Andalucia
+#SERVICE 1:64:9DC:0:0:0:0:0:0:0::##### Abertis PID 2524 #####
+#DESCRIPTION ##### Abertis@11382H30000 PID 2524 #####
+#SERVICE 1:0:1:1C6:2D85:12D:0:0:0:0:http%3A//0.0.0.0%3A9999/abertis/pid2524:(TV) La 1 HD Castilla y Leon
+#DESCRIPTION (TV) La 1 HD Castilla y Leon
+#SERVICE 1:0:1:1CA:2D85:12D:0:0:0:0:http%3A//0.0.0.0%3A9999/abertis/pid2524:(TV) La 2 HD Castilla y Leon
+#DESCRIPTION (TV) La 2 HD Castilla y Leon
+#SERVICE 1:0:2:1C7:2D85:12D:0:0:0:0:http%3A//0.0.0.0%3A9999/abertis/pid2524:(RADIO) RNE Radio 1 Castilla y Leon
+#DESCRIPTION (RADIO) RNE Radio 1 Castilla y Leon
+#SERVICE 1:0:2:1C8:2D85:12D:0:0:0:0:http%3A//0.0.0.0%3A9999/abertis/pid2524:(RADIO) RNE Radio 5 Castilla y Leon
+#DESCRIPTION (RADIO) RNE Radio 5 Castilla y Leon
+#SERVICE 1:64:1F40:0:0:0:0:0:0:0::##### Abertis PID 8000 #####
+#DESCRIPTION ##### Abertis@12671V30000 PID 8000 #####
+#SERVICE 1:0:1:6E:2D85:12D:0:0:0:0:http%3A//0.0.0.0%3A9999/abertis/pid8000:(TV) ALERTA
+#DESCRIPTION (TV) ALERTA
+#SERVICE 1:64:1F41:0:0:0:0:0:0:0::##### Abertis PID 8001 #####
+#DESCRIPTION ##### Abertis@12631V30000 PID 8001 #####
+#SERVICE 1:0:1:212:2D85:12D:0:0:0:0:http%3A//0.0.0.0%3A9999/abertis/pid8001:(TV) TDP HD Madrid
+#DESCRIPTION (TV) TDP HD Madrid
+#SERVICE 1:0:1:215:2D85:12D:0:0:0:0:http%3A//0.0.0.0%3A9999/abertis/pid8001:(TV) 24h HD Madrid
+#DESCRIPTION (TV) 24h HD Madrid
+#SERVICE 1:0:1:216:2D85:12D:0:0:0:0:http%3A//0.0.0.0%3A9999/abertis/pid8001:(TV) La 1 HD Madrid
+#DESCRIPTION (TV) La 1 HD Madrid
+#SERVICE 1:0:1:21A:2D85:12D:0:0:0:0:http%3A//0.0.0.0%3A9999/abertis/pid8001:(TV) La 2 HD Madrid
+#DESCRIPTION (TV) La 2 HD Madrid
+#SERVICE 1:0:2:217:2D85:12D:0:0:0:0:http%3A//0.0.0.0%3A9999/abertis/pid8001:(RADIO) RNE Radio Nacional de España
+#DESCRIPTION (RADIO) RNE Radio Nacional de España
+#SERVICE 1:0:2:218:2D85:12D:0:0:0:0:http%3A//0.0.0.0%3A9999/abertis/pid8001:(RADIO) RNE Radio 5
+#DESCRIPTION (RADIO) RNE Radio 5
+#SERVICE 1:0:2:219:2D85:12D:0:0:0:0:http%3A//0.0.0.0%3A9999/abertis/pid8001:(RADIO) RNE Radio 4
+#DESCRIPTION (RADIO) RNE Radio 4
+#SERVICE 1:64:1F42:0:0:0:0:0:0:0::##### Abertis PID 8002 #####
+#DESCRIPTION ##### Abertis@12631V30000 PID 8002 #####
+#SERVICE 1:0:1:1A5:2D85:12D:0:0:0:0:http%3A//0.0.0.0%3A9999/abertis/pid8002:(TV) Telemadrid HDR
+#DESCRIPTION (TV) Telemadrid HDR
+#SERVICE 1:0:1:1A7:2D85:12D:0:0:0:0:http%3A//0.0.0.0%3A9999/abertis/pid8002:(TV) BOM
+#DESCRIPTION (TV) BOM
+#SERVICE 1:0:1:1A9:2D85:12D:0:0:0:0:http%3A//0.0.0.0%3A9999/abertis/pid8002:(TV) Telemadrid HD
+#DESCRIPTION (TV) Telemadrid HD
+#SERVICE 1:0:1:3B88:2D85:12D:0:0:0:0:http%3A//0.0.0.0%3A9999/abertis/pid8002:(TV) LA OTRA HD
+#DESCRIPTION (TV) LA OTRA HD
+#SERVICE 1:0:2:2754:2D85:12D:0:0:0:0:http%3A//0.0.0.0%3A9999/abertis/pid8002:(RADIO) ONDA MADRID
+#DESCRIPTION (RADIO) ONDA MADRID
+#SERVICE 1:64:1F43:0:0:0:0:0:0:0::##### Abertis PID 8003 #####
+#DESCRIPTION ##### Abertis@12631V30000 PID 8003 #####
+#SERVICE 1:0:1:9B:2D85:12D:0:0:0:0:http%3A//0.0.0.0%3A9999/abertis/pid8003:(TV) Mega España
+#DESCRIPTION (TV) Mega España
+#SERVICE 1:0:1:AA:2D85:12D:0:0:0:0:http%3A//0.0.0.0%3A9999/abertis/pid8003:(TV) Trece España
+#DESCRIPTION (TV) Trece España
+#SERVICE 1:0:1:C0:2D85:12D:0:0:0:0:http%3A//0.0.0.0%3A9999/abertis/pid8003:(TV) Energy España
+#DESCRIPTION (TV) Energy España
+#SERVICE 1:0:1:C1:2D85:12D:0:0:0:0:http%3A//0.0.0.0%3A9999/abertis/pid8003:(TV) Boing España
+#DESCRIPTION (TV) Boing España
+#SERVICE 1:0:2:9C:2D85:12D:0:0:0:0:http%3A//0.0.0.0%3A9999/abertis/pid8003:(RADIO) Onda Cero
+#DESCRIPTION (RADIO) Onda Cero
+#SERVICE 1:0:2:9D:2D85:12D:0:0:0:0:http%3A//0.0.0.0%3A9999/abertis/pid8003:(RADIO) Europa FM España
+#DESCRIPTION (RADIO) Europa FM España
+#SERVICE 1:0:2:9E:2D85:12D:0:0:0:0:http%3A//0.0.0.0%3A9999/abertis/pid8003:(RADIO) Melodía FM
+#DESCRIPTION (RADIO) Melodía FM
+#SERVICE 1:0:2:AB:2D85:12D:0:0:0:0:http%3A//0.0.0.0%3A9999/abertis/pid8003:(RADIO) COPE Radio
+#DESCRIPTION (RADIO) COPE Radio
+#SERVICE 1:0:2:AC:2D85:12D:0:0:0:0:http%3A//0.0.0.0%3A9999/abertis/pid8003:(RADIO) Rock FM Definitivo
+#DESCRIPTION (RADIO) Rock FM Definitivo
+#SERVICE 1:64:1F44:0:0:0:0:0:0:0::##### Abertis PID 8004 #####
+#DESCRIPTION ##### Abertis@12671V30000 PID 8004 #####
+#SERVICE 1:0:1:65:2D85:12D:0:0:0:0:http%3A//0.0.0.0%3A9999/abertis/pid8004:(TV) A3Series
+#DESCRIPTION (TV) A3Series
+#SERVICE 1:0:1:66:2D85:12D:0:0:0:0:http%3A//0.0.0.0%3A9999/abertis/pid8004:(TV) BeMad tv HD
+#DESCRIPTION (TV) BeMad tv HD
+#SERVICE 1:0:1:67:2D85:12D:0:0:0:0:http%3A//0.0.0.0%3A9999/abertis/pid8004:(TV) Realmadrid TV HD
+#DESCRIPTION (TV) Realmadrid TV HD
+#SERVICE 1:0:1:68:2D85:12D:0:0:0:0:http%3A//0.0.0.0%3A9999/abertis/pid8004:(TV) TEN
+#DESCRIPTION (TV) TEN
+#SERVICE 1:0:2:69:2D85:12D:0:0:0:0:http%3A//0.0.0.0%3A9999/abertis/pid8004:(RADIO) LOS40 Classic
+#DESCRIPTION (RADIO) LOS40 Classic
+#SERVICE 1:0:2:6A:2D85:12D:0:0:0:0:http%3A//0.0.0.0%3A9999/abertis/pid8004:(RADIO) LOS40 Urban
+#DESCRIPTION (RADIO) LOS40 Urban
+#SERVICE 1:0:2:6B:2D85:12D:0:0:0:0:http%3A//0.0.0.0%3A9999/abertis/pid8004:(RADIO) Radiolé
+#DESCRIPTION (RADIO) Radiolé
+#SERVICE 1:64:1F45:0:0:0:0:0:0:0::##### Abertis PID 8005 #####
+#DESCRIPTION ##### Abertis@12671V30000 PID 8005 #####
+#SERVICE 1:0:1:BC:2D85:12D:0:0:0:0:http%3A//0.0.0.0%3A9999/abertis/pid8005:(TV) FDF
+#DESCRIPTION (TV) FDF
+#SERVICE 1:0:1:BD:2D85:12D:0:0:0:0:http%3A//0.0.0.0%3A9999/abertis/pid8005:(TV) Divinity
+#DESCRIPTION (TV) Divinity
+#SERVICE 1:0:1:BE:2D85:12D:0:0:0:0:http%3A//0.0.0.0%3A9999/abertis/pid8005:(TV) Telecinco HD
+#DESCRIPTION (TV) Telecinco HD
+#SERVICE 1:0:1:BF:2D85:12D:0:0:0:0:http%3A//0.0.0.0%3A9999/abertis/pid8005:(TV) Cuatro HD
+#DESCRIPTION (TV) Cuatro HD
+#SERVICE 1:64:1F46:0:0:0:0:0:0:0::##### Abertis PID 8006 #####
+#DESCRIPTION ##### Abertis@12671V30000 PID 8006 #####
+#SERVICE 1:0:1:1EA:2D85:12D:0:0:0:0:http%3A//0.0.0.0%3A9999/abertis/pid8006:(TV) TDP HD Cataluña
+#DESCRIPTION (TV) TDP HD Cataluña
+#SERVICE 1:0:1:1ED:2D85:12D:0:0:0:0:http%3A//0.0.0.0%3A9999/abertis/pid8006:(TV) 24h HD Cataluña
+#DESCRIPTION (TV) 24h HD Cataluña
+#SERVICE 1:0:1:1EE:2D85:12D:0:0:0:0:http%3A//0.0.0.0%3A9999/abertis/pid8006:(TV) La 1 HD Cataluña
+#DESCRIPTION (TV) La 1 HD Cataluña
+#SERVICE 1:0:1:1F2:2D85:12D:0:0:0:0:http%3A//0.0.0.0%3A9999/abertis/pid8006:(TV) La 2 HD Cataluña
+#DESCRIPTION (TV) La 2 HD Cataluña
+#SERVICE 1:0:2:1EF:2D85:12D:0:0:0:0:http%3A//0.0.0.0%3A9999/abertis/pid8006:(RADIO) RNE Radio 1 Cataluña
+#DESCRIPTION (RADIO) RNE Radio 1 Cataluña
+#SERVICE 1:0:2:1F0:2D85:12D:0:0:0:0:http%3A//0.0.0.0%3A9999/abertis/pid8006:(RADIO) RNE Radio 5 Cataluña
+#DESCRIPTION (RADIO) RNE Radio 5 Cataluña
+#SERVICE 1:0:2:1F1:2D85:12D:0:0:0:0:http%3A//0.0.0.0%3A9999/abertis/pid8006:(RADIO) RNE Radio 4 Cataluña
+#DESCRIPTION (RADIO) RNE Radio 4 Cataluña
+#SERVICE 1:64:1F48:0:0:0:0:0:0:0::##### Abertis PID 8008 #####
+#DESCRIPTION ##### Abertis@12583V16900 PID 8008 #####
+#SERVICE 1:0:1:9C41:2D85:12D:0:0:0:0:http%3A//0.0.0.0%3A9999/abertis/pid8008:(TV) Clan HD
+#DESCRIPTION (TV) Clan HD
+#SERVICE 1:0:1:9C43:2D85:12D:0:0:0:0:http%3A//0.0.0.0%3A9999/abertis/pid8008:(TV) La 1 UHD
+#DESCRIPTION (TV) La 1 UHD
+#SERVICE 1:0:1:A029:2D85:12D:0:0:0:0:http%3A//0.0.0.0%3A9999/abertis/pid8008:(TV) DKISS
+#DESCRIPTION (TV) DKISS
+#SERVICE 1:0:2:9C45:2D85:12D:0:0:0:0:http%3A//0.0.0.0%3A9999/abertis/pid8008:(RADIO) Radio Clasica HQ RNE
+#DESCRIPTION (RADIO) Radio Clasica HQ RNE
+#SERVICE 1:0:2:9C46:2D85:12D:0:0:0:0:http%3A//0.0.0.0%3A9999/abertis/pid8008:(RADIO) Radio3 HQ RNE
+#DESCRIPTION (RADIO) Radio3 HQ RNE
+#SERVICE 1:0:2:9C47:2D85:12D:0:0:0:0:http%3A//0.0.0.0%3A9999/abertis/pid8008:(RADIO) Radio Exterior RNE
+#DESCRIPTION (RADIO) Radio Exterior RNE
+#SERVICE 1:0:2:A02A:2D85:12D:0:0:0:0:http%3A//0.0.0.0%3A9999/abertis/pid8008:(RADIO) Kiss FM
+#DESCRIPTION (RADIO) Kiss FM
+#SERVICE 1:0:2:A02B:2D85:12D:0:0:0:0:http%3A//0.0.0.0%3A9999/abertis/pid8008:(RADIO) Hit FM
+#DESCRIPTION (RADIO) Hit FM
+#SERVICE 1:0:2:A02C:2D85:12D:0:0:0:0:http%3A//0.0.0.0%3A9999/abertis/pid8008:(RADIO) esRadio
+#DESCRIPTION (RADIO) esRadio
+#SERVICE 1:0:2:A02D:2D85:12D:0:0:0:0:http%3A//0.0.0.0%3A9999/abertis/pid8008:(RADIO) Cadena SER
+#DESCRIPTION (RADIO) Cadena SER
+#SERVICE 1:0:2:A02E:2D85:12D:0:0:0:0:http%3A//0.0.0.0%3A9999/abertis/pid8008:(RADIO) Los 40
+#DESCRIPTION (RADIO) Los 40
+#SERVICE 1:0:2:A02F:2D85:12D:0:0:0:0:http%3A//0.0.0.0%3A9999/abertis/pid8008:(RADIO) Cadéna Dial
+#DESCRIPTION (RADIO) Cadéna Dial

@@ -1,0 +1,103 @@
+Oct 06 00:02:41: INFO: Starting Astra SM 0.2
+Oct 06 00:02:42: INFO: PAT: tsid: 1109
+Oct 06 00:02:42: INFO: PAT: pid: 16 NIT
+Oct 06 00:02:42: INFO: PAT: pid: 300 PMT pnr: 504
+Oct 06 00:02:42: INFO: PAT: pid: 2000 PMT pnr: 505
+Oct 06 00:02:42: INFO: PAT: pid: 2030 PMT pnr: 506
+Oct 06 00:02:42: INFO: PAT: crc32: 0xB22590F6
+Oct 06 00:02:42: INFO: PMT: pnr: 506
+Oct 06 00:02:42: INFO: PMT: pid: 2031 PCR
+Oct 06 00:02:42: INFO: AUDIO: pid: 2031 type: MPEG-1 audio, ISO/IEC 11172-3 (0x03)
+Oct 06 00:02:42: INFO: AUDIO: Language: spa
+Oct 06 00:02:42: INFO: AUDIO: Stream ID: 1
+Oct 06 00:02:42: INFO: AUDIO: Maximum bitrate: 357
+Oct 06 00:02:42: INFO: DATA: pid: 2035 type: Private sections, ISO/IEC 13818-1 (0x05)
+Oct 06 00:02:42: INFO: DATA: descriptor: 0x6F030010FE
+Oct 06 00:02:42: INFO: PMT: crc32: 0xF5EB3F5A
+Oct 06 00:02:42: INFO: PMT: pnr: 504
+Oct 06 00:02:42: INFO: PMT: pid: 301 PCR
+Oct 06 00:02:42: INFO: PMT: descriptor: 0x050443554549
+Oct 06 00:02:42: INFO: VIDEO: pid: 301 type: MPEG-4 AVC/H.264, ISO/IEC 14496-10 (0x1B)
+Oct 06 00:02:42: INFO: VIDEO: descriptor: 0x28046400283F
+Oct 06 00:02:42: INFO: VIDEO: Maximum bitrate: 15030
+Oct 06 00:02:42: INFO: DATA: pid: 302 type: Private PES, ISO/IEC 13818-1 (0x06)
+Oct 06 00:02:42: INFO: DATA: descriptor: 0x7A04E0C41000
+Oct 06 00:02:42: INFO: DATA: descriptor: 0x050445414333
+Oct 06 00:02:42: INFO: DATA: Language: spa
+Oct 06 00:02:42: INFO: DATA: pid: 303 type: Private PES, ISO/IEC 13818-1 (0x06)
+Oct 06 00:02:42: INFO: DATA: descriptor: 0x7A04E0C41000
+Oct 06 00:02:42: INFO: DATA: descriptor: 0x050445414333
+Oct 06 00:02:42: INFO: DATA: Language: qaa
+Oct 06 00:02:42: INFO: DATA: pid: 304 type: Private PES, ISO/IEC 13818-1 (0x06)
+Oct 06 00:02:42: INFO: DATA: descriptor: 0x7A04D8901001
+Oct 06 00:02:42: INFO: DATA: descriptor: 0x050445414333
+Oct 06 00:02:42: INFO: DATA: Language: spa
+Oct 06 00:02:42: INFO: SUB: pid: 312 type: Private PES, ISO/IEC 13818-1 (0x06)
+Oct 06 00:02:42: INFO: SUB: descriptor: 0x59087370611400010001
+Oct 06 00:02:42: INFO: SUB: pid: 313 type: Private PES, ISO/IEC 13818-1 (0x06)
+Oct 06 00:02:42: INFO: SUB: descriptor: 0x59087161611400010001
+Oct 06 00:02:42: INFO: SUB: pid: 320 type: Private PES, ISO/IEC 13818-1 (0x06)
+Oct 06 00:02:42: INFO: SUB: type: teletext
+Oct 06 00:02:42: INFO: SUB:    page: 100 (initial page), language: spa
+Oct 06 00:02:42: INFO: SUB:    page: 088 (subtitle page), language: spa
+Oct 06 00:02:42: INFO: SUB:    page: 089 (subtitle page), language: qaa
+Oct 06 00:02:42: INFO: DATA: pid: 325 type: Private sections, ISO/IEC 13818-1 (0x05)
+Oct 06 00:02:42: INFO: DATA: descriptor: 0x6F030010FE
+Oct 06 00:02:42: INFO: DATA: pid: 8120 type: User private (0x86)
+Oct 06 00:02:42: INFO: PMT: crc32: 0x8260991B
+Oct 06 00:02:42: INFO: Bitrate: 4974 Kbit/s
+Oct 06 00:02:42: INFO: PMT: pnr: 505
+Oct 06 00:02:42: INFO: PMT: pid: 2001 PCR
+Oct 06 00:02:42: INFO: AUDIO: pid: 2001 type: MPEG-1 audio, ISO/IEC 11172-3 (0x03)
+Oct 06 00:02:42: INFO: AUDIO: Language: spa
+Oct 06 00:02:42: INFO: AUDIO: Stream ID: 1
+Oct 06 00:02:42: INFO: AUDIO: Maximum bitrate: 357
+Oct 06 00:02:42: INFO: DATA: pid: 2005 type: Private sections, ISO/IEC 13818-1 (0x05)
+Oct 06 00:02:42: INFO: DATA: descriptor: 0x6F030010FE
+Oct 06 00:02:42: INFO: PMT: crc32: 0xAF940C9B
+Oct 06 00:02:43: INFO: SDT: tsid: 1109
+Oct 06 00:02:43: INFO: SDT: sid: 500
+Oct 06 00:02:43: INFO: SDT:    Service: tdp HD
+Oct 06 00:02:43: INFO: SDT:    Provider: RTVE
+Oct 06 00:02:43: INFO: SDT: sid: 503
+Oct 06 00:02:43: INFO: SDT:    Service: 24h HD
+Oct 06 00:02:43: INFO: SDT:    Provider: RTVE
+Oct 06 00:02:43: INFO: SDT: sid: 504
+Oct 06 00:02:43: INFO: SDT:    Service: La 1 HD
+Oct 06 00:02:43: INFO: SDT:    Provider: RTVE
+Oct 06 00:02:43: INFO: SDT: sid: 505
+Oct 06 00:02:43: INFO: SDT:    Service: RNE Extremadura
+Oct 06 00:02:43: INFO: SDT:    Provider: RTVE
+Oct 06 00:02:43: INFO: SDT: sid: 506
+Oct 06 00:02:43: INFO: SDT:    Service: Radio 5 RNE
+Oct 06 00:02:43: INFO: SDT:    Provider: RTVE
+Oct 06 00:02:43: INFO: SDT: sid: 507
+Oct 06 00:02:43: INFO: SDT:    Service: Ràdio 4 RNE
+Oct 06 00:02:43: INFO: SDT:    Provider: RTVE
+Oct 06 00:02:43: INFO: SDT: sid: 508
+Oct 06 00:02:43: INFO: SDT:    Service: La 2 HD
+Oct 06 00:02:43: INFO: SDT:    Provider: RTVE
+Oct 06 00:02:43: INFO: SDT: crc32: 0x776DBE79
+Oct 06 00:02:43: INFO: Bitrate: 9365 Kbit/s
+Oct 06 00:02:43: ERROR: CC: PID:17=1 PID:325=1 PID:2000=1 PID:2001=1 PID:2005=1 PID:2035=1 PID:8120=1 
+Oct 06 00:02:44: INFO: Bitrate: 9072 Kbit/s
+Oct 06 00:02:45: INFO: Bitrate: 8283 Kbit/s
+Oct 06 00:02:46: INFO: Bitrate: 10182 Kbit/s
+Oct 06 00:02:46: ERROR: CC: PID:16=1 
+Oct 06 00:02:47: INFO: Bitrate: 9823 Kbit/s
+Oct 06 00:02:48: INFO: Bitrate: 9007 Kbit/s
+Oct 06 00:02:49: INFO: Bitrate: 9297 Kbit/s
+Oct 06 00:02:50: INFO: Bitrate: 9365 Kbit/s
+Oct 06 00:02:51: INFO: Bitrate: 10608 Kbit/s
+Oct 06 00:02:52: INFO: Bitrate: 8974 Kbit/s
+Oct 06 00:02:53: INFO: Bitrate: 8448 Kbit/s
+Oct 06 00:02:54: INFO: Bitrate: 9496 Kbit/s
+Oct 06 00:02:55: INFO: Bitrate: 8840 Kbit/s
+Oct 06 00:02:56: INFO: Bitrate: 10247 Kbit/s
+Oct 06 00:02:57: INFO: Bitrate: 9004 Kbit/s
+Oct 06 00:02:58: INFO: Bitrate: 9233 Kbit/s
+Oct 06 00:02:59: INFO: Bitrate: 8907 Kbit/s
+Oct 06 00:03:00: INFO: Bitrate: 8907 Kbit/s
+Oct 06 00:03:01: INFO: Bitrate: 10971 Kbit/s
+Oct 06 00:03:02: INFO: Bitrate: 8285 Kbit/s
+Oct 06 00:03:03: INFO: [main] shutting down
