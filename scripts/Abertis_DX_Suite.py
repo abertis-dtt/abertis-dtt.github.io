@@ -300,6 +300,17 @@ def lamedb_text(tp_entries, svc_entries, fmt='v4'):
 
 def astra_text(streams, args):
     ns = namespace_for(args.position)
+    header = (
+        '-- Astra Slonik Mod\n\n'
+        '-- during revival and testing\n'
+        '-- log.set({ stdout = true, debug = true, syslog = "astra", filename = "/tmp/astrasm.log", })\n'
+        '-- after revival and testing\n'
+        'log.set({ stdout = true, debug = false, syslog = "astra", filename = "/tmp/astra.log" })\n\n'
+        '-- =========================================================================\n'
+        '-- [ SECTION 1: ABERTIS PID CHANNELS ]\n'
+        '-- =========================================================================\n\n'
+        '-- Helper Text: This table maps the Abertis PID to its specific Enigma2 Stream Reference.\n\n'
+    )
     blocks = []
     for stream in streams:
         tp = stream['txp']
@@ -322,7 +333,7 @@ def astra_text(streams, args):
             '  },',
             '})',
         ]))
-    return '\n\n'.join(blocks) + '\n'
+    return header + '\n\n'.join(blocks) + '\n'
 
 
 def bouquet_text(streams, args):
