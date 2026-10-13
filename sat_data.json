@@ -5,7 +5,7 @@
         "provider": "Abertis DTT",
         "sr_fec": "30000 3/4",
         "onid_nid_tid": "1/60000/60020",
-        "date": "25.04.2026",
+        "date": "13.10.2026",
         "streams": [
             {
                 "title": "Stream 2025 - (HS125.25) - RGE Extremadura",
@@ -324,7 +324,7 @@
         "provider": "Abertis DTT",
         "sr_fec": "30000 3/4",
         "onid_nid_tid": "1/60000/60022",
-        "date": "24.04.2026",
+        "date": "13.10.2026",
         "streams": [
             {
                 "title": "Stream 2270 - (HS127.70) - RGE Nac",
@@ -994,7 +994,7 @@
         "provider": "Cellnex DTT",
         "sr_fec": "9142 3/4",
         "onid_nid_tid": "12574/8916/1001",
-        "date": "24.04.2026",
+        "date": "13.10.2026",
         "streams": [
             {
                 "title": "TDT Aragon",
@@ -1043,7 +1043,7 @@
         "provider": "Abertis DTT",
         "sr_fec": "20858 3/4",
         "onid_nid_tid": "-/60000/60023",
-        "date": "24.04.2026",
+        "date": "13.10.2026",
         "streams": [
             {
                 "title": "Stream 2301 - (HS128.1) - UNACTIVE",
@@ -1226,7 +1226,7 @@
         "provider": "Abertis DTT",
         "sr_fec": "30000 3/4",
         "onid_nid_tid": "1/60000/60025",
-        "date": "24.04.2026",
+        "date": "13.10.2026",
         "streams": [
             {
                 "title": "Stream 2520 - (HS129.20) - RGE N/Ac",
@@ -1928,7 +1928,7 @@
         "provider": "Cellnex DTT",
         "sr_fec": "7522 8/9",
         "onid_nid_tid": "12572/8916/1",
-        "date": "24.04.2026",
+        "date": "13.10.2026",
         "streams": [
             {
                 "title": "MAUT-CLM TDT",
@@ -2001,7 +2001,7 @@
         "provider": "Abertis DTT",
         "sr_fec": "10200 3/4",
         "onid_nid_tid": "-/60000/60028",
-        "date": "24.04.2026",
+        "date": "13.10.2026",
         "streams": [
             {
                 "title": "Stream 801 - (HS199.1) - Asturias TDT",
@@ -2052,7 +2052,7 @@
         "provider": "Abertis DTT",
         "sr_fec": "19680 3/4",
         "onid_nid_tid": "-/60000/60003",
-        "date": "24.04.2026",
+        "date": "13.10.2026",
         "streams": [
             {
                 "title": "Stream 301 - (HSA-88L.1) - RGE Canarias",
@@ -2176,7 +2176,7 @@
         "provider": "Abertis DTT",
         "sr_fec": "15750 3/4",
         "onid_nid_tid": "-/60000/60004",
-        "date": "24.04.2026",
+        "date": "13.10.2026",
         "streams": [
             {
                 "title": "Stream 420 - (HS88U.20) - RGE Nac",
@@ -2372,7 +2372,7 @@
         "provider": "Abertis DTT",
         "sr_fec": "29600 3/4",
         "onid_nid_tid": "-/60000/60007",
-        "date": "24.04.2026",
+        "date": "13.10.2026",
         "streams": [
             {
                 "title": "Stream 701 - (HSA-65U1) - MPE1",
@@ -2537,7 +2537,7 @@
         "provider": "Abertis DTT",
         "sr_fec": "16900 3/4",
         "onid_nid_tid": "-/60000/60008",
-        "date": "24.04.2026",
+        "date": "13.10.2026",
         "streams": [
             {
                 "title": "Stream 8008 - (HS190.1) - RGE2",
@@ -2652,7 +2652,7 @@
         "provider": "Abertis DTT",
         "sr_fec": "30000 3/4",
         "onid_nid_tid": "-/60000/60002",
-        "date": "29.04.2026",
+        "date": "13.10.2026",
         "streams": [
             {
                 "title": "Stream 8001 - (HSA-67.1) - RGE Madrid",
@@ -2855,7 +2855,7 @@
         "provider": "Abertis DTT",
         "sr_fec": "30000 3/4",
         "onid_nid_tid": "-/60000/60001",
-        "date": "24.04.2026",
+        "date": "13.10.2026",
         "streams": [
             {
                 "title": "Stream 8000 - (HSA-68.0) - Cellnex",
