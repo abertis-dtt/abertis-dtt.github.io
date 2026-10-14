@@ -69,6 +69,7 @@ DEFAULTS = {
     'out_host': '0.0.0.0',
     'http_port': 9999,
     'relay_script': '',
+    'gui_scale': 1.0,
 }
 
 
@@ -181,6 +182,15 @@ OPTIONS = OrderedDict((
                 'to derive it per stream from the JSON provider field '
                 '(abertis, cellnex). Set a fixed name only if your box '
                 'ships a single script that handles every provider.'}),
+    ('gui_scale', {
+        'section': 'output', 'label': 'GUI scale factor',
+        'help': 'Multiplier for all fonts and widgets of this window (for '
+                'example 1.5 on a HiDPI / small display). Values range from '
+                '0.5 up to 3.0. The setting is saved and applied on the next '
+                'start for a fully consistent layout; the Apply button also '
+                'updates the running window. Use the Apply scale button on the '
+                'status bar to change it live.'}),
+
 ))
 
 ACTION_HELP = {
@@ -706,20 +716,37 @@ if TK_AVAILABLE:
                         'Generate (Ctrl+G).')
 
         # ------------------------------------------------ fonts & style
+        def _initial_gui_scale(self):
+            try:
+                with open(SETTINGS_FILE, 'r', encoding='utf-8') as f:
+                    saved = json.load(f)
+                scale = float(saved.get('values', {}).get(
+                    'gui_scale', DEFAULTS.get('gui_scale', 1.0)))
+            except (OSError, ValueError, TypeError):
+                scale = float(DEFAULTS.get('gui_scale', 1.0))
+            if scale < 0.5 or scale > 3.0:
+                scale = 1.0
+            return scale
+
         def _setup_fonts(self):
+            self.scale_factor = self._initial_gui_scale()
             fams = set(tkfont.families(self))
             ui = ('Segoe UI' if 'Segoe UI' in fams else
                   'DejaVu Sans' if 'DejaVu Sans' in fams else 'Helvetica')
             mono = ('Consolas' if 'Consolas' in fams else
                     'DejaVu Sans Mono' if 'DejaVu Sans Mono' in fams else
                     'Courier')
+            sc = self.scale_factor
+
+            def sz(base):
+                return max(7, int(round(base * sc)))
             self.fonts = {
-                'base': tkfont.Font(family=ui, size=9),
-                'small': tkfont.Font(family=ui, size=8),
-                'bold': tkfont.Font(family=ui, size=9, weight='bold'),
-                'h1': tkfont.Font(family=ui, size=13, weight='bold'),
-                'mono': tkfont.Font(family=mono, size=9),
-                'mono_small': tkfont.Font(family=mono, size=8),
+                'base': tkfont.Font(family=ui, size=sz(9)),
+                'small': tkfont.Font(family=ui, size=sz(8)),
+                'bold': tkfont.Font(family=ui, size=sz(9), weight='bold'),
+                'h1': tkfont.Font(family=ui, size=sz(13), weight='bold'),
+                'mono': tkfont.Font(family=mono, size=sz(9)),
+                'mono_small': tkfont.Font(family=mono, size=sz(8)),
             }
 
         def _setup_style(self):
@@ -894,6 +921,17 @@ if TK_AVAILABLE:
             self.v_counts = tk.StringVar(value='')
             ttk.Label(status, textvariable=self.v_counts,
                       style='Muted.TLabel').pack(side='right', padx=(0, 14))
+
+            ttk.Label(status, text='Scale:', style='Muted.TLabel') \
+                .pack(side='right')
+            self.v_scale = tk.StringVar(value='%.2f' % self.scale_factor)
+            self.scale_spin = ttk.Spinbox(
+                status, from_=0.5, to=3.0, increment=0.1, width=5,
+                textvariable=self.v_scale)
+            self.scale_spin.pack(side='right', padx=(4, 10))
+            self.scale_apply_btn = self.button(status, 'Apply scale',
+                                              self._apply_gui_scale)
+            self.scale_apply_btn.pack(side='right', padx=(4, 6))
 
         def _attach_help(self, widget, text, key=None):
             Tooltip(self, widget, text)
@@ -1253,6 +1291,33 @@ if TK_AVAILABLE:
             self.help_text.configure(state='disabled')
 
         # ---------------------------------------------------- helpers
+        FONT_BASE_SIZES = {
+            'base': 9, 'small': 8, 'bold': 9, 'h1': 13, 'mono': 9,
+            'mono_small': 8,
+        }
+
+        def _apply_gui_scale(self, silent=False, event=None):
+            try:
+                factor = float(self.v_scale.get())
+            except (TypeError, ValueError):
+                factor = self.scale_factor
+            factor = min(3.0, max(0.5, factor))
+            self.scale_factor = factor
+            self.v_scale.set('%.2f' % factor)
+            for name, base in self.FONT_BASE_SIZES.items():
+                sz = max(7, int(round(base * factor)))
+                self.fonts[name].configure(size=sz)
+            try:
+                self.tk.call('tk', 'scaling', factor * 1.33)
+            except tk.TclError:
+                pass
+            if not silent:
+                self.status('GUI scale set to %.2f. Saved for next start.'
+                            % factor)
+
+        def _reconfigure_fonts(self):
+            self._apply_gui_scale(silent=True)
+
         def _set_text(self, widget, content):
             widget.configure(state='normal')
             widget.delete('1.0', 'end')
@@ -1295,6 +1360,7 @@ if TK_AVAILABLE:
                 'out_host': self.v_out_host.get().strip(),
                 'http_port': self.v_http_port.get().strip() or '9999',
                 'relay_script': self.v_script.get().strip(),
+                'gui_scale': float(self.v_scale.get() or self.scale_factor),
             }
 
         def _sync_source_state(self):
@@ -1784,6 +1850,7 @@ if TK_AVAILABLE:
                 'relay_host': self.v_relay_host, 'relay_port': self.v_relay_port,
                 'out_host': self.v_out_host, 'http_port': self.v_http_port,
                 'relay_script': self.v_script,
+                'gui_scale': self.v_scale,
             }
             for key, var in var_map.items():
                 if key in values:
@@ -1798,12 +1865,14 @@ if TK_AVAILABLE:
             self._sync_merge_state()
             self._sync_edit_state()
             self._update_pos_label()
+            self._apply_gui_scale(silent=True)
 
         def _restore_settings(self):
             self._sync_source_state()
             self._sync_merge_state()
             self._sync_edit_state()
             self._update_pos_label()
+            self._apply_gui_scale(silent=True)
             try:
                 with open(SETTINGS_FILE, 'r', encoding='utf-8') as f:
                     saved = json.load(f)

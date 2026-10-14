@@ -145,7 +145,7 @@ def parse_transponders(data):
             'onid': onid,
             'tsid': tsid,
             'provider': provider,
-            'provider_short': provider.split()[0] if provider.split() else 'Abertis',
+            'provider_short': (provider.split()[0] if provider.split() else '') or 'Abertis',
             'streams': entry.get('streams') or [],
         }
         key = (tp['tsid'], tp['onid'])
@@ -381,6 +381,13 @@ def parse_lamedb(lines):
             if line.strip() == 'end':
                 idx += 1
                 break
+            tp_parts = line.strip().split(':')
+            if not (len(tp_parts) >= 3 and tp_parts[0]
+                    and all(c in '0123456789abcdefABCDEF' for c in tp_parts[0])
+                    and all(c in '0123456789abcdefABCDEF' for c in tp_parts[1])
+                    and all(c in '0123456789abcdefABCDEF' for c in tp_parts[2])):
+                idx += 1
+                continue
             header_line = line
             idx += 1
             block = [header_line]
@@ -401,6 +408,14 @@ def parse_lamedb(lines):
             continue
         if fmt == 'v4' and line.strip() == 'end':
             break
+        svc_parts = line.strip().split(':')
+        if not (len(svc_parts) >= 5 and svc_parts[0] and svc_parts[1]
+                and svc_parts[2] and svc_parts[3]
+                and all(c in '0123456789abcdefABCDEF'
+                        for c in svc_parts[0] + svc_parts[1] + svc_parts[2]
+                        + svc_parts[3])):
+            idx += 1
+            continue
         block = [line]  # sid:namespace:tsid:onid:type:number
         idx += 1
         if idx < len(lines) and lines[idx].strip() \
@@ -412,6 +427,45 @@ def parse_lamedb(lines):
             idx += 1
         svc_blocks[tuple(line.split(':')[:4])] = block
     return fmt, tp_blocks, svc_blocks
+
+
+def normalize_tp_block(block):
+    if not block:
+        return block
+    header = block[0].strip()
+    sline = ''
+    for line in block[1:]:
+        st = line.strip()
+        if st.startswith('s ') or st.endswith('\t') is False and '\t' in line:
+            sline = line if line.startswith('\t') else '\t' + st
+            break
+    if not sline:
+        for line in block[1:]:
+            if line.strip():
+                sline = line if line.startswith('\t') else '\t' + line.strip()
+                break
+    return [header, sline if sline.strip() else '']
+
+
+def normalize_svc_block(block):
+    if not block:
+        return block
+    header = block[0].strip()
+    name = ''
+    flags = []
+    for line in block[1:]:
+        st = line.strip()
+        if not st:
+            continue
+        if st.startswith(('p:', 'c:', 'C:', 'f:', 'v:')):
+            flags.append(st)
+        elif not name:
+            name = st
+        else:
+            name = (name + ' ' + st).strip()
+    # Preserve the 3rd line even when flags are missing.
+    out = [header, name, ','.join(flags) if flags else '']
+    return out
 
 
 def merge_lamedb(path, tp_entries, svc_entries):
@@ -452,11 +506,11 @@ def merge_lamedb(path, tp_entries, svc_entries):
 
     out = ['eDVB services /4/', 'transponders']
     for block in tp_blocks.values():
-        out.extend(block)
+        out.extend(normalize_tp_block(block))
         out.append('/')
     out.extend(('end', 'services'))
     for block in svc_blocks.values():
-        out.extend(block)
+        out.extend(normalize_svc_block(block))
     out.append('end')
 
     shutil.copy2(path, path + '.bak')
@@ -504,11 +558,11 @@ def edit_lamedb(path, tp_entries, svc_entries):
 
     out = ['eDVB services /4/', 'transponders']
     for block in tp_blocks.values():
-        out.extend(block)
+        out.extend(normalize_tp_block(block))
         out.append('/')
     out.extend(('end', 'services'))
     for block in svc_blocks.values():
-        out.extend(block)
+        out.extend(normalize_svc_block(block))
     out.append('end')
 
     shutil.copy2(path, path + '.bak')

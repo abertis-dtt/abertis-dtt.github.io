@@ -1,0 +1,2005 @@
+root@novaler4kpro:~# py Abertis_CreateLogs.py 
+Parsed 55 PID channel(s) from /etc/astra/astra.conf
+
+==================================================
+Starting Scan for Channel: Abertis@11653H19680 (PID 301)
+==================================================
+[*] Zapping to feed service: 1:0:1:515:EA63:1:CE40000:0:0:0:
+    -> zap command: curl -s 'http://127.0.0.1/web/zap?sRef=1%3A0%3A1%3A515%3AEA63%3A1%3ACE40000%3A0%3A0%3A0%3A' | head
+    -> Zap successful. Waiting 6 seconds for tuner lock & stream start...
+[*] Letting feed service settle for 20 seconds...
+[*] Analyzing PID 301 for 22 seconds...
+    -> command: astra --analyze 'http://0.0.0.0:9999/abertis/pid301'
+Oct 14 16:24:22: INFO: [Abertis@11653H19680 PID 301 #1] PAT: tsid: 60003
+Oct 14 16:24:22: INFO: [Abertis@11653H19680 PID 301 #1] PAT: pid: 16 NIT
+Oct 14 16:24:22: INFO: [Abertis@11653H19680 PID 301 #1] PAT: pid: 5301 PMT pnr: 1301
+Oct 14 16:24:22: INFO: [Abertis@11653H19680 PID 301 #1] PAT: pid: 5303 PMT pnr: 1303
+Oct 14 16:24:22: INFO: [Abertis@11653H19680 PID 301 #1] PAT: pid: 8100 PMT pnr: 65534
+Oct 14 16:24:22: INFO: [Abertis@11653H19680 PID 301 #1] PAT: crc32: 0x8F31AF93
+Oct 14 16:24:22: INFO: [Abertis@11653H19680 PID 301 #1] PMT: pnr: 1301
+Oct 14 16:24:22: INFO: [Abertis@11653H19680 PID 301 #1] PMT: pid: 8191 PCR
+Oct 14 16:24:22: INFO: [Abertis@11653H19680 PID 301 #1] PMT: CAS: caid: 0x2600 pid: 8191
+Oct 14 16:24:22: INFO: [Abertis@11653H19680 PID 301 #1] PMT: Service: HSA-88L.1
+Oct 14 16:24:22: INFO: [Abertis@11653H19680 PID 301 #1] PMT: Provider: HSA-88L
+Oct 14 16:24:22: INFO: [Abertis@11653H19680 PID 301 #1] DATA: pid: 301 type: User private (0x90)
+Oct 14 16:24:22: INFO: [Abertis@11653H19680 PID 301 #1] DATA: descriptor: 0xFB06000600000000
+Oct 14 16:24:22: INFO: [Abertis@11653H19680 PID 301 #1] PMT: crc32: 0xB171EE9C
+Oct 14 16:24:22: ERROR: [Abertis@11653H19680 PID 301 #1] Bitrate:13859Kbit/s PES:0 CC:0
+Oct 14 16:24:23: ERROR: [Abertis@11653H19680 PID 301 #1] Bitrate:20021Kbit/s PES:0 CC:0
+Oct 14 16:24:24: ERROR: [Abertis@11653H19680 PID 301 #1] Bitrate:20021Kbit/s PES:0 CC:0
+Oct 14 16:24:25: ERROR: [Abertis@11653H19680 PID 301 #1] Bitrate:20021Kbit/s PES:0 CC:0
+Oct 14 16:24:25: ERROR: [Abertis@11653H19680 PID 301] Failed to switch to reserve
+    -> Finished PID 301. Log saved to pid_logs/pid301.log
+
+==================================================
+Starting Scan for Channel: Abertis@11653H19680 (PID 303)
+==================================================
+[*] Zapping to feed service: 1:0:1:517:EA63:1:CE40000:0:0:0:
+    -> zap command: curl -s 'http://127.0.0.1/web/zap?sRef=1%3A0%3A1%3A517%3AEA63%3A1%3ACE40000%3A0%3A0%3A0%3A' | head
+    -> Zap successful. Waiting 6 seconds for tuner lock & stream start...
+[*] Letting feed service settle for 20 seconds...
+[*] Analyzing PID 303 for 22 seconds...
+    -> command: astra --analyze 'http://0.0.0.0:9999/abertis/pid303'
+Oct 14 16:25:11: INFO: [Abertis@11653H19680 PID 303 #1] PAT: tsid: 60003
+Oct 14 16:25:11: INFO: [Abertis@11653H19680 PID 303 #1] PAT: pid: 16 NIT
+Oct 14 16:25:11: INFO: [Abertis@11653H19680 PID 303 #1] PAT: pid: 5301 PMT pnr: 1301
+Oct 14 16:25:11: INFO: [Abertis@11653H19680 PID 303 #1] PAT: pid: 5303 PMT pnr: 1303
+Oct 14 16:25:11: INFO: [Abertis@11653H19680 PID 303 #1] PAT: pid: 8100 PMT pnr: 65534
+Oct 14 16:25:11: INFO: [Abertis@11653H19680 PID 303 #1] PAT: crc32: 0x8F31AF93
+Oct 14 16:25:11: INFO: [Abertis@11653H19680 PID 303 #1] PMT: pnr: 1303
+Oct 14 16:25:11: INFO: [Abertis@11653H19680 PID 303 #1] PMT: pid: 8191 PCR
+Oct 14 16:25:11: INFO: [Abertis@11653H19680 PID 303 #1] PMT: CAS: caid: 0x2600 pid: 8191
+Oct 14 16:25:11: INFO: [Abertis@11653H19680 PID 303 #1] PMT: Service: HSA-88L.3
+Oct 14 16:25:11: INFO: [Abertis@11653H19680 PID 303 #1] PMT: Provider: HSA-88L
+Oct 14 16:25:11: INFO: [Abertis@11653H19680 PID 303 #1] DATA: pid: 303 type: User private (0x90)
+Oct 14 16:25:11: INFO: [Abertis@11653H19680 PID 303 #1] DATA: descriptor: 0xFB06000600000000
+Oct 14 16:25:11: INFO: [Abertis@11653H19680 PID 303 #1] PMT: crc32: 0x25A99B20
+Oct 14 16:25:12: ERROR: [Abertis@11653H19680 PID 303 #1] Bitrate:15399Kbit/s PES:0 CC:0
+Oct 14 16:25:13: ERROR: [Abertis@11653H19680 PID 303 #1] Bitrate:20020Kbit/s PES:0 CC:0
+Oct 14 16:25:14: ERROR: [Abertis@11653H19680 PID 303 #1] Bitrate:21560Kbit/s PES:0 CC:0
+Oct 14 16:25:15: ERROR: [Abertis@11653H19680 PID 303 #1] Bitrate:20021Kbit/s PES:0 CC:0
+Oct 14 16:25:15: ERROR: [Abertis@11653H19680 PID 303] Failed to switch to reserve
+    -> Finished PID 303. Log saved to pid_logs/pid303.log
+
+==================================================
+Starting Scan for Channel: Abertis@11674H15750 (PID 420)
+==================================================
+[*] Zapping to feed service: 1:0:1:58C:EA64:1:CE40000:0:0:0:
+    -> zap command: curl -s 'http://127.0.0.1/web/zap?sRef=1%3A0%3A1%3A58C%3AEA64%3A1%3ACE40000%3A0%3A0%3A0%3A' | head
+    -> Zap successful. Waiting 6 seconds for tuner lock & stream start...
+[*] Letting feed service settle for 20 seconds...
+[*] Analyzing PID 420 for 22 seconds...
+    -> command: astra --analyze 'http://0.0.0.0:9999/abertis/pid420'
+Oct 14 16:26:01: INFO: [Abertis@11674H15750 PID 420 #1] PAT: tsid: 60004
+Oct 14 16:26:01: INFO: [Abertis@11674H15750 PID 420 #1] PAT: pid: 16 NIT
+Oct 14 16:26:01: INFO: [Abertis@11674H15750 PID 420 #1] PAT: pid: 5420 PMT pnr: 1420
+Oct 14 16:26:01: INFO: [Abertis@11674H15750 PID 420 #1] PAT: pid: 5421 PMT pnr: 1421
+Oct 14 16:26:01: INFO: [Abertis@11674H15750 PID 420 #1] PAT: pid: 5423 PMT pnr: 1423
+Oct 14 16:26:01: INFO: [Abertis@11674H15750 PID 420 #1] PAT: pid: 5431 PMT pnr: 1431
+Oct 14 16:26:01: INFO: [Abertis@11674H15750 PID 420 #1] PAT: pid: 5433 PMT pnr: 1433
+Oct 14 16:26:01: INFO: [Abertis@11674H15750 PID 420 #1] PAT: pid: 8100 PMT pnr: 65534
+Oct 14 16:26:01: INFO: [Abertis@11674H15750 PID 420 #1] PAT: pid: 5440 PMT pnr: 1440
+Oct 14 16:26:01: INFO: [Abertis@11674H15750 PID 420 #1] PAT: crc32: 0x136DCE03
+Oct 14 16:26:01: INFO: [Abertis@11674H15750 PID 420 #1] PMT: pnr: 1420
+Oct 14 16:26:01: INFO: [Abertis@11674H15750 PID 420 #1] PMT: pid: 8191 PCR
+Oct 14 16:26:01: INFO: [Abertis@11674H15750 PID 420 #1] PMT: CAS: caid: 0x2600 pid: 8191
+Oct 14 16:26:01: INFO: [Abertis@11674H15750 PID 420 #1] PMT: Service: HS88U.20
+Oct 14 16:26:01: INFO: [Abertis@11674H15750 PID 420 #1] PMT: Provider: HSA-88U
+Oct 14 16:26:01: INFO: [Abertis@11674H15750 PID 420 #1] DATA: pid: 420 type: User private (0x90)
+Oct 14 16:26:01: INFO: [Abertis@11674H15750 PID 420 #1] DATA: descriptor: 0xFB06000C00000000
+Oct 14 16:26:01: INFO: [Abertis@11674H15750 PID 420 #1] DATA: descriptor: 0xFA08000C000000004000
+Oct 14 16:26:01: INFO: [Abertis@11674H15750 PID 420 #1] PMT: crc32: 0x39D4596E
+Oct 14 16:26:01: ERROR: [Abertis@11674H15750 PID 420 #1] Bitrate:6057Kbit/s PES:0 CC:0
+Oct 14 16:26:02: ERROR: [Abertis@11674H15750 PID 420 #1] Bitrate:12421Kbit/s PES:0 CC:0
+Oct 14 16:26:03: ERROR: [Abertis@11674H15750 PID 420 #1] Bitrate:12320Kbit/s PES:0 CC:0
+Oct 14 16:26:04: ERROR: [Abertis@11674H15750 PID 420 #1] Bitrate:12320Kbit/s PES:0 CC:0
+Oct 14 16:26:04: ERROR: [Abertis@11674H15750 PID 420] Failed to switch to reserve
+    -> Finished PID 420. Log saved to pid_logs/pid420.log
+
+==================================================
+Starting Scan for Channel: Abertis@11674H15750 (PID 421)
+==================================================
+[*] Zapping to feed service: 1:0:1:58D:EA64:1:CE40000:0:0:0:
+    -> zap command: curl -s 'http://127.0.0.1/web/zap?sRef=1%3A0%3A1%3A58D%3AEA64%3A1%3ACE40000%3A0%3A0%3A0%3A' | head
+    -> Zap successful. Waiting 6 seconds for tuner lock & stream start...
+[*] Letting feed service settle for 20 seconds...
+[*] Analyzing PID 421 for 22 seconds...
+    -> command: astra --analyze 'http://0.0.0.0:9999/abertis/pid421'
+Oct 14 16:26:51: INFO: [Abertis@11674H15750 PID 421 #1] PAT: tsid: 60004
+Oct 14 16:26:51: INFO: [Abertis@11674H15750 PID 421 #1] PAT: pid: 16 NIT
+Oct 14 16:26:51: INFO: [Abertis@11674H15750 PID 421 #1] PAT: pid: 5420 PMT pnr: 1420
+Oct 14 16:26:51: INFO: [Abertis@11674H15750 PID 421 #1] PAT: pid: 5421 PMT pnr: 1421
+Oct 14 16:26:51: INFO: [Abertis@11674H15750 PID 421 #1] PAT: pid: 5423 PMT pnr: 1423
+Oct 14 16:26:51: INFO: [Abertis@11674H15750 PID 421 #1] PAT: pid: 5431 PMT pnr: 1431
+Oct 14 16:26:51: INFO: [Abertis@11674H15750 PID 421 #1] PAT: pid: 5433 PMT pnr: 1433
+Oct 14 16:26:51: INFO: [Abertis@11674H15750 PID 421 #1] PAT: pid: 8100 PMT pnr: 65534
+Oct 14 16:26:51: INFO: [Abertis@11674H15750 PID 421 #1] PAT: pid: 5440 PMT pnr: 1440
+Oct 14 16:26:51: INFO: [Abertis@11674H15750 PID 421 #1] PAT: crc32: 0x136DCE03
+Oct 14 16:26:51: INFO: [Abertis@11674H15750 PID 421 #1] PMT: pnr: 1421
+Oct 14 16:26:51: INFO: [Abertis@11674H15750 PID 421 #1] PMT: pid: 8191 PCR
+Oct 14 16:26:51: INFO: [Abertis@11674H15750 PID 421 #1] PMT: CAS: caid: 0x2600 pid: 8191
+Oct 14 16:26:51: INFO: [Abertis@11674H15750 PID 421 #1] PMT: Service: HS88U.21
+Oct 14 16:26:51: INFO: [Abertis@11674H15750 PID 421 #1] PMT: Provider: HSA-88U
+Oct 14 16:26:51: INFO: [Abertis@11674H15750 PID 421 #1] DATA: pid: 421 type: User private (0x90)
+Oct 14 16:26:51: INFO: [Abertis@11674H15750 PID 421 #1] DATA: descriptor: 0xFB06000C00000000
+Oct 14 16:26:51: INFO: [Abertis@11674H15750 PID 421 #1] DATA: descriptor: 0xFA08000C000000002000
+Oct 14 16:26:51: INFO: [Abertis@11674H15750 PID 421 #1] PMT: crc32: 0xAAE50D5A
+Oct 14 16:26:51: ERROR: [Abertis@11674H15750 PID 421 #1] Bitrate:4619Kbit/s PES:0 CC:0
+Oct 14 16:26:52: ERROR: [Abertis@11674H15750 PID 421 #1] Bitrate:9240Kbit/s PES:0 CC:0
+Oct 14 16:26:53: ERROR: [Abertis@11674H15750 PID 421 #1] Bitrate:9240Kbit/s PES:0 CC:0
+Oct 14 16:26:54: ERROR: [Abertis@11674H15750 PID 421 #1] Bitrate:10780Kbit/s PES:0 CC:0
+Oct 14 16:26:54: ERROR: [Abertis@11674H15750 PID 421] Failed to switch to reserve
+    -> Finished PID 421. Log saved to pid_logs/pid421.log
+
+==================================================
+Starting Scan for Channel: Abertis@11674H15750 (PID 423)
+==================================================
+[*] Zapping to feed service: 1:0:1:58F:EA64:1:CE40000:0:0:0:
+    -> zap command: curl -s 'http://127.0.0.1/web/zap?sRef=1%3A0%3A1%3A58F%3AEA64%3A1%3ACE40000%3A0%3A0%3A0%3A' | head
+    -> Zap successful. Waiting 6 seconds for tuner lock & stream start...
+[*] Letting feed service settle for 20 seconds...
+[*] Analyzing PID 423 for 22 seconds...
+    -> command: astra --analyze 'http://0.0.0.0:9999/abertis/pid423'
+Oct 14 16:27:40: INFO: [Abertis@11674H15750 PID 423 #1] PAT: tsid: 60004
+Oct 14 16:27:40: INFO: [Abertis@11674H15750 PID 423 #1] PAT: pid: 16 NIT
+Oct 14 16:27:40: INFO: [Abertis@11674H15750 PID 423 #1] PAT: pid: 5420 PMT pnr: 1420
+Oct 14 16:27:40: INFO: [Abertis@11674H15750 PID 423 #1] PAT: pid: 5421 PMT pnr: 1421
+Oct 14 16:27:40: INFO: [Abertis@11674H15750 PID 423 #1] PAT: pid: 5423 PMT pnr: 1423
+Oct 14 16:27:40: INFO: [Abertis@11674H15750 PID 423 #1] PAT: pid: 5431 PMT pnr: 1431
+Oct 14 16:27:40: INFO: [Abertis@11674H15750 PID 423 #1] PAT: pid: 5433 PMT pnr: 1433
+Oct 14 16:27:40: INFO: [Abertis@11674H15750 PID 423 #1] PAT: pid: 8100 PMT pnr: 65534
+Oct 14 16:27:40: INFO: [Abertis@11674H15750 PID 423 #1] PAT: pid: 5440 PMT pnr: 1440
+Oct 14 16:27:40: INFO: [Abertis@11674H15750 PID 423 #1] PAT: crc32: 0x136DCE03
+Oct 14 16:27:40: INFO: [Abertis@11674H15750 PID 423 #1] PMT: pnr: 1423
+Oct 14 16:27:40: INFO: [Abertis@11674H15750 PID 423 #1] PMT: pid: 8191 PCR
+Oct 14 16:27:40: INFO: [Abertis@11674H15750 PID 423 #1] PMT: CAS: caid: 0x2600 pid: 8191
+Oct 14 16:27:40: INFO: [Abertis@11674H15750 PID 423 #1] PMT: Service: HS88U.23
+Oct 14 16:27:40: INFO: [Abertis@11674H15750 PID 423 #1] PMT: Provider: HSA-88U
+Oct 14 16:27:40: INFO: [Abertis@11674H15750 PID 423 #1] DATA: pid: 423 type: User private (0x90)
+Oct 14 16:27:40: INFO: [Abertis@11674H15750 PID 423 #1] DATA: descriptor: 0xFB06000C00000000
+Oct 14 16:27:40: INFO: [Abertis@11674H15750 PID 423 #1] DATA: descriptor: 0xFA08000C000000002000
+Oct 14 16:27:40: INFO: [Abertis@11674H15750 PID 423 #1] PMT: crc32: 0x6C073308
+Oct 14 16:27:40: ERROR: [Abertis@11674H15750 PID 423 #1] Bitrate:4619Kbit/s PES:0 CC:0
+Oct 14 16:27:41: ERROR: [Abertis@11674H15750 PID 423 #1] Bitrate:9240Kbit/s PES:0 CC:0
+Oct 14 16:27:42: ERROR: [Abertis@11674H15750 PID 423 #1] Bitrate:9240Kbit/s PES:0 CC:0
+Oct 14 16:27:43: ERROR: [Abertis@11674H15750 PID 423 #1] Bitrate:10780Kbit/s PES:0 CC:0
+Oct 14 16:27:43: ERROR: [Abertis@11674H15750 PID 423] Failed to switch to reserve
+    -> Finished PID 423. Log saved to pid_logs/pid423.log
+
+==================================================
+Starting Scan for Channel: Abertis@11674H15750 (PID 431)
+==================================================
+[*] Zapping to feed service: 1:0:1:597:EA64:1:CE40000:0:0:0:
+    -> zap command: curl -s 'http://127.0.0.1/web/zap?sRef=1%3A0%3A1%3A597%3AEA64%3A1%3ACE40000%3A0%3A0%3A0%3A' | head
+    -> Zap successful. Waiting 6 seconds for tuner lock & stream start...
+[*] Letting feed service settle for 20 seconds...
+[*] Analyzing PID 431 for 22 seconds...
+    -> command: astra --analyze 'http://0.0.0.0:9999/abertis/pid431'
+Oct 14 16:28:30: ERROR: [Abertis@11674H15750 PID 431 #1] Bitrate:0Kbit/s PES:0 CC:0
+Oct 14 16:28:31: ERROR: [Abertis@11674H15750 PID 431 #1] Bitrate:0Kbit/s PES:0 CC:0
+Oct 14 16:28:32: ERROR: [Abertis@11674H15750 PID 431 #1] Bitrate:0Kbit/s PES:0 CC:0
+Oct 14 16:28:33: ERROR: [Abertis@11674H15750 PID 431 #1] Bitrate:0Kbit/s PES:0 CC:0
+Oct 14 16:28:33: ERROR: [Abertis@11674H15750 PID 431] Failed to switch to reserve
+Oct 14 16:28:35: INFO: [Abertis@11674H15750 PID 431 #1] PAT: tsid: 60004
+Oct 14 16:28:35: INFO: [Abertis@11674H15750 PID 431 #1] PAT: pid: 16 NIT
+Oct 14 16:28:35: INFO: [Abertis@11674H15750 PID 431 #1] PAT: pid: 5420 PMT pnr: 1420
+Oct 14 16:28:35: INFO: [Abertis@11674H15750 PID 431 #1] PAT: pid: 5421 PMT pnr: 1421
+Oct 14 16:28:35: INFO: [Abertis@11674H15750 PID 431 #1] PAT: pid: 5423 PMT pnr: 1423
+Oct 14 16:28:35: INFO: [Abertis@11674H15750 PID 431 #1] PAT: pid: 5431 PMT pnr: 1431
+Oct 14 16:28:35: INFO: [Abertis@11674H15750 PID 431 #1] PAT: pid: 5433 PMT pnr: 1433
+Oct 14 16:28:35: INFO: [Abertis@11674H15750 PID 431 #1] PAT: pid: 8100 PMT pnr: 65534
+Oct 14 16:28:35: INFO: [Abertis@11674H15750 PID 431 #1] PAT: pid: 5440 PMT pnr: 1440
+Oct 14 16:28:35: INFO: [Abertis@11674H15750 PID 431 #1] PAT: crc32: 0x136DCE03
+Oct 14 16:28:35: INFO: [Abertis@11674H15750 PID 431 #1] PMT: pnr: 1431
+Oct 14 16:28:35: INFO: [Abertis@11674H15750 PID 431 #1] PMT: pid: 8191 PCR
+Oct 14 16:28:35: INFO: [Abertis@11674H15750 PID 431 #1] PMT: CAS: caid: 0x2600 pid: 8191
+Oct 14 16:28:35: INFO: [Abertis@11674H15750 PID 431 #1] PMT: Service: HS88U.31
+Oct 14 16:28:35: INFO: [Abertis@11674H15750 PID 431 #1] PMT: Provider: HSA-88U
+Oct 14 16:28:35: INFO: [Abertis@11674H15750 PID 431 #1] DATA: pid: 431 type: User private (0x90)
+Oct 14 16:28:35: INFO: [Abertis@11674H15750 PID 431 #1] DATA: descriptor: 0xFA0C0000000000008002058C058D
+Oct 14 16:28:35: INFO: [Abertis@11674H15750 PID 431 #1] PMT: crc32: 0x2341FE0C
+Oct 14 16:28:45: ERROR: [Abertis@11674H15750 PID 431 #1] Bitrate:0Kbit/s PES:0 CC:0
+Oct 14 16:28:46: ERROR: [Abertis@11674H15750 PID 431 #1] Bitrate:0Kbit/s PES:0 CC:0
+Oct 14 16:28:47: ERROR: [Abertis@11674H15750 PID 431 #1] Bitrate:0Kbit/s PES:0 CC:0
+Oct 14 16:28:48: ERROR: [Abertis@11674H15750 PID 431 #1] Bitrate:0Kbit/s PES:0 CC:0
+Oct 14 16:28:48: ERROR: [Abertis@11674H15750 PID 431] Failed to switch to reserve
+Oct 14 16:28:50: INFO: [Abertis@11674H15750 PID 431 #1] PAT: tsid: 60004
+Oct 14 16:28:50: INFO: [Abertis@11674H15750 PID 431 #1] PAT: pid: 16 NIT
+Oct 14 16:28:50: INFO: [Abertis@11674H15750 PID 431 #1] PAT: pid: 5420 PMT pnr: 1420
+Oct 14 16:28:50: INFO: [Abertis@11674H15750 PID 431 #1] PAT: pid: 5421 PMT pnr: 1421
+Oct 14 16:28:50: INFO: [Abertis@11674H15750 PID 431 #1] PAT: pid: 5423 PMT pnr: 1423
+Oct 14 16:28:50: INFO: [Abertis@11674H15750 PID 431 #1] PAT: pid: 5431 PMT pnr: 1431
+Oct 14 16:28:50: INFO: [Abertis@11674H15750 PID 431 #1] PAT: pid: 5433 PMT pnr: 1433
+Oct 14 16:28:50: INFO: [Abertis@11674H15750 PID 431 #1] PAT: pid: 8100 PMT pnr: 65534
+Oct 14 16:28:50: INFO: [Abertis@11674H15750 PID 431 #1] PAT: pid: 5440 PMT pnr: 1440
+Oct 14 16:28:50: INFO: [Abertis@11674H15750 PID 431 #1] PAT: crc32: 0x136DCE03
+Oct 14 16:28:50: INFO: [Abertis@11674H15750 PID 431 #1] PMT: pnr: 1431
+Oct 14 16:28:50: INFO: [Abertis@11674H15750 PID 431 #1] PMT: pid: 8191 PCR
+Oct 14 16:28:50: INFO: [Abertis@11674H15750 PID 431 #1] PMT: CAS: caid: 0x2600 pid: 8191
+Oct 14 16:28:50: INFO: [Abertis@11674H15750 PID 431 #1] PMT: Service: HS88U.31
+Oct 14 16:28:50: INFO: [Abertis@11674H15750 PID 431 #1] PMT: Provider: HSA-88U
+Oct 14 16:28:50: INFO: [Abertis@11674H15750 PID 431 #1] DATA: pid: 431 type: User private (0x90)
+Oct 14 16:28:50: INFO: [Abertis@11674H15750 PID 431 #1] DATA: descriptor: 0xFA0C0000000000008002058C058D
+Oct 14 16:28:50: INFO: [Abertis@11674H15750 PID 431 #1] PMT: crc32: 0x2341FE0C
+    -> Finished PID 431. Log saved to pid_logs/pid431.log
+
+==================================================
+Starting Scan for Channel: Abertis@11674H15750 (PID 433)
+==================================================
+[*] Zapping to feed service: 1:0:1:599:EA64:1:CE40000:0:0:0:
+    -> zap command: curl -s 'http://127.0.0.1/web/zap?sRef=1%3A0%3A1%3A599%3AEA64%3A1%3ACE40000%3A0%3A0%3A0%3A' | head
+    -> Zap successful. Waiting 6 seconds for tuner lock & stream start...
+[*] Letting feed service settle for 20 seconds...
+[*] Analyzing PID 433 for 22 seconds...
+    -> command: astra --analyze 'http://0.0.0.0:9999/abertis/pid433'
+Oct 14 16:29:19: ERROR: [Abertis@11674H15750 PID 433 #1] Bitrate:0Kbit/s PES:0 CC:0
+Oct 14 16:29:20: ERROR: [Abertis@11674H15750 PID 433 #1] Bitrate:0Kbit/s PES:0 CC:0
+Oct 14 16:29:21: ERROR: [Abertis@11674H15750 PID 433 #1] Bitrate:0Kbit/s PES:0 CC:0
+Oct 14 16:29:22: ERROR: [Abertis@11674H15750 PID 433 #1] Bitrate:0Kbit/s PES:0 CC:0
+Oct 14 16:29:22: ERROR: [Abertis@11674H15750 PID 433] Failed to switch to reserve
+Oct 14 16:29:25: INFO: [Abertis@11674H15750 PID 433 #1] PAT: tsid: 60004
+Oct 14 16:29:25: INFO: [Abertis@11674H15750 PID 433 #1] PAT: pid: 16 NIT
+Oct 14 16:29:25: INFO: [Abertis@11674H15750 PID 433 #1] PAT: pid: 5420 PMT pnr: 1420
+Oct 14 16:29:25: INFO: [Abertis@11674H15750 PID 433 #1] PAT: pid: 5421 PMT pnr: 1421
+Oct 14 16:29:25: INFO: [Abertis@11674H15750 PID 433 #1] PAT: pid: 5423 PMT pnr: 1423
+Oct 14 16:29:25: INFO: [Abertis@11674H15750 PID 433 #1] PAT: pid: 5431 PMT pnr: 1431
+Oct 14 16:29:25: INFO: [Abertis@11674H15750 PID 433 #1] PAT: pid: 5433 PMT pnr: 1433
+Oct 14 16:29:25: INFO: [Abertis@11674H15750 PID 433 #1] PAT: pid: 8100 PMT pnr: 65534
+Oct 14 16:29:25: INFO: [Abertis@11674H15750 PID 433 #1] PAT: pid: 5440 PMT pnr: 1440
+Oct 14 16:29:25: INFO: [Abertis@11674H15750 PID 433 #1] PAT: crc32: 0x136DCE03
+Oct 14 16:29:25: INFO: [Abertis@11674H15750 PID 433 #1] PMT: pnr: 1433
+Oct 14 16:29:25: INFO: [Abertis@11674H15750 PID 433 #1] PMT: pid: 8191 PCR
+Oct 14 16:29:25: INFO: [Abertis@11674H15750 PID 433 #1] PMT: CAS: caid: 0x2600 pid: 8191
+Oct 14 16:29:25: INFO: [Abertis@11674H15750 PID 433 #1] PMT: Service: HS88U.33
+Oct 14 16:29:25: INFO: [Abertis@11674H15750 PID 433 #1] PMT: Provider: HSA-88U
+Oct 14 16:29:25: INFO: [Abertis@11674H15750 PID 433 #1] DATA: pid: 433 type: User private (0x90)
+Oct 14 16:29:25: INFO: [Abertis@11674H15750 PID 433 #1] DATA: descriptor: 0xFA0C0000000000008002058C058F
+Oct 14 16:29:25: INFO: [Abertis@11674H15750 PID 433 #1] PMT: crc32: 0x82BD0F63
+Oct 14 16:29:34: ERROR: [Abertis@11674H15750 PID 433 #1] Bitrate:0Kbit/s PES:0 CC:0
+Oct 14 16:29:35: ERROR: [Abertis@11674H15750 PID 433 #1] Bitrate:0Kbit/s PES:0 CC:0
+Oct 14 16:29:36: ERROR: [Abertis@11674H15750 PID 433 #1] Bitrate:0Kbit/s PES:0 CC:0
+Oct 14 16:29:37: ERROR: [Abertis@11674H15750 PID 433 #1] Bitrate:0Kbit/s PES:0 CC:0
+Oct 14 16:29:37: ERROR: [Abertis@11674H15750 PID 433] Failed to switch to reserve
+Oct 14 16:29:40: INFO: [Abertis@11674H15750 PID 433 #1] PAT: tsid: 60004
+Oct 14 16:29:40: INFO: [Abertis@11674H15750 PID 433 #1] PAT: pid: 16 NIT
+Oct 14 16:29:40: INFO: [Abertis@11674H15750 PID 433 #1] PAT: pid: 5420 PMT pnr: 1420
+Oct 14 16:29:40: INFO: [Abertis@11674H15750 PID 433 #1] PAT: pid: 5421 PMT pnr: 1421
+Oct 14 16:29:40: INFO: [Abertis@11674H15750 PID 433 #1] PAT: pid: 5423 PMT pnr: 1423
+Oct 14 16:29:40: INFO: [Abertis@11674H15750 PID 433 #1] PAT: pid: 5431 PMT pnr: 1431
+Oct 14 16:29:40: INFO: [Abertis@11674H15750 PID 433 #1] PAT: pid: 5433 PMT pnr: 1433
+Oct 14 16:29:40: INFO: [Abertis@11674H15750 PID 433 #1] PAT: pid: 8100 PMT pnr: 65534
+Oct 14 16:29:40: INFO: [Abertis@11674H15750 PID 433 #1] PAT: pid: 5440 PMT pnr: 1440
+Oct 14 16:29:40: INFO: [Abertis@11674H15750 PID 433 #1] PAT: crc32: 0x136DCE03
+Oct 14 16:29:40: INFO: [Abertis@11674H15750 PID 433 #1] PMT: pnr: 1433
+Oct 14 16:29:40: INFO: [Abertis@11674H15750 PID 433 #1] PMT: pid: 8191 PCR
+Oct 14 16:29:40: INFO: [Abertis@11674H15750 PID 433 #1] PMT: CAS: caid: 0x2600 pid: 8191
+Oct 14 16:29:40: INFO: [Abertis@11674H15750 PID 433 #1] PMT: Service: HS88U.33
+Oct 14 16:29:40: INFO: [Abertis@11674H15750 PID 433 #1] PMT: Provider: HSA-88U
+Oct 14 16:29:40: INFO: [Abertis@11674H15750 PID 433 #1] DATA: pid: 433 type: User private (0x90)
+Oct 14 16:29:40: INFO: [Abertis@11674H15750 PID 433 #1] DATA: descriptor: 0xFA0C0000000000008002058C058F
+Oct 14 16:29:40: INFO: [Abertis@11674H15750 PID 433 #1] PMT: crc32: 0x82BD0F63
+    -> Finished PID 433. Log saved to pid_logs/pid433.log
+
+==================================================
+Starting Scan for Channel: Abertis@11674H15750 (PID 440)
+==================================================
+[*] Zapping to feed service: 1:0:1:5A0:EA64:1:CE40000:0:0:0:
+    -> zap command: curl -s 'http://127.0.0.1/web/zap?sRef=1%3A0%3A1%3A5A0%3AEA64%3A1%3ACE40000%3A0%3A0%3A0%3A' | head
+    -> Zap successful. Waiting 6 seconds for tuner lock & stream start...
+[*] Letting feed service settle for 20 seconds...
+[*] Analyzing PID 440 for 22 seconds...
+    -> command: astra --analyze 'http://0.0.0.0:9999/abertis/pid440'
+Oct 14 16:30:09: ERROR: [Abertis@11674H15750 PID 440 #1] Bitrate:0Kbit/s PES:0 CC:0
+Oct 14 16:30:10: ERROR: [Abertis@11674H15750 PID 440 #1] Bitrate:0Kbit/s PES:0 CC:0
+Oct 14 16:30:11: ERROR: [Abertis@11674H15750 PID 440 #1] Bitrate:0Kbit/s PES:0 CC:0
+Oct 14 16:30:12: ERROR: [Abertis@11674H15750 PID 440 #1] Bitrate:0Kbit/s PES:0 CC:0
+Oct 14 16:30:12: ERROR: [Abertis@11674H15750 PID 440] Failed to switch to reserve
+Oct 14 16:30:24: ERROR: [Abertis@11674H15750 PID 440 #1] Bitrate:0Kbit/s PES:0 CC:0
+Oct 14 16:30:25: ERROR: [Abertis@11674H15750 PID 440 #1] Bitrate:0Kbit/s PES:0 CC:0
+Oct 14 16:30:26: ERROR: [Abertis@11674H15750 PID 440 #1] Bitrate:0Kbit/s PES:0 CC:0
+Oct 14 16:30:27: ERROR: [Abertis@11674H15750 PID 440 #1] Bitrate:0Kbit/s PES:0 CC:0
+Oct 14 16:30:27: ERROR: [Abertis@11674H15750 PID 440] Failed to switch to reserve
+    -> Finished PID 440. Log saved to pid_logs/pid440.log
+
+==================================================
+Starting Scan for Channel: Abertis@12548V29600 (PID 701)
+==================================================
+[*] Zapping to feed service: 1:0:1:6A5:EA67:1:CE40000:0:0:0:
+    -> zap command: curl -s 'http://127.0.0.1/web/zap?sRef=1%3A0%3A1%3A6A5%3AEA67%3A1%3ACE40000%3A0%3A0%3A0%3A' | head
+    -> Zap successful. Waiting 6 seconds for tuner lock & stream start...
+[*] Letting feed service settle for 20 seconds...
+[*] Analyzing PID 701 for 22 seconds...
+    -> command: astra --analyze 'http://0.0.0.0:9999/abertis/pid701'
+Oct 14 16:30:58: INFO: [Abertis@12548V29600 PID 701 #1] PAT: tsid: 60007
+Oct 14 16:30:58: INFO: [Abertis@12548V29600 PID 701 #1] PAT: pid: 16 NIT
+Oct 14 16:30:58: INFO: [Abertis@12548V29600 PID 701 #1] PAT: pid: 5701 PMT pnr: 1701
+Oct 14 16:30:58: INFO: [Abertis@12548V29600 PID 701 #1] PAT: pid: 5702 PMT pnr: 1702
+Oct 14 16:30:58: INFO: [Abertis@12548V29600 PID 701 #1] PAT: pid: 5703 PMT pnr: 1703
+Oct 14 16:30:58: INFO: [Abertis@12548V29600 PID 701 #1] PAT: pid: 8100 PMT pnr: 65534
+Oct 14 16:30:58: INFO: [Abertis@12548V29600 PID 701 #1] PAT: crc32: 0xC0C5BC95
+Oct 14 16:30:58: ERROR: [Abertis@12548V29600 PID 701 #1] Bitrate:1539Kbit/s PES:0 CC:0
+Oct 14 16:30:58: INFO: [Abertis@12548V29600 PID 701 #1] PMT: pnr: 1701
+Oct 14 16:30:58: INFO: [Abertis@12548V29600 PID 701 #1] PMT: pid: 8191 PCR
+Oct 14 16:30:58: INFO: [Abertis@12548V29600 PID 701 #1] PMT: CAS: caid: 0x2600 pid: 8191
+Oct 14 16:30:58: INFO: [Abertis@12548V29600 PID 701 #1] PMT: Service: HSA-65U1
+Oct 14 16:30:58: INFO: [Abertis@12548V29600 PID 701 #1] PMT: Provider: HSA-65U
+Oct 14 16:30:58: INFO: [Abertis@12548V29600 PID 701 #1] DATA: pid: 701 type: User private (0x90)
+Oct 14 16:30:58: INFO: [Abertis@12548V29600 PID 701 #1] DATA: descriptor: 0xFB06000900000000
+Oct 14 16:30:58: INFO: [Abertis@12548V29600 PID 701 #1] PMT: crc32: 0x6620E32C
+Oct 14 16:30:59: ERROR: [Abertis@12548V29600 PID 701 #1] Bitrate:20020Kbit/s PES:0 CC:1
+Oct 14 16:31:00: ERROR: [Abertis@12548V29600 PID 701 #1] Bitrate:21561Kbit/s PES:0 CC:0
+Oct 14 16:31:01: ERROR: [Abertis@12548V29600 PID 701 #1] Bitrate:20020Kbit/s PES:0 CC:0
+Oct 14 16:31:01: ERROR: [Abertis@12548V29600 PID 701] Failed to switch to reserve
+    -> Finished PID 701. Log saved to pid_logs/pid701.log
+
+==================================================
+Starting Scan for Channel: Abertis@12548V29600 (PID 702)
+==================================================
+[*] Zapping to feed service: 1:0:1:6A6:EA67:1:CE40000:0:0:0:
+    -> zap command: curl -s 'http://127.0.0.1/web/zap?sRef=1%3A0%3A1%3A6A6%3AEA67%3A1%3ACE40000%3A0%3A0%3A0%3A' | head
+    -> Zap successful. Waiting 6 seconds for tuner lock & stream start...
+[*] Letting feed service settle for 20 seconds...
+[*] Analyzing PID 702 for 22 seconds...
+    -> command: astra --analyze 'http://0.0.0.0:9999/abertis/pid702'
+Oct 14 16:31:47: INFO: [Abertis@12548V29600 PID 702 #1] PAT: tsid: 60007
+Oct 14 16:31:47: INFO: [Abertis@12548V29600 PID 702 #1] PAT: pid: 16 NIT
+Oct 14 16:31:47: INFO: [Abertis@12548V29600 PID 702 #1] PAT: pid: 5701 PMT pnr: 1701
+Oct 14 16:31:47: INFO: [Abertis@12548V29600 PID 702 #1] PAT: pid: 5702 PMT pnr: 1702
+Oct 14 16:31:47: INFO: [Abertis@12548V29600 PID 702 #1] PAT: pid: 5703 PMT pnr: 1703
+Oct 14 16:31:47: INFO: [Abertis@12548V29600 PID 702 #1] PAT: pid: 8100 PMT pnr: 65534
+Oct 14 16:31:47: INFO: [Abertis@12548V29600 PID 702 #1] PAT: crc32: 0xC0C5BC95
+Oct 14 16:31:48: ERROR: [Abertis@12548V29600 PID 702 #1] Bitrate:7699Kbit/s PES:0 CC:0
+Oct 14 16:31:48: INFO: [Abertis@12548V29600 PID 702 #1] PMT: pnr: 1702
+Oct 14 16:31:48: INFO: [Abertis@12548V29600 PID 702 #1] PMT: pid: 8191 PCR
+Oct 14 16:31:48: INFO: [Abertis@12548V29600 PID 702 #1] PMT: CAS: caid: 0x2600 pid: 8191
+Oct 14 16:31:48: INFO: [Abertis@12548V29600 PID 702 #1] PMT: Service: HSA-65U2
+Oct 14 16:31:48: INFO: [Abertis@12548V29600 PID 702 #1] PMT: Provider: HSA-65U
+Oct 14 16:31:48: INFO: [Abertis@12548V29600 PID 702 #1] DATA: pid: 702 type: User private (0x90)
+Oct 14 16:31:48: INFO: [Abertis@12548V29600 PID 702 #1] DATA: descriptor: 0xFB06000900000000
+Oct 14 16:31:48: INFO: [Abertis@12548V29600 PID 702 #1] PMT: crc32: 0x1D5B7680
+Oct 14 16:31:49: ERROR: [Abertis@12548V29600 PID 702 #1] Bitrate:20021Kbit/s PES:0 CC:2
+Oct 14 16:31:50: ERROR: [Abertis@12548V29600 PID 702 #1] Bitrate:20021Kbit/s PES:0 CC:0
+Oct 14 16:31:51: ERROR: [Abertis@12548V29600 PID 702 #1] Bitrate:21560Kbit/s PES:0 CC:0
+Oct 14 16:31:51: ERROR: [Abertis@12548V29600 PID 702] Failed to switch to reserve
+    -> Finished PID 702. Log saved to pid_logs/pid702.log
+
+==================================================
+Starting Scan for Channel: Abertis@12548V29600 (PID 703)
+==================================================
+[*] Zapping to feed service: 1:0:1:6A7:EA67:1:CE40000:0:0:0:
+    -> zap command: curl -s 'http://127.0.0.1/web/zap?sRef=1%3A0%3A1%3A6A7%3AEA67%3A1%3ACE40000%3A0%3A0%3A0%3A' | head
+    -> Zap successful. Waiting 6 seconds for tuner lock & stream start...
+[*] Letting feed service settle for 20 seconds...
+[*] Analyzing PID 703 for 22 seconds...
+    -> command: astra --analyze 'http://0.0.0.0:9999/abertis/pid703'
+Oct 14 16:32:37: INFO: [Abertis@12548V29600 PID 703 #1] PAT: tsid: 60007
+Oct 14 16:32:37: INFO: [Abertis@12548V29600 PID 703 #1] PAT: pid: 16 NIT
+Oct 14 16:32:37: INFO: [Abertis@12548V29600 PID 703 #1] PAT: pid: 5701 PMT pnr: 1701
+Oct 14 16:32:37: INFO: [Abertis@12548V29600 PID 703 #1] PAT: pid: 5702 PMT pnr: 1702
+Oct 14 16:32:37: INFO: [Abertis@12548V29600 PID 703 #1] PAT: pid: 5703 PMT pnr: 1703
+Oct 14 16:32:37: INFO: [Abertis@12548V29600 PID 703 #1] PAT: pid: 8100 PMT pnr: 65534
+Oct 14 16:32:37: INFO: [Abertis@12548V29600 PID 703 #1] PAT: crc32: 0xC0C5BC95
+Oct 14 16:32:37: ERROR: [Abertis@12548V29600 PID 703 #1] Bitrate:9240Kbit/s PES:0 CC:0
+Oct 14 16:32:37: INFO: [Abertis@12548V29600 PID 703 #1] PMT: pnr: 1703
+Oct 14 16:32:37: INFO: [Abertis@12548V29600 PID 703 #1] PMT: pid: 8191 PCR
+Oct 14 16:32:37: INFO: [Abertis@12548V29600 PID 703 #1] PMT: CAS: caid: 0x2600 pid: 8191
+Oct 14 16:32:37: INFO: [Abertis@12548V29600 PID 703 #1] PMT: Service: HSA-65U3
+Oct 14 16:32:37: INFO: [Abertis@12548V29600 PID 703 #1] PMT: Provider: HSA-65U
+Oct 14 16:32:37: INFO: [Abertis@12548V29600 PID 703 #1] DATA: pid: 703 type: User private (0x90)
+Oct 14 16:32:37: INFO: [Abertis@12548V29600 PID 703 #1] DATA: descriptor: 0xFB06000900000000
+Oct 14 16:32:37: INFO: [Abertis@12548V29600 PID 703 #1] PMT: crc32: 0x347205E4
+Oct 14 16:32:38: ERROR: [Abertis@12548V29600 PID 703 #1] Bitrate:20020Kbit/s PES:0 CC:2
+Oct 14 16:32:39: ERROR: [Abertis@12548V29600 PID 703 #1] Bitrate:20021Kbit/s PES:0 CC:0
+Oct 14 16:32:40: ERROR: [Abertis@12548V29600 PID 703 #1] Bitrate:20152Kbit/s PES:0 CC:0
+Oct 14 16:32:40: ERROR: [Abertis@12548V29600 PID 703] Failed to switch to reserve
+    -> Finished PID 703. Log saved to pid_logs/pid703.log
+
+==================================================
+Starting Scan for Channel: Abertis@11502V10200 (PID 801)
+==================================================
+[*] Zapping to feed service: 1:0:1:709:EA7C:1:CE40000:0:0:0:
+    -> zap command: curl -s 'http://127.0.0.1/web/zap?sRef=1%3A0%3A1%3A709%3AEA7C%3A1%3ACE40000%3A0%3A0%3A0%3A' | head
+    -> Zap successful. Waiting 6 seconds for tuner lock & stream start...
+[*] Letting feed service settle for 20 seconds...
+[*] Analyzing PID 801 for 22 seconds...
+    -> command: astra --analyze 'http://0.0.0.0:9999/abertis/pid801'
+Oct 14 16:33:26: INFO: [Abertis@11502V10200 PID 801 #1] PAT: tsid: 60028
+Oct 14 16:33:26: INFO: [Abertis@11502V10200 PID 801 #1] PAT: pid: 16 NIT
+Oct 14 16:33:26: INFO: [Abertis@11502V10200 PID 801 #1] PAT: pid: 8100 PMT pnr: 65534
+Oct 14 16:33:26: INFO: [Abertis@11502V10200 PID 801 #1] PAT: pid: 5801 PMT pnr: 1801
+Oct 14 16:33:26: INFO: [Abertis@11502V10200 PID 801 #1] PAT: crc32: 0xB3A80222
+Oct 14 16:33:27: ERROR: [Abertis@11502V10200 PID 801 #1] Bitrate:6159Kbit/s PES:0 CC:0
+Oct 14 16:33:27: INFO: [Abertis@11502V10200 PID 801 #1] PMT: pnr: 1801
+Oct 14 16:33:27: INFO: [Abertis@11502V10200 PID 801 #1] PMT: pid: 8191 PCR
+Oct 14 16:33:27: INFO: [Abertis@11502V10200 PID 801 #1] PMT: CAS: caid: 0x2600 pid: 8191
+Oct 14 16:33:27: INFO: [Abertis@11502V10200 PID 801 #1] PMT: Service: HS199.1
+Oct 14 16:33:27: INFO: [Abertis@11502V10200 PID 801 #1] PMT: Provider: HSA-199
+Oct 14 16:33:27: INFO: [Abertis@11502V10200 PID 801 #1] DATA: pid: 801 type: User private (0x90)
+Oct 14 16:33:27: INFO: [Abertis@11502V10200 PID 801 #1] DATA: descriptor: 0xFB06000F00000000
+Oct 14 16:33:27: INFO: [Abertis@11502V10200 PID 801 #1] PMT: crc32: 0x412DD117
+Oct 14 16:33:28: ERROR: [Abertis@11502V10200 PID 801 #1] Bitrate:20020Kbit/s PES:0 CC:2
+Oct 14 16:33:29: ERROR: [Abertis@11502V10200 PID 801 #1] Bitrate:21561Kbit/s PES:0 CC:0
+Oct 14 16:33:30: ERROR: [Abertis@11502V10200 PID 801 #1] Bitrate:20020Kbit/s PES:0 CC:0
+Oct 14 16:33:30: ERROR: [Abertis@11502V10200 PID 801] Failed to switch to reserve
+    -> Finished PID 801. Log saved to pid_logs/pid801.log
+
+==================================================
+Starting Scan for Channel: Abertis@11222H30000 (PID 2025)
+==================================================
+[*] Zapping to feed service: 1:0:1:BD1:EA74:1:CE40000:0:0:0:
+    -> zap command: curl -s 'http://127.0.0.1/web/zap?sRef=1%3A0%3A1%3ABD1%3AEA74%3A1%3ACE40000%3A0%3A0%3A0%3A' | head
+    -> Zap successful. Waiting 6 seconds for tuner lock & stream start...
+[*] Letting feed service settle for 20 seconds...
+[*] Analyzing PID 2025 for 22 seconds...
+    -> command: astra --analyze 'http://0.0.0.0:9999/abertis/pid2025'
+Oct 14 16:34:16: INFO: [Abertis@11222H30000 PID 2025 #1] PAT: tsid: 60020
+Oct 14 16:34:16: INFO: [Abertis@11222H30000 PID 2025 #1] PAT: pid: 16 NIT
+Oct 14 16:34:16: INFO: [Abertis@11222H30000 PID 2025 #1] PAT: pid: 7025 PMT pnr: 3025
+Oct 14 16:34:16: INFO: [Abertis@11222H30000 PID 2025 #1] PAT: pid: 7026 PMT pnr: 3026
+Oct 14 16:34:16: INFO: [Abertis@11222H30000 PID 2025 #1] PAT: pid: 7027 PMT pnr: 3027
+Oct 14 16:34:16: INFO: [Abertis@11222H30000 PID 2025 #1] PAT: pid: 7028 PMT pnr: 3028
+Oct 14 16:34:16: INFO: [Abertis@11222H30000 PID 2025 #1] PAT: pid: 7035 PMT pnr: 3035
+Oct 14 16:34:16: INFO: [Abertis@11222H30000 PID 2025 #1] PAT: pid: 7036 PMT pnr: 3036
+Oct 14 16:34:16: INFO: [Abertis@11222H30000 PID 2025 #1] PAT: pid: 7037 PMT pnr: 3037
+Oct 14 16:34:16: INFO: [Abertis@11222H30000 PID 2025 #1] PAT: pid: 7038 PMT pnr: 3038
+Oct 14 16:34:16: INFO: [Abertis@11222H30000 PID 2025 #1] PAT: pid: 7050 PMT pnr: 3050
+Oct 14 16:34:16: INFO: [Abertis@11222H30000 PID 2025 #1] PAT: pid: 8100 PMT pnr: 65534
+Oct 14 16:34:16: INFO: [Abertis@11222H30000 PID 2025 #1] PAT: pid: 7060 PMT pnr: 3060
+Oct 14 16:34:16: INFO: [Abertis@11222H30000 PID 2025 #1] PAT: crc32: 0x729B4B94
+Oct 14 16:34:16: INFO: [Abertis@11222H30000 PID 2025 #1] PMT: pnr: 3025
+Oct 14 16:34:16: INFO: [Abertis@11222H30000 PID 2025 #1] PMT: pid: 8191 PCR
+Oct 14 16:34:16: INFO: [Abertis@11222H30000 PID 2025 #1] PMT: CAS: caid: 0x2600 pid: 8191
+Oct 14 16:34:16: INFO: [Abertis@11222H30000 PID 2025 #1] PMT: Service: HS125.25
+Oct 14 16:34:16: INFO: [Abertis@11222H30000 PID 2025 #1] PMT: Provider: HSA-125
+Oct 14 16:34:16: INFO: [Abertis@11222H30000 PID 2025 #1] DATA: pid: 2025 type: User private (0x90)
+Oct 14 16:34:16: INFO: [Abertis@11222H30000 PID 2025 #1] DATA: descriptor: 0xFB06000A00000000
+Oct 14 16:34:16: INFO: [Abertis@11222H30000 PID 2025 #1] DATA: descriptor: 0xFA08000A000000002000
+Oct 14 16:34:16: INFO: [Abertis@11222H30000 PID 2025 #1] PMT: crc32: 0x83917BE
+Oct 14 16:34:16: ERROR: [Abertis@11222H30000 PID 2025 #1] Bitrate:4619Kbit/s PES:0 CC:0
+Oct 14 16:34:17: ERROR: [Abertis@11222H30000 PID 2025 #1] Bitrate:9240Kbit/s PES:0 CC:0
+Oct 14 16:34:18: ERROR: [Abertis@11222H30000 PID 2025 #1] Bitrate:9240Kbit/s PES:0 CC:0
+Oct 14 16:34:19: ERROR: [Abertis@11222H30000 PID 2025 #1] Bitrate:9240Kbit/s PES:0 CC:0
+Oct 14 16:34:19: ERROR: [Abertis@11222H30000 PID 2025] Failed to switch to reserve
+    -> Finished PID 2025. Log saved to pid_logs/pid2025.log
+
+==================================================
+Starting Scan for Channel: Abertis@11222H30000 (PID 2026)
+==================================================
+[*] Zapping to feed service: 1:0:1:BD2:EA74:1:CE40000:0:0:0:
+    -> zap command: curl -s 'http://127.0.0.1/web/zap?sRef=1%3A0%3A1%3ABD2%3AEA74%3A1%3ACE40000%3A0%3A0%3A0%3A' | head
+    -> Zap successful. Waiting 6 seconds for tuner lock & stream start...
+[*] Letting feed service settle for 20 seconds...
+[*] Analyzing PID 2026 for 22 seconds...
+    -> command: astra --analyze 'http://0.0.0.0:9999/abertis/pid2026'
+Oct 14 16:35:05: INFO: [Abertis@11222H30000 PID 2026 #1] PAT: tsid: 60020
+Oct 14 16:35:05: INFO: [Abertis@11222H30000 PID 2026 #1] PAT: pid: 16 NIT
+Oct 14 16:35:05: INFO: [Abertis@11222H30000 PID 2026 #1] PAT: pid: 7025 PMT pnr: 3025
+Oct 14 16:35:05: INFO: [Abertis@11222H30000 PID 2026 #1] PAT: pid: 7026 PMT pnr: 3026
+Oct 14 16:35:05: INFO: [Abertis@11222H30000 PID 2026 #1] PAT: pid: 7027 PMT pnr: 3027
+Oct 14 16:35:05: INFO: [Abertis@11222H30000 PID 2026 #1] PAT: pid: 7028 PMT pnr: 3028
+Oct 14 16:35:05: INFO: [Abertis@11222H30000 PID 2026 #1] PAT: pid: 7035 PMT pnr: 3035
+Oct 14 16:35:05: INFO: [Abertis@11222H30000 PID 2026 #1] PAT: pid: 7036 PMT pnr: 3036
+Oct 14 16:35:05: INFO: [Abertis@11222H30000 PID 2026 #1] PAT: pid: 7037 PMT pnr: 3037
+Oct 14 16:35:05: INFO: [Abertis@11222H30000 PID 2026 #1] PAT: pid: 7038 PMT pnr: 3038
+Oct 14 16:35:05: INFO: [Abertis@11222H30000 PID 2026 #1] PAT: pid: 7050 PMT pnr: 3050
+Oct 14 16:35:05: INFO: [Abertis@11222H30000 PID 2026 #1] PAT: pid: 8100 PMT pnr: 65534
+Oct 14 16:35:05: INFO: [Abertis@11222H30000 PID 2026 #1] PAT: pid: 7060 PMT pnr: 3060
+Oct 14 16:35:05: INFO: [Abertis@11222H30000 PID 2026 #1] PAT: crc32: 0x729B4B94
+Oct 14 16:35:05: INFO: [Abertis@11222H30000 PID 2026 #1] PMT: pnr: 3026
+Oct 14 16:35:05: INFO: [Abertis@11222H30000 PID 2026 #1] PMT: pid: 8191 PCR
+Oct 14 16:35:05: INFO: [Abertis@11222H30000 PID 2026 #1] PMT: CAS: caid: 0x2600 pid: 8191
+Oct 14 16:35:05: INFO: [Abertis@11222H30000 PID 2026 #1] PMT: Service: HS125.26
+Oct 14 16:35:05: INFO: [Abertis@11222H30000 PID 2026 #1] PMT: Provider: HSA-125
+Oct 14 16:35:05: INFO: [Abertis@11222H30000 PID 2026 #1] DATA: pid: 2026 type: User private (0x90)
+Oct 14 16:35:05: INFO: [Abertis@11222H30000 PID 2026 #1] DATA: descriptor: 0xFB06000A00000000
+Oct 14 16:35:05: INFO: [Abertis@11222H30000 PID 2026 #1] DATA: descriptor: 0xFA08000A000000002000
+Oct 14 16:35:05: INFO: [Abertis@11222H30000 PID 2026 #1] PMT: crc32: 0xC8F335F5
+Oct 14 16:35:05: ERROR: [Abertis@11222H30000 PID 2026 #1] Bitrate:4619Kbit/s PES:0 CC:0
+Oct 14 16:35:06: ERROR: [Abertis@11222H30000 PID 2026 #1] Bitrate:9240Kbit/s PES:0 CC:0
+Oct 14 16:35:07: ERROR: [Abertis@11222H30000 PID 2026 #1] Bitrate:10780Kbit/s PES:0 CC:0
+Oct 14 16:35:08: ERROR: [Abertis@11222H30000 PID 2026 #1] Bitrate:9240Kbit/s PES:0 CC:0
+Oct 14 16:35:08: ERROR: [Abertis@11222H30000 PID 2026] Failed to switch to reserve
+    -> Finished PID 2026. Log saved to pid_logs/pid2026.log
+
+==================================================
+Starting Scan for Channel: Abertis@11222H30000 (PID 2027)
+==================================================
+[*] Zapping to feed service: 1:0:1:BD3:EA74:1:CE40000:0:0:0:
+    -> zap command: curl -s 'http://127.0.0.1/web/zap?sRef=1%3A0%3A1%3ABD3%3AEA74%3A1%3ACE40000%3A0%3A0%3A0%3A' | head
+    -> Zap successful. Waiting 6 seconds for tuner lock & stream start...
+[*] Letting feed service settle for 20 seconds...
+[*] Analyzing PID 2027 for 22 seconds...
+    -> command: astra --analyze 'http://0.0.0.0:9999/abertis/pid2027'
+Oct 14 16:35:55: INFO: [Abertis@11222H30000 PID 2027 #1] PAT: tsid: 60020
+Oct 14 16:35:55: INFO: [Abertis@11222H30000 PID 2027 #1] PAT: pid: 16 NIT
+Oct 14 16:35:55: INFO: [Abertis@11222H30000 PID 2027 #1] PAT: pid: 7025 PMT pnr: 3025
+Oct 14 16:35:55: INFO: [Abertis@11222H30000 PID 2027 #1] PAT: pid: 7026 PMT pnr: 3026
+Oct 14 16:35:55: INFO: [Abertis@11222H30000 PID 2027 #1] PAT: pid: 7027 PMT pnr: 3027
+Oct 14 16:35:55: INFO: [Abertis@11222H30000 PID 2027 #1] PAT: pid: 7028 PMT pnr: 3028
+Oct 14 16:35:55: INFO: [Abertis@11222H30000 PID 2027 #1] PAT: pid: 7035 PMT pnr: 3035
+Oct 14 16:35:55: INFO: [Abertis@11222H30000 PID 2027 #1] PAT: pid: 7036 PMT pnr: 3036
+Oct 14 16:35:55: INFO: [Abertis@11222H30000 PID 2027 #1] PAT: pid: 7037 PMT pnr: 3037
+Oct 14 16:35:55: INFO: [Abertis@11222H30000 PID 2027 #1] PAT: pid: 7038 PMT pnr: 3038
+Oct 14 16:35:55: INFO: [Abertis@11222H30000 PID 2027 #1] PAT: pid: 7050 PMT pnr: 3050
+Oct 14 16:35:55: INFO: [Abertis@11222H30000 PID 2027 #1] PAT: pid: 8100 PMT pnr: 65534
+Oct 14 16:35:55: INFO: [Abertis@11222H30000 PID 2027 #1] PAT: pid: 7060 PMT pnr: 3060
+Oct 14 16:35:55: INFO: [Abertis@11222H30000 PID 2027 #1] PAT: crc32: 0x729B4B94
+Oct 14 16:35:55: INFO: [Abertis@11222H30000 PID 2027 #1] PMT: pnr: 3027
+Oct 14 16:35:55: INFO: [Abertis@11222H30000 PID 2027 #1] PMT: pid: 8191 PCR
+Oct 14 16:35:55: INFO: [Abertis@11222H30000 PID 2027 #1] PMT: CAS: caid: 0x2600 pid: 8191
+Oct 14 16:35:55: INFO: [Abertis@11222H30000 PID 2027 #1] PMT: Service: HS125.27
+Oct 14 16:35:55: INFO: [Abertis@11222H30000 PID 2027 #1] PMT: Provider: HSA-125
+Oct 14 16:35:55: INFO: [Abertis@11222H30000 PID 2027 #1] DATA: pid: 2027 type: User private (0x90)
+Oct 14 16:35:55: INFO: [Abertis@11222H30000 PID 2027 #1] DATA: descriptor: 0xFB06000A00000000
+Oct 14 16:35:55: INFO: [Abertis@11222H30000 PID 2027 #1] DATA: descriptor: 0xFA08000A000000002000
+Oct 14 16:35:55: INFO: [Abertis@11222H30000 PID 2027 #1] PMT: crc32: 0x88B52BCC
+Oct 14 16:35:55: ERROR: [Abertis@11222H30000 PID 2027 #1] Bitrate:4618Kbit/s PES:0 CC:0
+Oct 14 16:35:56: ERROR: [Abertis@11222H30000 PID 2027 #1] Bitrate:9240Kbit/s PES:0 CC:0
+Oct 14 16:35:57: ERROR: [Abertis@11222H30000 PID 2027 #1] Bitrate:10780Kbit/s PES:0 CC:0
+Oct 14 16:35:58: ERROR: [Abertis@11222H30000 PID 2027 #1] Bitrate:9240Kbit/s PES:0 CC:0
+Oct 14 16:35:58: ERROR: [Abertis@11222H30000 PID 2027] Failed to switch to reserve
+    -> Finished PID 2027. Log saved to pid_logs/pid2027.log
+
+==================================================
+Starting Scan for Channel: Abertis@11222H30000 (PID 2028)
+==================================================
+[*] Zapping to feed service: 1:0:1:BD4:EA74:1:CE40000:0:0:0:
+    -> zap command: curl -s 'http://127.0.0.1/web/zap?sRef=1%3A0%3A1%3ABD4%3AEA74%3A1%3ACE40000%3A0%3A0%3A0%3A' | head
+    -> Zap successful. Waiting 6 seconds for tuner lock & stream start...
+[*] Letting feed service settle for 20 seconds...
+[*] Analyzing PID 2028 for 22 seconds...
+    -> command: astra --analyze 'http://0.0.0.0:9999/abertis/pid2028'
+Oct 14 16:36:44: INFO: [Abertis@11222H30000 PID 2028 #1] PAT: tsid: 60020
+Oct 14 16:36:44: INFO: [Abertis@11222H30000 PID 2028 #1] PAT: pid: 16 NIT
+Oct 14 16:36:44: INFO: [Abertis@11222H30000 PID 2028 #1] PAT: pid: 7025 PMT pnr: 3025
+Oct 14 16:36:44: INFO: [Abertis@11222H30000 PID 2028 #1] PAT: pid: 7026 PMT pnr: 3026
+Oct 14 16:36:44: INFO: [Abertis@11222H30000 PID 2028 #1] PAT: pid: 7027 PMT pnr: 3027
+Oct 14 16:36:44: INFO: [Abertis@11222H30000 PID 2028 #1] PAT: pid: 7028 PMT pnr: 3028
+Oct 14 16:36:44: INFO: [Abertis@11222H30000 PID 2028 #1] PAT: pid: 7035 PMT pnr: 3035
+Oct 14 16:36:44: INFO: [Abertis@11222H30000 PID 2028 #1] PAT: pid: 7036 PMT pnr: 3036
+Oct 14 16:36:44: INFO: [Abertis@11222H30000 PID 2028 #1] PAT: pid: 7037 PMT pnr: 3037
+Oct 14 16:36:44: INFO: [Abertis@11222H30000 PID 2028 #1] PAT: pid: 7038 PMT pnr: 3038
+Oct 14 16:36:44: INFO: [Abertis@11222H30000 PID 2028 #1] PAT: pid: 7050 PMT pnr: 3050
+Oct 14 16:36:44: INFO: [Abertis@11222H30000 PID 2028 #1] PAT: pid: 8100 PMT pnr: 65534
+Oct 14 16:36:44: INFO: [Abertis@11222H30000 PID 2028 #1] PAT: pid: 7060 PMT pnr: 3060
+Oct 14 16:36:44: INFO: [Abertis@11222H30000 PID 2028 #1] PAT: crc32: 0x729B4B94
+Oct 14 16:36:44: INFO: [Abertis@11222H30000 PID 2028 #1] PMT: pnr: 3028
+Oct 14 16:36:44: INFO: [Abertis@11222H30000 PID 2028 #1] PMT: pid: 8191 PCR
+Oct 14 16:36:44: INFO: [Abertis@11222H30000 PID 2028 #1] PMT: CAS: caid: 0x2600 pid: 8191
+Oct 14 16:36:44: INFO: [Abertis@11222H30000 PID 2028 #1] PMT: Service: HS125.28
+Oct 14 16:36:44: INFO: [Abertis@11222H30000 PID 2028 #1] PMT: Provider: HSA-125
+Oct 14 16:36:44: INFO: [Abertis@11222H30000 PID 2028 #1] DATA: pid: 2028 type: User private (0x90)
+Oct 14 16:36:44: INFO: [Abertis@11222H30000 PID 2028 #1] DATA: descriptor: 0xFB06000A00000000
+Oct 14 16:36:44: INFO: [Abertis@11222H30000 PID 2028 #1] DATA: descriptor: 0xFA08000A000000002000
+Oct 14 16:36:44: INFO: [Abertis@11222H30000 PID 2028 #1] PMT: crc32: 0xF158BA2A
+Oct 14 16:36:44: ERROR: [Abertis@11222H30000 PID 2028 #1] Bitrate:6159Kbit/s PES:0 CC:0
+Oct 14 16:36:45: ERROR: [Abertis@11222H30000 PID 2028 #1] Bitrate:9240Kbit/s PES:0 CC:0
+Oct 14 16:36:46: ERROR: [Abertis@11222H30000 PID 2028 #1] Bitrate:9240Kbit/s PES:0 CC:0
+Oct 14 16:36:47: ERROR: [Abertis@11222H30000 PID 2028 #1] Bitrate:9240Kbit/s PES:0 CC:0
+Oct 14 16:36:47: ERROR: [Abertis@11222H30000 PID 2028] Failed to switch to reserve
+    -> Finished PID 2028. Log saved to pid_logs/pid2028.log
+
+==================================================
+Starting Scan for Channel: Abertis@11222H30000 (PID 2035)
+==================================================
+[*] Zapping to feed service: 1:0:1:BDB:EA74:1:CE40000:0:0:0:
+    -> zap command: curl -s 'http://127.0.0.1/web/zap?sRef=1%3A0%3A1%3ABDB%3AEA74%3A1%3ACE40000%3A0%3A0%3A0%3A' | head
+    -> Zap successful. Waiting 6 seconds for tuner lock & stream start...
+[*] Letting feed service settle for 20 seconds...
+[*] Analyzing PID 2035 for 22 seconds...
+    -> command: astra --analyze 'http://0.0.0.0:9999/abertis/pid2035'
+Oct 14 16:37:34: ERROR: [Abertis@11222H30000 PID 2035 #1] Bitrate:0Kbit/s PES:0 CC:0
+Oct 14 16:37:35: ERROR: [Abertis@11222H30000 PID 2035 #1] Bitrate:0Kbit/s PES:0 CC:0
+Oct 14 16:37:36: ERROR: [Abertis@11222H30000 PID 2035 #1] Bitrate:0Kbit/s PES:0 CC:0
+Oct 14 16:37:37: ERROR: [Abertis@11222H30000 PID 2035 #1] Bitrate:0Kbit/s PES:0 CC:0
+Oct 14 16:37:37: ERROR: [Abertis@11222H30000 PID 2035] Failed to switch to reserve
+Oct 14 16:37:40: INFO: [Abertis@11222H30000 PID 2035 #1] PAT: tsid: 60020
+Oct 14 16:37:40: INFO: [Abertis@11222H30000 PID 2035 #1] PAT: pid: 16 NIT
+Oct 14 16:37:40: INFO: [Abertis@11222H30000 PID 2035 #1] PAT: pid: 7025 PMT pnr: 3025
+Oct 14 16:37:40: INFO: [Abertis@11222H30000 PID 2035 #1] PAT: pid: 7026 PMT pnr: 3026
+Oct 14 16:37:40: INFO: [Abertis@11222H30000 PID 2035 #1] PAT: pid: 7027 PMT pnr: 3027
+Oct 14 16:37:40: INFO: [Abertis@11222H30000 PID 2035 #1] PAT: pid: 7028 PMT pnr: 3028
+Oct 14 16:37:40: INFO: [Abertis@11222H30000 PID 2035 #1] PAT: pid: 7035 PMT pnr: 3035
+Oct 14 16:37:40: INFO: [Abertis@11222H30000 PID 2035 #1] PAT: pid: 7036 PMT pnr: 3036
+Oct 14 16:37:40: INFO: [Abertis@11222H30000 PID 2035 #1] PAT: pid: 7037 PMT pnr: 3037
+Oct 14 16:37:40: INFO: [Abertis@11222H30000 PID 2035 #1] PAT: pid: 7038 PMT pnr: 3038
+Oct 14 16:37:40: INFO: [Abertis@11222H30000 PID 2035 #1] PAT: pid: 7050 PMT pnr: 3050
+Oct 14 16:37:40: INFO: [Abertis@11222H30000 PID 2035 #1] PAT: pid: 8100 PMT pnr: 65534
+Oct 14 16:37:40: INFO: [Abertis@11222H30000 PID 2035 #1] PAT: pid: 7060 PMT pnr: 3060
+Oct 14 16:37:40: INFO: [Abertis@11222H30000 PID 2035 #1] PAT: crc32: 0x729B4B94
+Oct 14 16:37:40: INFO: [Abertis@11222H30000 PID 2035 #1] PMT: pnr: 3035
+Oct 14 16:37:40: INFO: [Abertis@11222H30000 PID 2035 #1] PMT: pid: 8191 PCR
+Oct 14 16:37:40: INFO: [Abertis@11222H30000 PID 2035 #1] PMT: CAS: caid: 0x2600 pid: 8191
+Oct 14 16:37:40: INFO: [Abertis@11222H30000 PID 2035 #1] PMT: Service: HS125.35
+Oct 14 16:37:40: INFO: [Abertis@11222H30000 PID 2035 #1] PMT: Provider: HSA-125
+Oct 14 16:37:40: INFO: [Abertis@11222H30000 PID 2035 #1] DATA: pid: 2035 type: User private (0x90)
+Oct 14 16:37:40: INFO: [Abertis@11222H30000 PID 2035 #1] DATA: descriptor: 0xFA0C00000000000080020BEA0BD1
+Oct 14 16:37:40: INFO: [Abertis@11222H30000 PID 2035 #1] PMT: crc32: 0x40FC99FB
+Oct 14 16:37:49: ERROR: [Abertis@11222H30000 PID 2035 #1] Bitrate:0Kbit/s PES:0 CC:0
+Oct 14 16:37:50: ERROR: [Abertis@11222H30000 PID 2035 #1] Bitrate:0Kbit/s PES:0 CC:0
+Oct 14 16:37:51: ERROR: [Abertis@11222H30000 PID 2035 #1] Bitrate:0Kbit/s PES:0 CC:0
+Oct 14 16:37:52: ERROR: [Abertis@11222H30000 PID 2035 #1] Bitrate:0Kbit/s PES:0 CC:0
+Oct 14 16:37:52: ERROR: [Abertis@11222H30000 PID 2035] Failed to switch to reserve
+Oct 14 16:37:55: INFO: [Abertis@11222H30000 PID 2035 #1] PAT: tsid: 60020
+Oct 14 16:37:55: INFO: [Abertis@11222H30000 PID 2035 #1] PAT: pid: 16 NIT
+Oct 14 16:37:55: INFO: [Abertis@11222H30000 PID 2035 #1] PAT: pid: 7025 PMT pnr: 3025
+Oct 14 16:37:55: INFO: [Abertis@11222H30000 PID 2035 #1] PAT: pid: 7026 PMT pnr: 3026
+Oct 14 16:37:55: INFO: [Abertis@11222H30000 PID 2035 #1] PAT: pid: 7027 PMT pnr: 3027
+Oct 14 16:37:55: INFO: [Abertis@11222H30000 PID 2035 #1] PAT: pid: 7028 PMT pnr: 3028
+Oct 14 16:37:55: INFO: [Abertis@11222H30000 PID 2035 #1] PAT: pid: 7035 PMT pnr: 3035
+Oct 14 16:37:55: INFO: [Abertis@11222H30000 PID 2035 #1] PAT: pid: 7036 PMT pnr: 3036
+Oct 14 16:37:55: INFO: [Abertis@11222H30000 PID 2035 #1] PAT: pid: 7037 PMT pnr: 3037
+Oct 14 16:37:55: INFO: [Abertis@11222H30000 PID 2035 #1] PAT: pid: 7038 PMT pnr: 3038
+Oct 14 16:37:55: INFO: [Abertis@11222H30000 PID 2035 #1] PAT: pid: 7050 PMT pnr: 3050
+Oct 14 16:37:55: INFO: [Abertis@11222H30000 PID 2035 #1] PAT: pid: 8100 PMT pnr: 65534
+Oct 14 16:37:55: INFO: [Abertis@11222H30000 PID 2035 #1] PAT: pid: 7060 PMT pnr: 3060
+Oct 14 16:37:55: INFO: [Abertis@11222H30000 PID 2035 #1] PAT: crc32: 0x729B4B94
+Oct 14 16:37:55: INFO: [Abertis@11222H30000 PID 2035 #1] PMT: pnr: 3035
+Oct 14 16:37:55: INFO: [Abertis@11222H30000 PID 2035 #1] PMT: pid: 8191 PCR
+Oct 14 16:37:55: INFO: [Abertis@11222H30000 PID 2035 #1] PMT: CAS: caid: 0x2600 pid: 8191
+Oct 14 16:37:55: INFO: [Abertis@11222H30000 PID 2035 #1] PMT: Service: HS125.35
+Oct 14 16:37:55: INFO: [Abertis@11222H30000 PID 2035 #1] PMT: Provider: HSA-125
+Oct 14 16:37:55: INFO: [Abertis@11222H30000 PID 2035 #1] DATA: pid: 2035 type: User private (0x90)
+Oct 14 16:37:55: INFO: [Abertis@11222H30000 PID 2035 #1] DATA: descriptor: 0xFA0C00000000000080020BEA0BD1
+Oct 14 16:37:55: INFO: [Abertis@11222H30000 PID 2035 #1] PMT: crc32: 0x40FC99FB
+    -> Finished PID 2035. Log saved to pid_logs/pid2035.log
+
+==================================================
+Starting Scan for Channel: Abertis@11222H30000 (PID 2036)
+==================================================
+[*] Zapping to feed service: 1:0:1:BDC:EA74:1:CE40000:0:0:0:
+    -> zap command: curl -s 'http://127.0.0.1/web/zap?sRef=1%3A0%3A1%3ABDC%3AEA74%3A1%3ACE40000%3A0%3A0%3A0%3A' | head
+    -> Zap successful. Waiting 6 seconds for tuner lock & stream start...
+[*] Letting feed service settle for 20 seconds...
+[*] Analyzing PID 2036 for 22 seconds...
+    -> command: astra --analyze 'http://0.0.0.0:9999/abertis/pid2036'
+Oct 14 16:38:23: ERROR: [Abertis@11222H30000 PID 2036 #1] Bitrate:0Kbit/s PES:0 CC:0
+Oct 14 16:38:24: ERROR: [Abertis@11222H30000 PID 2036 #1] Bitrate:0Kbit/s PES:0 CC:0
+Oct 14 16:38:25: ERROR: [Abertis@11222H30000 PID 2036 #1] Bitrate:0Kbit/s PES:0 CC:0
+Oct 14 16:38:27: ERROR: [Abertis@11222H30000 PID 2036 #1] Bitrate:0Kbit/s PES:0 CC:0
+Oct 14 16:38:27: ERROR: [Abertis@11222H30000 PID 2036] Failed to switch to reserve
+Oct 14 16:38:30: INFO: [Abertis@11222H30000 PID 2036 #1] PAT: tsid: 60020
+Oct 14 16:38:30: INFO: [Abertis@11222H30000 PID 2036 #1] PAT: pid: 16 NIT
+Oct 14 16:38:30: INFO: [Abertis@11222H30000 PID 2036 #1] PAT: pid: 7025 PMT pnr: 3025
+Oct 14 16:38:30: INFO: [Abertis@11222H30000 PID 2036 #1] PAT: pid: 7026 PMT pnr: 3026
+Oct 14 16:38:30: INFO: [Abertis@11222H30000 PID 2036 #1] PAT: pid: 7027 PMT pnr: 3027
+Oct 14 16:38:30: INFO: [Abertis@11222H30000 PID 2036 #1] PAT: pid: 7028 PMT pnr: 3028
+Oct 14 16:38:30: INFO: [Abertis@11222H30000 PID 2036 #1] PAT: pid: 7035 PMT pnr: 3035
+Oct 14 16:38:30: INFO: [Abertis@11222H30000 PID 2036 #1] PAT: pid: 7036 PMT pnr: 3036
+Oct 14 16:38:30: INFO: [Abertis@11222H30000 PID 2036 #1] PAT: pid: 7037 PMT pnr: 3037
+Oct 14 16:38:30: INFO: [Abertis@11222H30000 PID 2036 #1] PAT: pid: 7038 PMT pnr: 3038
+Oct 14 16:38:30: INFO: [Abertis@11222H30000 PID 2036 #1] PAT: pid: 7050 PMT pnr: 3050
+Oct 14 16:38:30: INFO: [Abertis@11222H30000 PID 2036 #1] PAT: pid: 8100 PMT pnr: 65534
+Oct 14 16:38:30: INFO: [Abertis@11222H30000 PID 2036 #1] PAT: pid: 7060 PMT pnr: 3060
+Oct 14 16:38:30: INFO: [Abertis@11222H30000 PID 2036 #1] PAT: crc32: 0x729B4B94
+Oct 14 16:38:30: INFO: [Abertis@11222H30000 PID 2036 #1] PMT: pnr: 3036
+Oct 14 16:38:30: INFO: [Abertis@11222H30000 PID 2036 #1] PMT: pid: 8191 PCR
+Oct 14 16:38:30: INFO: [Abertis@11222H30000 PID 2036 #1] PMT: CAS: caid: 0x2600 pid: 8191
+Oct 14 16:38:30: INFO: [Abertis@11222H30000 PID 2036 #1] PMT: Service: HS125.36
+Oct 14 16:38:30: INFO: [Abertis@11222H30000 PID 2036 #1] PMT: Provider: HSA-125
+Oct 14 16:38:30: INFO: [Abertis@11222H30000 PID 2036 #1] DATA: pid: 2036 type: User private (0x90)
+Oct 14 16:38:30: INFO: [Abertis@11222H30000 PID 2036 #1] DATA: descriptor: 0xFA0C00000000000080020BEA0BD2
+Oct 14 16:38:30: INFO: [Abertis@11222H30000 PID 2036 #1] PMT: crc32: 0x4D7CC1BD
+Oct 14 16:38:38: ERROR: [Abertis@11222H30000 PID 2036 #1] Bitrate:0Kbit/s PES:0 CC:0
+Oct 14 16:38:40: ERROR: [Abertis@11222H30000 PID 2036 #1] Bitrate:0Kbit/s PES:0 CC:0
+Oct 14 16:38:41: ERROR: [Abertis@11222H30000 PID 2036 #1] Bitrate:0Kbit/s PES:0 CC:0
+Oct 14 16:38:42: ERROR: [Abertis@11222H30000 PID 2036 #1] Bitrate:0Kbit/s PES:0 CC:0
+Oct 14 16:38:42: ERROR: [Abertis@11222H30000 PID 2036] Failed to switch to reserve
+Oct 14 16:38:44: INFO: [Abertis@11222H30000 PID 2036 #1] PAT: tsid: 60020
+Oct 14 16:38:44: INFO: [Abertis@11222H30000 PID 2036 #1] PAT: pid: 16 NIT
+Oct 14 16:38:44: INFO: [Abertis@11222H30000 PID 2036 #1] PAT: pid: 7025 PMT pnr: 3025
+Oct 14 16:38:44: INFO: [Abertis@11222H30000 PID 2036 #1] PAT: pid: 7026 PMT pnr: 3026
+Oct 14 16:38:44: INFO: [Abertis@11222H30000 PID 2036 #1] PAT: pid: 7027 PMT pnr: 3027
+Oct 14 16:38:44: INFO: [Abertis@11222H30000 PID 2036 #1] PAT: pid: 7028 PMT pnr: 3028
+Oct 14 16:38:44: INFO: [Abertis@11222H30000 PID 2036 #1] PAT: pid: 7035 PMT pnr: 3035
+Oct 14 16:38:44: INFO: [Abertis@11222H30000 PID 2036 #1] PAT: pid: 7036 PMT pnr: 3036
+Oct 14 16:38:44: INFO: [Abertis@11222H30000 PID 2036 #1] PAT: pid: 7037 PMT pnr: 3037
+Oct 14 16:38:44: INFO: [Abertis@11222H30000 PID 2036 #1] PAT: pid: 7038 PMT pnr: 3038
+Oct 14 16:38:44: INFO: [Abertis@11222H30000 PID 2036 #1] PAT: pid: 7050 PMT pnr: 3050
+Oct 14 16:38:44: INFO: [Abertis@11222H30000 PID 2036 #1] PAT: pid: 8100 PMT pnr: 65534
+Oct 14 16:38:44: INFO: [Abertis@11222H30000 PID 2036 #1] PAT: pid: 7060 PMT pnr: 3060
+Oct 14 16:38:44: INFO: [Abertis@11222H30000 PID 2036 #1] PAT: crc32: 0x729B4B94
+Oct 14 16:38:44: INFO: [Abertis@11222H30000 PID 2036 #1] PMT: pnr: 3036
+Oct 14 16:38:44: INFO: [Abertis@11222H30000 PID 2036 #1] PMT: pid: 8191 PCR
+Oct 14 16:38:44: INFO: [Abertis@11222H30000 PID 2036 #1] PMT: CAS: caid: 0x2600 pid: 8191
+Oct 14 16:38:44: INFO: [Abertis@11222H30000 PID 2036 #1] PMT: Service: HS125.36
+Oct 14 16:38:44: INFO: [Abertis@11222H30000 PID 2036 #1] PMT: Provider: HSA-125
+Oct 14 16:38:44: INFO: [Abertis@11222H30000 PID 2036 #1] DATA: pid: 2036 type: User private (0x90)
+Oct 14 16:38:44: INFO: [Abertis@11222H30000 PID 2036 #1] DATA: descriptor: 0xFA0C00000000000080020BEA0BD2
+Oct 14 16:38:44: INFO: [Abertis@11222H30000 PID 2036 #1] PMT: crc32: 0x4D7CC1BD
+    -> Finished PID 2036. Log saved to pid_logs/pid2036.log
+
+==================================================
+Starting Scan for Channel: Abertis@11222H30000 (PID 2037)
+==================================================
+[*] Zapping to feed service: 1:0:1:BDD:EA74:1:CE40000:0:0:0:
+    -> zap command: curl -s 'http://127.0.0.1/web/zap?sRef=1%3A0%3A1%3ABDD%3AEA74%3A1%3ACE40000%3A0%3A0%3A0%3A' | head
+    -> Zap successful. Waiting 6 seconds for tuner lock & stream start...
+[*] Letting feed service settle for 20 seconds...
+[*] Analyzing PID 2037 for 22 seconds...
+    -> command: astra --analyze 'http://0.0.0.0:9999/abertis/pid2037'
+Oct 14 16:39:13: ERROR: [Abertis@11222H30000 PID 2037 #1] Bitrate:0Kbit/s PES:0 CC:0
+Oct 14 16:39:14: ERROR: [Abertis@11222H30000 PID 2037 #1] Bitrate:0Kbit/s PES:0 CC:0
+Oct 14 16:39:15: ERROR: [Abertis@11222H30000 PID 2037 #1] Bitrate:0Kbit/s PES:0 CC:0
+Oct 14 16:39:16: ERROR: [Abertis@11222H30000 PID 2037 #1] Bitrate:0Kbit/s PES:0 CC:0
+Oct 14 16:39:16: ERROR: [Abertis@11222H30000 PID 2037] Failed to switch to reserve
+Oct 14 16:39:19: INFO: [Abertis@11222H30000 PID 2037 #1] PAT: tsid: 60020
+Oct 14 16:39:19: INFO: [Abertis@11222H30000 PID 2037 #1] PAT: pid: 16 NIT
+Oct 14 16:39:19: INFO: [Abertis@11222H30000 PID 2037 #1] PAT: pid: 7025 PMT pnr: 3025
+Oct 14 16:39:19: INFO: [Abertis@11222H30000 PID 2037 #1] PAT: pid: 7026 PMT pnr: 3026
+Oct 14 16:39:19: INFO: [Abertis@11222H30000 PID 2037 #1] PAT: pid: 7027 PMT pnr: 3027
+Oct 14 16:39:19: INFO: [Abertis@11222H30000 PID 2037 #1] PAT: pid: 7028 PMT pnr: 3028
+Oct 14 16:39:19: INFO: [Abertis@11222H30000 PID 2037 #1] PAT: pid: 7035 PMT pnr: 3035
+Oct 14 16:39:19: INFO: [Abertis@11222H30000 PID 2037 #1] PAT: pid: 7036 PMT pnr: 3036
+Oct 14 16:39:19: INFO: [Abertis@11222H30000 PID 2037 #1] PAT: pid: 7037 PMT pnr: 3037
+Oct 14 16:39:19: INFO: [Abertis@11222H30000 PID 2037 #1] PAT: pid: 7038 PMT pnr: 3038
+Oct 14 16:39:19: INFO: [Abertis@11222H30000 PID 2037 #1] PAT: pid: 7050 PMT pnr: 3050
+Oct 14 16:39:19: INFO: [Abertis@11222H30000 PID 2037 #1] PAT: pid: 8100 PMT pnr: 65534
+Oct 14 16:39:19: INFO: [Abertis@11222H30000 PID 2037 #1] PAT: pid: 7060 PMT pnr: 3060
+Oct 14 16:39:19: INFO: [Abertis@11222H30000 PID 2037 #1] PAT: crc32: 0x729B4B94
+Oct 14 16:39:19: INFO: [Abertis@11222H30000 PID 2037 #1] PMT: pnr: 3037
+Oct 14 16:39:19: INFO: [Abertis@11222H30000 PID 2037 #1] PMT: pid: 8191 PCR
+Oct 14 16:39:19: INFO: [Abertis@11222H30000 PID 2037 #1] PMT: CAS: caid: 0x2600 pid: 8191
+Oct 14 16:39:19: INFO: [Abertis@11222H30000 PID 2037 #1] PMT: Service: HS125.37
+Oct 14 16:39:19: INFO: [Abertis@11222H30000 PID 2037 #1] PMT: Provider: HSA-125
+Oct 14 16:39:19: INFO: [Abertis@11222H30000 PID 2037 #1] DATA: pid: 2037 type: User private (0x90)
+Oct 14 16:39:19: INFO: [Abertis@11222H30000 PID 2037 #1] DATA: descriptor: 0xFA0C00000000000080020BEA0BD3
+Oct 14 16:39:19: INFO: [Abertis@11222H30000 PID 2037 #1] PMT: crc32: 0xED3181A
+Oct 14 16:39:28: ERROR: [Abertis@11222H30000 PID 2037 #1] Bitrate:0Kbit/s PES:0 CC:0
+Oct 14 16:39:29: ERROR: [Abertis@11222H30000 PID 2037 #1] Bitrate:0Kbit/s PES:0 CC:0
+Oct 14 16:39:30: ERROR: [Abertis@11222H30000 PID 2037 #1] Bitrate:0Kbit/s PES:0 CC:0
+Oct 14 16:39:31: ERROR: [Abertis@11222H30000 PID 2037 #1] Bitrate:0Kbit/s PES:0 CC:0
+Oct 14 16:39:31: ERROR: [Abertis@11222H30000 PID 2037] Failed to switch to reserve
+    -> Finished PID 2037. Log saved to pid_logs/pid2037.log
+
+==================================================
+Starting Scan for Channel: Abertis@11222H30000 (PID 2038)
+==================================================
+[*] Zapping to feed service: 1:0:1:BDE:EA74:1:CE40000:0:0:0:
+    -> zap command: curl -s 'http://127.0.0.1/web/zap?sRef=1%3A0%3A1%3ABDE%3AEA74%3A1%3ACE40000%3A0%3A0%3A0%3A' | head
+    -> Zap successful. Waiting 6 seconds for tuner lock & stream start...
+[*] Letting feed service settle for 20 seconds...
+[*] Analyzing PID 2038 for 22 seconds...
+    -> command: astra --analyze 'http://0.0.0.0:9999/abertis/pid2038'
+Oct 14 16:40:03: ERROR: [Abertis@11222H30000 PID 2038 #1] Bitrate:0Kbit/s PES:0 CC:0
+Oct 14 16:40:04: ERROR: [Abertis@11222H30000 PID 2038 #1] Bitrate:0Kbit/s PES:0 CC:0
+Oct 14 16:40:05: ERROR: [Abertis@11222H30000 PID 2038 #1] Bitrate:0Kbit/s PES:0 CC:0
+Oct 14 16:40:06: ERROR: [Abertis@11222H30000 PID 2038 #1] Bitrate:0Kbit/s PES:0 CC:0
+Oct 14 16:40:06: ERROR: [Abertis@11222H30000 PID 2038] Failed to switch to reserve
+Oct 14 16:40:09: INFO: [Abertis@11222H30000 PID 2038 #1] PAT: tsid: 60020
+Oct 14 16:40:09: INFO: [Abertis@11222H30000 PID 2038 #1] PAT: pid: 16 NIT
+Oct 14 16:40:09: INFO: [Abertis@11222H30000 PID 2038 #1] PAT: pid: 7025 PMT pnr: 3025
+Oct 14 16:40:09: INFO: [Abertis@11222H30000 PID 2038 #1] PAT: pid: 7026 PMT pnr: 3026
+Oct 14 16:40:09: INFO: [Abertis@11222H30000 PID 2038 #1] PAT: pid: 7027 PMT pnr: 3027
+Oct 14 16:40:09: INFO: [Abertis@11222H30000 PID 2038 #1] PAT: pid: 7028 PMT pnr: 3028
+Oct 14 16:40:09: INFO: [Abertis@11222H30000 PID 2038 #1] PAT: pid: 7035 PMT pnr: 3035
+Oct 14 16:40:09: INFO: [Abertis@11222H30000 PID 2038 #1] PAT: pid: 7036 PMT pnr: 3036
+Oct 14 16:40:09: INFO: [Abertis@11222H30000 PID 2038 #1] PAT: pid: 7037 PMT pnr: 3037
+Oct 14 16:40:09: INFO: [Abertis@11222H30000 PID 2038 #1] PAT: pid: 7038 PMT pnr: 3038
+Oct 14 16:40:09: INFO: [Abertis@11222H30000 PID 2038 #1] PAT: pid: 7050 PMT pnr: 3050
+Oct 14 16:40:09: INFO: [Abertis@11222H30000 PID 2038 #1] PAT: pid: 8100 PMT pnr: 65534
+Oct 14 16:40:09: INFO: [Abertis@11222H30000 PID 2038 #1] PAT: pid: 7060 PMT pnr: 3060
+Oct 14 16:40:09: INFO: [Abertis@11222H30000 PID 2038 #1] PAT: crc32: 0x729B4B94
+Oct 14 16:40:09: INFO: [Abertis@11222H30000 PID 2038 #1] PMT: pnr: 3038
+Oct 14 16:40:09: INFO: [Abertis@11222H30000 PID 2038 #1] PMT: pid: 8191 PCR
+Oct 14 16:40:09: INFO: [Abertis@11222H30000 PID 2038 #1] PMT: CAS: caid: 0x2600 pid: 8191
+Oct 14 16:40:09: INFO: [Abertis@11222H30000 PID 2038 #1] PMT: Service: HS125.38
+Oct 14 16:40:09: INFO: [Abertis@11222H30000 PID 2038 #1] PMT: Provider: HSA-125
+Oct 14 16:40:09: INFO: [Abertis@11222H30000 PID 2038 #1] DATA: pid: 2038 type: User private (0x90)
+Oct 14 16:40:09: INFO: [Abertis@11222H30000 PID 2038 #1] DATA: descriptor: 0xFA0C00000000000080020BEA0BD4
+Oct 14 16:40:09: INFO: [Abertis@11222H30000 PID 2038 #1] PMT: crc32: 0xADF85870
+Oct 14 16:40:18: ERROR: [Abertis@11222H30000 PID 2038 #1] Bitrate:0Kbit/s PES:0 CC:0
+Oct 14 16:40:19: ERROR: [Abertis@11222H30000 PID 2038 #1] Bitrate:0Kbit/s PES:0 CC:0
+Oct 14 16:40:20: ERROR: [Abertis@11222H30000 PID 2038 #1] Bitrate:0Kbit/s PES:0 CC:0
+Oct 14 16:40:21: ERROR: [Abertis@11222H30000 PID 2038 #1] Bitrate:0Kbit/s PES:0 CC:0
+Oct 14 16:40:21: ERROR: [Abertis@11222H30000 PID 2038] Failed to switch to reserve
+Oct 14 16:40:24: INFO: [Abertis@11222H30000 PID 2038 #1] PAT: tsid: 60020
+Oct 14 16:40:24: INFO: [Abertis@11222H30000 PID 2038 #1] PAT: pid: 16 NIT
+Oct 14 16:40:24: INFO: [Abertis@11222H30000 PID 2038 #1] PAT: pid: 7025 PMT pnr: 3025
+Oct 14 16:40:24: INFO: [Abertis@11222H30000 PID 2038 #1] PAT: pid: 7026 PMT pnr: 3026
+Oct 14 16:40:24: INFO: [Abertis@11222H30000 PID 2038 #1] PAT: pid: 7027 PMT pnr: 3027
+Oct 14 16:40:24: INFO: [Abertis@11222H30000 PID 2038 #1] PAT: pid: 7028 PMT pnr: 3028
+Oct 14 16:40:24: INFO: [Abertis@11222H30000 PID 2038 #1] PAT: pid: 7035 PMT pnr: 3035
+Oct 14 16:40:24: INFO: [Abertis@11222H30000 PID 2038 #1] PAT: pid: 7036 PMT pnr: 3036
+Oct 14 16:40:24: INFO: [Abertis@11222H30000 PID 2038 #1] PAT: pid: 7037 PMT pnr: 3037
+Oct 14 16:40:24: INFO: [Abertis@11222H30000 PID 2038 #1] PAT: pid: 7038 PMT pnr: 3038
+Oct 14 16:40:24: INFO: [Abertis@11222H30000 PID 2038 #1] PAT: pid: 7050 PMT pnr: 3050
+Oct 14 16:40:24: INFO: [Abertis@11222H30000 PID 2038 #1] PAT: pid: 8100 PMT pnr: 65534
+Oct 14 16:40:24: INFO: [Abertis@11222H30000 PID 2038 #1] PAT: pid: 7060 PMT pnr: 3060
+Oct 14 16:40:24: INFO: [Abertis@11222H30000 PID 2038 #1] PAT: crc32: 0x729B4B94
+Oct 14 16:40:24: INFO: [Abertis@11222H30000 PID 2038 #1] PMT: pnr: 3038
+Oct 14 16:40:24: INFO: [Abertis@11222H30000 PID 2038 #1] PMT: pid: 8191 PCR
+Oct 14 16:40:24: INFO: [Abertis@11222H30000 PID 2038 #1] PMT: CAS: caid: 0x2600 pid: 8191
+Oct 14 16:40:24: INFO: [Abertis@11222H30000 PID 2038 #1] PMT: Service: HS125.38
+Oct 14 16:40:24: INFO: [Abertis@11222H30000 PID 2038 #1] PMT: Provider: HSA-125
+Oct 14 16:40:24: INFO: [Abertis@11222H30000 PID 2038 #1] DATA: pid: 2038 type: User private (0x90)
+Oct 14 16:40:24: INFO: [Abertis@11222H30000 PID 2038 #1] DATA: descriptor: 0xFA0C00000000000080020BEA0BD4
+Oct 14 16:40:24: INFO: [Abertis@11222H30000 PID 2038 #1] PMT: crc32: 0xADF85870
+    -> Finished PID 2038. Log saved to pid_logs/pid2038.log
+
+==================================================
+Starting Scan for Channel: Abertis@11222H30000 (PID 2050)
+==================================================
+[*] Zapping to feed service: 1:0:1:BEA:EA74:1:CE40000:0:0:0:
+    -> zap command: curl -s 'http://127.0.0.1/web/zap?sRef=1%3A0%3A1%3ABEA%3AEA74%3A1%3ACE40000%3A0%3A0%3A0%3A' | head
+    -> Zap successful. Waiting 6 seconds for tuner lock & stream start...
+[*] Letting feed service settle for 20 seconds...
+[*] Analyzing PID 2050 for 22 seconds...
+    -> command: astra --analyze 'http://0.0.0.0:9999/abertis/pid2050'
+Oct 14 16:40:52: INFO: [Abertis@11222H30000 PID 2050 #1] PAT: tsid: 60020
+Oct 14 16:40:52: INFO: [Abertis@11222H30000 PID 2050 #1] PAT: pid: 16 NIT
+Oct 14 16:40:52: INFO: [Abertis@11222H30000 PID 2050 #1] PAT: pid: 7025 PMT pnr: 3025
+Oct 14 16:40:52: INFO: [Abertis@11222H30000 PID 2050 #1] PAT: pid: 7026 PMT pnr: 3026
+Oct 14 16:40:52: INFO: [Abertis@11222H30000 PID 2050 #1] PAT: pid: 7027 PMT pnr: 3027
+Oct 14 16:40:52: INFO: [Abertis@11222H30000 PID 2050 #1] PAT: pid: 7028 PMT pnr: 3028
+Oct 14 16:40:52: INFO: [Abertis@11222H30000 PID 2050 #1] PAT: pid: 7035 PMT pnr: 3035
+Oct 14 16:40:52: INFO: [Abertis@11222H30000 PID 2050 #1] PAT: pid: 7036 PMT pnr: 3036
+Oct 14 16:40:52: INFO: [Abertis@11222H30000 PID 2050 #1] PAT: pid: 7037 PMT pnr: 3037
+Oct 14 16:40:52: INFO: [Abertis@11222H30000 PID 2050 #1] PAT: pid: 7038 PMT pnr: 3038
+Oct 14 16:40:52: INFO: [Abertis@11222H30000 PID 2050 #1] PAT: pid: 7050 PMT pnr: 3050
+Oct 14 16:40:52: INFO: [Abertis@11222H30000 PID 2050 #1] PAT: pid: 8100 PMT pnr: 65534
+Oct 14 16:40:52: INFO: [Abertis@11222H30000 PID 2050 #1] PAT: pid: 7060 PMT pnr: 3060
+Oct 14 16:40:52: INFO: [Abertis@11222H30000 PID 2050 #1] PAT: crc32: 0x729B4B94
+Oct 14 16:40:52: ERROR: [Abertis@11222H30000 PID 2050 #1] Bitrate:4619Kbit/s PES:0 CC:0
+Oct 14 16:40:52: INFO: [Abertis@11222H30000 PID 2050 #1] PMT: pnr: 3050
+Oct 14 16:40:52: INFO: [Abertis@11222H30000 PID 2050 #1] PMT: pid: 8191 PCR
+Oct 14 16:40:52: INFO: [Abertis@11222H30000 PID 2050 #1] PMT: CAS: caid: 0x2600 pid: 8191
+Oct 14 16:40:52: INFO: [Abertis@11222H30000 PID 2050 #1] PMT: Service: HS125.50
+Oct 14 16:40:52: INFO: [Abertis@11222H30000 PID 2050 #1] PMT: Provider: HSA-125
+Oct 14 16:40:52: INFO: [Abertis@11222H30000 PID 2050 #1] DATA: pid: 2050 type: User private (0x90)
+Oct 14 16:40:52: INFO: [Abertis@11222H30000 PID 2050 #1] DATA: descriptor: 0xFB06000A00000000
+Oct 14 16:40:52: INFO: [Abertis@11222H30000 PID 2050 #1] DATA: descriptor: 0xFA08000A000000004000
+Oct 14 16:40:52: INFO: [Abertis@11222H30000 PID 2050 #1] PMT: crc32: 0xC23A3CEF
+Oct 14 16:40:53: ERROR: [Abertis@11222H30000 PID 2050 #1] Bitrate:12320Kbit/s PES:0 CC:1
+Oct 14 16:40:54: ERROR: [Abertis@11222H30000 PID 2050 #1] Bitrate:12320Kbit/s PES:0 CC:0
+Oct 14 16:40:55: ERROR: [Abertis@11222H30000 PID 2050 #1] Bitrate:12320Kbit/s PES:0 CC:0
+Oct 14 16:40:55: ERROR: [Abertis@11222H30000 PID 2050] Failed to switch to reserve
+    -> Finished PID 2050. Log saved to pid_logs/pid2050.log
+
+==================================================
+Starting Scan for Channel: Abertis@11222H30000 (PID 2060)
+==================================================
+[*] Zapping to feed service: 1:0:1:BF4:EA74:1:CE40000:0:0:0:
+    -> zap command: curl -s 'http://127.0.0.1/web/zap?sRef=1%3A0%3A1%3ABF4%3AEA74%3A1%3ACE40000%3A0%3A0%3A0%3A' | head
+    -> Zap successful. Waiting 6 seconds for tuner lock & stream start...
+[*] Letting feed service settle for 20 seconds...
+[*] Analyzing PID 2060 for 22 seconds...
+    -> command: astra --analyze 'http://0.0.0.0:9999/abertis/pid2060'
+Oct 14 16:41:41: INFO: [Abertis@11222H30000 PID 2060 #1] PAT: tsid: 60020
+Oct 14 16:41:41: INFO: [Abertis@11222H30000 PID 2060 #1] PAT: pid: 16 NIT
+Oct 14 16:41:41: INFO: [Abertis@11222H30000 PID 2060 #1] PAT: pid: 7025 PMT pnr: 3025
+Oct 14 16:41:41: INFO: [Abertis@11222H30000 PID 2060 #1] PAT: pid: 7026 PMT pnr: 3026
+Oct 14 16:41:41: INFO: [Abertis@11222H30000 PID 2060 #1] PAT: pid: 7027 PMT pnr: 3027
+Oct 14 16:41:41: INFO: [Abertis@11222H30000 PID 2060 #1] PAT: pid: 7028 PMT pnr: 3028
+Oct 14 16:41:41: INFO: [Abertis@11222H30000 PID 2060 #1] PAT: pid: 7035 PMT pnr: 3035
+Oct 14 16:41:41: INFO: [Abertis@11222H30000 PID 2060 #1] PAT: pid: 7036 PMT pnr: 3036
+Oct 14 16:41:41: INFO: [Abertis@11222H30000 PID 2060 #1] PAT: pid: 7037 PMT pnr: 3037
+Oct 14 16:41:41: INFO: [Abertis@11222H30000 PID 2060 #1] PAT: pid: 7038 PMT pnr: 3038
+Oct 14 16:41:41: INFO: [Abertis@11222H30000 PID 2060 #1] PAT: pid: 7050 PMT pnr: 3050
+Oct 14 16:41:41: INFO: [Abertis@11222H30000 PID 2060 #1] PAT: pid: 8100 PMT pnr: 65534
+Oct 14 16:41:41: INFO: [Abertis@11222H30000 PID 2060 #1] PAT: pid: 7060 PMT pnr: 3060
+Oct 14 16:41:41: INFO: [Abertis@11222H30000 PID 2060 #1] PAT: crc32: 0x729B4B94
+Oct 14 16:41:42: ERROR: [Abertis@11222H30000 PID 2060 #1] Bitrate:4619Kbit/s PES:0 CC:0
+Oct 14 16:41:42: INFO: [Abertis@11222H30000 PID 2060 #1] PMT: pnr: 3060
+Oct 14 16:41:42: INFO: [Abertis@11222H30000 PID 2060 #1] PMT: pid: 8191 PCR
+Oct 14 16:41:42: INFO: [Abertis@11222H30000 PID 2060 #1] PMT: CAS: caid: 0x2600 pid: 8191
+Oct 14 16:41:42: INFO: [Abertis@11222H30000 PID 2060 #1] PMT: Service: HS125.60
+Oct 14 16:41:42: INFO: [Abertis@11222H30000 PID 2060 #1] PMT: Provider: HSA-125
+Oct 14 16:41:42: INFO: [Abertis@11222H30000 PID 2060 #1] DATA: pid: 2060 type: User private (0x90)
+Oct 14 16:41:42: INFO: [Abertis@11222H30000 PID 2060 #1] DATA: descriptor: 0xFA08000A000000000000
+Oct 14 16:41:42: INFO: [Abertis@11222H30000 PID 2060 #1] DATA: descriptor: 0xFB06000A00000000
+Oct 14 16:41:42: INFO: [Abertis@11222H30000 PID 2060 #1] PMT: crc32: 0xBC17AFC
+Oct 14 16:41:43: ERROR: [Abertis@11222H30000 PID 2060 #1] Bitrate:10780Kbit/s PES:0 CC:2
+Oct 14 16:41:44: ERROR: [Abertis@11222H30000 PID 2060 #1] Bitrate:10780Kbit/s PES:0 CC:0
+Oct 14 16:41:45: ERROR: [Abertis@11222H30000 PID 2060 #1] Bitrate:10780Kbit/s PES:0 CC:0
+Oct 14 16:41:45: ERROR: [Abertis@11222H30000 PID 2060] Failed to switch to reserve
+    -> Finished PID 2060. Log saved to pid_logs/pid2060.log
+
+==================================================
+Starting Scan for Channel: Abertis@11302H30000 (PID 2270)
+==================================================
+[*] Zapping to feed service: 1:0:1:CC6:EA76:1:CE40000:0:0:0:
+    -> zap command: curl -s 'http://127.0.0.1/web/zap?sRef=1%3A0%3A1%3ACC6%3AEA76%3A1%3ACE40000%3A0%3A0%3A0%3A' | head
+    -> Zap successful. Waiting 6 seconds for tuner lock & stream start...
+[*] Letting feed service settle for 20 seconds...
+[*] Analyzing PID 2270 for 22 seconds...
+    -> command: astra --analyze 'http://0.0.0.0:9999/abertis/pid2270'
+Oct 14 16:42:31: ERROR: [Abertis@11302H30000 PID 2270 #1] Bitrate:0Kbit/s PES:0 CC:0
+Oct 14 16:42:32: ERROR: [Abertis@11302H30000 PID 2270 #1] Bitrate:0Kbit/s PES:0 CC:0
+Oct 14 16:42:33: ERROR: [Abertis@11302H30000 PID 2270 #1] Bitrate:0Kbit/s PES:0 CC:0
+Oct 14 16:42:34: ERROR: [Abertis@11302H30000 PID 2270 #1] Bitrate:0Kbit/s PES:0 CC:0
+Oct 14 16:42:34: ERROR: [Abertis@11302H30000 PID 2270] Failed to switch to reserve
+Oct 14 16:42:46: ERROR: [Abertis@11302H30000 PID 2270 #1] Bitrate:0Kbit/s PES:0 CC:0
+Oct 14 16:42:47: ERROR: [Abertis@11302H30000 PID 2270 #1] Bitrate:0Kbit/s PES:0 CC:0
+Oct 14 16:42:48: ERROR: [Abertis@11302H30000 PID 2270 #1] Bitrate:0Kbit/s PES:0 CC:0
+Oct 14 16:42:49: ERROR: [Abertis@11302H30000 PID 2270 #1] Bitrate:0Kbit/s PES:0 CC:0
+Oct 14 16:42:49: ERROR: [Abertis@11302H30000 PID 2270] Failed to switch to reserve
+    -> Finished PID 2270. Log saved to pid_logs/pid2270.log
+
+==================================================
+Starting Scan for Channel: Abertis@11302H30000 (PID 2271)
+==================================================
+[*] Zapping to feed service: 1:0:1:CC7:EA76:1:CE40000:0:0:0:
+    -> zap command: curl -s 'http://127.0.0.1/web/zap?sRef=1%3A0%3A1%3ACC7%3AEA76%3A1%3ACE40000%3A0%3A0%3A0%3A' | head
+    -> Zap successful. Waiting 6 seconds for tuner lock & stream start...
+[*] Letting feed service settle for 20 seconds...
+[*] Analyzing PID 2271 for 22 seconds...
+    -> command: astra --analyze 'http://0.0.0.0:9999/abertis/pid2271'
+Oct 14 16:43:20: ERROR: [Abertis@11302H30000 PID 2271 #1] Bitrate:0Kbit/s PES:0 CC:0
+Oct 14 16:43:21: ERROR: [Abertis@11302H30000 PID 2271 #1] Bitrate:0Kbit/s PES:0 CC:0
+Oct 14 16:43:22: ERROR: [Abertis@11302H30000 PID 2271 #1] Bitrate:0Kbit/s PES:0 CC:0
+Oct 14 16:43:23: ERROR: [Abertis@11302H30000 PID 2271 #1] Bitrate:0Kbit/s PES:0 CC:0
+Oct 14 16:43:23: ERROR: [Abertis@11302H30000 PID 2271] Failed to switch to reserve
+Oct 14 16:43:35: ERROR: [Abertis@11302H30000 PID 2271 #1] Bitrate:0Kbit/s PES:0 CC:0
+Oct 14 16:43:36: ERROR: [Abertis@11302H30000 PID 2271 #1] Bitrate:0Kbit/s PES:0 CC:0
+Oct 14 16:43:37: ERROR: [Abertis@11302H30000 PID 2271 #1] Bitrate:0Kbit/s PES:0 CC:0
+Oct 14 16:43:38: ERROR: [Abertis@11302H30000 PID 2271 #1] Bitrate:0Kbit/s PES:0 CC:0
+Oct 14 16:43:38: ERROR: [Abertis@11302H30000 PID 2271] Failed to switch to reserve
+    -> Finished PID 2271. Log saved to pid_logs/pid2271.log
+
+==================================================
+Starting Scan for Channel: Abertis@11302H30000 (PID 2272)
+==================================================
+[*] Zapping to feed service: 1:0:1:CC8:EA76:1:CE40000:0:0:0:
+    -> zap command: curl -s 'http://127.0.0.1/web/zap?sRef=1%3A0%3A1%3ACC8%3AEA76%3A1%3ACE40000%3A0%3A0%3A0%3A' | head
+    -> Zap successful. Waiting 6 seconds for tuner lock & stream start...
+[*] Letting feed service settle for 20 seconds...
+[*] Analyzing PID 2272 for 22 seconds...
+    -> command: astra --analyze 'http://0.0.0.0:9999/abertis/pid2272'
+Oct 14 16:44:10: ERROR: [Abertis@11302H30000 PID 2272 #1] Bitrate:0Kbit/s PES:0 CC:0
+Oct 14 16:44:11: ERROR: [Abertis@11302H30000 PID 2272 #1] Bitrate:0Kbit/s PES:0 CC:0
+Oct 14 16:44:12: ERROR: [Abertis@11302H30000 PID 2272 #1] Bitrate:0Kbit/s PES:0 CC:0
+Oct 14 16:44:13: ERROR: [Abertis@11302H30000 PID 2272 #1] Bitrate:0Kbit/s PES:0 CC:0
+Oct 14 16:44:13: ERROR: [Abertis@11302H30000 PID 2272] Failed to switch to reserve
+Oct 14 16:44:25: ERROR: [Abertis@11302H30000 PID 2272 #1] Bitrate:0Kbit/s PES:0 CC:0
+Oct 14 16:44:26: ERROR: [Abertis@11302H30000 PID 2272 #1] Bitrate:0Kbit/s PES:0 CC:0
+Oct 14 16:44:27: ERROR: [Abertis@11302H30000 PID 2272 #1] Bitrate:0Kbit/s PES:0 CC:0
+Oct 14 16:44:28: ERROR: [Abertis@11302H30000 PID 2272 #1] Bitrate:0Kbit/s PES:0 CC:0
+Oct 14 16:44:28: ERROR: [Abertis@11302H30000 PID 2272] Failed to switch to reserve
+    -> Finished PID 2272. Log saved to pid_logs/pid2272.log
+
+==================================================
+Starting Scan for Channel: Abertis@11302H30000 (PID 2273)
+==================================================
+[*] Zapping to feed service: 1:0:1:CC9:EA76:1:CE40000:0:0:0:
+    -> zap command: curl -s 'http://127.0.0.1/web/zap?sRef=1%3A0%3A1%3ACC9%3AEA76%3A1%3ACE40000%3A0%3A0%3A0%3A' | head
+    -> Zap successful. Waiting 6 seconds for tuner lock & stream start...
+[*] Letting feed service settle for 20 seconds...
+[*] Analyzing PID 2273 for 22 seconds...
+    -> command: astra --analyze 'http://0.0.0.0:9999/abertis/pid2273'
+Oct 14 16:45:00: ERROR: [Abertis@11302H30000 PID 2273 #1] Bitrate:0Kbit/s PES:0 CC:0
+Oct 14 16:45:01: ERROR: [Abertis@11302H30000 PID 2273 #1] Bitrate:0Kbit/s PES:0 CC:0
+Oct 14 16:45:02: ERROR: [Abertis@11302H30000 PID 2273 #1] Bitrate:0Kbit/s PES:0 CC:0
+Oct 14 16:45:03: ERROR: [Abertis@11302H30000 PID 2273 #1] Bitrate:0Kbit/s PES:0 CC:0
+Oct 14 16:45:03: ERROR: [Abertis@11302H30000 PID 2273] Failed to switch to reserve
+Oct 14 16:45:15: ERROR: [Abertis@11302H30000 PID 2273 #1] Bitrate:0Kbit/s PES:0 CC:0
+Oct 14 16:45:16: ERROR: [Abertis@11302H30000 PID 2273 #1] Bitrate:0Kbit/s PES:0 CC:0
+Oct 14 16:45:17: ERROR: [Abertis@11302H30000 PID 2273 #1] Bitrate:0Kbit/s PES:0 CC:0
+Oct 14 16:45:18: ERROR: [Abertis@11302H30000 PID 2273 #1] Bitrate:0Kbit/s PES:0 CC:0
+Oct 14 16:45:18: ERROR: [Abertis@11302H30000 PID 2273] Failed to switch to reserve
+    -> Finished PID 2273. Log saved to pid_logs/pid2273.log
+
+==================================================
+Starting Scan for Channel: Abertis@11302H30000 (PID 2274)
+==================================================
+[*] Zapping to feed service: 1:0:1:CCA:EA76:1:CE40000:0:0:0:
+    -> zap command: curl -s 'http://127.0.0.1/web/zap?sRef=1%3A0%3A1%3ACCA%3AEA76%3A1%3ACE40000%3A0%3A0%3A0%3A' | head
+    -> Zap successful. Waiting 6 seconds for tuner lock & stream start...
+[*] Letting feed service settle for 20 seconds...
+[*] Analyzing PID 2274 for 22 seconds...
+    -> command: astra --analyze 'http://0.0.0.0:9999/abertis/pid2274'
+Oct 14 16:45:49: ERROR: [Abertis@11302H30000 PID 2274 #1] Bitrate:0Kbit/s PES:0 CC:0
+Oct 14 16:45:50: ERROR: [Abertis@11302H30000 PID 2274 #1] Bitrate:0Kbit/s PES:0 CC:0
+Oct 14 16:45:51: ERROR: [Abertis@11302H30000 PID 2274 #1] Bitrate:0Kbit/s PES:0 CC:0
+Oct 14 16:45:52: ERROR: [Abertis@11302H30000 PID 2274 #1] Bitrate:0Kbit/s PES:0 CC:0
+Oct 14 16:45:52: ERROR: [Abertis@11302H30000 PID 2274] Failed to switch to reserve
+Oct 14 16:46:04: ERROR: [Abertis@11302H30000 PID 2274 #1] Bitrate:0Kbit/s PES:0 CC:0
+Oct 14 16:46:05: ERROR: [Abertis@11302H30000 PID 2274 #1] Bitrate:0Kbit/s PES:0 CC:0
+Oct 14 16:46:06: ERROR: [Abertis@11302H30000 PID 2274 #1] Bitrate:0Kbit/s PES:0 CC:0
+Oct 14 16:46:07: ERROR: [Abertis@11302H30000 PID 2274 #1] Bitrate:0Kbit/s PES:0 CC:0
+Oct 14 16:46:07: ERROR: [Abertis@11302H30000 PID 2274] Failed to switch to reserve
+    -> Finished PID 2274. Log saved to pid_logs/pid2274.log
+
+==================================================
+Starting Scan for Channel: Abertis@11302H30000 (PID 2281)
+==================================================
+[*] Zapping to feed service: 1:0:1:CD1:EA76:1:CE40000:0:0:0:
+    -> zap command: curl -s 'http://127.0.0.1/web/zap?sRef=1%3A0%3A1%3ACD1%3AEA76%3A1%3ACE40000%3A0%3A0%3A0%3A' | head
+    -> Zap successful. Waiting 6 seconds for tuner lock & stream start...
+[*] Letting feed service settle for 20 seconds...
+[*] Analyzing PID 2281 for 22 seconds...
+    -> command: astra --analyze 'http://0.0.0.0:9999/abertis/pid2281'
+Oct 14 16:46:39: ERROR: [Abertis@11302H30000 PID 2281 #1] Bitrate:0Kbit/s PES:0 CC:0
+Oct 14 16:46:40: ERROR: [Abertis@11302H30000 PID 2281 #1] Bitrate:0Kbit/s PES:0 CC:0
+Oct 14 16:46:41: ERROR: [Abertis@11302H30000 PID 2281 #1] Bitrate:0Kbit/s PES:0 CC:0
+Oct 14 16:46:42: ERROR: [Abertis@11302H30000 PID 2281 #1] Bitrate:0Kbit/s PES:0 CC:0
+Oct 14 16:46:42: ERROR: [Abertis@11302H30000 PID 2281] Failed to switch to reserve
+Oct 14 16:46:54: ERROR: [Abertis@11302H30000 PID 2281 #1] Bitrate:0Kbit/s PES:0 CC:0
+Oct 14 16:46:55: ERROR: [Abertis@11302H30000 PID 2281 #1] Bitrate:0Kbit/s PES:0 CC:0
+Oct 14 16:46:56: ERROR: [Abertis@11302H30000 PID 2281 #1] Bitrate:0Kbit/s PES:0 CC:0
+Oct 14 16:46:57: ERROR: [Abertis@11302H30000 PID 2281 #1] Bitrate:0Kbit/s PES:0 CC:0
+Oct 14 16:46:57: ERROR: [Abertis@11302H30000 PID 2281] Failed to switch to reserve
+    -> Finished PID 2281. Log saved to pid_logs/pid2281.log
+
+==================================================
+Starting Scan for Channel: Abertis@11302H30000 (PID 2282)
+==================================================
+[*] Zapping to feed service: 1:0:1:CD2:EA76:1:CE40000:0:0:0:
+    -> zap command: curl -s 'http://127.0.0.1/web/zap?sRef=1%3A0%3A1%3ACD2%3AEA76%3A1%3ACE40000%3A0%3A0%3A0%3A' | head
+    -> Zap successful. Waiting 6 seconds for tuner lock & stream start...
+[*] Letting feed service settle for 20 seconds...
+[*] Analyzing PID 2282 for 22 seconds...
+    -> command: astra --analyze 'http://0.0.0.0:9999/abertis/pid2282'
+Oct 14 16:47:28: ERROR: [Abertis@11302H30000 PID 2282 #1] Bitrate:0Kbit/s PES:0 CC:0
+Oct 14 16:47:29: ERROR: [Abertis@11302H30000 PID 2282 #1] Bitrate:0Kbit/s PES:0 CC:0
+Oct 14 16:47:30: ERROR: [Abertis@11302H30000 PID 2282 #1] Bitrate:0Kbit/s PES:0 CC:0
+Oct 14 16:47:31: ERROR: [Abertis@11302H30000 PID 2282 #1] Bitrate:0Kbit/s PES:0 CC:0
+Oct 14 16:47:31: ERROR: [Abertis@11302H30000 PID 2282] Failed to switch to reserve
+Oct 14 16:47:43: ERROR: [Abertis@11302H30000 PID 2282 #1] Bitrate:0Kbit/s PES:0 CC:0
+Oct 14 16:47:44: ERROR: [Abertis@11302H30000 PID 2282 #1] Bitrate:0Kbit/s PES:0 CC:0
+Oct 14 16:47:45: ERROR: [Abertis@11302H30000 PID 2282 #1] Bitrate:0Kbit/s PES:0 CC:0
+Oct 14 16:47:46: ERROR: [Abertis@11302H30000 PID 2282 #1] Bitrate:0Kbit/s PES:0 CC:0
+Oct 14 16:47:46: ERROR: [Abertis@11302H30000 PID 2282] Failed to switch to reserve
+    -> Finished PID 2282. Log saved to pid_logs/pid2282.log
+
+==================================================
+Starting Scan for Channel: Abertis@11302H30000 (PID 2283)
+==================================================
+[*] Zapping to feed service: 1:0:1:CD3:EA76:1:CE40000:0:0:0:
+    -> zap command: curl -s 'http://127.0.0.1/web/zap?sRef=1%3A0%3A1%3ACD3%3AEA76%3A1%3ACE40000%3A0%3A0%3A0%3A' | head
+    -> Zap successful. Waiting 6 seconds for tuner lock & stream start...
+[*] Letting feed service settle for 20 seconds...
+[*] Analyzing PID 2283 for 22 seconds...
+    -> command: astra --analyze 'http://0.0.0.0:9999/abertis/pid2283'
+Oct 14 16:48:18: ERROR: [Abertis@11302H30000 PID 2283 #1] Bitrate:0Kbit/s PES:0 CC:0
+Oct 14 16:48:19: ERROR: [Abertis@11302H30000 PID 2283 #1] Bitrate:0Kbit/s PES:0 CC:0
+Oct 14 16:48:20: ERROR: [Abertis@11302H30000 PID 2283 #1] Bitrate:0Kbit/s PES:0 CC:0
+Oct 14 16:48:21: ERROR: [Abertis@11302H30000 PID 2283 #1] Bitrate:0Kbit/s PES:0 CC:0
+Oct 14 16:48:21: ERROR: [Abertis@11302H30000 PID 2283] Failed to switch to reserve
+Oct 14 16:48:33: ERROR: [Abertis@11302H30000 PID 2283 #1] Bitrate:0Kbit/s PES:0 CC:0
+Oct 14 16:48:34: ERROR: [Abertis@11302H30000 PID 2283 #1] Bitrate:0Kbit/s PES:0 CC:0
+Oct 14 16:48:35: ERROR: [Abertis@11302H30000 PID 2283 #1] Bitrate:0Kbit/s PES:0 CC:0
+Oct 14 16:48:36: ERROR: [Abertis@11302H30000 PID 2283 #1] Bitrate:0Kbit/s PES:0 CC:0
+Oct 14 16:48:36: ERROR: [Abertis@11302H30000 PID 2283] Failed to switch to reserve
+    -> Finished PID 2283. Log saved to pid_logs/pid2283.log
+
+==================================================
+Starting Scan for Channel: Abertis@11302H30000 (PID 2284)
+==================================================
+[*] Zapping to feed service: 1:0:1:CD4:EA76:1:CE40000:0:0:0:
+    -> zap command: curl -s 'http://127.0.0.1/web/zap?sRef=1%3A0%3A1%3ACD4%3AEA76%3A1%3ACE40000%3A0%3A0%3A0%3A' | head
+    -> Zap successful. Waiting 6 seconds for tuner lock & stream start...
+[*] Letting feed service settle for 20 seconds...
+[*] Analyzing PID 2284 for 22 seconds...
+    -> command: astra --analyze 'http://0.0.0.0:9999/abertis/pid2284'
+Oct 14 16:49:07: ERROR: [Abertis@11302H30000 PID 2284 #1] Bitrate:0Kbit/s PES:0 CC:0
+Oct 14 16:49:08: ERROR: [Abertis@11302H30000 PID 2284 #1] Bitrate:0Kbit/s PES:0 CC:0
+Oct 14 16:49:09: ERROR: [Abertis@11302H30000 PID 2284 #1] Bitrate:0Kbit/s PES:0 CC:0
+Oct 14 16:49:10: ERROR: [Abertis@11302H30000 PID 2284 #1] Bitrate:0Kbit/s PES:0 CC:0
+Oct 14 16:49:10: ERROR: [Abertis@11302H30000 PID 2284] Failed to switch to reserve
+Oct 14 16:49:22: ERROR: [Abertis@11302H30000 PID 2284 #1] Bitrate:0Kbit/s PES:0 CC:0
+Oct 14 16:49:23: ERROR: [Abertis@11302H30000 PID 2284 #1] Bitrate:0Kbit/s PES:0 CC:0
+Oct 14 16:49:24: ERROR: [Abertis@11302H30000 PID 2284 #1] Bitrate:0Kbit/s PES:0 CC:0
+Oct 14 16:49:25: ERROR: [Abertis@11302H30000 PID 2284 #1] Bitrate:0Kbit/s PES:0 CC:0
+Oct 14 16:49:25: ERROR: [Abertis@11302H30000 PID 2284] Failed to switch to reserve
+    -> Finished PID 2284. Log saved to pid_logs/pid2284.log
+
+==================================================
+Starting Scan for Channel: Abertis@11347H20858 (PID 2301)
+==================================================
+[*] Zapping to feed service: 1:0:1:CE5:EA77:1:CE40000:0:0:0:
+    -> zap command: curl -s 'http://127.0.0.1/web/zap?sRef=1%3A0%3A1%3ACE5%3AEA77%3A1%3ACE40000%3A0%3A0%3A0%3A' | head
+    -> Zap successful. Waiting 6 seconds for tuner lock & stream start...
+[*] Letting feed service settle for 20 seconds...
+[*] Analyzing PID 2301 for 22 seconds...
+    -> command: astra --analyze 'http://0.0.0.0:9999/abertis/pid2301'
+Oct 14 16:49:57: ERROR: [Abertis@11347H20858 PID 2301 #1] Bitrate:0Kbit/s PES:0 CC:0
+Oct 14 16:49:58: ERROR: [Abertis@11347H20858 PID 2301 #1] Bitrate:0Kbit/s PES:0 CC:0
+Oct 14 16:49:59: ERROR: [Abertis@11347H20858 PID 2301 #1] Bitrate:0Kbit/s PES:0 CC:0
+Oct 14 16:50:00: ERROR: [Abertis@11347H20858 PID 2301 #1] Bitrate:0Kbit/s PES:0 CC:0
+Oct 14 16:50:00: ERROR: [Abertis@11347H20858 PID 2301] Failed to switch to reserve
+Oct 14 16:50:12: ERROR: [Abertis@11347H20858 PID 2301 #1] Bitrate:0Kbit/s PES:0 CC:0
+Oct 14 16:50:13: ERROR: [Abertis@11347H20858 PID 2301 #1] Bitrate:0Kbit/s PES:0 CC:0
+Oct 14 16:50:14: ERROR: [Abertis@11347H20858 PID 2301 #1] Bitrate:0Kbit/s PES:0 CC:0
+Oct 14 16:50:15: ERROR: [Abertis@11347H20858 PID 2301 #1] Bitrate:0Kbit/s PES:0 CC:0
+Oct 14 16:50:15: ERROR: [Abertis@11347H20858 PID 2301] Failed to switch to reserve
+    -> Finished PID 2301. Log saved to pid_logs/pid2301.log
+
+==================================================
+Starting Scan for Channel: Abertis@11347H20858 (PID 2302)
+==================================================
+[*] Zapping to feed service: 1:0:1:CE6:EA77:1:CE40000:0:0:0:
+    -> zap command: curl -s 'http://127.0.0.1/web/zap?sRef=1%3A0%3A1%3ACE6%3AEA77%3A1%3ACE40000%3A0%3A0%3A0%3A' | head
+    -> Zap successful. Waiting 6 seconds for tuner lock & stream start...
+[*] Letting feed service settle for 20 seconds...
+[*] Analyzing PID 2302 for 22 seconds...
+    -> command: astra --analyze 'http://0.0.0.0:9999/abertis/pid2302'
+Oct 14 16:50:46: INFO: [Abertis@11347H20858 PID 2302 #1] PAT: tsid: 60023
+Oct 14 16:50:46: INFO: [Abertis@11347H20858 PID 2302 #1] PAT: pid: 16 NIT
+Oct 14 16:50:46: INFO: [Abertis@11347H20858 PID 2302 #1] PAT: pid: 7301 PMT pnr: 3301
+Oct 14 16:50:46: INFO: [Abertis@11347H20858 PID 2302 #1] PAT: pid: 7302 PMT pnr: 3302
+Oct 14 16:50:46: INFO: [Abertis@11347H20858 PID 2302 #1] PAT: pid: 7303 PMT pnr: 3303
+Oct 14 16:50:46: INFO: [Abertis@11347H20858 PID 2302 #1] PAT: pid: 7304 PMT pnr: 3304
+Oct 14 16:50:46: INFO: [Abertis@11347H20858 PID 2302 #1] PAT: pid: 7305 PMT pnr: 3305
+Oct 14 16:50:46: INFO: [Abertis@11347H20858 PID 2302 #1] PAT: pid: 7306 PMT pnr: 3306
+Oct 14 16:50:46: INFO: [Abertis@11347H20858 PID 2302 #1] PAT: pid: 8100 PMT pnr: 65534
+Oct 14 16:50:46: INFO: [Abertis@11347H20858 PID 2302 #1] PAT: pid: 7308 PMT pnr: 3308
+Oct 14 16:50:46: INFO: [Abertis@11347H20858 PID 2302 #1] PAT: crc32: 0x9DB04683
+Oct 14 16:50:46: INFO: [Abertis@11347H20858 PID 2302 #1] PMT: pnr: 3302
+Oct 14 16:50:46: INFO: [Abertis@11347H20858 PID 2302 #1] PMT: pid: 8191 PCR
+Oct 14 16:50:46: INFO: [Abertis@11347H20858 PID 2302 #1] PMT: CAS: caid: 0x2600 pid: 8191
+Oct 14 16:50:46: INFO: [Abertis@11347H20858 PID 2302 #1] PMT: Service: HS128.2
+Oct 14 16:50:46: INFO: [Abertis@11347H20858 PID 2302 #1] PMT: Provider: HSA-128
+Oct 14 16:50:46: INFO: [Abertis@11347H20858 PID 2302 #1] DATA: pid: 2302 type: User private (0x90)
+Oct 14 16:50:46: INFO: [Abertis@11347H20858 PID 2302 #1] DATA: descriptor: 0xFA08000C000000000000
+Oct 14 16:50:46: INFO: [Abertis@11347H20858 PID 2302 #1] DATA: descriptor: 0xFB06000D00000000
+Oct 14 16:50:46: INFO: [Abertis@11347H20858 PID 2302 #1] PMT: crc32: 0x9A9F4DC3
+Oct 14 16:50:46: ERROR: [Abertis@11347H20858 PID 2302 #1] Bitrate:3078Kbit/s PES:0 CC:0
+Oct 14 16:50:47: ERROR: [Abertis@11347H20858 PID 2302 #1] Bitrate:4620Kbit/s PES:0 CC:0
+Oct 14 16:50:48: ERROR: [Abertis@11347H20858 PID 2302 #1] Bitrate:4620Kbit/s PES:0 CC:0
+Oct 14 16:50:49: ERROR: [Abertis@11347H20858 PID 2302 #1] Bitrate:6159Kbit/s PES:0 CC:0
+Oct 14 16:50:49: ERROR: [Abertis@11347H20858 PID 2302] Failed to switch to reserve
+    -> Finished PID 2302. Log saved to pid_logs/pid2302.log
+
+==================================================
+Starting Scan for Channel: Abertis@11347H20858 (PID 2303)
+==================================================
+[*] Zapping to feed service: 1:0:1:CE7:EA77:1:CE40000:0:0:0:
+    -> zap command: curl -s 'http://127.0.0.1/web/zap?sRef=1%3A0%3A1%3ACE7%3AEA77%3A1%3ACE40000%3A0%3A0%3A0%3A' | head
+    -> Zap successful. Waiting 6 seconds for tuner lock & stream start...
+[*] Letting feed service settle for 20 seconds...
+[*] Analyzing PID 2303 for 22 seconds...
+    -> command: astra --analyze 'http://0.0.0.0:9999/abertis/pid2303'
+Oct 14 16:51:36: ERROR: [Abertis@11347H20858 PID 2303 #1] Bitrate:0Kbit/s PES:0 CC:0
+Oct 14 16:51:36: INFO: [Abertis@11347H20858 PID 2303 #1] PAT: tsid: 60023
+Oct 14 16:51:36: INFO: [Abertis@11347H20858 PID 2303 #1] PAT: pid: 16 NIT
+Oct 14 16:51:36: INFO: [Abertis@11347H20858 PID 2303 #1] PAT: pid: 7301 PMT pnr: 3301
+Oct 14 16:51:36: INFO: [Abertis@11347H20858 PID 2303 #1] PAT: pid: 7302 PMT pnr: 3302
+Oct 14 16:51:36: INFO: [Abertis@11347H20858 PID 2303 #1] PAT: pid: 7303 PMT pnr: 3303
+Oct 14 16:51:36: INFO: [Abertis@11347H20858 PID 2303 #1] PAT: pid: 7304 PMT pnr: 3304
+Oct 14 16:51:36: INFO: [Abertis@11347H20858 PID 2303 #1] PAT: pid: 7305 PMT pnr: 3305
+Oct 14 16:51:36: INFO: [Abertis@11347H20858 PID 2303 #1] PAT: pid: 7306 PMT pnr: 3306
+Oct 14 16:51:36: INFO: [Abertis@11347H20858 PID 2303 #1] PAT: pid: 8100 PMT pnr: 65534
+Oct 14 16:51:36: INFO: [Abertis@11347H20858 PID 2303 #1] PAT: pid: 7308 PMT pnr: 3308
+Oct 14 16:51:36: INFO: [Abertis@11347H20858 PID 2303 #1] PAT: crc32: 0x9DB04683
+Oct 14 16:51:36: INFO: [Abertis@11347H20858 PID 2303 #1] PMT: pnr: 3303
+Oct 14 16:51:36: INFO: [Abertis@11347H20858 PID 2303 #1] PMT: pid: 8191 PCR
+Oct 14 16:51:36: INFO: [Abertis@11347H20858 PID 2303 #1] PMT: CAS: caid: 0x2600 pid: 8191
+Oct 14 16:51:36: INFO: [Abertis@11347H20858 PID 2303 #1] PMT: Service: HS128.3
+Oct 14 16:51:36: INFO: [Abertis@11347H20858 PID 2303 #1] PMT: Provider: HSA-128
+Oct 14 16:51:36: INFO: [Abertis@11347H20858 PID 2303 #1] DATA: pid: 2303 type: User private (0x90)
+Oct 14 16:51:36: INFO: [Abertis@11347H20858 PID 2303 #1] DATA: descriptor: 0xFA08000C000000000000
+Oct 14 16:51:36: INFO: [Abertis@11347H20858 PID 2303 #1] DATA: descriptor: 0xFB06000D00000000
+Oct 14 16:51:36: INFO: [Abertis@11347H20858 PID 2303 #1] PMT: crc32: 0x18129DB5
+Oct 14 16:51:37: ERROR: [Abertis@11347H20858 PID 2303 #1] Bitrate:3079Kbit/s PES:0 CC:3
+Oct 14 16:51:38: ERROR: [Abertis@11347H20858 PID 2303 #1] Bitrate:3080Kbit/s PES:0 CC:0
+Oct 14 16:51:39: ERROR: [Abertis@11347H20858 PID 2303 #1] Bitrate:3080Kbit/s PES:0 CC:0
+Oct 14 16:51:39: ERROR: [Abertis@11347H20858 PID 2303] Failed to switch to reserve
+    -> Finished PID 2303. Log saved to pid_logs/pid2303.log
+
+==================================================
+Starting Scan for Channel: Abertis@11347H20858 (PID 2304)
+==================================================
+[*] Zapping to feed service: 1:0:1:CE8:EA77:1:CE40000:0:0:0:
+    -> zap command: curl -s 'http://127.0.0.1/web/zap?sRef=1%3A0%3A1%3ACE8%3AEA77%3A1%3ACE40000%3A0%3A0%3A0%3A' | head
+    -> Zap successful. Waiting 6 seconds for tuner lock & stream start...
+[*] Letting feed service settle for 20 seconds...
+[*] Analyzing PID 2304 for 22 seconds...
+    -> command: astra --analyze 'http://0.0.0.0:9999/abertis/pid2304'
+Oct 14 16:52:25: ERROR: [Abertis@11347H20858 PID 2304 #1] Bitrate:0Kbit/s PES:0 CC:0
+Oct 14 16:52:26: ERROR: [Abertis@11347H20858 PID 2304 #1] Bitrate:0Kbit/s PES:0 CC:0
+Oct 14 16:52:27: ERROR: [Abertis@11347H20858 PID 2304 #1] Bitrate:0Kbit/s PES:0 CC:0
+Oct 14 16:52:28: ERROR: [Abertis@11347H20858 PID 2304 #1] Bitrate:0Kbit/s PES:0 CC:0
+Oct 14 16:52:28: ERROR: [Abertis@11347H20858 PID 2304] Failed to switch to reserve
+Oct 14 16:52:34: ERROR: [http_request localhost:8001/1:0:1:CE8:EA77:1:CE40000:0:0:0:] receiving timeout
+Oct 14 16:52:40: ERROR: [Abertis@11347H20858 PID 2304 #1] Bitrate:0Kbit/s PES:0 CC:0
+Oct 14 16:52:41: ERROR: [Abertis@11347H20858 PID 2304 #1] Bitrate:0Kbit/s PES:0 CC:0
+Oct 14 16:52:42: ERROR: [Abertis@11347H20858 PID 2304 #1] Bitrate:0Kbit/s PES:0 CC:0
+Oct 14 16:52:43: ERROR: [Abertis@11347H20858 PID 2304 #1] Bitrate:0Kbit/s PES:0 CC:0
+Oct 14 16:52:43: ERROR: [Abertis@11347H20858 PID 2304] Failed to switch to reserve
+    -> Finished PID 2304. Log saved to pid_logs/pid2304.log
+
+==================================================
+Starting Scan for Channel: Abertis@11347H20858 (PID 2305)
+==================================================
+[*] Zapping to feed service: 1:0:1:CE9:EA77:1:CE40000:0:0:0:
+    -> zap command: curl -s 'http://127.0.0.1/web/zap?sRef=1%3A0%3A1%3ACE9%3AEA77%3A1%3ACE40000%3A0%3A0%3A0%3A' | head
+    -> Zap successful. Waiting 6 seconds for tuner lock & stream start...
+[*] Letting feed service settle for 20 seconds...
+[*] Analyzing PID 2305 for 22 seconds...
+    -> command: astra --analyze 'http://0.0.0.0:9999/abertis/pid2305'
+Oct 14 16:53:14: INFO: [Abertis@11347H20858 PID 2305 #1] PAT: tsid: 60023
+Oct 14 16:53:14: INFO: [Abertis@11347H20858 PID 2305 #1] PAT: pid: 16 NIT
+Oct 14 16:53:14: INFO: [Abertis@11347H20858 PID 2305 #1] PAT: pid: 7301 PMT pnr: 3301
+Oct 14 16:53:14: INFO: [Abertis@11347H20858 PID 2305 #1] PAT: pid: 7302 PMT pnr: 3302
+Oct 14 16:53:14: INFO: [Abertis@11347H20858 PID 2305 #1] PAT: pid: 7303 PMT pnr: 3303
+Oct 14 16:53:14: INFO: [Abertis@11347H20858 PID 2305 #1] PAT: pid: 7304 PMT pnr: 3304
+Oct 14 16:53:14: INFO: [Abertis@11347H20858 PID 2305 #1] PAT: pid: 7305 PMT pnr: 3305
+Oct 14 16:53:14: INFO: [Abertis@11347H20858 PID 2305 #1] PAT: pid: 7306 PMT pnr: 3306
+Oct 14 16:53:14: INFO: [Abertis@11347H20858 PID 2305 #1] PAT: pid: 8100 PMT pnr: 65534
+Oct 14 16:53:14: INFO: [Abertis@11347H20858 PID 2305 #1] PAT: pid: 7308 PMT pnr: 3308
+Oct 14 16:53:14: INFO: [Abertis@11347H20858 PID 2305 #1] PAT: crc32: 0x9DB04683
+Oct 14 16:53:14: ERROR: [Abertis@11347H20858 PID 2305 #1] Bitrate:1539Kbit/s PES:0 CC:0
+Oct 14 16:53:15: INFO: [Abertis@11347H20858 PID 2305 #1] PMT: pnr: 3305
+Oct 14 16:53:15: INFO: [Abertis@11347H20858 PID 2305 #1] PMT: pid: 8191 PCR
+Oct 14 16:53:15: INFO: [Abertis@11347H20858 PID 2305 #1] PMT: CAS: caid: 0x2600 pid: 8191
+Oct 14 16:53:15: INFO: [Abertis@11347H20858 PID 2305 #1] PMT: Service: HS128.5
+Oct 14 16:53:15: INFO: [Abertis@11347H20858 PID 2305 #1] PMT: Provider: HSA-128
+Oct 14 16:53:15: INFO: [Abertis@11347H20858 PID 2305 #1] DATA: pid: 2305 type: User private (0x90)
+Oct 14 16:53:15: INFO: [Abertis@11347H20858 PID 2305 #1] DATA: descriptor: 0xFA08000C000000000000
+Oct 14 16:53:15: INFO: [Abertis@11347H20858 PID 2305 #1] DATA: descriptor: 0xFB06000D00000000
+Oct 14 16:53:15: INFO: [Abertis@11347H20858 PID 2305 #1] PMT: crc32: 0x269A660A
+Oct 14 16:53:15: ERROR: [Abertis@11347H20858 PID 2305 #1] Bitrate:4619Kbit/s PES:0 CC:2
+Oct 14 16:53:16: ERROR: [Abertis@11347H20858 PID 2305 #1] Bitrate:4620Kbit/s PES:0 CC:0
+Oct 14 16:53:17: ERROR: [Abertis@11347H20858 PID 2305 #1] Bitrate:4619Kbit/s PES:0 CC:0
+Oct 14 16:53:17: ERROR: [Abertis@11347H20858 PID 2305] Failed to switch to reserve
+    -> Finished PID 2305. Log saved to pid_logs/pid2305.log
+
+==================================================
+Starting Scan for Channel: Abertis@11347H20858 (PID 2306)
+==================================================
+[*] Zapping to feed service: 1:0:1:CEA:EA77:1:CE40000:0:0:0:
+    -> zap command: curl -s 'http://127.0.0.1/web/zap?sRef=1%3A0%3A1%3ACEA%3AEA77%3A1%3ACE40000%3A0%3A0%3A0%3A' | head
+    -> Zap successful. Waiting 6 seconds for tuner lock & stream start...
+[*] Letting feed service settle for 20 seconds...
+[*] Analyzing PID 2306 for 22 seconds...
+    -> command: astra --analyze 'http://0.0.0.0:9999/abertis/pid2306'
+Oct 14 16:54:04: INFO: [Abertis@11347H20858 PID 2306 #1] PAT: tsid: 60023
+Oct 14 16:54:04: INFO: [Abertis@11347H20858 PID 2306 #1] PAT: pid: 16 NIT
+Oct 14 16:54:04: INFO: [Abertis@11347H20858 PID 2306 #1] PAT: pid: 7301 PMT pnr: 3301
+Oct 14 16:54:04: INFO: [Abertis@11347H20858 PID 2306 #1] PAT: pid: 7302 PMT pnr: 3302
+Oct 14 16:54:04: INFO: [Abertis@11347H20858 PID 2306 #1] PAT: pid: 7303 PMT pnr: 3303
+Oct 14 16:54:04: INFO: [Abertis@11347H20858 PID 2306 #1] PAT: pid: 7304 PMT pnr: 3304
+Oct 14 16:54:04: INFO: [Abertis@11347H20858 PID 2306 #1] PAT: pid: 7305 PMT pnr: 3305
+Oct 14 16:54:04: INFO: [Abertis@11347H20858 PID 2306 #1] PAT: pid: 7306 PMT pnr: 3306
+Oct 14 16:54:04: INFO: [Abertis@11347H20858 PID 2306 #1] PAT: pid: 8100 PMT pnr: 65534
+Oct 14 16:54:04: INFO: [Abertis@11347H20858 PID 2306 #1] PAT: pid: 7308 PMT pnr: 3308
+Oct 14 16:54:04: INFO: [Abertis@11347H20858 PID 2306 #1] PAT: crc32: 0x9DB04683
+Oct 14 16:54:04: ERROR: [Abertis@11347H20858 PID 2306 #1] Bitrate:1539Kbit/s PES:0 CC:0
+Oct 14 16:54:04: INFO: [Abertis@11347H20858 PID 2306 #1] PMT: pnr: 3306
+Oct 14 16:54:04: INFO: [Abertis@11347H20858 PID 2306 #1] PMT: pid: 8191 PCR
+Oct 14 16:54:04: INFO: [Abertis@11347H20858 PID 2306 #1] PMT: CAS: caid: 0x2600 pid: 8191
+Oct 14 16:54:04: INFO: [Abertis@11347H20858 PID 2306 #1] PMT: Service: HS128.6
+Oct 14 16:54:04: INFO: [Abertis@11347H20858 PID 2306 #1] PMT: Provider: HSA-128
+Oct 14 16:54:04: INFO: [Abertis@11347H20858 PID 2306 #1] DATA: pid: 2306 type: User private (0x90)
+Oct 14 16:54:04: INFO: [Abertis@11347H20858 PID 2306 #1] DATA: descriptor: 0xFA08000C000000000000
+Oct 14 16:54:04: INFO: [Abertis@11347H20858 PID 2306 #1] DATA: descriptor: 0xFB06000D00000000
+Oct 14 16:54:04: INFO: [Abertis@11347H20858 PID 2306 #1] PMT: crc32: 0xA5CD0B27
+Oct 14 16:54:05: ERROR: [Abertis@11347H20858 PID 2306 #1] Bitrate:3079Kbit/s PES:0 CC:2
+Oct 14 16:54:06: ERROR: [Abertis@11347H20858 PID 2306 #1] Bitrate:3080Kbit/s PES:0 CC:0
+Oct 14 16:54:07: ERROR: [Abertis@11347H20858 PID 2306 #1] Bitrate:3080Kbit/s PES:0 CC:0
+Oct 14 16:54:07: ERROR: [Abertis@11347H20858 PID 2306] Failed to switch to reserve
+    -> Finished PID 2306. Log saved to pid_logs/pid2306.log
+
+==================================================
+Starting Scan for Channel: Abertis@11347H20858 (PID 2308)
+==================================================
+[*] Zapping to feed service: 1:0:1:CEC:EA77:1:CE40000:0:0:0:
+    -> zap command: curl -s 'http://127.0.0.1/web/zap?sRef=1%3A0%3A1%3ACEC%3AEA77%3A1%3ACE40000%3A0%3A0%3A0%3A' | head
+    -> Zap successful. Waiting 6 seconds for tuner lock & stream start...
+[*] Letting feed service settle for 20 seconds...
+[*] Analyzing PID 2308 for 22 seconds...
+    -> command: astra --analyze 'http://0.0.0.0:9999/abertis/pid2308'
+Oct 14 16:54:53: INFO: [Abertis@11347H20858 PID 2308 #1] PAT: tsid: 60023
+Oct 14 16:54:53: INFO: [Abertis@11347H20858 PID 2308 #1] PAT: pid: 16 NIT
+Oct 14 16:54:53: INFO: [Abertis@11347H20858 PID 2308 #1] PAT: pid: 7301 PMT pnr: 3301
+Oct 14 16:54:53: INFO: [Abertis@11347H20858 PID 2308 #1] PAT: pid: 7302 PMT pnr: 3302
+Oct 14 16:54:53: INFO: [Abertis@11347H20858 PID 2308 #1] PAT: pid: 7303 PMT pnr: 3303
+Oct 14 16:54:53: INFO: [Abertis@11347H20858 PID 2308 #1] PAT: pid: 7304 PMT pnr: 3304
+Oct 14 16:54:53: INFO: [Abertis@11347H20858 PID 2308 #1] PAT: pid: 7305 PMT pnr: 3305
+Oct 14 16:54:53: INFO: [Abertis@11347H20858 PID 2308 #1] PAT: pid: 7306 PMT pnr: 3306
+Oct 14 16:54:53: INFO: [Abertis@11347H20858 PID 2308 #1] PAT: pid: 8100 PMT pnr: 65534
+Oct 14 16:54:53: INFO: [Abertis@11347H20858 PID 2308 #1] PAT: pid: 7308 PMT pnr: 3308
+Oct 14 16:54:53: INFO: [Abertis@11347H20858 PID 2308 #1] PAT: crc32: 0x9DB04683
+Oct 14 16:54:53: INFO: [Abertis@11347H20858 PID 2308 #1] PMT: pnr: 3308
+Oct 14 16:54:53: INFO: [Abertis@11347H20858 PID 2308 #1] PMT: pid: 8191 PCR
+Oct 14 16:54:53: INFO: [Abertis@11347H20858 PID 2308 #1] PMT: CAS: caid: 0x2600 pid: 8191
+Oct 14 16:54:53: INFO: [Abertis@11347H20858 PID 2308 #1] PMT: Service: HS128.8
+Oct 14 16:54:53: INFO: [Abertis@11347H20858 PID 2308 #1] PMT: Provider: HSA-128
+Oct 14 16:54:53: INFO: [Abertis@11347H20858 PID 2308 #1] DATA: pid: 2308 type: User private (0x90)
+Oct 14 16:54:53: INFO: [Abertis@11347H20858 PID 2308 #1] DATA: descriptor: 0xFA08000C000000000000
+Oct 14 16:54:53: INFO: [Abertis@11347H20858 PID 2308 #1] DATA: descriptor: 0xFB06000D00000000
+Oct 14 16:54:53: INFO: [Abertis@11347H20858 PID 2308 #1] PMT: crc32: 0x1B5C1A34
+Oct 14 16:54:53: ERROR: [Abertis@11347H20858 PID 2308 #1] Bitrate:10779Kbit/s PES:0 CC:0
+Oct 14 16:54:54: ERROR: [Abertis@11347H20858 PID 2308 #1] Bitrate:20021Kbit/s PES:0 CC:0
+Oct 14 16:54:55: ERROR: [Abertis@11347H20858 PID 2308 #1] Bitrate:20021Kbit/s PES:0 CC:0
+Oct 14 16:54:56: ERROR: [Abertis@11347H20858 PID 2308 #1] Bitrate:21560Kbit/s PES:0 CC:0
+Oct 14 16:54:56: ERROR: [Abertis@11347H20858 PID 2308] Failed to switch to reserve
+    -> Finished PID 2308. Log saved to pid_logs/pid2308.log
+
+==================================================
+Starting Scan for Channel: Abertis@11382H30000 (PID 2520)
+==================================================
+[*] Zapping to feed service: 1:0:1:DC0:EA79:1:CE40000:0:0:0:
+    -> zap command: curl -s 'http://127.0.0.1/web/zap?sRef=1%3A0%3A1%3ADC0%3AEA79%3A1%3ACE40000%3A0%3A0%3A0%3A' | head
+    -> Zap successful. Waiting 6 seconds for tuner lock & stream start...
+[*] Letting feed service settle for 20 seconds...
+[*] Analyzing PID 2520 for 22 seconds...
+    -> command: astra --analyze 'http://0.0.0.0:9999/abertis/pid2520'
+Oct 14 16:55:43: INFO: [Abertis@11382H30000 PID 2520 #1] PAT: tsid: 60025
+Oct 14 16:55:43: INFO: [Abertis@11382H30000 PID 2520 #1] PAT: pid: 16 NIT
+Oct 14 16:55:43: INFO: [Abertis@11382H30000 PID 2520 #1] PAT: pid: 7520 PMT pnr: 3520
+Oct 14 16:55:43: INFO: [Abertis@11382H30000 PID 2520 #1] PAT: pid: 7521 PMT pnr: 3521
+Oct 14 16:55:43: INFO: [Abertis@11382H30000 PID 2520 #1] PAT: pid: 7522 PMT pnr: 3522
+Oct 14 16:55:43: INFO: [Abertis@11382H30000 PID 2520 #1] PAT: pid: 7523 PMT pnr: 3523
+Oct 14 16:55:43: INFO: [Abertis@11382H30000 PID 2520 #1] PAT: pid: 7524 PMT pnr: 3524
+Oct 14 16:55:43: INFO: [Abertis@11382H30000 PID 2520 #1] PAT: pid: 7531 PMT pnr: 3531
+Oct 14 16:55:43: INFO: [Abertis@11382H30000 PID 2520 #1] PAT: pid: 7532 PMT pnr: 3532
+Oct 14 16:55:43: INFO: [Abertis@11382H30000 PID 2520 #1] PAT: pid: 7533 PMT pnr: 3533
+Oct 14 16:55:43: INFO: [Abertis@11382H30000 PID 2520 #1] PAT: pid: 7534 PMT pnr: 3534
+Oct 14 16:55:43: INFO: [Abertis@11382H30000 PID 2520 #1] PAT: pid: 8100 PMT pnr: 65534
+Oct 14 16:55:43: INFO: [Abertis@11382H30000 PID 2520 #1] PAT: crc32: 0xEF6CD9FB
+Oct 14 16:55:43: INFO: [Abertis@11382H30000 PID 2520 #1] PMT: pnr: 3520
+Oct 14 16:55:43: INFO: [Abertis@11382H30000 PID 2520 #1] PMT: pid: 8191 PCR
+Oct 14 16:55:43: INFO: [Abertis@11382H30000 PID 2520 #1] PMT: CAS: caid: 0x2600 pid: 8191
+Oct 14 16:55:43: INFO: [Abertis@11382H30000 PID 2520 #1] PMT: Service: HS129.20
+Oct 14 16:55:43: INFO: [Abertis@11382H30000 PID 2520 #1] PMT: Provider: HSA-129
+Oct 14 16:55:43: INFO: [Abertis@11382H30000 PID 2520 #1] DATA: pid: 2520 type: User private (0x90)
+Oct 14 16:55:43: INFO: [Abertis@11382H30000 PID 2520 #1] DATA: descriptor: 0xFB06000E00000000
+Oct 14 16:55:43: INFO: [Abertis@11382H30000 PID 2520 #1] DATA: descriptor: 0xFA08000E000000004000
+Oct 14 16:55:43: INFO: [Abertis@11382H30000 PID 2520 #1] PMT: crc32: 0x17369075
+Oct 14 16:55:43: ERROR: [Abertis@11382H30000 PID 2520 #1] Bitrate:4618Kbit/s PES:0 CC:0
+Oct 14 16:55:44: ERROR: [Abertis@11382H30000 PID 2520 #1] Bitrate:10780Kbit/s PES:0 CC:0
+Oct 14 16:55:45: ERROR: [Abertis@11382H30000 PID 2520 #1] Bitrate:10780Kbit/s PES:0 CC:0
+Oct 14 16:55:46: ERROR: [Abertis@11382H30000 PID 2520 #1] Bitrate:10780Kbit/s PES:0 CC:0
+Oct 14 16:55:46: ERROR: [Abertis@11382H30000 PID 2520] Failed to switch to reserve
+    -> Finished PID 2520. Log saved to pid_logs/pid2520.log
+
+==================================================
+Starting Scan for Channel: Abertis@11382H30000 (PID 2521)
+==================================================
+[*] Zapping to feed service: 1:0:1:DC1:EA79:1:CE40000:0:0:0:
+    -> zap command: curl -s 'http://127.0.0.1/web/zap?sRef=1%3A0%3A1%3ADC1%3AEA79%3A1%3ACE40000%3A0%3A0%3A0%3A' | head
+    -> Zap successful. Waiting 6 seconds for tuner lock & stream start...
+[*] Letting feed service settle for 20 seconds...
+[*] Analyzing PID 2521 for 22 seconds...
+    -> command: astra --analyze 'http://0.0.0.0:9999/abertis/pid2521'
+Oct 14 16:56:32: INFO: [Abertis@11382H30000 PID 2521 #1] PAT: tsid: 60025
+Oct 14 16:56:32: INFO: [Abertis@11382H30000 PID 2521 #1] PAT: pid: 16 NIT
+Oct 14 16:56:32: INFO: [Abertis@11382H30000 PID 2521 #1] PAT: pid: 7520 PMT pnr: 3520
+Oct 14 16:56:32: INFO: [Abertis@11382H30000 PID 2521 #1] PAT: pid: 7521 PMT pnr: 3521
+Oct 14 16:56:32: INFO: [Abertis@11382H30000 PID 2521 #1] PAT: pid: 7522 PMT pnr: 3522
+Oct 14 16:56:32: INFO: [Abertis@11382H30000 PID 2521 #1] PAT: pid: 7523 PMT pnr: 3523
+Oct 14 16:56:32: INFO: [Abertis@11382H30000 PID 2521 #1] PAT: pid: 7524 PMT pnr: 3524
+Oct 14 16:56:32: INFO: [Abertis@11382H30000 PID 2521 #1] PAT: pid: 7531 PMT pnr: 3531
+Oct 14 16:56:32: INFO: [Abertis@11382H30000 PID 2521 #1] PAT: pid: 7532 PMT pnr: 3532
+Oct 14 16:56:32: INFO: [Abertis@11382H30000 PID 2521 #1] PAT: pid: 7533 PMT pnr: 3533
+Oct 14 16:56:32: INFO: [Abertis@11382H30000 PID 2521 #1] PAT: pid: 7534 PMT pnr: 3534
+Oct 14 16:56:32: INFO: [Abertis@11382H30000 PID 2521 #1] PAT: pid: 8100 PMT pnr: 65534
+Oct 14 16:56:32: INFO: [Abertis@11382H30000 PID 2521 #1] PAT: crc32: 0xEF6CD9FB
+Oct 14 16:56:32: INFO: [Abertis@11382H30000 PID 2521 #1] PMT: pnr: 3521
+Oct 14 16:56:32: INFO: [Abertis@11382H30000 PID 2521 #1] PMT: pid: 8191 PCR
+Oct 14 16:56:32: INFO: [Abertis@11382H30000 PID 2521 #1] PMT: CAS: caid: 0x2600 pid: 8191
+Oct 14 16:56:32: INFO: [Abertis@11382H30000 PID 2521 #1] PMT: Service: HS129.21
+Oct 14 16:56:32: INFO: [Abertis@11382H30000 PID 2521 #1] PMT: Provider: HSA-129
+Oct 14 16:56:32: INFO: [Abertis@11382H30000 PID 2521 #1] DATA: pid: 2521 type: User private (0x90)
+Oct 14 16:56:32: INFO: [Abertis@11382H30000 PID 2521 #1] DATA: descriptor: 0xFB06000E00000000
+Oct 14 16:56:32: INFO: [Abertis@11382H30000 PID 2521 #1] DATA: descriptor: 0xFA08000E000000002000
+Oct 14 16:56:32: INFO: [Abertis@11382H30000 PID 2521 #1] PMT: crc32: 0x3695D426
+Oct 14 16:56:32: ERROR: [Abertis@11382H30000 PID 2521 #1] Bitrate:6158Kbit/s PES:0 CC:0
+Oct 14 16:56:33: ERROR: [Abertis@11382H30000 PID 2521 #1] Bitrate:10780Kbit/s PES:0 CC:0
+Oct 14 16:56:34: ERROR: [Abertis@11382H30000 PID 2521 #1] Bitrate:10780Kbit/s PES:0 CC:0
+Oct 14 16:56:35: ERROR: [Abertis@11382H30000 PID 2521 #1] Bitrate:9240Kbit/s PES:0 CC:0
+Oct 14 16:56:35: ERROR: [Abertis@11382H30000 PID 2521] Failed to switch to reserve
+    -> Finished PID 2521. Log saved to pid_logs/pid2521.log
+
+==================================================
+Starting Scan for Channel: Abertis@11382H30000 (PID 2522)
+==================================================
+[*] Zapping to feed service: 1:0:1:DC2:EA79:1:CE40000:0:0:0:
+    -> zap command: curl -s 'http://127.0.0.1/web/zap?sRef=1%3A0%3A1%3ADC2%3AEA79%3A1%3ACE40000%3A0%3A0%3A0%3A' | head
+    -> Zap successful. Waiting 6 seconds for tuner lock & stream start...
+[*] Letting feed service settle for 20 seconds...
+[*] Analyzing PID 2522 for 22 seconds...
+    -> command: astra --analyze 'http://0.0.0.0:9999/abertis/pid2522'
+Oct 14 16:57:22: INFO: [Abertis@11382H30000 PID 2522 #1] PAT: tsid: 60025
+Oct 14 16:57:22: INFO: [Abertis@11382H30000 PID 2522 #1] PAT: pid: 16 NIT
+Oct 14 16:57:22: INFO: [Abertis@11382H30000 PID 2522 #1] PAT: pid: 7520 PMT pnr: 3520
+Oct 14 16:57:22: INFO: [Abertis@11382H30000 PID 2522 #1] PAT: pid: 7521 PMT pnr: 3521
+Oct 14 16:57:22: INFO: [Abertis@11382H30000 PID 2522 #1] PAT: pid: 7522 PMT pnr: 3522
+Oct 14 16:57:22: INFO: [Abertis@11382H30000 PID 2522 #1] PAT: pid: 7523 PMT pnr: 3523
+Oct 14 16:57:22: INFO: [Abertis@11382H30000 PID 2522 #1] PAT: pid: 7524 PMT pnr: 3524
+Oct 14 16:57:22: INFO: [Abertis@11382H30000 PID 2522 #1] PAT: pid: 7531 PMT pnr: 3531
+Oct 14 16:57:22: INFO: [Abertis@11382H30000 PID 2522 #1] PAT: pid: 7532 PMT pnr: 3532
+Oct 14 16:57:22: INFO: [Abertis@11382H30000 PID 2522 #1] PAT: pid: 7533 PMT pnr: 3533
+Oct 14 16:57:22: INFO: [Abertis@11382H30000 PID 2522 #1] PAT: pid: 7534 PMT pnr: 3534
+Oct 14 16:57:22: INFO: [Abertis@11382H30000 PID 2522 #1] PAT: pid: 8100 PMT pnr: 65534
+Oct 14 16:57:22: INFO: [Abertis@11382H30000 PID 2522 #1] PAT: crc32: 0xEF6CD9FB
+Oct 14 16:57:22: ERROR: [Abertis@11382H30000 PID 2522 #1] Bitrate:3079Kbit/s PES:0 CC:0
+Oct 14 16:57:22: INFO: [Abertis@11382H30000 PID 2522 #1] PMT: pnr: 3522
+Oct 14 16:57:22: INFO: [Abertis@11382H30000 PID 2522 #1] PMT: pid: 8191 PCR
+Oct 14 16:57:22: INFO: [Abertis@11382H30000 PID 2522 #1] PMT: CAS: caid: 0x2600 pid: 8191
+Oct 14 16:57:22: INFO: [Abertis@11382H30000 PID 2522 #1] PMT: Service: HS129.22
+Oct 14 16:57:22: INFO: [Abertis@11382H30000 PID 2522 #1] PMT: Provider: HSA-129
+Oct 14 16:57:22: INFO: [Abertis@11382H30000 PID 2522 #1] DATA: pid: 2522 type: User private (0x90)
+Oct 14 16:57:22: INFO: [Abertis@11382H30000 PID 2522 #1] DATA: descriptor: 0xFB06000E00000000
+Oct 14 16:57:22: INFO: [Abertis@11382H30000 PID 2522 #1] DATA: descriptor: 0xFA08000E000000002000
+Oct 14 16:57:22: INFO: [Abertis@11382H30000 PID 2522 #1] PMT: crc32: 0x9306F55D
+Oct 14 16:57:23: ERROR: [Abertis@11382H30000 PID 2522 #1] Bitrate:9239Kbit/s PES:0 CC:2
+Oct 14 16:57:24: ERROR: [Abertis@11382H30000 PID 2522 #1] Bitrate:10780Kbit/s PES:0 CC:0
+Oct 14 16:57:25: ERROR: [Abertis@11382H30000 PID 2522 #1] Bitrate:10548Kbit/s PES:0 CC:0
+Oct 14 16:57:25: ERROR: [Abertis@11382H30000 PID 2522] Failed to switch to reserve
+    -> Finished PID 2522. Log saved to pid_logs/pid2522.log
+
+==================================================
+Starting Scan for Channel: Abertis@11382H30000 (PID 2523)
+==================================================
+[*] Zapping to feed service: 1:0:1:DC3:EA79:1:CE40000:0:0:0:
+    -> zap command: curl -s 'http://127.0.0.1/web/zap?sRef=1%3A0%3A1%3ADC3%3AEA79%3A1%3ACE40000%3A0%3A0%3A0%3A' | head
+    -> Zap successful. Waiting 6 seconds for tuner lock & stream start...
+[*] Letting feed service settle for 20 seconds...
+[*] Analyzing PID 2523 for 22 seconds...
+    -> command: astra --analyze 'http://0.0.0.0:9999/abertis/pid2523'
+Oct 14 16:58:11: INFO: [Abertis@11382H30000 PID 2523 #1] PAT: tsid: 60025
+Oct 14 16:58:11: INFO: [Abertis@11382H30000 PID 2523 #1] PAT: pid: 16 NIT
+Oct 14 16:58:11: INFO: [Abertis@11382H30000 PID 2523 #1] PAT: pid: 7520 PMT pnr: 3520
+Oct 14 16:58:11: INFO: [Abertis@11382H30000 PID 2523 #1] PAT: pid: 7521 PMT pnr: 3521
+Oct 14 16:58:11: INFO: [Abertis@11382H30000 PID 2523 #1] PAT: pid: 7522 PMT pnr: 3522
+Oct 14 16:58:11: INFO: [Abertis@11382H30000 PID 2523 #1] PAT: pid: 7523 PMT pnr: 3523
+Oct 14 16:58:11: INFO: [Abertis@11382H30000 PID 2523 #1] PAT: pid: 7524 PMT pnr: 3524
+Oct 14 16:58:11: INFO: [Abertis@11382H30000 PID 2523 #1] PAT: pid: 7531 PMT pnr: 3531
+Oct 14 16:58:11: INFO: [Abertis@11382H30000 PID 2523 #1] PAT: pid: 7532 PMT pnr: 3532
+Oct 14 16:58:11: INFO: [Abertis@11382H30000 PID 2523 #1] PAT: pid: 7533 PMT pnr: 3533
+Oct 14 16:58:11: INFO: [Abertis@11382H30000 PID 2523 #1] PAT: pid: 7534 PMT pnr: 3534
+Oct 14 16:58:11: INFO: [Abertis@11382H30000 PID 2523 #1] PAT: pid: 8100 PMT pnr: 65534
+Oct 14 16:58:11: INFO: [Abertis@11382H30000 PID 2523 #1] PAT: crc32: 0xEF6CD9FB
+Oct 14 16:58:11: ERROR: [Abertis@11382H30000 PID 2523 #1] Bitrate:3079Kbit/s PES:0 CC:0
+Oct 14 16:58:12: INFO: [Abertis@11382H30000 PID 2523 #1] PMT: pnr: 3523
+Oct 14 16:58:12: INFO: [Abertis@11382H30000 PID 2523 #1] PMT: pid: 8191 PCR
+Oct 14 16:58:12: INFO: [Abertis@11382H30000 PID 2523 #1] PMT: CAS: caid: 0x2600 pid: 8191
+Oct 14 16:58:12: INFO: [Abertis@11382H30000 PID 2523 #1] PMT: Service: HS129.23
+Oct 14 16:58:12: INFO: [Abertis@11382H30000 PID 2523 #1] PMT: Provider: HSA-129
+Oct 14 16:58:12: INFO: [Abertis@11382H30000 PID 2523 #1] DATA: pid: 2523 type: User private (0x90)
+Oct 14 16:58:12: INFO: [Abertis@11382H30000 PID 2523 #1] DATA: descriptor: 0xFB06000E00000000
+Oct 14 16:58:12: INFO: [Abertis@11382H30000 PID 2523 #1] DATA: descriptor: 0xFA08000E000000002000
+Oct 14 16:58:12: INFO: [Abertis@11382H30000 PID 2523 #1] PMT: crc32: 0xD340EB64
+Oct 14 16:58:12: ERROR: [Abertis@11382H30000 PID 2523 #1] Bitrate:10779Kbit/s PES:0 CC:2
+Oct 14 16:58:13: ERROR: [Abertis@11382H30000 PID 2523 #1] Bitrate:9240Kbit/s PES:0 CC:0
+Oct 14 16:58:14: ERROR: [Abertis@11382H30000 PID 2523 #1] Bitrate:10780Kbit/s PES:0 CC:0
+Oct 14 16:58:14: ERROR: [Abertis@11382H30000 PID 2523] Failed to switch to reserve
+    -> Finished PID 2523. Log saved to pid_logs/pid2523.log
+
+==================================================
+Starting Scan for Channel: Abertis@11382H30000 (PID 2524)
+==================================================
+[*] Zapping to feed service: 1:0:1:DC4:EA79:1:CE40000:0:0:0:
+    -> zap command: curl -s 'http://127.0.0.1/web/zap?sRef=1%3A0%3A1%3ADC4%3AEA79%3A1%3ACE40000%3A0%3A0%3A0%3A' | head
+    -> Zap successful. Waiting 6 seconds for tuner lock & stream start...
+[*] Letting feed service settle for 20 seconds...
+[*] Analyzing PID 2524 for 22 seconds...
+    -> command: astra --analyze 'http://0.0.0.0:9999/abertis/pid2524'
+Oct 14 16:59:01: INFO: [Abertis@11382H30000 PID 2524 #1] PAT: tsid: 60025
+Oct 14 16:59:01: INFO: [Abertis@11382H30000 PID 2524 #1] PAT: pid: 16 NIT
+Oct 14 16:59:01: INFO: [Abertis@11382H30000 PID 2524 #1] PAT: pid: 7520 PMT pnr: 3520
+Oct 14 16:59:01: INFO: [Abertis@11382H30000 PID 2524 #1] PAT: pid: 7521 PMT pnr: 3521
+Oct 14 16:59:01: INFO: [Abertis@11382H30000 PID 2524 #1] PAT: pid: 7522 PMT pnr: 3522
+Oct 14 16:59:01: INFO: [Abertis@11382H30000 PID 2524 #1] PAT: pid: 7523 PMT pnr: 3523
+Oct 14 16:59:01: INFO: [Abertis@11382H30000 PID 2524 #1] PAT: pid: 7524 PMT pnr: 3524
+Oct 14 16:59:01: INFO: [Abertis@11382H30000 PID 2524 #1] PAT: pid: 7531 PMT pnr: 3531
+Oct 14 16:59:01: INFO: [Abertis@11382H30000 PID 2524 #1] PAT: pid: 7532 PMT pnr: 3532
+Oct 14 16:59:01: INFO: [Abertis@11382H30000 PID 2524 #1] PAT: pid: 7533 PMT pnr: 3533
+Oct 14 16:59:01: INFO: [Abertis@11382H30000 PID 2524 #1] PAT: pid: 7534 PMT pnr: 3534
+Oct 14 16:59:01: INFO: [Abertis@11382H30000 PID 2524 #1] PAT: pid: 8100 PMT pnr: 65534
+Oct 14 16:59:01: INFO: [Abertis@11382H30000 PID 2524 #1] PAT: crc32: 0xEF6CD9FB
+Oct 14 16:59:01: ERROR: [Abertis@11382H30000 PID 2524 #1] Bitrate:4619Kbit/s PES:0 CC:0
+Oct 14 16:59:01: INFO: [Abertis@11382H30000 PID 2524 #1] PMT: pnr: 3524
+Oct 14 16:59:01: INFO: [Abertis@11382H30000 PID 2524 #1] PMT: pid: 8191 PCR
+Oct 14 16:59:01: INFO: [Abertis@11382H30000 PID 2524 #1] PMT: CAS: caid: 0x2600 pid: 8191
+Oct 14 16:59:01: INFO: [Abertis@11382H30000 PID 2524 #1] PMT: Service: HS129.24
+Oct 14 16:59:01: INFO: [Abertis@11382H30000 PID 2524 #1] PMT: Provider: HSA-129
+Oct 14 16:59:01: INFO: [Abertis@11382H30000 PID 2524 #1] DATA: pid: 2524 type: User private (0x90)
+Oct 14 16:59:01: INFO: [Abertis@11382H30000 PID 2524 #1] DATA: descriptor: 0xFB06000E00000000
+Oct 14 16:59:01: INFO: [Abertis@11382H30000 PID 2524 #1] DATA: descriptor: 0xFA08000E000000002000
+Oct 14 16:59:01: INFO: [Abertis@11382H30000 PID 2524 #1] PMT: crc32: 0x1653AC7C
+Oct 14 16:59:02: ERROR: [Abertis@11382H30000 PID 2524 #1] Bitrate:10779Kbit/s PES:0 CC:2
+Oct 14 16:59:03: ERROR: [Abertis@11382H30000 PID 2524 #1] Bitrate:9240Kbit/s PES:0 CC:0
+Oct 14 16:59:04: ERROR: [Abertis@11382H30000 PID 2524 #1] Bitrate:10780Kbit/s PES:0 CC:0
+Oct 14 16:59:04: ERROR: [Abertis@11382H30000 PID 2524] Failed to switch to reserve
+    -> Finished PID 2524. Log saved to pid_logs/pid2524.log
+
+==================================================
+Starting Scan for Channel: Abertis@11382H30000 (PID 2531)
+==================================================
+[*] Zapping to feed service: 1:0:1:DCB:EA79:1:CE40000:0:0:0:
+    -> zap command: curl -s 'http://127.0.0.1/web/zap?sRef=1%3A0%3A1%3ADCB%3AEA79%3A1%3ACE40000%3A0%3A0%3A0%3A' | head
+    -> Zap successful. Waiting 6 seconds for tuner lock & stream start...
+[*] Letting feed service settle for 20 seconds...
+[*] Analyzing PID 2531 for 22 seconds...
+    -> command: astra --analyze 'http://0.0.0.0:9999/abertis/pid2531'
+Oct 14 16:59:50: ERROR: [Abertis@11382H30000 PID 2531 #1] Bitrate:0Kbit/s PES:0 CC:0
+Oct 14 16:59:51: ERROR: [Abertis@11382H30000 PID 2531 #1] Bitrate:0Kbit/s PES:0 CC:0
+Oct 14 16:59:52: ERROR: [Abertis@11382H30000 PID 2531 #1] Bitrate:0Kbit/s PES:0 CC:0
+Oct 14 16:59:53: ERROR: [Abertis@11382H30000 PID 2531 #1] Bitrate:0Kbit/s PES:0 CC:0
+Oct 14 16:59:53: ERROR: [Abertis@11382H30000 PID 2531] Failed to switch to reserve
+Oct 14 16:59:56: INFO: [Abertis@11382H30000 PID 2531 #1] PAT: tsid: 60025
+Oct 14 16:59:56: INFO: [Abertis@11382H30000 PID 2531 #1] PAT: pid: 16 NIT
+Oct 14 16:59:56: INFO: [Abertis@11382H30000 PID 2531 #1] PAT: pid: 7520 PMT pnr: 3520
+Oct 14 16:59:56: INFO: [Abertis@11382H30000 PID 2531 #1] PAT: pid: 7521 PMT pnr: 3521
+Oct 14 16:59:56: INFO: [Abertis@11382H30000 PID 2531 #1] PAT: pid: 7522 PMT pnr: 3522
+Oct 14 16:59:56: INFO: [Abertis@11382H30000 PID 2531 #1] PAT: pid: 7523 PMT pnr: 3523
+Oct 14 16:59:56: INFO: [Abertis@11382H30000 PID 2531 #1] PAT: pid: 7524 PMT pnr: 3524
+Oct 14 16:59:56: INFO: [Abertis@11382H30000 PID 2531 #1] PAT: pid: 7531 PMT pnr: 3531
+Oct 14 16:59:56: INFO: [Abertis@11382H30000 PID 2531 #1] PAT: pid: 7532 PMT pnr: 3532
+Oct 14 16:59:56: INFO: [Abertis@11382H30000 PID 2531 #1] PAT: pid: 7533 PMT pnr: 3533
+Oct 14 16:59:56: INFO: [Abertis@11382H30000 PID 2531 #1] PAT: pid: 7534 PMT pnr: 3534
+Oct 14 16:59:56: INFO: [Abertis@11382H30000 PID 2531 #1] PAT: pid: 8100 PMT pnr: 65534
+Oct 14 16:59:56: INFO: [Abertis@11382H30000 PID 2531 #1] PAT: crc32: 0xEF6CD9FB
+Oct 14 16:59:56: INFO: [Abertis@11382H30000 PID 2531 #1] PMT: pnr: 3531
+Oct 14 16:59:56: INFO: [Abertis@11382H30000 PID 2531 #1] PMT: pid: 8191 PCR
+Oct 14 16:59:56: INFO: [Abertis@11382H30000 PID 2531 #1] PMT: CAS: caid: 0x2600 pid: 8191
+Oct 14 16:59:56: INFO: [Abertis@11382H30000 PID 2531 #1] PMT: Service: HS129.31
+Oct 14 16:59:56: INFO: [Abertis@11382H30000 PID 2531 #1] PMT: Provider: HSA-129
+Oct 14 16:59:56: INFO: [Abertis@11382H30000 PID 2531 #1] DATA: pid: 2531 type: User private (0x90)
+Oct 14 16:59:56: INFO: [Abertis@11382H30000 PID 2531 #1] DATA: descriptor: 0xFA0C00000000000080020DC00DC1
+Oct 14 16:59:56: INFO: [Abertis@11382H30000 PID 2531 #1] PMT: crc32: 0x796FD112
+Oct 14 17:00:05: ERROR: [Abertis@11382H30000 PID 2531 #1] Bitrate:0Kbit/s PES:0 CC:0
+Oct 14 17:00:06: ERROR: [Abertis@11382H30000 PID 2531 #1] Bitrate:0Kbit/s PES:0 CC:0
+Oct 14 17:00:07: ERROR: [Abertis@11382H30000 PID 2531 #1] Bitrate:0Kbit/s PES:0 CC:0
+Oct 14 17:00:08: ERROR: [Abertis@11382H30000 PID 2531 #1] Bitrate:0Kbit/s PES:0 CC:0
+Oct 14 17:00:08: ERROR: [Abertis@11382H30000 PID 2531] Failed to switch to reserve
+Oct 14 17:00:11: INFO: [Abertis@11382H30000 PID 2531 #1] PAT: tsid: 60025
+Oct 14 17:00:11: INFO: [Abertis@11382H30000 PID 2531 #1] PAT: pid: 16 NIT
+Oct 14 17:00:11: INFO: [Abertis@11382H30000 PID 2531 #1] PAT: pid: 7520 PMT pnr: 3520
+Oct 14 17:00:11: INFO: [Abertis@11382H30000 PID 2531 #1] PAT: pid: 7521 PMT pnr: 3521
+Oct 14 17:00:11: INFO: [Abertis@11382H30000 PID 2531 #1] PAT: pid: 7522 PMT pnr: 3522
+Oct 14 17:00:11: INFO: [Abertis@11382H30000 PID 2531 #1] PAT: pid: 7523 PMT pnr: 3523
+Oct 14 17:00:11: INFO: [Abertis@11382H30000 PID 2531 #1] PAT: pid: 7524 PMT pnr: 3524
+Oct 14 17:00:11: INFO: [Abertis@11382H30000 PID 2531 #1] PAT: pid: 7531 PMT pnr: 3531
+Oct 14 17:00:11: INFO: [Abertis@11382H30000 PID 2531 #1] PAT: pid: 7532 PMT pnr: 3532
+Oct 14 17:00:11: INFO: [Abertis@11382H30000 PID 2531 #1] PAT: pid: 7533 PMT pnr: 3533
+Oct 14 17:00:11: INFO: [Abertis@11382H30000 PID 2531 #1] PAT: pid: 7534 PMT pnr: 3534
+Oct 14 17:00:11: INFO: [Abertis@11382H30000 PID 2531 #1] PAT: pid: 8100 PMT pnr: 65534
+Oct 14 17:00:11: INFO: [Abertis@11382H30000 PID 2531 #1] PAT: crc32: 0xEF6CD9FB
+Oct 14 17:00:11: INFO: [Abertis@11382H30000 PID 2531 #1] PMT: pnr: 3531
+Oct 14 17:00:11: INFO: [Abertis@11382H30000 PID 2531 #1] PMT: pid: 8191 PCR
+Oct 14 17:00:11: INFO: [Abertis@11382H30000 PID 2531 #1] PMT: CAS: caid: 0x2600 pid: 8191
+Oct 14 17:00:11: INFO: [Abertis@11382H30000 PID 2531 #1] PMT: Service: HS129.31
+Oct 14 17:00:11: INFO: [Abertis@11382H30000 PID 2531 #1] PMT: Provider: HSA-129
+Oct 14 17:00:11: INFO: [Abertis@11382H30000 PID 2531 #1] DATA: pid: 2531 type: User private (0x90)
+Oct 14 17:00:11: INFO: [Abertis@11382H30000 PID 2531 #1] DATA: descriptor: 0xFA0C00000000000080020DC00DC1
+Oct 14 17:00:11: INFO: [Abertis@11382H30000 PID 2531 #1] PMT: crc32: 0x796FD112
+    -> Finished PID 2531. Log saved to pid_logs/pid2531.log
+
+==================================================
+Starting Scan for Channel: Abertis@11382H30000 (PID 2532)
+==================================================
+[*] Zapping to feed service: 1:0:1:DCC:EA79:1:CE40000:0:0:0:
+    -> zap command: curl -s 'http://127.0.0.1/web/zap?sRef=1%3A0%3A1%3ADCC%3AEA79%3A1%3ACE40000%3A0%3A0%3A0%3A' | head
+    -> Zap successful. Waiting 6 seconds for tuner lock & stream start...
+[*] Letting feed service settle for 20 seconds...
+[*] Analyzing PID 2532 for 22 seconds...
+    -> command: astra --analyze 'http://0.0.0.0:9999/abertis/pid2532'
+Oct 14 17:00:40: ERROR: [Abertis@11382H30000 PID 2532 #1] Bitrate:0Kbit/s PES:0 CC:0
+Oct 14 17:00:41: ERROR: [Abertis@11382H30000 PID 2532 #1] Bitrate:0Kbit/s PES:0 CC:0
+Oct 14 17:00:42: ERROR: [Abertis@11382H30000 PID 2532 #1] Bitrate:0Kbit/s PES:0 CC:0
+Oct 14 17:00:43: ERROR: [Abertis@11382H30000 PID 2532 #1] Bitrate:0Kbit/s PES:0 CC:0
+Oct 14 17:00:43: ERROR: [Abertis@11382H30000 PID 2532] Failed to switch to reserve
+Oct 14 17:00:46: INFO: [Abertis@11382H30000 PID 2532 #1] PAT: tsid: 60025
+Oct 14 17:00:46: INFO: [Abertis@11382H30000 PID 2532 #1] PAT: pid: 16 NIT
+Oct 14 17:00:46: INFO: [Abertis@11382H30000 PID 2532 #1] PAT: pid: 7520 PMT pnr: 3520
+Oct 14 17:00:46: INFO: [Abertis@11382H30000 PID 2532 #1] PAT: pid: 7521 PMT pnr: 3521
+Oct 14 17:00:46: INFO: [Abertis@11382H30000 PID 2532 #1] PAT: pid: 7522 PMT pnr: 3522
+Oct 14 17:00:46: INFO: [Abertis@11382H30000 PID 2532 #1] PAT: pid: 7523 PMT pnr: 3523
+Oct 14 17:00:46: INFO: [Abertis@11382H30000 PID 2532 #1] PAT: pid: 7524 PMT pnr: 3524
+Oct 14 17:00:46: INFO: [Abertis@11382H30000 PID 2532 #1] PAT: pid: 7531 PMT pnr: 3531
+Oct 14 17:00:46: INFO: [Abertis@11382H30000 PID 2532 #1] PAT: pid: 7532 PMT pnr: 3532
+Oct 14 17:00:46: INFO: [Abertis@11382H30000 PID 2532 #1] PAT: pid: 7533 PMT pnr: 3533
+Oct 14 17:00:46: INFO: [Abertis@11382H30000 PID 2532 #1] PAT: pid: 7534 PMT pnr: 3534
+Oct 14 17:00:46: INFO: [Abertis@11382H30000 PID 2532 #1] PAT: pid: 8100 PMT pnr: 65534
+Oct 14 17:00:46: INFO: [Abertis@11382H30000 PID 2532 #1] PAT: crc32: 0xEF6CD9FB
+Oct 14 17:00:46: INFO: [Abertis@11382H30000 PID 2532 #1] PMT: pnr: 3532
+Oct 14 17:00:46: INFO: [Abertis@11382H30000 PID 2532 #1] PMT: pid: 8191 PCR
+Oct 14 17:00:46: INFO: [Abertis@11382H30000 PID 2532 #1] PMT: CAS: caid: 0x2600 pid: 8191
+Oct 14 17:00:46: INFO: [Abertis@11382H30000 PID 2532 #1] PMT: Service: HS129.32
+Oct 14 17:00:46: INFO: [Abertis@11382H30000 PID 2532 #1] PMT: Provider: HSA-129
+Oct 14 17:00:46: INFO: [Abertis@11382H30000 PID 2532 #1] DATA: pid: 2532 type: User private (0x90)
+Oct 14 17:00:46: INFO: [Abertis@11382H30000 PID 2532 #1] DATA: descriptor: 0xFA0C00000000000080020DC00DC2
+Oct 14 17:00:46: INFO: [Abertis@11382H30000 PID 2532 #1] PMT: crc32: 0x74EF8954
+Oct 14 17:00:55: ERROR: [Abertis@11382H30000 PID 2532 #1] Bitrate:0Kbit/s PES:0 CC:0
+Oct 14 17:00:56: ERROR: [Abertis@11382H30000 PID 2532 #1] Bitrate:0Kbit/s PES:0 CC:0
+Oct 14 17:00:57: ERROR: [Abertis@11382H30000 PID 2532 #1] Bitrate:0Kbit/s PES:0 CC:0
+Oct 14 17:00:58: ERROR: [Abertis@11382H30000 PID 2532 #1] Bitrate:0Kbit/s PES:0 CC:0
+Oct 14 17:00:58: ERROR: [Abertis@11382H30000 PID 2532] Failed to switch to reserve
+Oct 14 17:01:01: INFO: [Abertis@11382H30000 PID 2532 #1] PAT: tsid: 60025
+Oct 14 17:01:01: INFO: [Abertis@11382H30000 PID 2532 #1] PAT: pid: 16 NIT
+Oct 14 17:01:01: INFO: [Abertis@11382H30000 PID 2532 #1] PAT: pid: 7520 PMT pnr: 3520
+Oct 14 17:01:01: INFO: [Abertis@11382H30000 PID 2532 #1] PAT: pid: 7521 PMT pnr: 3521
+Oct 14 17:01:01: INFO: [Abertis@11382H30000 PID 2532 #1] PAT: pid: 7522 PMT pnr: 3522
+Oct 14 17:01:01: INFO: [Abertis@11382H30000 PID 2532 #1] PAT: pid: 7523 PMT pnr: 3523
+Oct 14 17:01:01: INFO: [Abertis@11382H30000 PID 2532 #1] PAT: pid: 7524 PMT pnr: 3524
+Oct 14 17:01:01: INFO: [Abertis@11382H30000 PID 2532 #1] PAT: pid: 7531 PMT pnr: 3531
+Oct 14 17:01:01: INFO: [Abertis@11382H30000 PID 2532 #1] PAT: pid: 7532 PMT pnr: 3532
+Oct 14 17:01:01: INFO: [Abertis@11382H30000 PID 2532 #1] PAT: pid: 7533 PMT pnr: 3533
+Oct 14 17:01:01: INFO: [Abertis@11382H30000 PID 2532 #1] PAT: pid: 7534 PMT pnr: 3534
+Oct 14 17:01:01: INFO: [Abertis@11382H30000 PID 2532 #1] PAT: pid: 8100 PMT pnr: 65534
+Oct 14 17:01:01: INFO: [Abertis@11382H30000 PID 2532 #1] PAT: crc32: 0xEF6CD9FB
+Oct 14 17:01:01: INFO: [Abertis@11382H30000 PID 2532 #1] PMT: pnr: 3532
+Oct 14 17:01:01: INFO: [Abertis@11382H30000 PID 2532 #1] PMT: pid: 8191 PCR
+Oct 14 17:01:01: INFO: [Abertis@11382H30000 PID 2532 #1] PMT: CAS: caid: 0x2600 pid: 8191
+Oct 14 17:01:01: INFO: [Abertis@11382H30000 PID 2532 #1] PMT: Service: HS129.32
+Oct 14 17:01:01: INFO: [Abertis@11382H30000 PID 2532 #1] PMT: Provider: HSA-129
+Oct 14 17:01:01: INFO: [Abertis@11382H30000 PID 2532 #1] DATA: pid: 2532 type: User private (0x90)
+Oct 14 17:01:01: INFO: [Abertis@11382H30000 PID 2532 #1] DATA: descriptor: 0xFA0C00000000000080020DC00DC2
+Oct 14 17:01:01: INFO: [Abertis@11382H30000 PID 2532 #1] PMT: crc32: 0x74EF8954
+    -> Finished PID 2532. Log saved to pid_logs/pid2532.log
+
+==================================================
+Starting Scan for Channel: Abertis@11382H30000 (PID 2533)
+==================================================
+[*] Zapping to feed service: 1:0:1:DCD:EA79:1:CE40000:0:0:0:
+    -> zap command: curl -s 'http://127.0.0.1/web/zap?sRef=1%3A0%3A1%3ADCD%3AEA79%3A1%3ACE40000%3A0%3A0%3A0%3A' | head
+    -> Zap successful. Waiting 6 seconds for tuner lock & stream start...
+[*] Letting feed service settle for 20 seconds...
+[*] Analyzing PID 2533 for 22 seconds...
+    -> command: astra --analyze 'http://0.0.0.0:9999/abertis/pid2533'
+Oct 14 17:01:29: ERROR: [Abertis@11382H30000 PID 2533 #1] Bitrate:0Kbit/s PES:0 CC:0
+Oct 14 17:01:30: ERROR: [Abertis@11382H30000 PID 2533 #1] Bitrate:0Kbit/s PES:0 CC:0
+Oct 14 17:01:31: ERROR: [Abertis@11382H30000 PID 2533 #1] Bitrate:0Kbit/s PES:0 CC:0
+Oct 14 17:01:32: ERROR: [Abertis@11382H30000 PID 2533 #1] Bitrate:0Kbit/s PES:0 CC:0
+Oct 14 17:01:32: ERROR: [Abertis@11382H30000 PID 2533] Failed to switch to reserve
+Oct 14 17:01:35: INFO: [Abertis@11382H30000 PID 2533 #1] PAT: tsid: 60025
+Oct 14 17:01:35: INFO: [Abertis@11382H30000 PID 2533 #1] PAT: pid: 16 NIT
+Oct 14 17:01:35: INFO: [Abertis@11382H30000 PID 2533 #1] PAT: pid: 7520 PMT pnr: 3520
+Oct 14 17:01:35: INFO: [Abertis@11382H30000 PID 2533 #1] PAT: pid: 7521 PMT pnr: 3521
+Oct 14 17:01:35: INFO: [Abertis@11382H30000 PID 2533 #1] PAT: pid: 7522 PMT pnr: 3522
+Oct 14 17:01:35: INFO: [Abertis@11382H30000 PID 2533 #1] PAT: pid: 7523 PMT pnr: 3523
+Oct 14 17:01:35: INFO: [Abertis@11382H30000 PID 2533 #1] PAT: pid: 7524 PMT pnr: 3524
+Oct 14 17:01:35: INFO: [Abertis@11382H30000 PID 2533 #1] PAT: pid: 7531 PMT pnr: 3531
+Oct 14 17:01:35: INFO: [Abertis@11382H30000 PID 2533 #1] PAT: pid: 7532 PMT pnr: 3532
+Oct 14 17:01:35: INFO: [Abertis@11382H30000 PID 2533 #1] PAT: pid: 7533 PMT pnr: 3533
+Oct 14 17:01:35: INFO: [Abertis@11382H30000 PID 2533 #1] PAT: pid: 7534 PMT pnr: 3534
+Oct 14 17:01:35: INFO: [Abertis@11382H30000 PID 2533 #1] PAT: pid: 8100 PMT pnr: 65534
+Oct 14 17:01:35: INFO: [Abertis@11382H30000 PID 2533 #1] PAT: crc32: 0xEF6CD9FB
+Oct 14 17:01:35: INFO: [Abertis@11382H30000 PID 2533 #1] PMT: pnr: 3533
+Oct 14 17:01:35: INFO: [Abertis@11382H30000 PID 2533 #1] PMT: pid: 8191 PCR
+Oct 14 17:01:35: INFO: [Abertis@11382H30000 PID 2533 #1] PMT: CAS: caid: 0x2600 pid: 8191
+Oct 14 17:01:35: INFO: [Abertis@11382H30000 PID 2533 #1] PMT: Service: HS129.33
+Oct 14 17:01:35: INFO: [Abertis@11382H30000 PID 2533 #1] PMT: Provider: HSA-129
+Oct 14 17:01:35: INFO: [Abertis@11382H30000 PID 2533 #1] DATA: pid: 2533 type: User private (0x90)
+Oct 14 17:01:35: INFO: [Abertis@11382H30000 PID 2533 #1] DATA: descriptor: 0xFA0C00000000000080020DC00DC3
+Oct 14 17:01:35: INFO: [Abertis@11382H30000 PID 2533 #1] PMT: crc32: 0x374050F3
+Oct 14 17:01:44: ERROR: [Abertis@11382H30000 PID 2533 #1] Bitrate:0Kbit/s PES:0 CC:0
+Oct 14 17:01:45: ERROR: [Abertis@11382H30000 PID 2533 #1] Bitrate:0Kbit/s PES:0 CC:0
+Oct 14 17:01:46: ERROR: [Abertis@11382H30000 PID 2533 #1] Bitrate:0Kbit/s PES:0 CC:0
+Oct 14 17:01:47: ERROR: [Abertis@11382H30000 PID 2533 #1] Bitrate:0Kbit/s PES:0 CC:0
+Oct 14 17:01:47: ERROR: [Abertis@11382H30000 PID 2533] Failed to switch to reserve
+Oct 14 17:01:50: INFO: [Abertis@11382H30000 PID 2533 #1] PAT: tsid: 60025
+Oct 14 17:01:50: INFO: [Abertis@11382H30000 PID 2533 #1] PAT: pid: 16 NIT
+Oct 14 17:01:50: INFO: [Abertis@11382H30000 PID 2533 #1] PAT: pid: 7520 PMT pnr: 3520
+Oct 14 17:01:50: INFO: [Abertis@11382H30000 PID 2533 #1] PAT: pid: 7521 PMT pnr: 3521
+Oct 14 17:01:50: INFO: [Abertis@11382H30000 PID 2533 #1] PAT: pid: 7522 PMT pnr: 3522
+Oct 14 17:01:50: INFO: [Abertis@11382H30000 PID 2533 #1] PAT: pid: 7523 PMT pnr: 3523
+Oct 14 17:01:50: INFO: [Abertis@11382H30000 PID 2533 #1] PAT: pid: 7524 PMT pnr: 3524
+Oct 14 17:01:50: INFO: [Abertis@11382H30000 PID 2533 #1] PAT: pid: 7531 PMT pnr: 3531
+Oct 14 17:01:50: INFO: [Abertis@11382H30000 PID 2533 #1] PAT: pid: 7532 PMT pnr: 3532
+Oct 14 17:01:50: INFO: [Abertis@11382H30000 PID 2533 #1] PAT: pid: 7533 PMT pnr: 3533
+Oct 14 17:01:50: INFO: [Abertis@11382H30000 PID 2533 #1] PAT: pid: 7534 PMT pnr: 3534
+Oct 14 17:01:50: INFO: [Abertis@11382H30000 PID 2533 #1] PAT: pid: 8100 PMT pnr: 65534
+Oct 14 17:01:50: INFO: [Abertis@11382H30000 PID 2533 #1] PAT: crc32: 0xEF6CD9FB
+Oct 14 17:01:50: INFO: [Abertis@11382H30000 PID 2533 #1] PMT: pnr: 3533
+Oct 14 17:01:50: INFO: [Abertis@11382H30000 PID 2533 #1] PMT: pid: 8191 PCR
+Oct 14 17:01:50: INFO: [Abertis@11382H30000 PID 2533 #1] PMT: CAS: caid: 0x2600 pid: 8191
+Oct 14 17:01:50: INFO: [Abertis@11382H30000 PID 2533 #1] PMT: Service: HS129.33
+Oct 14 17:01:50: INFO: [Abertis@11382H30000 PID 2533 #1] PMT: Provider: HSA-129
+Oct 14 17:01:50: INFO: [Abertis@11382H30000 PID 2533 #1] DATA: pid: 2533 type: User private (0x90)
+Oct 14 17:01:50: INFO: [Abertis@11382H30000 PID 2533 #1] DATA: descriptor: 0xFA0C00000000000080020DC00DC3
+Oct 14 17:01:50: INFO: [Abertis@11382H30000 PID 2533 #1] PMT: crc32: 0x374050F3
+    -> Finished PID 2533. Log saved to pid_logs/pid2533.log
+
+==================================================
+Starting Scan for Channel: Abertis@11382H30000 (PID 2534)
+==================================================
+[*] Zapping to feed service: 1:0:1:DCE:EA79:1:CE40000:0:0:0:
+    -> zap command: curl -s 'http://127.0.0.1/web/zap?sRef=1%3A0%3A1%3ADCE%3AEA79%3A1%3ACE40000%3A0%3A0%3A0%3A' | head
+    -> Zap successful. Waiting 6 seconds for tuner lock & stream start...
+[*] Letting feed service settle for 20 seconds...
+[*] Analyzing PID 2534 for 22 seconds...
+    -> command: astra --analyze 'http://0.0.0.0:9999/abertis/pid2534'
+Oct 14 17:02:19: ERROR: [Abertis@11382H30000 PID 2534 #1] Bitrate:0Kbit/s PES:0 CC:0
+Oct 14 17:02:20: ERROR: [Abertis@11382H30000 PID 2534 #1] Bitrate:0Kbit/s PES:0 CC:0
+Oct 14 17:02:21: ERROR: [Abertis@11382H30000 PID 2534 #1] Bitrate:0Kbit/s PES:0 CC:0
+Oct 14 17:02:22: ERROR: [Abertis@11382H30000 PID 2534 #1] Bitrate:0Kbit/s PES:0 CC:0
+Oct 14 17:02:22: ERROR: [Abertis@11382H30000 PID 2534] Failed to switch to reserve
+Oct 14 17:02:25: INFO: [Abertis@11382H30000 PID 2534 #1] PAT: tsid: 60025
+Oct 14 17:02:25: INFO: [Abertis@11382H30000 PID 2534 #1] PAT: pid: 16 NIT
+Oct 14 17:02:25: INFO: [Abertis@11382H30000 PID 2534 #1] PAT: pid: 7520 PMT pnr: 3520
+Oct 14 17:02:25: INFO: [Abertis@11382H30000 PID 2534 #1] PAT: pid: 7521 PMT pnr: 3521
+Oct 14 17:02:25: INFO: [Abertis@11382H30000 PID 2534 #1] PAT: pid: 7522 PMT pnr: 3522
+Oct 14 17:02:25: INFO: [Abertis@11382H30000 PID 2534 #1] PAT: pid: 7523 PMT pnr: 3523
+Oct 14 17:02:25: INFO: [Abertis@11382H30000 PID 2534 #1] PAT: pid: 7524 PMT pnr: 3524
+Oct 14 17:02:25: INFO: [Abertis@11382H30000 PID 2534 #1] PAT: pid: 7531 PMT pnr: 3531
+Oct 14 17:02:25: INFO: [Abertis@11382H30000 PID 2534 #1] PAT: pid: 7532 PMT pnr: 3532
+Oct 14 17:02:25: INFO: [Abertis@11382H30000 PID 2534 #1] PAT: pid: 7533 PMT pnr: 3533
+Oct 14 17:02:25: INFO: [Abertis@11382H30000 PID 2534 #1] PAT: pid: 7534 PMT pnr: 3534
+Oct 14 17:02:25: INFO: [Abertis@11382H30000 PID 2534 #1] PAT: pid: 8100 PMT pnr: 65534
+Oct 14 17:02:25: INFO: [Abertis@11382H30000 PID 2534 #1] PAT: crc32: 0xEF6CD9FB
+Oct 14 17:02:25: INFO: [Abertis@11382H30000 PID 2534 #1] PMT: pnr: 3534
+Oct 14 17:02:25: INFO: [Abertis@11382H30000 PID 2534 #1] PMT: pid: 8191 PCR
+Oct 14 17:02:25: INFO: [Abertis@11382H30000 PID 2534 #1] PMT: CAS: caid: 0x2600 pid: 8191
+Oct 14 17:02:25: INFO: [Abertis@11382H30000 PID 2534 #1] PMT: Service: HS129.34
+Oct 14 17:02:25: INFO: [Abertis@11382H30000 PID 2534 #1] PMT: Provider: HSA-129
+Oct 14 17:02:25: INFO: [Abertis@11382H30000 PID 2534 #1] DATA: pid: 2534 type: User private (0x90)
+Oct 14 17:02:25: INFO: [Abertis@11382H30000 PID 2534 #1] DATA: descriptor: 0xFA0C00000000000080020DC00DC4
+Oct 14 17:02:25: INFO: [Abertis@11382H30000 PID 2534 #1] PMT: crc32: 0x30BE739E
+Oct 14 17:02:34: ERROR: [Abertis@11382H30000 PID 2534 #1] Bitrate:0Kbit/s PES:0 CC:0
+Oct 14 17:02:35: ERROR: [Abertis@11382H30000 PID 2534 #1] Bitrate:0Kbit/s PES:0 CC:0
+Oct 14 17:02:36: ERROR: [Abertis@11382H30000 PID 2534 #1] Bitrate:0Kbit/s PES:0 CC:0
+Oct 14 17:02:37: ERROR: [Abertis@11382H30000 PID 2534 #1] Bitrate:0Kbit/s PES:0 CC:0
+Oct 14 17:02:37: ERROR: [Abertis@11382H30000 PID 2534] Failed to switch to reserve
+Oct 14 17:02:40: INFO: [Abertis@11382H30000 PID 2534 #1] PAT: tsid: 60025
+Oct 14 17:02:40: INFO: [Abertis@11382H30000 PID 2534 #1] PAT: pid: 16 NIT
+Oct 14 17:02:40: INFO: [Abertis@11382H30000 PID 2534 #1] PAT: pid: 7520 PMT pnr: 3520
+Oct 14 17:02:40: INFO: [Abertis@11382H30000 PID 2534 #1] PAT: pid: 7521 PMT pnr: 3521
+Oct 14 17:02:40: INFO: [Abertis@11382H30000 PID 2534 #1] PAT: pid: 7522 PMT pnr: 3522
+Oct 14 17:02:40: INFO: [Abertis@11382H30000 PID 2534 #1] PAT: pid: 7523 PMT pnr: 3523
+Oct 14 17:02:40: INFO: [Abertis@11382H30000 PID 2534 #1] PAT: pid: 7524 PMT pnr: 3524
+Oct 14 17:02:40: INFO: [Abertis@11382H30000 PID 2534 #1] PAT: pid: 7531 PMT pnr: 3531
+Oct 14 17:02:40: INFO: [Abertis@11382H30000 PID 2534 #1] PAT: pid: 7532 PMT pnr: 3532
+Oct 14 17:02:40: INFO: [Abertis@11382H30000 PID 2534 #1] PAT: pid: 7533 PMT pnr: 3533
+Oct 14 17:02:40: INFO: [Abertis@11382H30000 PID 2534 #1] PAT: pid: 7534 PMT pnr: 3534
+Oct 14 17:02:40: INFO: [Abertis@11382H30000 PID 2534 #1] PAT: pid: 8100 PMT pnr: 65534
+Oct 14 17:02:40: INFO: [Abertis@11382H30000 PID 2534 #1] PAT: crc32: 0xEF6CD9FB
+Oct 14 17:02:40: INFO: [Abertis@11382H30000 PID 2534 #1] PMT: pnr: 3534
+Oct 14 17:02:40: INFO: [Abertis@11382H30000 PID 2534 #1] PMT: pid: 8191 PCR
+Oct 14 17:02:40: INFO: [Abertis@11382H30000 PID 2534 #1] PMT: CAS: caid: 0x2600 pid: 8191
+Oct 14 17:02:40: INFO: [Abertis@11382H30000 PID 2534 #1] PMT: Service: HS129.34
+Oct 14 17:02:40: INFO: [Abertis@11382H30000 PID 2534 #1] PMT: Provider: HSA-129
+Oct 14 17:02:40: INFO: [Abertis@11382H30000 PID 2534 #1] DATA: pid: 2534 type: User private (0x90)
+Oct 14 17:02:40: INFO: [Abertis@11382H30000 PID 2534 #1] DATA: descriptor: 0xFA0C00000000000080020DC00DC4
+Oct 14 17:02:40: INFO: [Abertis@11382H30000 PID 2534 #1] PMT: crc32: 0x30BE739E
+    -> Finished PID 2534. Log saved to pid_logs/pid2534.log
+
+==================================================
+Starting Scan for Channel: Abertis@12671V30000 (PID 8000)
+==================================================
+[*] Zapping to feed service: 1:0:1:3E8:EA61:1:CE40000:0:0:0:
+    -> zap command: curl -s 'http://127.0.0.1/web/zap?sRef=1%3A0%3A1%3A3E8%3AEA61%3A1%3ACE40000%3A0%3A0%3A0%3A' | head
+    -> Zap successful. Waiting 6 seconds for tuner lock & stream start...
+[*] Letting feed service settle for 20 seconds...
+[*] Analyzing PID 8000 for 22 seconds...
+    -> command: astra --analyze 'http://0.0.0.0:9999/abertis/pid8000'
+Oct 14 17:03:08: ERROR: [Abertis@12671V30000 PID 8000 #1] Bitrate:0Kbit/s PES:0 CC:0
+Oct 14 17:03:08: INFO: [Abertis@12671V30000 PID 8000 #1] PAT: tsid: 60001
+Oct 14 17:03:08: INFO: [Abertis@12671V30000 PID 8000 #1] PAT: pid: 16 NIT
+Oct 14 17:03:08: INFO: [Abertis@12671V30000 PID 8000 #1] PAT: pid: 5000 PMT pnr: 1000
+Oct 14 17:03:08: INFO: [Abertis@12671V30000 PID 8000 #1] PAT: pid: 5004 PMT pnr: 1004
+Oct 14 17:03:08: INFO: [Abertis@12671V30000 PID 8000 #1] PAT: pid: 5005 PMT pnr: 1005
+Oct 14 17:03:08: INFO: [Abertis@12671V30000 PID 8000 #1] PAT: pid: 5006 PMT pnr: 1006
+Oct 14 17:03:08: INFO: [Abertis@12671V30000 PID 8000 #1] PAT: pid: 8100 PMT pnr: 65534
+Oct 14 17:03:08: INFO: [Abertis@12671V30000 PID 8000 #1] PAT: crc32: 0xC02A3617
+Oct 14 17:03:08: INFO: [Abertis@12671V30000 PID 8000 #1] PMT: pnr: 1000
+Oct 14 17:03:08: INFO: [Abertis@12671V30000 PID 8000 #1] PMT: pid: 8191 PCR
+Oct 14 17:03:08: INFO: [Abertis@12671V30000 PID 8000 #1] PMT: CAS: caid: 0x2600 pid: 8191
+Oct 14 17:03:08: INFO: [Abertis@12671V30000 PID 8000 #1] PMT: Service: HSA-68.0
+Oct 14 17:03:08: INFO: [Abertis@12671V30000 PID 8000 #1] PMT: Provider: HSA-68
+Oct 14 17:03:08: INFO: [Abertis@12671V30000 PID 8000 #1] DATA: pid: 8000 type: User private (0x90)
+Oct 14 17:03:08: INFO: [Abertis@12671V30000 PID 8000 #1] DATA: descriptor: 0xFB06000700000000
+Oct 14 17:03:08: INFO: [Abertis@12671V30000 PID 8000 #1] PMT: crc32: 0x76DFFD5C
+Oct 14 17:03:09: ERROR: [Abertis@12671V30000 PID 8000 #1] Bitrate:3078Kbit/s PES:0 CC:3
+Oct 14 17:03:10: ERROR: [Abertis@12671V30000 PID 8000 #1] Bitrate:1540Kbit/s PES:0 CC:0
+Oct 14 17:03:11: ERROR: [Abertis@12671V30000 PID 8000 #1] Bitrate:3079Kbit/s PES:0 CC:0
+Oct 14 17:03:11: ERROR: [Abertis@12671V30000 PID 8000] Failed to switch to reserve
+    -> Finished PID 8000. Log saved to pid_logs/pid8000.log
+
+==================================================
+Starting Scan for Channel: Abertis@12631V30000 (PID 8001)
+==================================================
+[*] Zapping to feed service: 1:0:1:3E9:EA62:1:CE40000:0:0:0:
+    -> zap command: curl -s 'http://127.0.0.1/web/zap?sRef=1%3A0%3A1%3A3E9%3AEA62%3A1%3ACE40000%3A0%3A0%3A0%3A' | head
+    -> Zap successful. Waiting 6 seconds for tuner lock & stream start...
+[*] Letting feed service settle for 20 seconds...
+[*] Analyzing PID 8001 for 22 seconds...
+    -> command: astra --analyze 'http://0.0.0.0:9999/abertis/pid8001'
+Oct 14 17:03:58: ERROR: [Abertis@12631V30000 PID 8001 #1] Bitrate:1540Kbit/s PES:0 CC:0
+Oct 14 17:03:58: INFO: [Abertis@12631V30000 PID 8001 #1] PAT: tsid: 60002
+Oct 14 17:03:58: INFO: [Abertis@12631V30000 PID 8001 #1] PAT: pid: 16 NIT
+Oct 14 17:03:58: INFO: [Abertis@12631V30000 PID 8001 #1] PAT: pid: 5001 PMT pnr: 1001
+Oct 14 17:03:58: INFO: [Abertis@12631V30000 PID 8001 #1] PAT: pid: 5002 PMT pnr: 1002
+Oct 14 17:03:58: INFO: [Abertis@12631V30000 PID 8001 #1] PAT: pid: 5003 PMT pnr: 1003
+Oct 14 17:03:58: INFO: [Abertis@12631V30000 PID 8001 #1] PAT: pid: 8100 PMT pnr: 65534
+Oct 14 17:03:58: INFO: [Abertis@12631V30000 PID 8001 #1] PAT: crc32: 0xA7B84058
+Oct 14 17:03:59: INFO: [Abertis@12631V30000 PID 8001 #1] PMT: pnr: 1001
+Oct 14 17:03:59: INFO: [Abertis@12631V30000 PID 8001 #1] PMT: pid: 8191 PCR
+Oct 14 17:03:59: INFO: [Abertis@12631V30000 PID 8001 #1] PMT: CAS: caid: 0x2600 pid: 8191
+Oct 14 17:03:59: INFO: [Abertis@12631V30000 PID 8001 #1] PMT: Service: HSA-67.1
+Oct 14 17:03:59: INFO: [Abertis@12631V30000 PID 8001 #1] PMT: Provider: HSA-67
+Oct 14 17:03:59: INFO: [Abertis@12631V30000 PID 8001 #1] DATA: pid: 8001 type: User private (0x90)
+Oct 14 17:03:59: INFO: [Abertis@12631V30000 PID 8001 #1] DATA: descriptor: 0xFB06000000000000
+Oct 14 17:03:59: INFO: [Abertis@12631V30000 PID 8001 #1] PMT: crc32: 0xDD014A7B
+Oct 14 17:03:59: ERROR: [Abertis@12631V30000 PID 8001 #1] Bitrate:20019Kbit/s PES:0 CC:3
+Oct 14 17:04:00: ERROR: [Abertis@12631V30000 PID 8001 #1] Bitrate:20021Kbit/s PES:0 CC:0
+Oct 14 17:04:01: ERROR: [Abertis@12631V30000 PID 8001 #1] Bitrate:20021Kbit/s PES:0 CC:0
+Oct 14 17:04:01: ERROR: [Abertis@12631V30000 PID 8001] Failed to switch to reserve
+    -> Finished PID 8001. Log saved to pid_logs/pid8001.log
+
+==================================================
+Starting Scan for Channel: Abertis@12631V30000 (PID 8002)
+==================================================
+[*] Zapping to feed service: 1:0:1:3EA:EA62:1:CE40000:0:0:0:
+    -> zap command: curl -s 'http://127.0.0.1/web/zap?sRef=1%3A0%3A1%3A3EA%3AEA62%3A1%3ACE40000%3A0%3A0%3A0%3A' | head
+    -> Zap successful. Waiting 6 seconds for tuner lock & stream start...
+[*] Letting feed service settle for 20 seconds...
+[*] Analyzing PID 8002 for 22 seconds...
+    -> command: astra --analyze 'http://0.0.0.0:9999/abertis/pid8002'
+Oct 14 17:04:47: INFO: [Abertis@12631V30000 PID 8002 #1] PAT: tsid: 60002
+Oct 14 17:04:47: INFO: [Abertis@12631V30000 PID 8002 #1] PAT: pid: 16 NIT
+Oct 14 17:04:47: INFO: [Abertis@12631V30000 PID 8002 #1] PAT: pid: 5001 PMT pnr: 1001
+Oct 14 17:04:47: INFO: [Abertis@12631V30000 PID 8002 #1] PAT: pid: 5002 PMT pnr: 1002
+Oct 14 17:04:47: INFO: [Abertis@12631V30000 PID 8002 #1] PAT: pid: 5003 PMT pnr: 1003
+Oct 14 17:04:47: INFO: [Abertis@12631V30000 PID 8002 #1] PAT: pid: 8100 PMT pnr: 65534
+Oct 14 17:04:47: INFO: [Abertis@12631V30000 PID 8002 #1] PAT: crc32: 0xA7B84058
+Oct 14 17:04:47: ERROR: [Abertis@12631V30000 PID 8002 #1] Bitrate:4619Kbit/s PES:0 CC:0
+Oct 14 17:04:47: INFO: [Abertis@12631V30000 PID 8002 #1] PMT: pnr: 1002
+Oct 14 17:04:47: INFO: [Abertis@12631V30000 PID 8002 #1] PMT: pid: 8191 PCR
+Oct 14 17:04:47: INFO: [Abertis@12631V30000 PID 8002 #1] PMT: CAS: caid: 0x2600 pid: 8191
+Oct 14 17:04:47: INFO: [Abertis@12631V30000 PID 8002 #1] PMT: Service: HSA-67.2
+Oct 14 17:04:47: INFO: [Abertis@12631V30000 PID 8002 #1] PMT: Provider: HSA-67
+Oct 14 17:04:47: INFO: [Abertis@12631V30000 PID 8002 #1] DATA: pid: 8002 type: User private (0x90)
+Oct 14 17:04:47: INFO: [Abertis@12631V30000 PID 8002 #1] DATA: descriptor: 0xFB06000100000000
+Oct 14 17:04:47: INFO: [Abertis@12631V30000 PID 8002 #1] PMT: crc32: 0xE2E8D349
+Oct 14 17:04:48: ERROR: [Abertis@12631V30000 PID 8002 #1] Bitrate:20020Kbit/s PES:0 CC:2
+Oct 14 17:04:49: ERROR: [Abertis@12631V30000 PID 8002 #1] Bitrate:20021Kbit/s PES:0 CC:0
+Oct 14 17:04:50: ERROR: [Abertis@12631V30000 PID 8002 #1] Bitrate:21561Kbit/s PES:0 CC:0
+Oct 14 17:04:50: ERROR: [Abertis@12631V30000 PID 8002] Failed to switch to reserve
+    -> Finished PID 8002. Log saved to pid_logs/pid8002.log
+
+==================================================
+Starting Scan for Channel: Abertis@12631V30000 (PID 8003)
+==================================================
+[*] Zapping to feed service: 1:0:1:3EB:EA62:1:CE40000:0:0:0:
+    -> zap command: curl -s 'http://127.0.0.1/web/zap?sRef=1%3A0%3A1%3A3EB%3AEA62%3A1%3ACE40000%3A0%3A0%3A0%3A' | head
+    -> Zap successful. Waiting 6 seconds for tuner lock & stream start...
+[*] Letting feed service settle for 20 seconds...
+[*] Analyzing PID 8003 for 22 seconds...
+    -> command: astra --analyze 'http://0.0.0.0:9999/abertis/pid8003'
+Oct 14 17:05:36: INFO: [Abertis@12631V30000 PID 8003 #1] PAT: tsid: 60002
+Oct 14 17:05:36: INFO: [Abertis@12631V30000 PID 8003 #1] PAT: pid: 16 NIT
+Oct 14 17:05:36: INFO: [Abertis@12631V30000 PID 8003 #1] PAT: pid: 5001 PMT pnr: 1001
+Oct 14 17:05:36: INFO: [Abertis@12631V30000 PID 8003 #1] PAT: pid: 5002 PMT pnr: 1002
+Oct 14 17:05:36: INFO: [Abertis@12631V30000 PID 8003 #1] PAT: pid: 5003 PMT pnr: 1003
+Oct 14 17:05:36: INFO: [Abertis@12631V30000 PID 8003 #1] PAT: pid: 8100 PMT pnr: 65534
+Oct 14 17:05:36: INFO: [Abertis@12631V30000 PID 8003 #1] PAT: crc32: 0xA7B84058
+Oct 14 17:05:37: ERROR: [Abertis@12631V30000 PID 8003 #1] Bitrate:6159Kbit/s PES:0 CC:0
+Oct 14 17:05:37: INFO: [Abertis@12631V30000 PID 8003 #1] PMT: pnr: 1003
+Oct 14 17:05:37: INFO: [Abertis@12631V30000 PID 8003 #1] PMT: pid: 8191 PCR
+Oct 14 17:05:37: INFO: [Abertis@12631V30000 PID 8003 #1] PMT: CAS: caid: 0x2600 pid: 8191
+Oct 14 17:05:37: INFO: [Abertis@12631V30000 PID 8003 #1] PMT: Service: HSA-67.3
+Oct 14 17:05:37: INFO: [Abertis@12631V30000 PID 8003 #1] PMT: Provider: HSA-67
+Oct 14 17:05:37: INFO: [Abertis@12631V30000 PID 8003 #1] DATA: pid: 8003 type: User private (0x90)
+Oct 14 17:05:37: INFO: [Abertis@12631V30000 PID 8003 #1] DATA: descriptor: 0xFB06000200000000
+Oct 14 17:05:37: INFO: [Abertis@12631V30000 PID 8003 #1] PMT: crc32: 0xE38CE17B
+Oct 14 17:05:38: ERROR: [Abertis@12631V30000 PID 8003 #1] Bitrate:20020Kbit/s PES:0 CC:1
+Oct 14 17:05:39: ERROR: [Abertis@12631V30000 PID 8003 #1] Bitrate:21561Kbit/s PES:0 CC:0
+Oct 14 17:05:40: ERROR: [Abertis@12631V30000 PID 8003 #1] Bitrate:20020Kbit/s PES:0 CC:0
+Oct 14 17:05:40: ERROR: [Abertis@12631V30000 PID 8003] Failed to switch to reserve
+    -> Finished PID 8003. Log saved to pid_logs/pid8003.log
+
+==================================================
+Starting Scan for Channel: Abertis@12671V30000 (PID 8004)
+==================================================
+[*] Zapping to feed service: 1:0:1:3EC:EA61:1:CE40000:0:0:0:
+    -> zap command: curl -s 'http://127.0.0.1/web/zap?sRef=1%3A0%3A1%3A3EC%3AEA61%3A1%3ACE40000%3A0%3A0%3A0%3A' | head
+    -> Zap successful. Waiting 6 seconds for tuner lock & stream start...
+[*] Letting feed service settle for 20 seconds...
+[*] Analyzing PID 8004 for 22 seconds...
+    -> command: astra --analyze 'http://0.0.0.0:9999/abertis/pid8004'
+Oct 14 17:06:26: INFO: [Abertis@12671V30000 PID 8004 #1] PAT: tsid: 60001
+Oct 14 17:06:26: INFO: [Abertis@12671V30000 PID 8004 #1] PAT: pid: 16 NIT
+Oct 14 17:06:26: INFO: [Abertis@12671V30000 PID 8004 #1] PAT: pid: 5000 PMT pnr: 1000
+Oct 14 17:06:26: INFO: [Abertis@12671V30000 PID 8004 #1] PAT: pid: 5004 PMT pnr: 1004
+Oct 14 17:06:26: INFO: [Abertis@12671V30000 PID 8004 #1] PAT: pid: 5005 PMT pnr: 1005
+Oct 14 17:06:26: INFO: [Abertis@12671V30000 PID 8004 #1] PAT: pid: 5006 PMT pnr: 1006
+Oct 14 17:06:26: INFO: [Abertis@12671V30000 PID 8004 #1] PAT: pid: 8100 PMT pnr: 65534
+Oct 14 17:06:26: INFO: [Abertis@12671V30000 PID 8004 #1] PAT: crc32: 0xC02A3617
+Oct 14 17:06:26: INFO: [Abertis@12671V30000 PID 8004 #1] PMT: pnr: 1004
+Oct 14 17:06:26: INFO: [Abertis@12671V30000 PID 8004 #1] PMT: pid: 8191 PCR
+Oct 14 17:06:26: INFO: [Abertis@12671V30000 PID 8004 #1] PMT: CAS: caid: 0x2600 pid: 8191
+Oct 14 17:06:26: INFO: [Abertis@12671V30000 PID 8004 #1] PMT: Service: HSA-68.1
+Oct 14 17:06:26: INFO: [Abertis@12671V30000 PID 8004 #1] PMT: Provider: HSA-68
+Oct 14 17:06:26: INFO: [Abertis@12671V30000 PID 8004 #1] DATA: pid: 8004 type: User private (0x90)
+Oct 14 17:06:26: INFO: [Abertis@12671V30000 PID 8004 #1] DATA: descriptor: 0xFB06000300000000
+Oct 14 17:06:26: INFO: [Abertis@12671V30000 PID 8004 #1] PMT: crc32: 0x1C8AE97C
+Oct 14 17:06:26: ERROR: [Abertis@12671V30000 PID 8004 #1] Bitrate:15399Kbit/s PES:0 CC:0
+Oct 14 17:06:27: ERROR: [Abertis@12671V30000 PID 8004 #1] Bitrate:20020Kbit/s PES:0 CC:0
+Oct 14 17:06:28: ERROR: [Abertis@12671V30000 PID 8004 #1] Bitrate:20021Kbit/s PES:0 CC:0
+Oct 14 17:06:29: ERROR: [Abertis@12671V30000 PID 8004 #1] Bitrate:20021Kbit/s PES:0 CC:0
+Oct 14 17:06:29: ERROR: [Abertis@12671V30000 PID 8004] Failed to switch to reserve
+    -> Finished PID 8004. Log saved to pid_logs/pid8004.log
+
+==================================================
+Starting Scan for Channel: Abertis@12671V30000 (PID 8005)
+==================================================
+[*] Zapping to feed service: 1:0:1:3ED:EA61:1:CE40000:0:0:0:
+    -> zap command: curl -s 'http://127.0.0.1/web/zap?sRef=1%3A0%3A1%3A3ED%3AEA61%3A1%3ACE40000%3A0%3A0%3A0%3A' | head
+    -> Zap successful. Waiting 6 seconds for tuner lock & stream start...
+[*] Letting feed service settle for 20 seconds...
+[*] Analyzing PID 8005 for 22 seconds...
+    -> command: astra --analyze 'http://0.0.0.0:9999/abertis/pid8005'
+Oct 14 17:07:15: INFO: [Abertis@12671V30000 PID 8005 #1] PAT: tsid: 60001
+Oct 14 17:07:15: INFO: [Abertis@12671V30000 PID 8005 #1] PAT: pid: 16 NIT
+Oct 14 17:07:15: INFO: [Abertis@12671V30000 PID 8005 #1] PAT: pid: 5000 PMT pnr: 1000
+Oct 14 17:07:15: INFO: [Abertis@12671V30000 PID 8005 #1] PAT: pid: 5004 PMT pnr: 1004
+Oct 14 17:07:15: INFO: [Abertis@12671V30000 PID 8005 #1] PAT: pid: 5005 PMT pnr: 1005
+Oct 14 17:07:15: INFO: [Abertis@12671V30000 PID 8005 #1] PAT: pid: 5006 PMT pnr: 1006
+Oct 14 17:07:15: INFO: [Abertis@12671V30000 PID 8005 #1] PAT: pid: 8100 PMT pnr: 65534
+Oct 14 17:07:15: INFO: [Abertis@12671V30000 PID 8005 #1] PAT: crc32: 0xC02A3617
+Oct 14 17:07:15: INFO: [Abertis@12671V30000 PID 8005 #1] PMT: pnr: 1005
+Oct 14 17:07:15: INFO: [Abertis@12671V30000 PID 8005 #1] PMT: pid: 8191 PCR
+Oct 14 17:07:15: INFO: [Abertis@12671V30000 PID 8005 #1] PMT: CAS: caid: 0x2600 pid: 8191
+Oct 14 17:07:15: INFO: [Abertis@12671V30000 PID 8005 #1] PMT: Service: HSA-68.2
+Oct 14 17:07:15: INFO: [Abertis@12671V30000 PID 8005 #1] PMT: Provider: HSA-68
+Oct 14 17:07:15: INFO: [Abertis@12671V30000 PID 8005 #1] DATA: pid: 8005 type: User private (0x90)
+Oct 14 17:07:15: INFO: [Abertis@12671V30000 PID 8005 #1] DATA: descriptor: 0xFB06000400000000
+Oct 14 17:07:15: INFO: [Abertis@12671V30000 PID 8005 #1] PMT: crc32: 0xB2F5C54F
+Oct 14 17:07:16: ERROR: [Abertis@12671V30000 PID 8005 #1] Bitrate:16939Kbit/s PES:0 CC:0
+Oct 14 17:07:17: ERROR: [Abertis@12671V30000 PID 8005 #1] Bitrate:20021Kbit/s PES:0 CC:0
+Oct 14 17:07:18: ERROR: [Abertis@12671V30000 PID 8005 #1] Bitrate:20020Kbit/s PES:0 CC:0
+Oct 14 17:07:19: ERROR: [Abertis@12671V30000 PID 8005 #1] Bitrate:21561Kbit/s PES:0 CC:0
+Oct 14 17:07:19: ERROR: [Abertis@12671V30000 PID 8005] Failed to switch to reserve
+    -> Finished PID 8005. Log saved to pid_logs/pid8005.log
+
+==================================================
+Starting Scan for Channel: Abertis@12671V30000 (PID 8006)
+==================================================
+[*] Zapping to feed service: 1:0:1:3EE:EA61:1:CE40000:0:0:0:
+    -> zap command: curl -s 'http://127.0.0.1/web/zap?sRef=1%3A0%3A1%3A3EE%3AEA61%3A1%3ACE40000%3A0%3A0%3A0%3A' | head
+    -> Zap successful. Waiting 6 seconds for tuner lock & stream start...
+[*] Letting feed service settle for 20 seconds...
+[*] Analyzing PID 8006 for 22 seconds...
+    -> command: astra --analyze 'http://0.0.0.0:9999/abertis/pid8006'
+Oct 14 17:08:05: INFO: [Abertis@12671V30000 PID 8006 #1] PAT: tsid: 60001
+Oct 14 17:08:05: INFO: [Abertis@12671V30000 PID 8006 #1] PAT: pid: 16 NIT
+Oct 14 17:08:05: INFO: [Abertis@12671V30000 PID 8006 #1] PAT: pid: 5000 PMT pnr: 1000
+Oct 14 17:08:05: INFO: [Abertis@12671V30000 PID 8006 #1] PAT: pid: 5004 PMT pnr: 1004
+Oct 14 17:08:05: INFO: [Abertis@12671V30000 PID 8006 #1] PAT: pid: 5005 PMT pnr: 1005
+Oct 14 17:08:05: INFO: [Abertis@12671V30000 PID 8006 #1] PAT: pid: 5006 PMT pnr: 1006
+Oct 14 17:08:05: INFO: [Abertis@12671V30000 PID 8006 #1] PAT: pid: 8100 PMT pnr: 65534
+Oct 14 17:08:05: INFO: [Abertis@12671V30000 PID 8006 #1] PAT: crc32: 0xC02A3617
+Oct 14 17:08:05: INFO: [Abertis@12671V30000 PID 8006 #1] PMT: pnr: 1006
+Oct 14 17:08:05: INFO: [Abertis@12671V30000 PID 8006 #1] PMT: pid: 8191 PCR
+Oct 14 17:08:05: INFO: [Abertis@12671V30000 PID 8006 #1] PMT: CAS: caid: 0x2600 pid: 8191
+Oct 14 17:08:05: INFO: [Abertis@12671V30000 PID 8006 #1] PMT: Service: HSA-68.3
+Oct 14 17:08:05: INFO: [Abertis@12671V30000 PID 8006 #1] PMT: Provider: HSA-68
+Oct 14 17:08:05: INFO: [Abertis@12671V30000 PID 8006 #1] DATA: pid: 8006 type: User private (0x90)
+Oct 14 17:08:05: INFO: [Abertis@12671V30000 PID 8006 #1] DATA: descriptor: 0xFB06000500000000
+Oct 14 17:08:05: INFO: [Abertis@12671V30000 PID 8006 #1] PMT: crc32: 0x2F3C1FF
+Oct 14 17:08:05: ERROR: [Abertis@12671V30000 PID 8006 #1] Bitrate:7698Kbit/s PES:0 CC:0
+Oct 14 17:08:06: ERROR: [Abertis@12671V30000 PID 8006 #1] Bitrate:20020Kbit/s PES:0 CC:0
+Oct 14 17:08:07: ERROR: [Abertis@12671V30000 PID 8006 #1] Bitrate:21560Kbit/s PES:0 CC:0
+Oct 14 17:08:08: ERROR: [Abertis@12671V30000 PID 8006 #1] Bitrate:20021Kbit/s PES:0 CC:0
+Oct 14 17:08:08: ERROR: [Abertis@12671V30000 PID 8006] Failed to switch to reserve
+    -> Finished PID 8006. Log saved to pid_logs/pid8006.log
+
+==================================================
+Starting Scan for Channel: Abertis@12583V16900 (PID 8008)
+==================================================
+[*] Zapping to feed service: 1:0:1:3F0:EA68:1:CE40000:0:0:0:
+    -> zap command: curl -s 'http://127.0.0.1/web/zap?sRef=1%3A0%3A1%3A3F0%3AEA68%3A1%3ACE40000%3A0%3A0%3A0%3A' | head
+    -> Zap successful. Waiting 6 seconds for tuner lock & stream start...
+[*] Letting feed service settle for 20 seconds...
+[*] Analyzing PID 8008 for 22 seconds...
+    -> command: astra --analyze 'http://0.0.0.0:9999/abertis/pid8008'
+Oct 14 17:08:55: ERROR: [Abertis@12583V16900 PID 8008 #1] Bitrate:1540Kbit/s PES:0 CC:0
+Oct 14 17:08:55: INFO: [Abertis@12583V16900 PID 8008 #1] PAT: tsid: 60008
+Oct 14 17:08:55: INFO: [Abertis@12583V16900 PID 8008 #1] PAT: pid: 16 NIT
+Oct 14 17:08:55: INFO: [Abertis@12583V16900 PID 8008 #1] PAT: pid: 5008 PMT pnr: 1008
+Oct 14 17:08:55: INFO: [Abertis@12583V16900 PID 8008 #1] PAT: pid: 8100 PMT pnr: 65534
+Oct 14 17:08:55: INFO: [Abertis@12583V16900 PID 8008 #1] PAT: crc32: 0x8F4EC110
+Oct 14 17:08:55: INFO: [Abertis@12583V16900 PID 8008 #1] PMT: pnr: 1008
+Oct 14 17:08:55: INFO: [Abertis@12583V16900 PID 8008 #1] PMT: pid: 8191 PCR
+Oct 14 17:08:55: INFO: [Abertis@12583V16900 PID 8008 #1] PMT: CAS: caid: 0x2600 pid: 8191
+Oct 14 17:08:55: INFO: [Abertis@12583V16900 PID 8008 #1] PMT: Service: HSA190.1
+Oct 14 17:08:55: INFO: [Abertis@12583V16900 PID 8008 #1] PMT: Provider: HSA190
+Oct 14 17:08:55: INFO: [Abertis@12583V16900 PID 8008 #1] DATA: pid: 8008 type: User private (0x90)
+Oct 14 17:08:55: INFO: [Abertis@12583V16900 PID 8008 #1] DATA: descriptor: 0xFB06000700000000
+Oct 14 17:08:55: INFO: [Abertis@12583V16900 PID 8008 #1] PMT: crc32: 0xBC178A94
+Oct 14 17:08:56: ERROR: [Abertis@12583V16900 PID 8008 #1] Bitrate:21560Kbit/s PES:0 CC:3
+Oct 14 17:08:57: ERROR: [Abertis@12583V16900 PID 8008 #1] Bitrate:20021Kbit/s PES:0 CC:0
+Oct 14 17:08:58: ERROR: [Abertis@12583V16900 PID 8008 #1] Bitrate:20021Kbit/s PES:0 CC:0
+Oct 14 17:08:58: ERROR: [Abertis@12583V16900 PID 8008] Failed to switch to reserve
+    -> Finished PID 8008. Log saved to pid_logs/pid8008.log
+
+==================================================
+Scan Complete! Processed 55 PIDs.
+All logs are safely stored in the 'pid_logs' directory.
+==================================================

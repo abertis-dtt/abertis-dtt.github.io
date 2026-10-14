@@ -236,62 +236,6 @@ make_channel({
 })
 
 make_channel({
-  name = "Abertis@11222H30000 PID 2035",
-  input = {
-    "http://localhost:8001/1:0:1:BDB:EA74:1:CE40000:0:0:0:",
-  },
-  transform = {{
-    format = "pipe",
-      command = "/etc/astra/scripts/abertis 2035",
-  }},
-  output = {
-    "http://0.0.0.0:9999/abertis/pid2035",
-  },
-})
-
-make_channel({
-  name = "Abertis@11222H30000 PID 2036",
-  input = {
-    "http://localhost:8001/1:0:1:BDC:EA74:1:CE40000:0:0:0:",
-  },
-  transform = {{
-    format = "pipe",
-      command = "/etc/astra/scripts/abertis 2036",
-  }},
-  output = {
-    "http://0.0.0.0:9999/abertis/pid2036",
-  },
-})
-
-make_channel({
-  name = "Abertis@11222H30000 PID 2037",
-  input = {
-    "http://localhost:8001/1:0:1:BDD:EA74:1:CE40000:0:0:0:",
-  },
-  transform = {{
-    format = "pipe",
-      command = "/etc/astra/scripts/abertis 2037",
-  }},
-  output = {
-    "http://0.0.0.0:9999/abertis/pid2037",
-  },
-})
-
-make_channel({
-  name = "Abertis@11222H30000 PID 2038",
-  input = {
-    "http://localhost:8001/1:0:1:BDE:EA74:1:CE40000:0:0:0:",
-  },
-  transform = {{
-    format = "pipe",
-      command = "/etc/astra/scripts/abertis 2038",
-  }},
-  output = {
-    "http://0.0.0.0:9999/abertis/pid2038",
-  },
-})
-
-make_channel({
   name = "Abertis@11222H30000 PID 2050",
   input = {
     "http://localhost:8001/1:0:1:BEA:EA74:1:CE40000:0:0:0:",

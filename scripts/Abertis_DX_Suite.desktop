@@ -1,0 +1,13 @@
+[Desktop Entry]
+Type=Application
+Version=1.0
+Name=Abertis DX Suite
+GenericName=DX Suite Generator
+Comment=Generate lamedb, astra.conf and Enigma2 bouquet for the Abertis/Cellnex DTT feeds on Hispasat 30.0W
+Exec=python3 /home/midoo/abertis-dtt.github.io/scripts/Abertis_DX_Suite_GUI.py
+Path=/home/midoo/abertis-dtt.github.io/scripts
+Icon=applications-internet
+Terminal=false
+StartupNotify=true
+Categories=Network;HamRadio;Utility;
+Keywords=abertis;cellnex;hispasat;dx;lamedb;astra;enigma2;bouquet;streamrelay;
