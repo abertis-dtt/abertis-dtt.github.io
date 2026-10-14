@@ -1,0 +1,42 @@
+Oct 14 16:53:13: INFO: Starting Astra SM 0.2
+Oct 14 16:53:14: INFO: Bitrate: 0 Kbit/s
+Oct 14 16:53:15: INFO: PAT: tsid: 1
+Oct 14 16:53:15: INFO: PAT: pid: 3000 PMT pnr: 1
+Oct 14 16:53:15: INFO: PAT: crc32: 0xC7DB33C4
+Oct 14 16:53:15: INFO: PMT: pnr: 1
+Oct 14 16:53:15: INFO: PMT: pid: 3001 PCR
+Oct 14 16:53:15: INFO: VIDEO: pid: 3001 type: MPEG-4 AVC/H.264, ISO/IEC 14496-10 (0x1B)
+Oct 14 16:53:15: INFO: VIDEO: descriptor: 0x28046400283F
+Oct 14 16:53:15: INFO: AUDIO: pid: 3002 type: MPEG-1 audio, ISO/IEC 11172-3 (0x03)
+Oct 14 16:53:15: INFO: AUDIO: Language: gal
+Oct 14 16:53:15: INFO: SUB: pid: 3011 type: Private PES, ISO/IEC 13818-1 (0x06)
+Oct 14 16:53:15: INFO: SUB: type: teletext
+Oct 14 16:53:15: INFO: SUB:    page: 100 (initial page), language: spa
+Oct 14 16:53:15: INFO: PMT: crc32: 0x286A383D
+Oct 14 16:53:15: INFO: SDT: tsid: 1
+Oct 14 16:53:15: INFO: SDT: sid: 1
+Oct 14 16:53:15: INFO: SDT:    Service: TVG TDT-Sat
+Oct 14 16:53:15: INFO: SDT:    Provider: TVG
+Oct 14 16:53:15: INFO: SDT: crc32: 0x3C08AF28
+Oct 14 16:53:15: INFO: Bitrate: 4584 Kbit/s
+Oct 14 16:53:15: ERROR: CC: PID:0=1 PID:1=1 PID:17=1 PID:3000=1 PID:3001=1 PID:3002=1 PID:3011=1 
+Oct 14 16:53:16: INFO: Bitrate: 4585 Kbit/s
+Oct 14 16:53:17: INFO: Bitrate: 5108 Kbit/s
+Oct 14 16:53:18: INFO: Bitrate: 4485 Kbit/s
+Oct 14 16:53:20: INFO: Bitrate: 4193 Kbit/s
+Oct 14 16:53:21: INFO: Bitrate: 5110 Kbit/s
+Oct 14 16:53:22: INFO: Bitrate: 4126 Kbit/s
+Oct 14 16:53:23: INFO: Bitrate: 4356 Kbit/s
+Oct 14 16:53:24: INFO: Bitrate: 4585 Kbit/s
+Oct 14 16:53:25: INFO: Bitrate: 4552 Kbit/s
+Oct 14 16:53:26: INFO: Bitrate: 4879 Kbit/s
+Oct 14 16:53:27: INFO: Bitrate: 3898 Kbit/s
+Oct 14 16:53:28: INFO: Bitrate: 5271 Kbit/s
+Oct 14 16:53:29: INFO: Bitrate: 4062 Kbit/s
+Oct 14 16:53:30: INFO: Bitrate: 4126 Kbit/s
+Oct 14 16:53:31: INFO: Bitrate: 5109 Kbit/s
+Oct 14 16:53:32: INFO: Bitrate: 5109 Kbit/s
+Oct 14 16:53:33: INFO: Bitrate: 3175 Kbit/s
+Oct 14 16:53:34: INFO: Bitrate: 4747 Kbit/s
+Oct 14 16:53:35: INFO: Bitrate: 5142 Kbit/s
+Oct 14 16:53:35: INFO: [main] shutting down

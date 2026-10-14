@@ -1,0 +1,24 @@
+Oct 14 16:59:49: INFO: Starting Astra SM 0.2
+Oct 14 16:59:50: INFO: Bitrate: 0 Kbit/s
+Oct 14 16:59:51: INFO: Bitrate: 0 Kbit/s
+Oct 14 16:59:52: INFO: Bitrate: 0 Kbit/s
+Oct 14 16:59:53: INFO: Bitrate: 0 Kbit/s
+Oct 14 16:59:54: INFO: Bitrate: 0 Kbit/s
+Oct 14 16:59:55: INFO: Bitrate: 0 Kbit/s
+Oct 14 16:59:56: INFO: Bitrate: 0 Kbit/s
+Oct 14 16:59:57: INFO: Bitrate: 0 Kbit/s
+Oct 14 16:59:58: INFO: Bitrate: 0 Kbit/s
+Oct 14 16:59:59: ERROR: [http_request 0.0.0.0:9999/abertis/pid2531] receiving timeout
+Oct 14 16:59:59: INFO: Bitrate: 0 Kbit/s
+Oct 14 17:00:00: INFO: Bitrate: 0 Kbit/s
+Oct 14 17:00:01: INFO: Bitrate: 0 Kbit/s
+Oct 14 17:00:02: INFO: Bitrate: 0 Kbit/s
+Oct 14 17:00:03: INFO: Bitrate: 0 Kbit/s
+Oct 14 17:00:04: INFO: Bitrate: 0 Kbit/s
+Oct 14 17:00:05: INFO: Bitrate: 0 Kbit/s
+Oct 14 17:00:06: INFO: Bitrate: 0 Kbit/s
+Oct 14 17:00:07: INFO: Bitrate: 0 Kbit/s
+Oct 14 17:00:08: INFO: Bitrate: 0 Kbit/s
+Oct 14 17:00:09: INFO: Bitrate: 0 Kbit/s
+Oct 14 17:00:10: INFO: Bitrate: 0 Kbit/s
+Oct 14 17:00:11: INFO: [main] shutting down

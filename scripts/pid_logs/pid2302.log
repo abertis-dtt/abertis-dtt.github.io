@@ -1,0 +1,57 @@
+Oct 14 16:50:45: INFO: Starting Astra SM 0.2
+Oct 14 16:50:46: INFO: PAT: tsid: 1009
+Oct 14 16:50:46: INFO: PAT: pid: 16 NIT
+Oct 14 16:50:46: INFO: PAT: pid: 100 PMT pnr: 10680
+Oct 14 16:50:46: INFO: PAT: pid: 300 PMT pnr: 10682
+Oct 14 16:50:46: INFO: PAT: crc32: 0xF48537A6
+Oct 14 16:50:46: INFO: PMT: pnr: 10680
+Oct 14 16:50:46: INFO: PMT: pid: 101 PCR
+Oct 14 16:50:46: INFO: VIDEO: pid: 101 type: MPEG-4 AVC/H.264, ISO/IEC 14496-10 (0x1B)
+Oct 14 16:50:46: INFO: VIDEO: descriptor: 0x28046400283F
+Oct 14 16:50:46: INFO: AUDIO: pid: 103 type: MPEG-1 audio, ISO/IEC 11172-3 (0x03)
+Oct 14 16:50:46: INFO: AUDIO: Language: spa
+Oct 14 16:50:46: INFO: AUDIO: pid: 104 type: MPEG-1 audio, ISO/IEC 11172-3 (0x03)
+Oct 14 16:50:46: INFO: AUDIO: Language: eng
+Oct 14 16:50:46: INFO: DATA: pid: 110 type: Private sections, ISO/IEC 13818-1 (0x05)
+Oct 14 16:50:46: INFO: DATA: descriptor: 0x6F030010E0
+Oct 14 16:50:46: INFO: SUB: pid: 111 type: Private PES, ISO/IEC 13818-1 (0x06)
+Oct 14 16:50:46: INFO: SUB: descriptor: 0x59087370611000020002
+Oct 14 16:50:46: INFO: PMT: crc32: 0xF74D2D05
+Oct 14 16:50:46: INFO: PMT: pnr: 10682
+Oct 14 16:50:46: INFO: PMT: pid: 301 PCR
+Oct 14 16:50:46: INFO: AUDIO: pid: 301 type: MPEG-1 audio, ISO/IEC 11172-3 (0x03)
+Oct 14 16:50:46: INFO: AUDIO: Language: spa
+Oct 14 16:50:46: INFO: PMT: crc32: 0xEEE42887
+Oct 14 16:50:46: INFO: Bitrate: 2548 Kbit/s
+Oct 14 16:50:46: INFO: SDT: tsid: 1009
+Oct 14 16:50:46: INFO: SDT: sid: 10680
+Oct 14 16:50:46: INFO: SDT:    Service: Canal Extremadura TV
+Oct 14 16:50:46: INFO: SDT:    Provider: Canal Extremadura
+Oct 14 16:50:46: INFO: SDT: sid: 10682
+Oct 14 16:50:46: INFO: SDT:    Service: Canal Extremadura Radio
+Oct 14 16:50:46: INFO: SDT:    Provider: Canal Extremadura
+Oct 14 16:50:46: INFO: SDT: crc32: 0x400F1D94
+Oct 14 16:50:47: INFO: Bitrate: 4060 Kbit/s
+Oct 14 16:50:47: ERROR: CC: PID:17=1 
+Oct 14 16:50:48: INFO: Bitrate: 4879 Kbit/s
+Oct 14 16:50:48: ERROR: CC: PID:110=1 
+Oct 14 16:50:49: INFO: Bitrate: 6383 Kbit/s
+Oct 14 16:50:49: ERROR: CC: PID:16=1 
+Oct 14 16:50:50: INFO: Bitrate: 3929 Kbit/s
+Oct 14 16:50:51: INFO: Bitrate: 3730 Kbit/s
+Oct 14 16:50:52: INFO: Bitrate: 5107 Kbit/s
+Oct 14 16:50:53: INFO: Bitrate: 5799 Kbit/s
+Oct 14 16:50:54: INFO: Bitrate: 5171 Kbit/s
+Oct 14 16:50:55: INFO: Bitrate: 4123 Kbit/s
+Oct 14 16:50:56: INFO: Bitrate: 5338 Kbit/s
+Oct 14 16:50:57: INFO: Bitrate: 5106 Kbit/s
+Oct 14 16:50:58: INFO: Bitrate: 4485 Kbit/s
+Oct 14 16:50:59: INFO: Bitrate: 6744 Kbit/s
+Oct 14 16:51:00: INFO: Bitrate: 3862 Kbit/s
+Oct 14 16:51:01: INFO: Bitrate: 5337 Kbit/s
+Oct 14 16:51:02: INFO: Bitrate: 5106 Kbit/s
+Oct 14 16:51:03: INFO: Bitrate: 4551 Kbit/s
+Oct 14 16:51:04: INFO: Bitrate: 4223 Kbit/s
+Oct 14 16:51:05: INFO: Bitrate: 5501 Kbit/s
+Oct 14 16:51:06: INFO: Bitrate: 6156 Kbit/s
+Oct 14 16:51:07: INFO: [main] shutting down

@@ -1,0 +1,130 @@
+Oct 14 17:07:15: INFO: Starting Astra SM 0.2
+Oct 14 17:07:15: INFO: PAT: tsid: 16
+Oct 14 17:07:15: INFO: PAT: pid: 16 NIT
+Oct 14 17:07:15: INFO: PAT: pid: 1300 PMT pnr: 188
+Oct 14 17:07:15: INFO: PAT: pid: 1400 PMT pnr: 189
+Oct 14 17:07:15: INFO: PAT: pid: 1500 PMT pnr: 190
+Oct 14 17:07:15: INFO: PAT: pid: 1700 PMT pnr: 191
+Oct 14 17:07:15: INFO: PAT: crc32: 0x79778B4F
+Oct 14 17:07:15: INFO: PMT: pnr: 188
+Oct 14 17:07:15: INFO: PMT: pid: 1301 PCR
+Oct 14 17:07:15: INFO: DATA: pid: 512 type: DSM-CC stream descriptors, ISO/IEC 13818-6 (0x0C)
+Oct 14 17:07:15: INFO: DATA: Stream ID: 31
+Oct 14 17:07:15: INFO: DATA: descriptor: 0x1405001F010000
+Oct 14 17:07:15: INFO: VIDEO: pid: 1301 type: MPEG-4 AVC/H.264, ISO/IEC 14496-10 (0x1B)
+Oct 14 17:07:15: INFO: VIDEO: descriptor: 0x28046400283F
+Oct 14 17:07:15: INFO: SUB: pid: 1302 type: Private PES, ISO/IEC 13818-1 (0x06)
+Oct 14 17:07:15: INFO: SUB: type: teletext
+Oct 14 17:07:15: INFO: SUB:    page: 100 (initial page), language: spa
+Oct 14 17:07:15: INFO: SUB:    page: 088 (subtitle page), language: spa
+Oct 14 17:07:15: INFO: SUB: descriptor: 0x45080106E7E8E9C7C8C9
+Oct 14 17:07:15: INFO: AUDIO: pid: 1303 type: MPEG-1 audio, ISO/IEC 11172-3 (0x03)
+Oct 14 17:07:15: INFO: AUDIO: Language: spa
+Oct 14 17:07:15: INFO: AUDIO: pid: 1304 type: MPEG-1 audio, ISO/IEC 11172-3 (0x03)
+Oct 14 17:07:15: INFO: AUDIO: Language: qaa
+Oct 14 17:07:15: INFO: AUDIO: pid: 1305 type: MPEG-1 audio, ISO/IEC 11172-3 (0x03)
+Oct 14 17:07:15: INFO: AUDIO: Language: spa
+Oct 14 17:07:15: INFO: DATA: pid: 1306 type: Private sections, ISO/IEC 13818-1 (0x05)
+Oct 14 17:07:15: INFO: DATA: descriptor: 0x6F00
+Oct 14 17:07:15: INFO: PMT: crc32: 0x15939CE4
+Oct 14 17:07:15: INFO: PMT: pnr: 189
+Oct 14 17:07:15: INFO: PMT: pid: 1401 PCR
+Oct 14 17:07:15: INFO: DATA: pid: 512 type: DSM-CC stream descriptors, ISO/IEC 13818-6 (0x0C)
+Oct 14 17:07:15: INFO: DATA: Stream ID: 31
+Oct 14 17:07:15: INFO: DATA: descriptor: 0x1405001F010000
+Oct 14 17:07:15: INFO: VIDEO: pid: 1401 type: MPEG-4 AVC/H.264, ISO/IEC 14496-10 (0x1B)
+Oct 14 17:07:15: INFO: VIDEO: descriptor: 0x28046400283F
+Oct 14 17:07:15: INFO: SUB: pid: 1402 type: Private PES, ISO/IEC 13818-1 (0x06)
+Oct 14 17:07:15: INFO: SUB: descriptor: 0x45080106E7E8E9C7C8C9
+Oct 14 17:07:15: INFO: SUB: type: teletext
+Oct 14 17:07:15: INFO: SUB:    page: 100 (initial page), language: spa
+Oct 14 17:07:15: INFO: SUB:    page: 088 (subtitle page), language: spa
+Oct 14 17:07:15: INFO: AUDIO: pid: 1403 type: MPEG-1 audio, ISO/IEC 11172-3 (0x03)
+Oct 14 17:07:15: INFO: AUDIO: Language: spa
+Oct 14 17:07:15: INFO: AUDIO: pid: 1404 type: MPEG-1 audio, ISO/IEC 11172-3 (0x03)
+Oct 14 17:07:15: INFO: AUDIO: Language: qaa
+Oct 14 17:07:15: INFO: AUDIO: pid: 1405 type: MPEG-1 audio, ISO/IEC 11172-3 (0x03)
+Oct 14 17:07:15: INFO: AUDIO: Language: spa
+Oct 14 17:07:15: INFO: DATA: pid: 1406 type: Private sections, ISO/IEC 13818-1 (0x05)
+Oct 14 17:07:15: INFO: DATA: descriptor: 0x6F00
+Oct 14 17:07:15: INFO: PMT: crc32: 0x7213029C
+Oct 14 17:07:16: INFO: PMT: pnr: 191
+Oct 14 17:07:16: INFO: PMT: pid: 1701 PCR
+Oct 14 17:07:16: INFO: DATA: pid: 512 type: DSM-CC stream descriptors, ISO/IEC 13818-6 (0x0C)
+Oct 14 17:07:16: INFO: DATA: Stream ID: 31
+Oct 14 17:07:16: INFO: DATA: descriptor: 0x1405001F010000
+Oct 14 17:07:16: INFO: SUB: pid: 1202 type: Private PES, ISO/IEC 13818-1 (0x06)
+Oct 14 17:07:16: INFO: SUB: type: teletext
+Oct 14 17:07:16: INFO: SUB:    page: 100 (initial page), language: spa
+Oct 14 17:07:16: INFO: SUB:    page: 088 (subtitle page), language: spa
+Oct 14 17:07:16: INFO: SUB: descriptor: 0x4510010EE7E8E9EAEBECEDC7C8C9CACBCCCD
+Oct 14 17:07:16: INFO: VIDEO: pid: 1701 type: MPEG-4 AVC/H.264, ISO/IEC 14496-10 (0x1B)
+Oct 14 17:07:16: INFO: VIDEO: descriptor: 0x28046400283F
+Oct 14 17:07:16: INFO: AUDIO: pid: 1703 type: MPEG-1 audio, ISO/IEC 11172-3 (0x03)
+Oct 14 17:07:16: INFO: AUDIO: Language: spa
+Oct 14 17:07:16: INFO: AUDIO: pid: 1704 type: MPEG-1 audio, ISO/IEC 11172-3 (0x03)
+Oct 14 17:07:16: INFO: AUDIO: Language: qaa
+Oct 14 17:07:16: INFO: AUDIO: pid: 1705 type: MPEG-1 audio, ISO/IEC 11172-3 (0x03)
+Oct 14 17:07:16: INFO: AUDIO: Language: spa
+Oct 14 17:07:16: INFO: DATA: pid: 1706 type: Private sections, ISO/IEC 13818-1 (0x05)
+Oct 14 17:07:16: INFO: DATA: descriptor: 0x6F00
+Oct 14 17:07:16: INFO: PMT: crc32: 0x9C29CE5D
+Oct 14 17:07:16: INFO: Bitrate: 15324 Kbit/s
+Oct 14 17:07:16: INFO: PMT: pnr: 190
+Oct 14 17:07:16: INFO: PMT: pid: 1501 PCR
+Oct 14 17:07:16: INFO: DATA: pid: 512 type: DSM-CC stream descriptors, ISO/IEC 13818-6 (0x0C)
+Oct 14 17:07:16: INFO: DATA: Stream ID: 31
+Oct 14 17:07:16: INFO: DATA: descriptor: 0x1405001F010000
+Oct 14 17:07:16: INFO: SUB: pid: 1102 type: Private PES, ISO/IEC 13818-1 (0x06)
+Oct 14 17:07:16: INFO: SUB: type: teletext
+Oct 14 17:07:16: INFO: SUB:    page: 100 (initial page), language: spa
+Oct 14 17:07:16: INFO: SUB:    page: 088 (subtitle page), language: spa
+Oct 14 17:07:16: INFO: SUB: descriptor: 0x4510010EE7E8E9EAEBECEDC7C8C9CACBCCCD
+Oct 14 17:07:16: INFO: VIDEO: pid: 1501 type: MPEG-4 AVC/H.264, ISO/IEC 14496-10 (0x1B)
+Oct 14 17:07:16: INFO: VIDEO: descriptor: 0x28046400283F
+Oct 14 17:07:16: INFO: AUDIO: pid: 1503 type: MPEG-1 audio, ISO/IEC 11172-3 (0x03)
+Oct 14 17:07:16: INFO: AUDIO: Language: spa
+Oct 14 17:07:16: INFO: AUDIO: pid: 1504 type: MPEG-1 audio, ISO/IEC 11172-3 (0x03)
+Oct 14 17:07:16: INFO: AUDIO: Language: qaa
+Oct 14 17:07:16: INFO: AUDIO: pid: 1505 type: MPEG-1 audio, ISO/IEC 11172-3 (0x03)
+Oct 14 17:07:16: INFO: AUDIO: Language: spa
+Oct 14 17:07:16: INFO: DATA: pid: 1506 type: Private sections, ISO/IEC 13818-1 (0x05)
+Oct 14 17:07:16: INFO: DATA: descriptor: 0x6F00
+Oct 14 17:07:16: INFO: PMT: crc32: 0xE6F8C53A
+Oct 14 17:07:16: INFO: SDT: tsid: 16
+Oct 14 17:07:16: INFO: SDT: sid: 188
+Oct 14 17:07:16: INFO: SDT:    Service: FDF
+Oct 14 17:07:16: INFO: SDT:    Provider: MEDIASET
+Oct 14 17:07:16: INFO: SDT: sid: 189
+Oct 14 17:07:16: INFO: SDT:    Service: Divinity
+Oct 14 17:07:16: INFO: SDT:    Provider: MEDIASET
+Oct 14 17:07:16: INFO: SDT: sid: 190
+Oct 14 17:07:16: INFO: SDT:    Service: Telecinco HD
+Oct 14 17:07:16: INFO: SDT:    Provider: MEDIASET
+Oct 14 17:07:16: INFO: SDT: sid: 191
+Oct 14 17:07:16: INFO: SDT:    Service: Cuatro HD
+Oct 14 17:07:16: INFO: SDT:    Provider: MEDIASET
+Oct 14 17:07:16: INFO: SDT: crc32: 0x25DE8307
+Oct 14 17:07:17: INFO: Bitrate: 20141 Kbit/s
+Oct 14 17:07:17: ERROR: CC: PID:17=1 PID:1102=1 PID:1406=1 PID:1500=1 PID:1501=1 PID:1503=1 PID:1504=1 PID:1505=1 PID:1706=1 
+Oct 14 17:07:18: INFO: Bitrate: 19094 Kbit/s
+Oct 14 17:07:19: INFO: Bitrate: 22006 Kbit/s
+Oct 14 17:07:20: INFO: Bitrate: 19583 Kbit/s
+Oct 14 17:07:21: INFO: Bitrate: 19417 Kbit/s
+Oct 14 17:07:22: INFO: Bitrate: 18405 Kbit/s
+Oct 14 17:07:23: INFO: Bitrate: 22074 Kbit/s
+Oct 14 17:07:23: ERROR: CC: PID:16=1 
+Oct 14 17:07:24: INFO: Bitrate: 19849 Kbit/s
+Oct 14 17:07:25: INFO: Bitrate: 19255 Kbit/s
+Oct 14 17:07:26: INFO: Bitrate: 18994 Kbit/s
+Oct 14 17:07:27: INFO: Bitrate: 20597 Kbit/s
+Oct 14 17:07:28: INFO: Bitrate: 20205 Kbit/s
+Oct 14 17:07:29: INFO: Bitrate: 19191 Kbit/s
+Oct 14 17:07:30: INFO: Bitrate: 20010 Kbit/s
+Oct 14 17:07:31: INFO: Bitrate: 19551 Kbit/s
+Oct 14 17:07:32: INFO: Bitrate: 20765 Kbit/s
+Oct 14 17:07:33: INFO: Bitrate: 19746 Kbit/s
+Oct 14 17:07:34: INFO: Bitrate: 19257 Kbit/s
+Oct 14 17:07:35: INFO: Bitrate: 20335 Kbit/s
+Oct 14 17:07:36: INFO: Bitrate: 20533 Kbit/s
+Oct 14 17:07:37: INFO: [main] shutting down

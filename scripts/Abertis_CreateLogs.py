@@ -1,5 +1,17 @@
 #!/usr/bin/env python3
+"""Create astra analysis logs for the Abertis/Cellnex (Hispasat 30.0W) feeds.
+
+Runs on the Enigma2 side. Instead of a hand-maintained transponder/PID table,
+it derives every (feed service reference, PID) pair from an astra.conf file,
+so the list of feeds always matches the generated suite.
+
+Each logical transponder exposes a single feed service reference and one astra
+output per PID; the script zaps to that service reference once per transponder
+and then runs ``astra --analyze`` on each PID's output URL.
+"""
 import os
+import re
+import sys
 import time
 import urllib.request
 import subprocess
@@ -7,145 +19,192 @@ import subprocess
 # =======================================================================
 # CONFIGURATION
 # =======================================================================
-# Define your transponders, their feed service reference, and their PIDs.
-# 'sref' is the Enigma2 Service Reference of the feed channel on that frequency.
-TRANSPONDERS = {
-    "11222_H_30000": {
-        "sref": "1:0:1:BD1:EA74:1:CE40000:0:0:0:",
-        "pids": [2025, 2026, 2027, 2028, 2035, 2050, 2060]
-    },
-    "11347_H_20858": {
-        "sref": "1:0:1:CE5:EA77:0:CE40000:0:0:0:",
-        "pids": [2302, 2303, 2305, 2306, 2308]
-    },
-    "11382_H_30000": {
-        "sref": "1:0:1:DC0:EA79:1:CE40000:0:0:0:",
-        "pids": [2520, 2521, 2522, 2523, 2524, 2531, 2532, 2533, 2534]
-    },
-    "11653_H_19680": {
-        "sref": "1:0:1:515:EA63:0:CE40000:0:0:0:",
-        "pids": [301, 303]
-    },
-    "11674_H_15750": {
-        "sref": "1:0:1:58C:EA64:0:CE40000:0:0:0:",
-        "pids": [420, 421, 423, 431, 433]
-    },
-    "12548_V_29600": {
-        "sref": "1:0:1:6A5:EA67:0:CE40000:0:0:0:",
-        "pids": [701, 702, 703]
-    },
-    "12671_V_30000": {
-        "sref": "1:0:1:3E8:EA61:0:CE40000:0:0:0:",
-        "pids": [8000, 8004, 8005, 8006]
-    },
-    "12631_V_30000": {
-        "sref": "1:0:1:3E9:EA62:0:CE40000:0:0:0:",
-        "pids": [8001, 8002, 8003]
-    },
-    "12584_V_16900": {
-        "sref": "1:0:1:3F0:EA68:0:CE43128:0:0:0:",
-        "pids": [8008]
-    }
-}
-
-# The command used to analyze the stream. 
-# Because astra.conf outputs the streams to a local HTTP port, we analyze that URL.
-ANALYZE_CMD_TEMPLATE = "astra --analyze http://127.0.0.1:9999/abertis/pid{pid}"
+# Path to the astra.conf produced by Abertis_DX_Suite.py (override by passing
+# a path as the first argument, or via the ASTRA_CONF environment variable).
+ASTRA_CONF_PATH = (sys.argv[1] if len(sys.argv) > 1
+                    else os.environ.get('ASTRA_CONF', '/etc/astra/astra.conf'))
 
 # How long (in seconds) to run the analysis for each PID to gather SDT/PMT data
-ANALYZE_DURATION = 22
+ANALYZE_DURATION = 30
+
+# Delay after a successful zap before launching astra --analyze. Lets the
+# feed service settle so the analysis matches a manual run.
+POST_ZAP_SETTLE = 4
+
+# Zap to the feed service before analyzing a transponder group. Set to False to
+# analyze the streams exactly as they come in now (matches a manual
+# `astra --analyze URL` run made without zapping first).
+ZAP_BEFORE_ANALYZE = True
 
 # Output directory for the logs
 OUTPUT_DIR = "pid_logs"
 
 # =======================================================================
 
+
+def parse_astra_conf(path):
+    """Return one record per PID channel as found in ``make_channel(...)`` blocks.
+
+    Each record carries the channel label, its feed service reference (taken
+    from that same channel's input URL) and the output URL that astra
+    --analyze must use. Channels are tuned one at a time so the analysis always
+    follows the correct feed service.
+    """
+    channels = []
+
+    try:
+        with open(path, 'r', encoding='utf-8') as f:
+            text = f.read()
+    except OSError as exc:
+        print('Error: cannot read astra.conf %s: %s' % (path, exc))
+        return channels
+
+    for block in re.finditer(r'make_channel\s*\(\s*\{(.*?)\}\s*\)',
+                             text, re.DOTALL):
+        body = block.group(1)
+
+        name_m = re.search(r'name\s*=\s*"([^"]*)"', body)
+        input_m = re.search(r'input\s*=\s*\{\s*"([^"]*)"', body, re.DOTALL)
+        output_m = re.search(r'output\s*=\s*\{\s*"([^"]*)"', body, re.DOTALL)
+        if not input_m or not output_m:
+            continue
+
+        input_url = input_m.group(1)
+        output_url = output_m.group(1)
+
+        # Strip the scheme/host/port, keep the trailing Enigma2 sref (colon).
+        sref = input_url.split('://', 1)[-1]
+        if '/' in sref:
+            sref = sref.split('/', 1)[1]
+        sref = sref.strip()
+
+        name = name_m.group(1).strip() if name_m else ''
+        pid = None
+        pid_m = re.search(r'/pid(\d+)', output_url, re.IGNORECASE)
+        if pid_m:
+            pid = int(pid_m.group(1))
+        else:
+            pid_m = re.search(r'PID\s+(\d+)', name, re.IGNORECASE)
+            if pid_m:
+                pid = int(pid_m.group(1))
+        if pid is None:
+            continue
+
+        # Use the exact output URL published in astra.conf.
+        analyze_url = output_url.strip()
+
+        label = name.split(' PID ', 1)[0].strip() if ' PID ' in name else name
+        if not label:
+            label = sref
+
+        channels.append({'label': label, 'sref': sref, 'pid': pid,
+                         'url': analyze_url})
+
+    return channels
+
+
 def zap_to_service(sref):
-    """Zap to the specified Enigma2 service reference using the local Web Interface."""
+    """Zap to the specified Enigma2 service reference using the local WebIf."""
     # Encode colons to ensure WebIf properly parses the string
     encoded_sref = sref.replace(':', '%3A')
-    url = f"http://127.0.0.1/web/zap?sRef={encoded_sref}"
+    url = 'http://127.0.0.1/web/zap?sRef=%s' % encoded_sref
     try:
-        print(f"[*] Zapping to feed service: {sref}")
+        print('[*] Zapping to feed service: %s' % sref)
+        print('    -> zap command: curl -s %r | head' % url)
         # Call the local WebIf to change the channel
         with urllib.request.urlopen(url, timeout=5) as response:
             result = response.read().decode('utf-8')
-            if "true" in result.lower():
-                print("    -> Zap successful. Waiting 6 seconds for tuner lock & stream start...")
-                time.sleep(6) # Give the tuner time to lock and Astra time to decrypt/route
+            if 'true' in result.lower():
+                print('    -> Zap successful. Waiting 6 seconds for tuner lock'
+                      ' & stream start...')
+                time.sleep(6)  # Give the tuner time to lock and astra time to route
                 return True
             else:
-                print("    -> Zap failed. Check the sRef format.")
+                print('    -> Zap failed. Check the sRef format.')
                 return False
     except Exception as e:
-        print(f"    -> Error during zap (Is WebIf running?): {e}")
+        print('    -> Error during zap (Is WebIf running?): %s' % e)
         return False
 
-def analyze_pid(pid):
-    """Run astra --analyze for the specified PID, wait, then terminate and save log."""
-    log_filepath = os.path.join(OUTPUT_DIR, f"pid{pid}.log")
-    cmd = ANALYZE_CMD_TEMPLATE.format(pid=pid)
-    
-    print(f"[*] Analyzing PID {pid} for {ANALYZE_DURATION} seconds...")
-    
-    with open(log_filepath, "w", encoding='utf-8') as log_file:
+
+def analyze_pid(pid, url):
+    """Run astra --analyze for the specified PID/output URL, save the log."""
+    log_filepath = os.path.join(OUTPUT_DIR, 'pid%d.log' % pid)
+    cmd = "astra --analyze '%s'" % url
+
+    print('[*] Analyzing PID %d for %d seconds...' % (pid, ANALYZE_DURATION))
+    print('    -> command: %s' % cmd)
+
+    with open(log_filepath, 'w', encoding='utf-8') as log_file:
         try:
             # Start the astra analysis process in the background
             process = subprocess.Popen(
-                cmd, 
-                shell=True, 
-                stdout=log_file, 
+                cmd,
+                shell=True,
+                stdout=log_file,
                 stderr=subprocess.STDOUT
             )
-            
+
             # astra --analyze runs forever, so we intentionally wait for a timeout
             process.wait(timeout=ANALYZE_DURATION)
-            
+
         except subprocess.TimeoutExpired:
             # Time is up! Terminate the process to finish the log
             process.terminate()
             process.wait()
-            print(f"    -> Finished PID {pid}. Log saved to {log_filepath}")
+            print('    -> Finished PID %d. Log saved to %s' % (pid, log_filepath))
         except Exception as e:
-            print(f"    -> Error running analysis for PID {pid}: {e}")
+            print('    -> Error running analysis for PID %d: %s' % (pid, e))
+
 
 def main():
+    channels = parse_astra_conf(ASTRA_CONF_PATH)
+    if not channels:
+        print('No feeds found in %s' % ASTRA_CONF_PATH)
+        sys.exit(1)
+
     # 1. Create the pid_logs directory if it doesn't exist
     if not os.path.exists(OUTPUT_DIR):
         os.makedirs(OUTPUT_DIR)
-        print(f"Created directory: {OUTPUT_DIR}/")
+        print('Created directory: %s/' % OUTPUT_DIR)
 
     total_pids_scanned = 0
 
-    # 2. Iterate through each Transponder group
-    for tp_name, tp_data in TRANSPONDERS.items():
-        print("\n" + "="*50)
-        print(f"Starting Scan for Transponder/Group: {tp_name}")
-        print("="*50)
-        
-        sref = tp_data.get("sref")
-        pids = tp_data.get("pids", [])
-        
-        if not sref or not pids:
-            print(f"Skipping {tp_name}: Missing sref or pids configuration.")
-            continue
+    print('Parsed %d PID channel(s) from %s' % (len(channels), ASTRA_CONF_PATH))
 
-        # 3. Zap to the transponder's feed channel
-        zap_success = zap_to_service(sref)
-        
-        if not zap_success:
-            print(f"Skipping PIDs for {tp_name} due to zap failure.")
-            continue
+    # 2. Tune to each feed service before analyzing that PID's output URL
+    for idx, ch in enumerate(channels, 1):
+        label = ch['label']
+        sref = ch['sref']
+        pid = ch['pid']
+        url = ch['url']
 
-        # 4. Scan each PID belonging to this frequency
-        for pid in pids:
-            analyze_pid(pid)
-            total_pids_scanned += 1
+        print('\n' + '=' * 50)
+        print('Starting Scan for Channel: %s (PID %d)' % (label, pid))
+        print('=' * 50)
 
-    print("\n" + "="*50)
-    print(f"Scan Complete! Processed {total_pids_scanned} PIDs.")
-    print(f"All logs are safely stored in the '{OUTPUT_DIR}' directory.")
-    print("="*50)
+        # 3. Tune to this PID's feed service first
+        if ZAP_BEFORE_ANALYZE:
+            zap_success = zap_to_service(sref)
+            if not zap_success:
+                print('Skipping PID %d for %s due to zap failure.' % (pid, label))
+                continue
+            if POST_ZAP_SETTLE > 0:
+                print('[*] Letting feed service settle for %d seconds...' %
+                      POST_ZAP_SETTLE)
+                time.sleep(POST_ZAP_SETTLE)
+        else:
+            print('[*] Skipping zap; analyzing streams as currently tuned.')
 
-if __name__ == "__main__":
+        # 4. Scan this PID's output channel
+        analyze_pid(pid, url)
+        total_pids_scanned += 1
+
+    print('\n' + '=' * 50)
+    print('Scan Complete! Processed %d PIDs.' % total_pids_scanned)
+    print('All logs are safely stored in the \'%s\' directory.' % OUTPUT_DIR)
+    print('=' * 50)
+
+
+if __name__ == '__main__':
     main()

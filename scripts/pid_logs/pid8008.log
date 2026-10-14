@@ -1,0 +1,45 @@
+Oct 14 17:08:54: INFO: Starting Astra SM 0.2
+Oct 14 17:08:55: INFO: Bitrate: 0 Kbit/s
+Oct 14 17:08:56: INFO: Bitrate: 8814 Kbit/s
+Oct 14 17:08:57: INFO: Bitrate: 8678 Kbit/s
+Oct 14 17:08:57: ERROR: CC: PID:1=1 
+Oct 14 17:08:57: ERROR: Scrambled: 1=1 
+Oct 14 17:08:58: INFO: Bitrate: 8325 Kbit/s
+Oct 14 17:08:58: ERROR: CC: PID:0=1 
+Oct 14 17:08:59: INFO: Bitrate: 8819 Kbit/s
+Oct 14 17:09:00: INFO: Bitrate: 8860 Kbit/s
+Oct 14 17:09:01: INFO: Bitrate: 8118 Kbit/s
+Oct 14 17:09:02: INFO: Bitrate: 7901 Kbit/s
+Oct 14 17:09:02: ERROR: CC: PID:17=1 
+Oct 14 17:09:02: ERROR: Scrambled: 17=1 
+Oct 14 17:09:03: INFO: Bitrate: 8973 Kbit/s
+Oct 14 17:09:03: ERROR: CC: PID:1=1 
+Oct 14 17:09:03: ERROR: Scrambled: 1=1 
+Oct 14 17:09:04: INFO: Bitrate: 8734 Kbit/s
+Oct 14 17:09:05: INFO: Bitrate: 9041 Kbit/s
+Oct 14 17:09:05: ERROR: CC: PID:1=1 
+Oct 14 17:09:05: ERROR: Scrambled: 1=1 
+Oct 14 17:09:06: INFO: Bitrate: 7830 Kbit/s
+Oct 14 17:09:07: INFO: Bitrate: 7961 Kbit/s
+Oct 14 17:09:07: ERROR: CC: PID:18=1 
+Oct 14 17:09:07: ERROR: Scrambled: 18=1 
+Oct 14 17:09:08: INFO: Bitrate: 8995 Kbit/s
+Oct 14 17:09:08: ERROR: CC: PID:1=1 PID:18=1 
+Oct 14 17:09:08: ERROR: Scrambled: 18=1 
+Oct 14 17:09:09: INFO: Bitrate: 8796 Kbit/s
+Oct 14 17:09:09: ERROR: CC: PID:0=2 PID:1=1 
+Oct 14 17:09:09: ERROR: Scrambled: 0=2 
+Oct 14 17:09:10: INFO: Bitrate: 8710 Kbit/s
+Oct 14 17:09:11: INFO: Bitrate: 7642 Kbit/s
+Oct 14 17:09:11: ERROR: Scrambled: 0=1 
+Oct 14 17:09:12: INFO: Bitrate: 9003 Kbit/s
+Oct 14 17:09:12: ERROR: CC: PID:0=1 PID:18=1 
+Oct 14 17:09:12: ERROR: Scrambled: 0=1 18=1 
+Oct 14 17:09:13: INFO: Bitrate: 7629 Kbit/s
+Oct 14 17:09:14: INFO: Bitrate: 8856 Kbit/s
+Oct 14 17:09:14: ERROR: CC: PID:17=1 PID:18=1 
+Oct 14 17:09:14: ERROR: Scrambled: 17=1 18=1 
+Oct 14 17:09:15: INFO: Bitrate: 8887 Kbit/s
+Oct 14 17:09:15: ERROR: CC: PID:0=1 
+Oct 14 17:09:15: ERROR: Scrambled: 0=1 17=1 
+Oct 14 17:09:16: INFO: [main] shutting down
