@@ -7,7 +7,7 @@ Reads the transponder / stream / channel database published as JSON
 pieces needed to receive the single-PID feeds through Enigma2 streamrelay +
 astra:
 
-  1. lamedb                    Enigma2 lamedb (v4 sectioned or classic v3):
+  1. lamedb                    Enigma2 lamedb (v4 sectioned layout):
                               the real transponders plus one fake feed
                               service per stream PID. The service SID comes
                               from the JSON "sid" field (fallback PID+1000)
@@ -107,7 +107,7 @@ def parse_transponders(data):
         if pol not in POLARISATION_CODES:
             print('Warning: unusual polarisation %r on txp %s' % (pol, entry.get('txp_no')))
         if 'PLS' in delivery or 'MISO' in delivery:
-            print('Warning: txp %s (%s) uses %s - lamedb v3 cannot carry PLS/MISO '
+            print('Warning: txp %s (%s) uses %s - lamedb cannot carry PLS/MISO '
                   'parameters, add them manually if your image supports it'
                   % (entry.get('txp_no'), entry.get('freq_pol_mode'),
                      delivery[delivery.find('PLS' if 'PLS' in delivery else 'MISO'):]))
@@ -278,23 +278,14 @@ def lamedb_text(tp_entries, svc_entries, fmt='v4'):
     """Serialize as lamedb v4 (sectioned, written by current images) or
     v3 (classic layout for older images). Service and transponder blocks
     themselves are identical in both versions."""
-    if fmt == 'v4':
-        lines = ['eDVB services /4/', 'transponders']
-        for _key, block in tp_entries:
-            lines.extend(block)
-            lines.append('/')
-        lines.extend(('end', 'services'))
-        for _key, block in svc_entries:
-            lines.extend(block)
-        lines.append('end')
-    else:
-        lines = ['eDVB services /3/']
-        for _key, block in tp_entries:
-            lines.extend(block)
+    lines = ['eDVB services /4/', 'transponders']
+    for _key, block in tp_entries:
+        lines.extend(block)
         lines.append('/')
-        for _key, block in svc_entries:
-            lines.extend(block)
-        lines.append('/')
+    lines.extend(('end', 'services'))
+    for _key, block in svc_entries:
+        lines.extend(block)
+    lines.append('end')
     return '\n'.join(lines) + '\n'
 
 
@@ -366,22 +357,16 @@ def bouquet_text(streams, args):
 def parse_lamedb(lines):
     """Parse a lamedb file body into (fmt, tp_blocks, svc_blocks).
 
-    fmt 'v4' is the sectioned layout written by current images
-    (transponders ... each block closed by '/' ... end / services ... end),
-    fmt 'v3' the classic layout (contiguous transponders, one '/' separator,
-    services closed by '/').
+    Only the v4 sectioned layout (transponders ... each block closed by '/'
+    ... end / services ... end) is supported.
     """
     header = lines[0] if lines else ''
     if not header.startswith('eDVB services'):
         sys.exit('Error: not an Enigma2 lamedb (header %r)' % header)
-    if '/4/' in header:
-        fmt = 'v4'
-    elif '/3/' in header:
-        fmt = 'v3'
-    else:
-        print('Warning: unexpected lamedb header %r - assuming v3 layout'
-              % header)
-        fmt = 'v3'
+    if '/4/' not in header:
+        sys.exit('Error: unsupported lamedb format %r (only v4 /4/ supported)'
+                 % header)
+    fmt = 'v4'
 
     idx = 1
     tp_blocks = OrderedDict()
@@ -405,26 +390,13 @@ def parse_lamedb(lines):
             if idx < len(lines) and lines[idx].strip() == '/':
                 idx += 1  # per-block terminator, regenerated on save
             tp_blocks[tuple(header_line.split(':')[:3])] = block
-    else:
-        while idx < len(lines) and lines[idx].strip() != '/':
-            if not lines[idx].strip():
-                idx += 1
-                continue
-            header_line = lines[idx]
-            idx += 1
-            block = [header_line]
-            while idx < len(lines) and lines[idx].startswith('\t'):
-                block.append(lines[idx])
-                idx += 1
-            tp_blocks[tuple(header_line.split(':')[:3])] = block
-        idx += 1  # skip the '/' closing the transponder section
 
     svc_blocks = OrderedDict()
     if fmt == 'v4' and idx < len(lines) and lines[idx].strip() == 'services':
         idx += 1
     while idx < len(lines):
         line = lines[idx]
-        if not line.strip() or (fmt == 'v3' and line.strip() == '/'):
+        if not line.strip():
             idx += 1
             continue
         if fmt == 'v4' and line.strip() == 'end':
@@ -445,42 +417,104 @@ def parse_lamedb(lines):
 def merge_lamedb(path, tp_entries, svc_entries):
     """Insert/replace our transponders and services inside an existing lamedb.
 
-    The container format (v3/v4) of the existing file is detected and kept.
+    Only v4 /4/ lamedb files are supported.
     """
     with open(path, 'r', encoding='utf-8', errors='surrogateescape') as f:
         lines = f.read().split('\n')
 
     fmt, tp_blocks, svc_blocks = parse_lamedb(lines)
 
-    replaced = sum(1 for key, _ in tp_entries if key in tp_blocks) \
-        + sum(1 for key, _ in svc_entries if key in svc_blocks)
+    # Clean stale entries first (avoid duplicates): remove transponders
+    # matching the generated ones and services whose name contains
+    # "abertis", then record how many generated keys already existed.
+    generated_tp_keys = {key for key, _ in tp_entries}
+    original_tp_keys = set(tp_blocks)
+    original_svc_keys = set(svc_blocks)
+    for key in list(tp_blocks):
+        if key in generated_tp_keys:
+            del tp_blocks[key]
+    for key in list(svc_blocks):
+        block = svc_blocks[key]
+        name = ''
+        if len(block) > 1:
+            candidate = block[1]
+            if candidate.strip() and not candidate.startswith(SERVICE_FLAG_PREFIXES):
+                name = candidate.strip()
+        if 'abertis' in name.lower():
+            del svc_blocks[key]
+
+    replaced = sum(1 for key, _ in tp_entries if key in original_tp_keys) \
+        + sum(1 for key, _ in svc_entries if key in original_svc_keys)
     for key, block in tp_entries:
         tp_blocks[key] = block
     for key, block in svc_entries:
         svc_blocks[key] = block
 
-    out = [lines[0]]
-    if fmt == 'v4':
-        out.append('transponders')
-        for block in tp_blocks.values():
-            out.extend(block)
-            out.append('/')
-        out.extend(('end', 'services'))
-        for block in svc_blocks.values():
-            out.extend(block)
-        out.append('end')
-    else:
-        for block in tp_blocks.values():
-            out.extend(block)
+    out = ['eDVB services /4/', 'transponders']
+    for block in tp_blocks.values():
+        out.extend(block)
         out.append('/')
-        for block in svc_blocks.values():
-            out.extend(block)
-        out.append('/')
+    out.extend(('end', 'services'))
+    for block in svc_blocks.values():
+        out.extend(block)
+    out.append('end')
 
     shutil.copy2(path, path + '.bak')
     with open(path, 'w', encoding='utf-8', errors='surrogateescape') as f:
         f.write('\n'.join(out) + '\n')
     return len(tp_blocks), len(svc_blocks), replaced
+
+
+def edit_lamedb(path, tp_entries, svc_entries):
+    """Edit an external lamedb in place with cleanup before adding entries."""
+    with open(path, 'r', encoding='utf-8', errors='surrogateescape') as f:
+        lines = f.read().split('\n')
+
+    fmt, tp_blocks, svc_blocks = parse_lamedb(lines)
+
+    original_tp_keys = set(tp_blocks)
+    original_svc_keys = set(svc_blocks)
+
+    generated_tp_keys = {key for key, _ in tp_entries}
+    removed_tp = 0
+    for key in list(tp_blocks):
+        if key in generated_tp_keys:
+            removed_tp += 1
+            del tp_blocks[key]
+
+    removed_svc = 0
+    for key in list(svc_blocks):
+        block = svc_blocks[key]
+        name = ''
+        if len(block) > 1:
+            candidate = block[1]
+            if candidate.strip() and not candidate.startswith(SERVICE_FLAG_PREFIXES):
+                name = candidate.strip()
+        if 'abertis' in name.lower():
+            removed_svc += 1
+            del svc_blocks[key]
+
+    replaced = (sum(1 for key, _ in tp_entries if key in original_tp_keys)
+                + sum(1 for key, _ in svc_entries if key in original_svc_keys))
+
+    for key, block in tp_entries:
+        tp_blocks[key] = block
+    for key, block in svc_entries:
+        svc_blocks[key] = block
+
+    out = ['eDVB services /4/', 'transponders']
+    for block in tp_blocks.values():
+        out.extend(block)
+        out.append('/')
+    out.extend(('end', 'services'))
+    for block in svc_blocks.values():
+        out.extend(block)
+    out.append('end')
+
+    shutil.copy2(path, path + '.bak')
+    with open(path, 'w', encoding='utf-8', errors='surrogateescape') as f:
+        f.write('\n'.join(out) + '\n')
+    return len(tp_blocks), len(svc_blocks), replaced, removed_tp, removed_svc
 
 
 def main():
@@ -503,13 +537,17 @@ def main():
                         help='merge the generated entries into this existing lamedb '
                              '(a .bak backup is written first) instead of writing '
                              'a standalone lamedb')
-    parser.add_argument('--lamedb-format', choices=('v3', 'v4'), default='v4',
+    parser.add_argument('--edit-lamedb', metavar='LAMEDB',
+                        help='edit this existing lamedb in place: remove '
+                             'transponders matching the generated ones and '
+                             'services whose name contains "abertis", then add '
+                             'the generated entries (a .bak backup is written '
+                             'first). Only v4 /4/ lamedb files are supported')
+    parser.add_argument('--lamedb-format', choices=('v4',), default='v4',
                         dest='lamedb_format',
                         help='container format of a standalone lamedb: v4 = '
                              'sectioned layout written by current images '
-                             '(default), v3 = classic layout for older images. '
-                             'Merge mode always keeps the format of the '
-                             'existing lamedb.')
+                             '(default). Only v4 is supported.')
     parser.add_argument('--position', type=int, default=-300,
                         help='orbital position in tenths of a degree, West negative '
                              '(default: %(default)s = 30.0W)')
@@ -564,6 +602,14 @@ def main():
         print('Merged into %s: %d transponders / %d services in total '
               '(%d replaced, backup at %s.bak)'
               % (args.merge_lamedb, n_tp, n_svc, replaced, args.merge_lamedb))
+    elif args.edit_lamedb:
+        n_tp, n_svc, replaced, removed_tp, removed_svc = edit_lamedb(
+            args.edit_lamedb, tp_entries, svc_entries)
+        print('Edited %s: %d transponders / %d services in total '
+              '(%d replaced, %d transponders removed, %d abertis services '
+              'removed, backup at %s.bak)'
+              % (args.edit_lamedb, n_tp, n_svc, replaced, removed_tp,
+                 removed_svc, args.edit_lamedb))
     else:
         path = os.path.join(args.out_dir, 'lamedb')
         with open(path, 'w', encoding='utf-8') as f:

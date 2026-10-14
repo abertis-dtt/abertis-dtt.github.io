@@ -60,6 +60,8 @@ DEFAULTS = {
     'bouquet': 'userbouquet.abertis.tv',
     'merge_enabled': False,
     'merge_path': '/etc/enigma2/lamedb',
+    'edit_enabled': False,
+    'edit_path': '/etc/enigma2/lamedb',
     'lamedb_format': 'v4',
     'position': -300,
     'relay_host': 'localhost',
@@ -124,16 +126,26 @@ OPTIONS = OrderedDict((
         'help': 'The lamedb file to merge into, normally '
                 '/etc/enigma2/lamedb on the box. A backup is saved as '
                 '<file>.bak before anything is touched.'}),
+    ('edit_enabled', {
+        'section': 'output', 'label': 'Edit external lamedb',
+        'help': 'Instead of writing a standalone lamedb, edit an existing '
+                'Enigma2 lamedb in place: remove transponders matching the '
+                'generated ones and services whose name contains "abertis", '
+                'then inject the generated entries. A .bak backup is written '
+                'first.'}),
+    ('edit_path', {
+        'section': 'output', 'label': 'lamedb to edit',
+        'help': 'The lamedb file to edit, normally /etc/enigma2/lamedb on '
+                'the box. A backup is saved as <file>.bak before anything is '
+                'touched.'}),
     ('lamedb_format', {
         'section': 'output', 'label': 'lamedb format',
         'help': 'Container layout of a standalone lamedb: "v4" is the '
                 'sectioned format (header /4/, literal transponders / '
                 'services / end keywords, one / after every transponder) '
                 'written and required by current OpenATV, OpenViX, OpenBH '
-                'and recent OpenPLi images. "v3" is the classic single-'
-                'separator layout for older images. Transponder and service '
-                'blocks are identical in both. In merge mode the format of '
-                'the existing lamedb is detected and kept automatically, '
+                'and recent OpenPLi images. Only v4 is supported now. '
+                'Transponder and service blocks are identical either way, '
                 'so this setting only affects the standalone file.'}),
     ('bouquet', {
         'section': 'output', 'label': 'Bouquet file name',
@@ -262,6 +274,11 @@ def validate_values(v):
         problems.append('Output directory is empty.')
     if v['merge_enabled'] and not v['merge_path'].strip():
         problems.append('Merge mode is enabled but no lamedb path is given.')
+    if v.get('edit_enabled') and v.get('edit_path', '').strip() and \
+            not os.path.isfile(os.path.expanduser(v['edit_path'].strip())):
+        problems.append('lamedb to edit not found: %s' % v['edit_path'])
+    if v.get('edit_enabled') and not str(v.get('edit_path') or '').strip():
+        problems.append('Edit mode is enabled but no lamedb path is given.')
     try:
         pos = int(v['position'])
         if not -1800 <= pos <= 1800:
@@ -320,6 +337,8 @@ def build_cli_command(v):
     parts += ['--out-dir', shlex.quote(v['out_dir'].strip() or '.')]
     if v['merge_enabled'] and v['merge_path'].strip():
         parts += ['--merge-lamedb', shlex.quote(v['merge_path'].strip())]
+    if v.get('edit_enabled') and str(v.get('edit_path') or '').strip():
+        parts += ['--edit-lamedb', shlex.quote(v['edit_path'].strip())]
     parts += ['--position', position]
     parts += ['--relay-host', shlex.quote(v['relay_host'].strip()),
               '--relay-port', relay_port]
@@ -374,8 +393,11 @@ def generate_artifacts(v, txps, streams):
     written = []
     summary = []
     merged = None
+    edited = None
     merge_path = os.path.expanduser(v['merge_path'].strip()) \
         if v['merge_enabled'] and v['merge_path'].strip() else None
+    edit_path = os.path.expanduser(v['edit_path'].strip()) \
+        if v.get('edit_enabled') and str(v.get('edit_path') or '').strip() else None
     try:
         os.makedirs(out_dir, exist_ok=True)
         if merge_path:
@@ -385,7 +407,17 @@ def generate_artifacts(v, txps, streams):
             summary.append('lamedb: merged %d transponders / %d services into '
                            '%s (%d replaced, backup .bak written)'
                            % (merged[0], merged[1], merge_path, merged[2]))
-        else:
+        if edit_path:
+            if not os.path.isfile(edit_path):
+                raise SuiteError('lamedb to edit not found: %s' % edit_path)
+            edited = dxs.edit_lamedb(edit_path, tp_entries, svc_entries)
+            merged = edited
+            summary.append('lamedb: edited %d transponders / %d services in '
+                           '%s (%d removed transponders, %d abertis services '
+                           'removed, backup .bak written)'
+                           % (edited[0], edited[1], edit_path, edited[3],
+                              edited[4]))
+        if not merge_path and not edit_path:
             fmt = v.get('lamedb_format') or 'v4'
             text = dxs.lamedb_text(tp_entries, svc_entries, fmt)
             path = os.path.join(out_dir, 'lamedb')
@@ -415,7 +447,7 @@ def generate_artifacts(v, txps, streams):
     except OSError as exc:
         raise SuiteError('Cannot write output: %s' % exc)
     return {'outputs': outputs, 'written': written,
-            'summary': summary, 'merged': merged}
+            'summary': summary, 'merged': merged, 'edited': edited}
 
 
 # ---------------------------------------------------------------------------
@@ -528,7 +560,7 @@ def run_checks():
             assert os.path.isfile(p), p
         print('PASS  generation round on fixture (standalone mode)')
 
-        # 6. merge rounds: v4 (current images) and v3 (classic) round-trips
+        # 6. merge round (v4 only)
         existing = os.path.join(tmp, 'lamedb')
         with open(existing, 'w', encoding='utf-8') as f:
             f.write('eDVB services /4/\n'
@@ -551,22 +583,31 @@ def run_checks():
         assert 'end\nservices\n' in merged and merged.rstrip('\n').endswith('end')
         assert os.path.isfile(existing + '.bak')
 
-        v3file = os.path.join(tmp, 'lamedb_v3')
-        with open(v3file, 'w', encoding='utf-8') as f:
-            f.write('eDVB services /3/\n'
-                    '00c00000:0f4c:0001\n'
-                    '\ts 10744000:22000000:0:5:192:2:0:0:0:0:0\n'
+        # 7. edit rounds: removes stale abertis services and matching txps
+        editfile = os.path.join(tmp, 'lamedb_edit')
+        with open(editfile, 'w', encoding='utf-8') as f:
+            f.write('eDVB services /4/\n'
+                    'transponders\n'
+                    '0ce40000:ea74:0001\n'
+                    '\ts 11222000:30000000:0:3:-300:2:0:0:0:0:0\n'
                     '/\n'
-                    '012c:00c00000:0f4c:0001:1:0\nZDF\n/\n')
-        result3 = generate_artifacts(dict(v, merge_enabled=True,
-                                          merge_path=v3file), txps, streams)
-        with open(v3file, encoding='utf-8') as f:
-            merged3 = f.read()
-        assert merged3.startswith('eDVB services /3/')
-        assert 'ZDF' in merged3 and 'Abertis@11222H30000 PID 2025' in merged3
-        assert 'transponders\n' not in merged3
-        assert '\nservices\n' not in merged3 and '\nend\n' not in merged3
-        print('PASS  generation round on fixture (merge mode, v4 and v3 kept)')
+                    'end\n'
+                    'services\n'
+                    '0bd1:0ce40000:ea74:0001:1:0\nAbertis@11222H30000 PID 2025 (old)\n'
+                    'p:ABERTIS,c:031fff,c:1807e9,c:191b71,C:2600,f:01\n'
+                    '012c:00c00000:0f4c:0001:1:0\nZDF\n'
+                    'end\n')
+        result3 = generate_artifacts(dict(v, merge_enabled=False,
+                                          edit_enabled=True,
+                                          edit_path=editfile), txps, streams)
+        assert result3['edited'] is not None
+        with open(editfile, encoding='utf-8') as f:
+            edited = f.read()
+        assert edited.startswith('eDVB services /4/\ntransponders\n')
+        assert 'ZDF' in edited and 'Abertis@11222H30000 PID 2025' in edited
+        assert 'old' not in edited
+        assert edited.count('\n0ce40000:ea74:0001\n') == 1
+        print('PASS  generation round on fixture (edit mode cleanup)')
     print('ALL CHECKS PASSED')
 
 
@@ -956,14 +997,36 @@ if TK_AVAILABLE:
                                   'merge_path')
             self._row(box, 'merge_path', w_mpath)
 
+            def w_edit(holder):
+                self.v_edit = tk.BooleanVar(value=DEFAULTS['edit_enabled'])
+                cb = ttk.Checkbutton(
+                    holder, text='edit external lamedb',
+                    variable=self.v_edit, command=self._sync_edit_state)
+                cb.pack(side='left')
+                self._attach_help(cb, OPTIONS['edit_enabled']['help'],
+                                  'edit_enabled')
+            self._row(box, 'edit_enabled', w_edit)
+
+            def w_epath(holder):
+                fr = ttk.Frame(holder)
+                fr.pack(fill='x')
+                self.v_edit_path = tk.StringVar(value=DEFAULTS['edit_path'])
+                self.e_edit = ttk.Entry(fr, textvariable=self.v_edit_path)
+                self.e_edit.pack(side='left', fill='x', expand=True)
+                b = self.button(fr, 'Browse\\u2026',
+                                lambda: self._browse('edit_path'))
+                b.pack(side='left', padx=(6, 0))
+                self._attach_help(self.e_edit, OPTIONS['edit_path']['help'],
+                                  'edit_path')
+            self._row(box, 'edit_path', w_epath)
+
             def w_fmt(holder):
                 self.v_format = tk.StringVar(value=DEFAULTS['lamedb_format'])
                 cb = ttk.Combobox(holder, textvariable=self.v_format,
                                   state='readonly', width=5,
-                                  values=('v4', 'v3'))
+                                  values=('v4',))
                 cb.pack(side='left')
-                note = ttk.Label(holder, text='v4 = current images, v3 = '
-                                 'older images (merge auto-detects)',
+                note = ttk.Label(holder, text='v4 = current images only',
                                  style='Muted.TLabel')
                 note.pack(side='left', padx=(8, 0))
                 for w in (cb, note):
@@ -1223,6 +1286,8 @@ if TK_AVAILABLE:
                 'bouquet': self.v_bouquet.get().strip() or DEFAULTS['bouquet'],
                 'merge_enabled': bool(self.v_merge.get()),
                 'merge_path': self.v_merge_path.get().strip(),
+                'edit_enabled': bool(self.v_edit.get()),
+                'edit_path': self.v_edit_path.get().strip(),
                 'lamedb_format': self.v_format.get() or 'v4',
                 'position': self.v_position.get().strip() or '-300',
                 'relay_host': self.v_relay_host.get().strip(),
@@ -1244,6 +1309,10 @@ if TK_AVAILABLE:
         def _sync_merge_state(self):
             state = 'normal' if self.v_merge.get() else 'disabled'
             self.e_merge.configure(state=state)
+
+        def _sync_edit_state(self):
+            state = 'normal' if self.v_edit.get() else 'disabled'
+            self.e_edit.configure(state=state)
 
         def _update_pos_label(self):
             try:
@@ -1274,6 +1343,12 @@ if TK_AVAILABLE:
                     filetypes=[('lamedb', 'lamedb*'), ('All files', '*')])
                 if path:
                     self.v_merge_path.set(path)
+            elif what == 'edit_path':
+                path = filedialog.askopenfilename(
+                    parent=self, title='Select the lamedb to edit',
+                    filetypes=[('lamedb', 'lamedb*'), ('All files', '*')])
+                if path:
+                    self.v_edit_path.set(path)
 
         # --------------------------------------------------- workers
         def _set_busy(self, busy, what=''):
@@ -1703,6 +1778,7 @@ if TK_AVAILABLE:
                 'url': self.v_url, 'file': self.v_file,
                 'out_dir': self.v_out_dir, 'bouquet': self.v_bouquet,
                 'merge_path': self.v_merge_path,
+                'edit_path': self.v_edit_path,
                 'lamedb_format': self.v_format,
                 'position': self.v_position,
                 'relay_host': self.v_relay_host, 'relay_port': self.v_relay_port,
@@ -1714,13 +1790,19 @@ if TK_AVAILABLE:
                     var.set(str(values[key]))
             if 'merge_enabled' in values:
                 self.v_merge.set(bool(values['merge_enabled']))
+            if 'edit_enabled' in values:
+                self.v_edit.set(bool(values['edit_enabled']))
+            if 'edit_path' in values:
+                self.v_edit_path.set(str(values['edit_path']))
             self._sync_source_state()
             self._sync_merge_state()
+            self._sync_edit_state()
             self._update_pos_label()
 
         def _restore_settings(self):
             self._sync_source_state()
             self._sync_merge_state()
+            self._sync_edit_state()
             self._update_pos_label()
             try:
                 with open(SETTINGS_FILE, 'r', encoding='utf-8') as f:
