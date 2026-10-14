@@ -148,46 +148,6 @@
                 ]
             },
             {
-                "title": "Stream 2035 - (HS125.35) - RGE Extremadura",
-                "pid_info": "8916-1109--12566",
-                "encryption": "BISS",
-                "sid": "3035",
-                "cpid": "7035",
-                "changed_by": "ahmedmoselhi",
-                "changes": "feed service sid/cpid identifiers added",
-                "channels": []
-            },
-            {
-                "title": "Stream 2036 - (HS125.36) - RGE La Rioja",
-                "pid_info": "8916-1011--12567",
-                "encryption": "BISS",
-                "sid": "3036",
-                "cpid": "7036",
-                "changed_by": "ahmedmoselhi",
-                "changes": "feed service sid/cpid identifiers added",
-                "channels": []
-            },
-            {
-                "title": "Stream 2037 - (HS125.37) - RGE Murcia",
-                "pid_info": "8916-1013--12564",
-                "encryption": "BISS",
-                "sid": "3037",
-                "cpid": "7037",
-                "changed_by": "ahmedmoselhi",
-                "changes": "feed service sid/cpid identifiers added",
-                "channels": []
-            },
-            {
-                "title": "Stream 2038 - (HS125.38) - RGE Valencia",
-                "pid_info": "8916-1016--12561",
-                "encryption": "BISS",
-                "sid": "3038",
-                "cpid": "7038",
-                "changed_by": "ahmedmoselhi",
-                "changes": "feed service sid/cpid identifiers added",
-                "channels": []
-            },
-            {
                 "title": "Stream 2050 - (HS125.50) - RGE Nac",
                 "pid_info": "8916-1051--",
                 "encryption": "BISS",
