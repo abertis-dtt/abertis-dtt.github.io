@@ -482,46 +482,6 @@
                 ]
             },
             {
-                "title": "Stream 2281 - (HS127.81) - RGE Navarra",
-                "pid_info": "8916-1014--12562",
-                "encryption": "BISS",
-                "sid": "3281",
-                "cpid": "7281",
-                "changed_by": "ahmedmoselhi",
-                "changes": "feed service sid/cpid identifiers added",
-                "channels": []
-            },
-            {
-                "title": "Stream 2282 - (HS127.82) - RGE Asturias",
-                "pid_info": "8916-1002--12567",
-                "encryption": "BISS",
-                "sid": "3282",
-                "cpid": "7282",
-                "changed_by": "ahmedmoselhi",
-                "changes": "feed service sid/cpid identifiers added",
-                "channels": []
-            },
-            {
-                "title": "Stream 2283 - (HS127.83) - RGE Aragon",
-                "pid_info": "8916-1101--12564",
-                "encryption": "BISS",
-                "sid": "3283",
-                "cpid": "7283",
-                "changed_by": "ahmedmoselhi",
-                "changes": "feed service sid/cpid identifiers added",
-                "channels": []
-            },
-            {
-                "title": "Stream 2284 - (HS127.84) - RGE Cantabria",
-                "pid_info": "8916-1006--12561",
-                "encryption": "BISS",
-                "sid": "3284",
-                "cpid": "7284",
-                "changed_by": "ahmedmoselhi",
-                "changes": "feed service sid/cpid identifiers added",
-                "channels": []
-            },
-            {
                 "title": "RNE",
                 "pid_info": "1-60022--60000",
                 "encryption": "",
@@ -1046,16 +1006,6 @@
         "date": "13.10.2026",
         "streams": [
             {
-                "title": "Stream 2301 - (HS128.1) - UNACTIVE",
-                "pid_info": "",
-                "encryption": "",
-                "sid": "3301",
-                "cpid": "7301",
-                "changed_by": "ahmedmoselhi",
-                "changes": "feed service sid/cpid identifiers added",
-                "channels": []
-            },
-            {
                 "title": "Stream 2302 - (HS128.2) - TDT Extremadura",
                 "pid_info": "8916-1009--12576",
                 "encryption": "BISS",
@@ -1100,16 +1050,6 @@
                         "apid_lang": "1011 SPA"
                     }
                 ]
-            },
-            {
-                "title": "Stream 2304 - (HS128.4) - UNACTIVE",
-                "pid_info": "",
-                "encryption": "",
-                "sid": "3304",
-                "cpid": "7304",
-                "changed_by": "ahmedmoselhi",
-                "changes": "feed service sid/cpid identifiers added",
-                "channels": []
             },
             {
                 "title": "Stream 2305 - (HS128.5) - Abertis Telecom",
@@ -1448,46 +1388,6 @@
                         "apid_lang": "2031 SPA"
                     }
                 ]
-            },
-            {
-                "title": "Stream 2531 - (HS129.31) - RGE Baleares",
-                "pid_info": "8916-1003--12566",
-                "encryption": "BISS",
-                "sid": "3531",
-                "cpid": "7531",
-                "changed_by": "ahmedmoselhi",
-                "changes": "feed service sid/cpid identifiers added",
-                "channels": []
-            },
-            {
-                "title": "Stream 2532 - (HS129.32) - RGE Castilla La Mancha",
-                "pid_info": "8916-1005--12562",
-                "encryption": "BISS",
-                "sid": "3532",
-                "cpid": "7532",
-                "changed_by": "ahmedmoselhi",
-                "changes": "feed service sid/cpid identifiers added",
-                "channels": []
-            },
-            {
-                "title": "Stream 2533 - (HS129.33) - RGE Andalucia",
-                "pid_info": "8916-1000--12560",
-                "encryption": "BISS",
-                "sid": "3533",
-                "cpid": "7533",
-                "changed_by": "ahmedmoselhi",
-                "changes": "feed service sid/cpid identifiers added",
-                "channels": []
-            },
-            {
-                "title": "Stream 2534 - (HS129.34) - RGE Castilla y Leon",
-                "pid_info": "8916-1004--12560",
-                "encryption": "BISS",
-                "sid": "3534",
-                "cpid": "7534",
-                "changed_by": "ahmedmoselhi",
-                "changes": "feed service sid/cpid identifiers added",
-                "channels": []
             },
             {
                 "title": "RNE",
@@ -2330,36 +2230,6 @@
                         "apid_lang": "2031 SPA"
                     }
                 ]
-            },
-            {
-                "title": "Stream 431 - (HS88U.31) - RGE Pais Vasco",
-                "pid_info": "8916-1015--12566",
-                "encryption": "BISS",
-                "sid": "1431",
-                "cpid": "5431",
-                "changed_by": "ahmedmoselhi",
-                "changes": "feed service sid/cpid identifiers added",
-                "channels": []
-            },
-            {
-                "title": "Stream 433 - (HS88U.33) - RGE Galicia",
-                "pid_info": "8916-1010--12566",
-                "encryption": "BISS",
-                "sid": "1433",
-                "cpid": "5433",
-                "changed_by": "ahmedmoselhi",
-                "changes": "feed service sid/cpid identifiers added",
-                "channels": []
-            },
-            {
-                "title": "Stream 440 - (HS88U.40) - UNACTIVE",
-                "pid_info": "",
-                "encryption": "",
-                "sid": "1440",
-                "cpid": "5440",
-                "changed_by": "ahmedmoselhi",
-                "changes": "feed service sid/cpid identifiers added",
-                "channels": []
             },
             {
                 "title": "RNE -60004--60000",
