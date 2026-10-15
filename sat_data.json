@@ -482,46 +482,6 @@
                 ]
             },
             {
-                "title": "Stream 2281 - (HS127.81) - RGE Navarra",
-                "pid_info": "8916-1014--12562",
-                "encryption": "BISS",
-                "sid": "3281",
-                "cpid": "7281",
-                "changed_by": "ahmedmoselhi",
-                "changes": "feed service sid/cpid identifiers added",
-                "channels": []
-            },
-            {
-                "title": "Stream 2282 - (HS127.82) - RGE Asturias",
-                "pid_info": "8916-1002--12567",
-                "encryption": "BISS",
-                "sid": "3282",
-                "cpid": "7282",
-                "changed_by": "ahmedmoselhi",
-                "changes": "feed service sid/cpid identifiers added",
-                "channels": []
-            },
-            {
-                "title": "Stream 2283 - (HS127.83) - RGE Aragon",
-                "pid_info": "8916-1101--12564",
-                "encryption": "BISS",
-                "sid": "3283",
-                "cpid": "7283",
-                "changed_by": "ahmedmoselhi",
-                "changes": "feed service sid/cpid identifiers added",
-                "channels": []
-            },
-            {
-                "title": "Stream 2284 - (HS127.84) - RGE Cantabria",
-                "pid_info": "8916-1006--12561",
-                "encryption": "BISS",
-                "sid": "3284",
-                "cpid": "7284",
-                "changed_by": "ahmedmoselhi",
-                "changes": "feed service sid/cpid identifiers added",
-                "channels": []
-            },
-            {
                 "title": "RNE",
                 "pid_info": "1-60022--60000",
                 "encryption": "",
