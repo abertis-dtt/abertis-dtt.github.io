@@ -35,10 +35,590 @@ import types
 import urllib.request
 from collections import OrderedDict
 
+import re
+import shutil
+import struct
+import zlib
+
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
-if SCRIPT_DIR not in sys.path:
-    sys.path.insert(0, SCRIPT_DIR)
-import Abertis_DX_Suite as dxs
+
+import re
+import shutil
+import struct
+import sys
+import zlib
+from collections import OrderedDict
+DEFAULT_JSON_URL = 'https://abertis-dtt.github.io/sat_data.json'
+
+BOUQUET_HEADER = u'#NAME \u2022 30,0 W - Abertis & Cellnex DX Suite ( streamrelay )'
+
+
+FEC_CODES = {
+    '1/2': 1, '2/3': 2, '3/4': 3, '5/6': 4, '6/7': 5, '7/8': 6,
+    '8/9': 7, '3/5': 8, '4/5': 9, '9/10': 10, 'AUTO': 15,
+}
+
+MODULATION_CODES = {'QPSK': 0, '8PSK': 2, '16APSK': 3, '32APSK': 4}
+
+POLARISATION_CODES = {'H': 0, 'V': 1}
+
+
+BISS_CAID = '2600'
+
+BISS_CRC_SEED = 0x2600
+
+DUMMY_BISS_KEY = '0000000000000000'
+
+STREAM_PID_RE = re.compile(r'Stream\s+(\d+)', re.IGNORECASE)
+
+FREQ_POL_MODE_RE = re.compile(r'^\s*([0-9]+(?:\.[0-9]+)?)\s+([HVLR])\s+(.+?)\s*$')
+
+SERVICE_FLAG_PREFIXES = ('p:', 'c:', 'C:', 'f:', 'v:')
+
+
+
+def namespace_for(position_tenths):
+    """DVB namespace for a satellite position; West positions wrap at 3600."""
+    pos = position_tenths + 3600 if position_tenths < 0 else position_tenths
+    return (pos & 0xFFFF) << 16
+
+
+
+def parse_transponders(data):
+    """Normalise the sat_data.json list into transponders carrying their streams."""
+    txps = OrderedDict()
+    for entry in data:
+        if not isinstance(entry, dict):
+            continue
+        match = FREQ_POL_MODE_RE.match(entry.get('freq_pol_mode') or '')
+        if not match:
+            print('Warning: cannot parse freq_pol_mode %r on txp %s - skipped'
+                  % (entry.get('freq_pol_mode'), entry.get('txp_no')))
+            continue
+        freq_mhz = float(match.group(1))
+        pol = match.group(2)
+        delivery = match.group(3).upper()
+        system = 1 if 'S2' in delivery else 0
+        modulation = MODULATION_CODES.get(delivery.split('/')[-1].split()[0],
+                                          2 if system else 0)
+        if pol not in POLARISATION_CODES:
+            print('Warning: unusual polarisation %r on txp %s' % (pol, entry.get('txp_no')))
+        if 'PLS' in delivery or 'MISO' in delivery:
+            print('Warning: txp %s (%s) uses %s - lamedb cannot carry PLS/MISO '
+                  'parameters, add them manually if your image supports it'
+                  % (entry.get('txp_no'), entry.get('freq_pol_mode'),
+                     delivery[delivery.find('PLS' if 'PLS' in delivery else 'MISO'):]))
+        sr_fec = (entry.get('sr_fec') or '').split()
+        # onid is '-' (unconfirmed) on part of the Abertis network; the
+        # confirmed original network id there is 1, so fall back to it.
+        parts = [p.strip() for p in (entry.get('onid_nid_tid') or '').split('/')]
+        onid, tsid = 1, None
+        if len(parts) == 3:
+            try:
+                tsid = int(parts[2])
+            except ValueError:
+                tsid = None
+            try:
+                onid = int(parts[0])
+            except ValueError:
+                onid = 1
+        if tsid is None:
+            print('Warning: cannot parse tsid in onid_nid_tid %r on txp %s - skipped'
+                  % (entry.get('onid_nid_tid'), entry.get('txp_no')))
+            continue
+        if not sr_fec:
+            print('Warning: missing sr_fec on txp %s' % entry.get('txp_no'))
+        provider = (entry.get('provider') or 'Abertis DTT').strip()
+        tp = {
+            'txp_no': entry.get('txp_no', '?'),
+            'freq_khz': int(freq_mhz * 1000 + 0.5),
+            'freq_label': str(int(freq_mhz)),
+            'pol_letter': pol,
+            'pol': POLARISATION_CODES.get(pol, 0),
+            'system': system,
+            'modulation': modulation,
+            'sr_ksps': int(sr_fec[0]) if sr_fec else 0,
+            'fec': FEC_CODES.get(sr_fec[1].upper() if len(sr_fec) > 1 else '', 15),
+            'onid': onid,
+            'tsid': tsid,
+            'provider': provider,
+            'provider_short': (provider.split()[0] if provider.split() else '') or 'Abertis',
+            'streams': entry.get('streams') or [],
+        }
+        key = (tp['tsid'], tp['onid'])
+        if key in txps:
+            txps[key]['streams'].extend(tp['streams'])
+        else:
+            txps[key] = tp
+    return list(txps.values())
+
+
+
+def collect_streams(txps):
+    """Flatten (transponder, stream) pairs, extracting PID and channel lists."""
+    streams = []
+    seen = {}
+    channel_lists = []
+    for tp in txps:
+        for raw in tp['streams']:
+            match = STREAM_PID_RE.search(raw.get('title') or '')
+            if not match:
+                # Entries without a "Stream <pid>" title (e.g. "RNE",
+                # "TDT Aragon") are whole-transponder channel lists: their
+                # pid_info carries nid/onid/tsid instead of a stream PID,
+                # so there is no single PID to relay through astra.
+                channel_lists.append(raw.get('title') or '(untitled)')
+                continue
+            pid = int(match.group(1))
+            if pid in seen and seen[pid] != (tp['tsid'], tp['onid']):
+                print('Warning: PID %d appears on more than one transponder - '
+                      'astra/bouquet URLs will collide' % pid)
+            seen[pid] = (tp['tsid'], tp['onid'])
+
+            channels = []
+            sids = set()
+            for ch in raw.get('channels') or []:
+                name = (ch.get('name') or '').strip()
+                try:
+                    sid = int(ch.get('sid'))
+                except (TypeError, ValueError):
+                    continue
+                if not name or sid <= 0 or sid in sids:
+                    continue
+                sids.add(sid)
+                ctype = (ch.get('type') or '').strip().lower()
+                radio = 'radio' in ctype or (not ctype and not (ch.get('vpid') or '').strip())
+                channels.append({'sid': sid, 'name': name, 'radio': radio})
+
+            # Stream-level identifiers from the database: the SID of the fake
+            # feed service and the component data PID that goes into the
+            # c:19<xxxx> lamedb cache entry. Empty/invalid -> arithmetic
+            # defaults (SID = PID+1000, component PID = PID+5000).
+            def id_field(key, fallback, lo, hi):
+                value = str(raw.get(key) or '').strip()
+                if not value:
+                    return fallback
+                try:
+                    num = int(value)
+                except ValueError:
+                    num = None
+                if num is None or not lo <= num <= hi:
+                    print('Warning: invalid %s %r on %r - using %d'
+                          % (key, value, raw.get('title'), fallback))
+                    return fallback
+                return num
+
+            streams.append({
+                'pid': pid,
+                'title': raw.get('title') or '',
+                'encryption': (raw.get('encryption') or '').upper(),
+                'sid': id_field('sid', pid + 1000, 1, 0xFFFF),
+                'cpid': id_field('cpid', pid + 5000, 0, 0xFFFF),
+                'txp': tp,
+                'channels': channels,
+            })
+    streams.sort(key=lambda s: s['pid'])
+    if channel_lists:
+        print('Skipped %d whole-transponder channel lists (no single PID to '
+              'relay): %s' % (len(channel_lists), ', '.join(sorted(set(channel_lists)))))
+    return streams
+
+
+
+def feed_service_name(stream):
+    """lamedb/astra name of the fake feed service, e.g. Abertis@11222H30000 PID 2025."""
+    tp = stream['txp']
+    return '%s@%s%s%d PID %d' % (tp['provider_short'], tp['freq_label'],
+                                  tp['pol_letter'], tp['sr_ksps'], stream['pid'])
+
+
+
+def relay_script_for(stream, override):
+    """Relay script name (and URL segment) for a stream's provider."""
+    return override or stream['txp']['provider_short'].lower()
+
+
+
+def build_lamedb_entries(txps, streams, position):
+    """Return ((key, lines), ...) for the transponder and service sections."""
+    ns = namespace_for(position)
+    tp_entries = []
+    for tp in txps:
+        header = '%08x:%04x:%04x' % (ns, tp['tsid'], tp['onid'])
+        sline = '\ts %d:%d:%d:%d:%d:2:0:%d:%d:0:2' % (
+            tp['freq_khz'], tp['sr_ksps'] * 1000, tp['pol'], tp['fec'],
+            position, tp['system'], tp['modulation'])
+        tp_entries.append((tuple(header.split(':')), [header, sline]))
+
+    svc_entries = []
+    for stream in streams:
+        tp = stream['txp']
+        # SID of the feed service comes straight from the JSON (field "sid"),
+        # never from arithmetic, so it always matches the database.
+        sid = stream['sid']
+        header = '%04x:%08x:%04x:%04x:1:0' % (sid, ns, tp['tsid'], tp['onid'])
+        block = [header, feed_service_name(stream)]
+        # lamedb cache ids are DECIMAL in the file: c:18 = cDATAPID gets the
+        # raw stream PID, c:19 = cPMTPID gets the component data PID
+        # ("cpid" field of the JSON, used by the astra pipe script to
+        # rebuild the PMT). c:031fff = dummy pid, C:2600 = BISS CAID.
+        if 'BISS' in stream['encryption']:
+            block.append('p:%s,c:031fff,c:18%04x,c:19%04x,C:%s,f:01'
+                         % (tp['provider_short'].upper(), stream['pid'],
+                            stream['cpid'], BISS_CAID))
+        else:
+            # FTA raw PID: same cache entries, no BISS CAID.
+            block.append('p:%s,c:031fff,c:18%04x,c:19%04x,f:01'
+                         % (tp['provider_short'].upper(), stream['pid'],
+                            stream['cpid']))
+        svc_entries.append((tuple(header.split(':')[:4]), block))
+    return tp_entries, svc_entries
+
+
+
+def lamedb_text(tp_entries, svc_entries, fmt='v4'):
+    """Serialize as lamedb v4 (sectioned, written by current images) or
+    v3 (classic layout for older images). Service and transponder blocks
+    themselves are identical in both versions."""
+    lines = ['eDVB services /4/', 'transponders']
+    for _key, block in tp_entries:
+        lines.extend(block)
+        lines.append('/')
+    lines.extend(('end', 'services'))
+    for _key, block in svc_entries:
+        lines.extend(block)
+    lines.append('end')
+    return '\n'.join(lines) + '\n'
+
+
+
+def astra_text(streams, args):
+    ns = namespace_for(args.position)
+    header = (
+        '-- Astra Slonik Mod\n\n'
+        '-- during revival and testing\n'
+        '-- log.set({ stdout = true, debug = true, syslog = "astra", filename = "/tmp/astrasm.log", })\n'
+        '-- after revival and testing\n'
+        'log.set({ stdout = true, debug = false, syslog = "astra", filename = "/tmp/astra.log" })\n\n'
+        '-- =========================================================================\n'
+        '-- [ SECTION 1: ABERTIS PID CHANNELS ]\n'
+        '-- =========================================================================\n\n'
+        '-- Helper Text: This table maps the Abertis PID to its specific Enigma2 Stream Reference.\n\n'
+    )
+    blocks = []
+    for stream in streams:
+        tp = stream['txp']
+        sid = stream['sid']
+        sref = '1:0:1:%X:%X:%d:%X:0:0:0' % (sid, tp['tsid'], tp['onid'], ns)
+        relay = relay_script_for(stream, args.relay_script)
+        blocks.append('\n'.join([
+            'make_channel({',
+            '  name = "%s",' % feed_service_name(stream),
+            '  input = {',
+            '    "http://%s:%d/%s:",' % (args.relay_host, args.relay_port, sref),
+            '  },',
+            '  transform = {{',
+            '    format = "pipe",',
+            '      command = "/etc/astra/scripts/%s %d",' % (relay, stream['pid']),
+            '  }},',
+            '  output = {',
+            '    "http://%s:%d/%s/pid%d",' % (args.out_host, args.http_port,
+                                             relay, stream['pid']),
+            '  },',
+            '})',
+        ]))
+    return header + '\n\n'.join(blocks) + '\n'
+
+
+
+def bouquet_text(streams, args):
+    lines = [BOUQUET_HEADER]
+    for stream in streams:
+        if not stream['channels']:
+            print('Note: PID %d has no channels in the JSON - lamedb/astra '
+                  'entries only' % stream['pid'])
+            continue
+        relay = relay_script_for(stream, args.relay_script)
+        marker_name = '##### %s PID %d #####' % (stream['txp']['provider_short'],
+                                                 stream['pid'])
+        lines.append('#SERVICE 1:64:%X:0:0:0:0:0:0:0::%s' % (stream['pid'], marker_name))
+        lines.append('#DESCRIPTION ##### %s #####' % feed_service_name(stream))
+        url = 'http://%s:%d/%s/pid%d' % (args.out_host, args.http_port,
+                                          relay, stream['pid'])
+        # Enigma2 requires colons in URLs to be URL-encoded (uppercase %3A)
+        encoded = url.replace(':', '%3A')
+        groups = (('1', '(TV)', [c for c in stream['channels'] if not c['radio']]),
+                  ('2', '(RADIO)', [c for c in stream['channels'] if c['radio']]))
+        for svc_type, tag, channels in groups:
+            for ch in channels:
+                name = '%s %s' % (tag, ch['name'])
+                lines.append('#SERVICE 1:0:%s:%X:2D85:12D:0:0:0:0:%s:%s'
+                             % (svc_type, ch['sid'], encoded, name))
+                lines.append('#DESCRIPTION %s' % name)
+    return '\n'.join(lines) + '\n'
+
+
+
+def softcam_key_id(sid, pmt_pid, stream_pid):
+    """BISS key ID = CRC32(seed=0x2600, SID(2) + PMT(2) + stream PID(s)(2)), big-endian.
+
+    Matches OSCam's universal BISS hash: the fake ECM is
+    [sid][pmtpid][pid1][pid2]...[tsid][onid][ens] and the hash covers everything
+    before [tsid][onid][ens]. One feed service carries a single stream PID here.
+    """
+    return zlib.crc32(struct.pack('>HHH', sid, pmt_pid, stream_pid), BISS_CRC_SEED) & 0xFFFFFFFF
+
+
+
+def softcam_text(streams):
+    """Serialize dummy BISS SoftCam.Key entries for every BISS-encrypted stream.
+
+    Each line: F <key id> 00000000 0000000000000000 ;<feed service name>
+    """
+    lines = [
+        '; SoftCam.Key generated by the Abertis DX Suite',
+        '; Key ID = CRC32(seed=0x2600, SID + PMT + stream PID), big-endian',
+        '; Dummy BISS key 0000000000000000 - replace with the real BISS keys.',
+        '; Format: F <key id> <expiry date> <BISS key> ;comment',
+        '',
+    ]
+    entries = OrderedDict()
+    for stream in streams:
+        if 'BISS' not in (stream.get('encryption') or '').upper():
+            continue
+        # c:19<cpid> is the cPMTPID cache entry (PMT); stream['pid'] is the raw
+        # stream PID carried in c:18<cDATAPID>.
+        key_id = softcam_key_id(stream['sid'], stream['cpid'], stream['pid'])
+        entries.setdefault(key_id, []).append(feed_service_name(stream))
+    for key_id, comments in entries.items():
+        lines.append('F %08X 00000000 %s ;%s' % (key_id, DUMMY_BISS_KEY,
+                                                 ' / '.join(comments)))
+    return '\n'.join(lines) + '\n'
+
+
+
+def parse_lamedb(lines):
+    """Parse a lamedb file body into (fmt, tp_blocks, svc_blocks).
+
+    Only the v4 sectioned layout (transponders ... each block closed by '/'
+    ... end / services ... end) is supported.
+    """
+    header = lines[0] if lines else ''
+    if not header.startswith('eDVB services'):
+        sys.exit('Error: not an Enigma2 lamedb (header %r)' % header)
+    if '/4/' not in header:
+        sys.exit('Error: unsupported lamedb format %r (only v4 /4/ supported)'
+                 % header)
+    fmt = 'v4'
+
+    idx = 1
+    tp_blocks = OrderedDict()
+    if fmt == 'v4':
+        if idx < len(lines) and lines[idx].strip() == 'transponders':
+            idx += 1
+        while idx < len(lines):
+            line = lines[idx]
+            if not line.strip():
+                idx += 1
+                continue
+            if line.strip() == 'end':
+                idx += 1
+                break
+            tp_parts = line.strip().split(':')
+            if not (len(tp_parts) >= 3 and tp_parts[0]
+                    and all(c in '0123456789abcdefABCDEF' for c in tp_parts[0])
+                    and all(c in '0123456789abcdefABCDEF' for c in tp_parts[1])
+                    and all(c in '0123456789abcdefABCDEF' for c in tp_parts[2])):
+                idx += 1
+                continue
+            header_line = line
+            idx += 1
+            block = [header_line]
+            while idx < len(lines) and lines[idx].startswith('\t'):
+                block.append(lines[idx])
+                idx += 1
+            if idx < len(lines) and lines[idx].strip() == '/':
+                idx += 1  # per-block terminator, regenerated on save
+            tp_blocks[tuple(header_line.split(':')[:3])] = block
+
+    svc_blocks = OrderedDict()
+    if fmt == 'v4' and idx < len(lines) and lines[idx].strip() == 'services':
+        idx += 1
+    while idx < len(lines):
+        line = lines[idx]
+        if not line.strip():
+            idx += 1
+            continue
+        if fmt == 'v4' and line.strip() == 'end':
+            break
+        svc_parts = line.strip().split(':')
+        if not (len(svc_parts) >= 5 and svc_parts[0] and svc_parts[1]
+                and svc_parts[2] and svc_parts[3]
+                and all(c in '0123456789abcdefABCDEF'
+                        for c in svc_parts[0] + svc_parts[1] + svc_parts[2]
+                        + svc_parts[3])):
+            idx += 1
+            continue
+        block = [line]  # sid:namespace:tsid:onid:type:number
+        idx += 1
+        if idx < len(lines) and lines[idx].strip() \
+                and not lines[idx].startswith(SERVICE_FLAG_PREFIXES):
+            block.append(lines[idx])  # service name
+            idx += 1
+        while idx < len(lines) and lines[idx].startswith(SERVICE_FLAG_PREFIXES):
+            block.append(lines[idx])
+            idx += 1
+        svc_blocks[tuple(line.split(':')[:4])] = block
+    return fmt, tp_blocks, svc_blocks
+
+
+
+def normalize_tp_block(block):
+    if not block:
+        return block
+    header = block[0].strip()
+    sline = ''
+    for line in block[1:]:
+        st = line.strip()
+        if st.startswith('s ') or st.endswith('\t') is False and '\t' in line:
+            sline = line if line.startswith('\t') else '\t' + st
+            break
+    if not sline:
+        for line in block[1:]:
+            if line.strip():
+                sline = line if line.startswith('\t') else '\t' + line.strip()
+                break
+    return [header, sline if sline.strip() else '']
+
+
+
+def normalize_svc_block(block):
+    if not block:
+        return block
+    header = block[0].strip()
+    name = ''
+    flags = []
+    for line in block[1:]:
+        st = line.strip()
+        if not st:
+            continue
+        if st.startswith(('p:', 'c:', 'C:', 'f:', 'v:')):
+            flags.append(st)
+        elif not name:
+            name = st
+        else:
+            name = (name + ' ' + st).strip()
+    # Preserve the 3rd line even when flags are missing.
+    out = [header, name, ','.join(flags) if flags else '']
+    return out
+
+
+
+def merge_lamedb(path, tp_entries, svc_entries):
+    """Insert/replace our transponders and services inside an existing lamedb.
+
+    Only v4 /4/ lamedb files are supported.
+    """
+    with open(path, 'r', encoding='utf-8', errors='surrogateescape') as f:
+        lines = f.read().split('\n')
+
+    fmt, tp_blocks, svc_blocks = parse_lamedb(lines)
+
+    # Clean stale entries first (avoid duplicates): remove transponders
+    # matching the generated ones and services whose name contains
+    # "abertis", then record how many generated keys already existed.
+    generated_tp_keys = {key for key, _ in tp_entries}
+    original_tp_keys = set(tp_blocks)
+    original_svc_keys = set(svc_blocks)
+    for key in list(tp_blocks):
+        if key in generated_tp_keys:
+            del tp_blocks[key]
+    for key in list(svc_blocks):
+        block = svc_blocks[key]
+        name = ''
+        if len(block) > 1:
+            candidate = block[1]
+            if candidate.strip() and not candidate.startswith(SERVICE_FLAG_PREFIXES):
+                name = candidate.strip()
+        if 'abertis' in name.lower():
+            del svc_blocks[key]
+
+    replaced = sum(1 for key, _ in tp_entries if key in original_tp_keys) \
+        + sum(1 for key, _ in svc_entries if key in original_svc_keys)
+    for key, block in tp_entries:
+        tp_blocks[key] = block
+    for key, block in svc_entries:
+        svc_blocks[key] = block
+
+    out = ['eDVB services /4/', 'transponders']
+    for block in tp_blocks.values():
+        out.extend(normalize_tp_block(block))
+        out.append('/')
+    out.extend(('end', 'services'))
+    for block in svc_blocks.values():
+        out.extend(normalize_svc_block(block))
+    out.append('end')
+
+    shutil.copy2(path, path + '.bak')
+    with open(path, 'w', encoding='utf-8', errors='surrogateescape') as f:
+        f.write('\n'.join(out) + '\n')
+    return len(tp_blocks), len(svc_blocks), replaced
+
+
+
+def edit_lamedb(path, tp_entries, svc_entries):
+    """Edit an external lamedb in place with cleanup before adding entries."""
+    with open(path, 'r', encoding='utf-8', errors='surrogateescape') as f:
+        lines = f.read().split('\n')
+
+    fmt, tp_blocks, svc_blocks = parse_lamedb(lines)
+
+    original_tp_keys = set(tp_blocks)
+    original_svc_keys = set(svc_blocks)
+
+    generated_tp_keys = {key for key, _ in tp_entries}
+    removed_tp = 0
+    for key in list(tp_blocks):
+        if key in generated_tp_keys:
+            removed_tp += 1
+            del tp_blocks[key]
+
+    removed_svc = 0
+    for key in list(svc_blocks):
+        block = svc_blocks[key]
+        name = ''
+        if len(block) > 1:
+            candidate = block[1]
+            if candidate.strip() and not candidate.startswith(SERVICE_FLAG_PREFIXES):
+                name = candidate.strip()
+        if 'abertis' in name.lower():
+            removed_svc += 1
+            del svc_blocks[key]
+
+    replaced = (sum(1 for key, _ in tp_entries if key in original_tp_keys)
+                + sum(1 for key, _ in svc_entries if key in original_svc_keys))
+
+    for key, block in tp_entries:
+        tp_blocks[key] = block
+    for key, block in svc_entries:
+        svc_blocks[key] = block
+
+    out = ['eDVB services /4/', 'transponders']
+    for block in tp_blocks.values():
+        out.extend(normalize_tp_block(block))
+        out.append('/')
+    out.extend(('end', 'services'))
+    for block in svc_blocks.values():
+        out.extend(normalize_svc_block(block))
+    out.append('end')
+
+    shutil.copy2(path, path + '.bak')
+    with open(path, 'w', encoding='utf-8', errors='surrogateescape') as f:
+        f.write('\n'.join(out) + '\n')
+    return len(tp_blocks), len(svc_blocks), replaced, removed_tp, removed_svc
+
+
+
 
 try:
     import tkinter as tk
@@ -54,7 +634,7 @@ SETTINGS_FILE = os.path.join(os.path.expanduser('~'), '.abertis_dx_suite_gui.jso
 
 DEFAULTS = {
     'source_mode': 'url',
-    'url': dxs.DEFAULT_JSON_URL,
+    'url': DEFAULT_JSON_URL,
     'file': '',
     'out_dir': '.',
     'bouquet': 'userbouquet.abertis.tv',
@@ -64,6 +644,8 @@ DEFAULTS = {
     'edit_path': '/etc/enigma2/lamedb',
     'lamedb_format': 'v4',
     'position': -300,
+    'softcam_key_enabled': False,
+    'softcam_key_path': '',
     'relay_host': 'localhost',
     'relay_port': 8001,
     'out_host': '0.0.0.0',
@@ -154,6 +736,18 @@ OPTIONS = OrderedDict((
                 'from bouquets.tv with:\n'
                 '  #SERVICE 1:7:1:0:0:0:0:0:0:0:FROM BOUQUET "<name>" '
                 'ORDER BY bouquet'}),
+    ('softcam_key_enabled', {
+        'section': 'output', 'label': 'Write SoftCam.Key',
+        'help': 'Also generate a SoftCam.Key file with one dummy BISS entry '
+                'per BISS-encrypted stream. The key ID is\n'
+                '  CRC32(seed=0x2600, SID + Enigma2 namespace)\n'
+                'written big-endian as `F <id> 00000000 0000000000000000 ;comment`.\n'
+                'Replace the dummy key `0000000000000000` with the real BISS keys. '
+                'Only standard-library zlib CRC-32 is used.'}),
+    ('softcam_key_path', {
+        'section': 'output', 'label': 'SoftCam.Key path',
+        'help': 'Output path for SoftCam.Key. Leave empty to write '
+                'SoftCam.Key next to the other outputs (in --out-dir).'}),
     ('position', {
         'section': 'sat', 'label': 'Orbital position',
         'help': 'Orbital position in tenths of a degree, negative = West. '
@@ -358,6 +952,10 @@ def build_cli_command(v):
         parts += ['--relay-script', shlex.quote(v['relay_script'].strip())]
     if v['bouquet'].strip() and v['bouquet'].strip() != DEFAULTS['bouquet']:
         parts += ['--bouquet', shlex.quote(v['bouquet'].strip())]
+    if v.get('softcam_key_enabled'):
+        parts += ['--softcam-key']
+        if v.get('softcam_key_path'):
+            parts += [shlex.quote(v['softcam_key_path'])]
     return ' '.join(parts)
 
 
@@ -379,14 +977,14 @@ def load_database(v):
     if not isinstance(data, list):
         raise SuiteError('Unexpected JSON layout - expected a list of '
                          'transponders.')
-    txps = dxs.parse_transponders(data)
-    streams = dxs.collect_streams(txps)
+    txps = parse_transponders(data)
+    streams = collect_streams(txps)
     if not txps or not streams:
         raise SuiteError('No transponders/streams found in the source data.')
     raw_by_pid = {}
     for tp in txps:
         for raw in tp['streams']:
-            m = dxs.STREAM_PID_RE.search(raw.get('title') or '')
+            m = STREAM_PID_RE.search(raw.get('title') or '')
             if m:
                 raw_by_pid[int(m.group(1))] = raw
     return data, txps, streams, raw_by_pid
@@ -397,7 +995,7 @@ def generate_artifacts(v, txps, streams):
     ns = values_namespace(v)
     out_dir = os.path.expanduser(v['out_dir'].strip() or '.')
     bouquet_name = v['bouquet'].strip() or DEFAULTS['bouquet']
-    tp_entries, svc_entries = dxs.build_lamedb_entries(txps, streams, ns.position)
+    tp_entries, svc_entries = build_lamedb_entries(txps, streams, ns.position)
 
     outputs = OrderedDict()
     written = []
@@ -413,14 +1011,14 @@ def generate_artifacts(v, txps, streams):
         if merge_path:
             if not os.path.isfile(merge_path):
                 raise SuiteError('lamedb to merge not found: %s' % merge_path)
-            merged = dxs.merge_lamedb(merge_path, tp_entries, svc_entries)
+            merged = merge_lamedb(merge_path, tp_entries, svc_entries)
             summary.append('lamedb: merged %d transponders / %d services into '
                            '%s (%d replaced, backup .bak written)'
                            % (merged[0], merged[1], merge_path, merged[2]))
         if edit_path:
             if not os.path.isfile(edit_path):
                 raise SuiteError('lamedb to edit not found: %s' % edit_path)
-            edited = dxs.edit_lamedb(edit_path, tp_entries, svc_entries)
+            edited = edit_lamedb(edit_path, tp_entries, svc_entries)
             merged = edited
             summary.append('lamedb: edited %d transponders / %d services in '
                            '%s (%d removed transponders, %d abertis services '
@@ -429,7 +1027,7 @@ def generate_artifacts(v, txps, streams):
                               edited[4]))
         if not merge_path and not edit_path:
             fmt = v.get('lamedb_format') or 'v4'
-            text = dxs.lamedb_text(tp_entries, svc_entries, fmt)
+            text = lamedb_text(tp_entries, svc_entries, fmt)
             path = os.path.join(out_dir, 'lamedb')
             with open(path, 'w', encoding='utf-8') as f:
                 f.write(text)
@@ -438,20 +1036,34 @@ def generate_artifacts(v, txps, streams):
             summary.append('lamedb (format %s): %d transponders, %d feed '
                            'services (%s)' % (fmt, len(tp_entries),
                                               len(svc_entries), path))
-        astra = dxs.astra_text(streams, ns)
+        astra = astra_text(streams, ns)
         path = os.path.join(out_dir, 'astra.conf')
         with open(path, 'w', encoding='utf-8') as f:
             f.write(astra)
         outputs['astra.conf'] = astra
         written.append(path)
         summary.append('astra.conf: %d relay channels (%s)' % (len(streams), path))
-        bouquet = dxs.bouquet_text(streams, ns)
+        bouquet = bouquet_text(streams, ns)
         path = os.path.join(out_dir, bouquet_name)
         with open(path, 'w', encoding='utf-8') as f:
             f.write(bouquet)
         outputs[bouquet_name] = bouquet
         written.append(path)
         summary.append('bouquet: %s (%s)' % (bouquet_name, path))
+
+        softcam_enabled = v.get('softcam_key_enabled', False)
+        softcam_path = v.get('softcam_key_path') or ''
+        if softcam_enabled:
+            sk_path = softcam_path or os.path.join(out_dir, 'SoftCam.Key')
+            sk_text = softcam_text(streams)
+            with open(sk_path, 'w', encoding='utf-8') as f:
+                f.write(sk_text)
+            outputs['SoftCam.Key'] = sk_text
+            written.append(sk_path)
+            n_biss = sum(1 for s in streams
+                         if 'BISS' in (s.get('encryption') or '').upper())
+            summary.append('SoftCam.Key: %d dummy BISS entries (%s)'
+                           % (n_biss, sk_path))
     except SystemExit as exc:                      # engine guards with sys.exit
         raise SuiteError(str(exc.code) if exc.code else 'generation failed')
     except OSError as exc:
@@ -569,6 +1181,18 @@ def run_checks():
         for p in result['written']:
             assert os.path.isfile(p), p
         print('PASS  generation round on fixture (standalone mode)')
+
+        # 5b. SoftCam.Key: dummy BISS entries with CRC32(seed=0x2600, SID+ns)
+        v_sk = dict(v, softcam_key_enabled=True)
+        result_sk = generate_artifacts(v_sk, txps, streams)
+        assert 'SoftCam.Key' in result_sk['outputs'], list(result_sk['outputs'])
+        sk = result_sk['outputs']['SoftCam.Key']
+        assert sk.startswith('; SoftCam.Key generated by the Abertis DX Suite')
+        assert 'F 65ADC3CF 00000000 0000000000000000 ;Abertis@11222H30000 PID 2025' in sk
+        assert not any('PID 3150' in line for line in sk.splitlines() if line.startswith('F '))
+        sk_path = os.path.join(tmp, 'out', 'SoftCam.Key')
+        assert os.path.isfile(sk_path)
+        print('PASS  SoftCam.Key dummy BISS entries')
 
         # 6. merge round (v4 only)
         existing = os.path.join(tmp, 'lamedb')
@@ -1079,6 +1703,31 @@ if TK_AVAILABLE:
                 self._attach_help(e, OPTIONS['bouquet']['help'], 'bouquet')
             self._row(box, 'bouquet', w_bq)
 
+            def w_softcam(holder):
+                self.v_softcam_key = tk.BooleanVar(value=DEFAULTS['softcam_key_enabled'])
+                cb = ttk.Checkbutton(
+                    holder, text='also write SoftCam.Key (dummy BISS keys)',
+                    variable=self.v_softcam_key, command=self._sync_softcam_state)
+                cb.pack(side='left')
+                self._attach_help(cb, OPTIONS['softcam_key_enabled']['help'],
+                                  'softcam_key_enabled')
+            self._row(box, 'softcam_key_enabled', w_softcam)
+
+            def w_softcam_path(holder):
+                fr = ttk.Frame(holder)
+                fr.pack(fill='x')
+                self.v_softcam_key_path = tk.StringVar(value=DEFAULTS['softcam_key_path'])
+                self.e_softcam_key_path = ttk.Entry(fr, textvariable=self.v_softcam_key_path)
+                self.e_softcam_key_path.pack(side='left', fill='x', expand=True)
+                b = self.button(fr, 'Browse\u2026',
+                                lambda: self._browse('softcam_key_path'))
+                b.pack(side='left', padx=(6, 0))
+                self._attach_help(self.e_softcam_key_path, OPTIONS['softcam_key_path']['help'],
+                                  'softcam_key_path')
+                self._attach_help(b, OPTIONS['softcam_key_path']['help'],
+                                  'softcam_key_path')
+            self._row(box, 'softcam_key_path', w_softcam_path)
+
             # -- 3 satellite
             box = ttk.LabelFrame(parent, text=SECTIONS[2][1])
             box.pack(fill='x', pady=(0, 6), ipadx=6, ipady=5)
@@ -1353,6 +2002,8 @@ if TK_AVAILABLE:
                 'merge_path': self.v_merge_path.get().strip(),
                 'edit_enabled': bool(self.v_edit.get()),
                 'edit_path': self.v_edit_path.get().strip(),
+                'softcam_key_enabled': bool(self.v_softcam_key.get()),
+                'softcam_key_path': self.v_softcam_key_path.get().strip(),
                 'lamedb_format': self.v_format.get() or 'v4',
                 'position': self.v_position.get().strip() or '-300',
                 'relay_host': self.v_relay_host.get().strip(),
@@ -1380,10 +2031,14 @@ if TK_AVAILABLE:
             state = 'normal' if self.v_edit.get() else 'disabled'
             self.e_edit.configure(state=state)
 
+        def _sync_softcam_state(self):
+            state = 'normal' if self.v_softcam_key.get() else 'disabled'
+            self.e_softcam_key_path.configure(state=state)
+
         def _update_pos_label(self):
             try:
                 pos = int(self.v_position.get())
-                ns = dxs.namespace_for(pos)
+                ns = namespace_for(pos)
                 self.v_pos_label.set(
                     '= %s  (namespace 0x%08X)' % (position_label(pos), ns))
             except ValueError:
@@ -1415,6 +2070,14 @@ if TK_AVAILABLE:
                     filetypes=[('lamedb', 'lamedb*'), ('All files', '*')])
                 if path:
                     self.v_edit_path.set(path)
+            elif what == 'softcam_key_path':
+                path = filedialog.asksaveasfilename(
+                    parent=self, title='Select SoftCam.Key output file',
+                    initialfile='SoftCam.Key',
+                    filetypes=[('SoftCam.Key', '*.Key *SoftCam.Key'), ('All files', '*')])
+                if path:
+                    self.v_softcam_key_path.set(path)
+                    self.v_softcam_key.set(True)
 
         # --------------------------------------------------- workers
         def _set_busy(self, busy, what=''):
@@ -1576,7 +2239,7 @@ if TK_AVAILABLE:
                     s_text = 'PID %d \u00b7 %s \u00b7 %s' % (
                         s['pid'], s['encryption'] or 'FTA', label)
                     s_detail = '%s \u00b7 SID %d \u00b7 CPID %d \u00b7 %d channel%s' % (
-                        dxs.feed_service_name(s), s['sid'], s['cpid'],
+                        feed_service_name(s), s['sid'], s['cpid'],
                         len(s['channels']),
                         '' if len(s['channels']) == 1 else 's')
                     if query and not (tp_match or match(s_text, s_detail)):
@@ -1633,11 +2296,11 @@ if TK_AVAILABLE:
             v = self.collect_values()
             ns = values_namespace(v)
             tp = stream['txp']
-            tp_e, svc_e = dxs.build_lamedb_entries([tp], [stream], ns.position)
+            tp_e, svc_e = build_lamedb_entries([tp], [stream], ns.position)
             with contextlib.redirect_stdout(self._log_stream):
-                lam = dxs.lamedb_text(tp_e, svc_e)
-                astx = dxs.astra_text([stream], ns)
-                bqx = dxs.bouquet_text([stream], ns)
+                lam = lamedb_text(tp_e, svc_e)
+                astx = astra_text([stream], ns)
+                bqx = bouquet_text([stream], ns)
             sid = stream.get('sid', pid + 1000)
             cpid = stream.get('cpid', pid + 5000)
             raw_sid = str(raw.get('sid') or '').strip()
@@ -1774,7 +2437,7 @@ if TK_AVAILABLE:
                 'Engine: lamedb + astra relay + Enigma2 bouquet generator '
                 'for the Abertis / Cellnex DTT feeds on Hispasat 30.0\u00b0W.\n\n'
                 'Standard library only (tkinter). Data source:\n%s'
-                % (APP_NAME, APP_SUBTITLE, dxs.DEFAULT_JSON_URL),
+                % (APP_NAME, APP_SUBTITLE, DEFAULT_JSON_URL),
                 parent=self)
 
         # ----------------------------------------------- CLI command
@@ -1846,6 +2509,8 @@ if TK_AVAILABLE:
                 'merge_path': self.v_merge_path,
                 'edit_path': self.v_edit_path,
                 'lamedb_format': self.v_format,
+                'softcam_key_enabled': self.v_softcam_key,
+                'softcam_key_path': self.v_softcam_key_path,
                 'position': self.v_position,
                 'relay_host': self.v_relay_host, 'relay_port': self.v_relay_port,
                 'out_host': self.v_out_host, 'http_port': self.v_http_port,
