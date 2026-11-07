@@ -177,6 +177,20 @@
                                                     <span x-text="`CPID: ${stream.cpid}`"></span>
                                                 </span>
                                             </template>
+
+                                            <!-- T2MI encapsulation metadata (stream level) -->
+                                            <span class="inline-flex items-center gap-1.5 text-xs code-font font-bold px-2.5 py-1 rounded-lg border"
+                                                  :class="isNA(stream.t2mi_pid) ? 'text-slate-500 bg-slate-800/40 border-slate-700/60' : 'text-violet-300 bg-violet-500/10 border-violet-400/25 shadow-[0_0_10px_rgba(139,92,246,0.2)]'"
+                                                  title="T2MI PID — encapsulation PID inside the T2MI stream (N/A when not applicable)">
+                                                <i class="fa-solid fa-satellite-dish text-[9px] opacity-60"></i>
+                                                <span x-text="`T2MI PID: ${fmtT2mi(stream.t2mi_pid)}`"></span>
+                                            </span>
+                                            <span class="inline-flex items-center gap-1.5 text-xs code-font font-bold px-2.5 py-1 rounded-lg border"
+                                                  :class="isNA(stream.t2mi_plp) ? 'text-slate-500 bg-slate-800/40 border-slate-700/60' : 'text-teal-300 bg-teal-500/10 border-teal-400/25 shadow-[0_0_10px_rgba(20,184,166,0.2)]'"
+                                                  title="T2MI PLP — physical layer pipe inside the T2MI stream (N/A when not applicable)">
+                                                <i class="fa-solid fa-layer-group text-[9px] opacity-60"></i>
+                                                <span x-text="`T2MI PLP: ${fmtT2mi(stream.t2mi_plp)}`"></span>
+                                            </span>
                                             <!-- Expand Arrow -->
                                             <i class="fa-solid fa-chevron-down text-slate-500 transition-transform duration-300" :class="streamExpanded ? 'rotate-180' : ''"></i>
                                         </div>
@@ -390,6 +404,18 @@
                     return `Service ID · 0x${n.toString(16).toUpperCase().padStart(4, '0')}`;
                 },
 
+                // T2MI metadata is stream-level; "N/A" means the value is not applicable.
+                fmtT2mi(v) {
+                    if (v === null || v === undefined) return 'N/A';
+                    const s = String(v).trim();
+                    return (!s || /^n\/?a$/i.test(s)) ? 'N/A' : s;
+                },
+
+                isNA(v) {
+                    const s = (v === null || v === undefined) ? '' : String(v).trim();
+                    return !s || /^n\/?a$/i.test(s);
+                },
+
                 // Builds ONE ROW PER PID with enhanced graphics
                 formatPids(pidStr, type = 'vpid') {
                     if (pidStr === null || pidStr === undefined) return '<span class="inline-block text-slate-600 font-medium px-1">—</span>';
@@ -461,6 +487,8 @@
                                 || (stream.pid_info && stream.pid_info.toLowerCase().includes(q))
                                 || (stream.sid && stream.sid.toString().toLowerCase().includes(q))
                                 || (stream.cpid && stream.cpid.toString().toLowerCase().includes(q))
+                                || (stream.t2mi_pid && stream.t2mi_pid.toString().toLowerCase().includes(q))
+                                || (stream.t2mi_plp && stream.t2mi_plp.toString().toLowerCase().includes(q))
                                 || (stream.changed_by && stream.changed_by.toLowerCase().includes(q))
                                 || (stream.changes && stream.changes.toLowerCase().includes(q));
 
