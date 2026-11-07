@@ -181,7 +181,14 @@ def collect_streams(txps):
                 channels.append({'sid': sid, 'name': name, 'radio': radio})
 
             def id_field(key, fallback, lo, hi):
-                value = str(raw.get(key) or '').strip()
+                keys = (key,) if isinstance(key, str) else tuple(key)
+                value = ''
+                for k in keys:
+                    raw_value = raw.get(k)
+                    value = '' if raw_value is None else str(raw_value).strip()
+                    if value and value.upper() not in ('N/A', 'NA', '-'):
+                        break
+                    value = ''
                 if not value:
                     return fallback
                 try:
@@ -190,18 +197,41 @@ def collect_streams(txps):
                     num = None
                 if num is None or not lo <= num <= hi:
                     print('Warning: invalid %s %r on %r - using %d'
-                          % (key, value, raw.get('title'), fallback))
+                          % (keys[0], value, raw.get('title'), fallback))
                     return fallback
                 return num
 
+            def t2mi_field(key, lo, hi):
+                keys = (key,) if isinstance(key, str) else tuple(key)
+                for k in keys:
+                    if k not in raw:
+                        continue
+                    raw_value = raw.get(k)
+                    value = '' if raw_value is None else str(raw_value).strip()
+                    if not value or value.upper() in ('N/A', 'NA', '-'):
+                        return None
+                    try:
+                        num = int(value)
+                    except ValueError:
+                        num = None
+                    if num is None or not lo <= num <= hi:
+                        print('Warning: invalid %s %r on %r - T2MI disabled'
+                              % (keys[0], value, raw.get('title')))
+                        return None
+                    return num
+                return None
+
+            t2mi_pid = t2mi_field('t2mi_pid', 0, 0x1FFF)
+            plp = t2mi_field(('t2mi_plp', 'plp'), 0, 255)
             streams.append({
                 'pid': pid,
                 'title': raw.get('title') or '',
                 'encryption': (raw.get('encryption') or '').upper(),
                 'sid': id_field('sid', pid + 1000, 1, 0xFFFF),
                 'cpid': id_field('cpid', pid + 5000, 0, 0xFFFF),
-                'plp': id_field('plp', 0, 0, 255),
-                't2mi_pid': id_field('t2mi_pid', 4096, 0, 0x1FFF),
+                'plp': plp,
+                't2mi_pid': t2mi_pid,
+                't2mi': t2mi_pid is not None and plp is not None,
                 't2mi_pnr': id_field('t2mi_pnr', 0, 0, 0xFFFF),
                 'txp': tp,
                 'channels': channels,
@@ -309,7 +339,6 @@ def astra_text(streams, args):
         sid = stream['sid']
         sref = '1:0:1:%X:%X:%d:%X:0:0:0' % (sid, tp['tsid'], tp['onid'], ns)
         relay = relay_script_for(stream, args.relay_script)
-        t2mi_pid = stream.get('t2mi_pid', 4096) or 4096
 
         block = '\n'.join([
             '-- %s %s %d PID%d Stream' % (tp['freq_label'], tp['pol_letter'],
@@ -330,39 +359,43 @@ def astra_text(streams, args):
             '})',
         ])
 
-        plp = stream.get('plp', 0) or 0
-        if plp == 0 and args.t2mi_plp is not None:
-            plp = args.t2mi_plp
-        pnr = stream.get('t2mi_pnr', 0) or 0
-        if pnr == 0 and args.t2mi_pnr is not None:
-            pnr = args.t2mi_pnr
+        # T2MI is generated only when the JSON provides numeric t2mi_pid and
+        # t2mi_plp values. N/A / missing means raw pid<PID> output only.
+        if stream.get('t2mi'):
+            t2mi_pid = stream['t2mi_pid']
+            plp = stream['plp']
+            if plp == 0 and args.t2mi_plp is not None:
+                plp = args.t2mi_plp
+            pnr = stream.get('t2mi_pnr', 0) or 0
+            if pnr == 0 and args.t2mi_pnr is not None:
+                pnr = args.t2mi_pnr
 
-        decap_var, decap_name, t2mi_name, output_seg = t2mi_tag(
-            stream, t2mi_pid, plp)
+            decap_var, decap_name, t2mi_name, output_seg = t2mi_tag(
+                stream, t2mi_pid, plp)
 
-        block += '\n\n' + '\n'.join([
-            '%s = make_t2mi_decap({' % decap_var,
-            '        name = "%s",' % decap_name,
-            '        input = "http://%s:%d/%s/pid%d",' % (args.out_host, args.http_port,
-                                                          relay, stream['pid']),
-            '        plp = %d,' % plp,
-            '        pnr = %d,' % pnr,
-            '        pid = %d,' % t2mi_pid,
-            '    })',
-        ])
+            block += '\n\n' + '\n'.join([
+                '%s = make_t2mi_decap({' % decap_var,
+                '        name = "%s",' % decap_name,
+                '        input = "http://%s:%d/%s/pid%d",' % (args.out_host, args.http_port,
+                                                              relay, stream['pid']),
+                '        plp = %d,' % plp,
+                '        pnr = %d,' % pnr,
+                '        pid = %d,' % t2mi_pid,
+                '    })',
+            ])
 
-        block += '\n\n' + '\n'.join([
-            'make_channel({',
-            '  name = "%s",' % t2mi_name,
-            '  input = {',
-            '    "t2mi://%s",' % decap_var,
-            '  },',
-            '  output = {',
-            '    "http://%s:%d/%s/%s",' % (args.out_host, args.http_port,
-                                           relay, output_seg),
-            '  },',
-            '})',
-        ])
+            block += '\n\n' + '\n'.join([
+                'make_channel({',
+                '  name = "%s",' % t2mi_name,
+                '  input = {',
+                '    "t2mi://%s",' % decap_var,
+                '  },',
+                '  output = {',
+                '    "http://%s:%d/%s/%s",' % (args.out_host, args.http_port,
+                                               relay, output_seg),
+                '  },',
+                '})',
+            ])
 
         blocks.append(block)
     return header + '\n\n'.join(blocks) + '\n'
@@ -377,13 +410,17 @@ def bouquet_text(streams, args):
             continue
         tp = stream['txp']
         relay = relay_script_for(stream, args.relay_script)
-        t2mi_pid = stream.get('t2mi_pid', 4096) or 4096
-        plp = stream.get('plp', 0) or 0
-        if plp == 0 and args.t2mi_plp is not None:
-            plp = args.t2mi_plp
-        output_seg = t2mi_tag(stream, t2mi_pid, plp)[3]
-        url = 'http://%s:%d/%s/%s' % (args.out_host, args.http_port,
-                                      relay, output_seg)
+        if stream.get('t2mi'):
+            t2mi_pid = stream['t2mi_pid']
+            plp = stream['plp']
+            if plp == 0 and args.t2mi_plp is not None:
+                plp = args.t2mi_plp
+            output_seg = t2mi_tag(stream, t2mi_pid, plp)[3]
+            url = 'http://%s:%d/%s/%s' % (args.out_host, args.http_port,
+                                          relay, output_seg)
+        else:
+            url = 'http://%s:%d/%s/pid%d' % (args.out_host, args.http_port,
+                                             relay, stream['pid'])
         marker_name = '##### %s PID %d #####' % (stream['txp']['provider_short'],
                                                  stream['pid'])
         lines.append('#SERVICE 1:64:%X:0:0:0:0:0:0:0::%s' % (stream['pid'], marker_name))
@@ -760,15 +797,17 @@ OPTIONS = OrderedDict((
                 '(abertis, cellnex). Set a fixed name only if your box '
                 'ships a single script that handles every provider.'}),
     ('t2mi_plp', {
-        'section': 'relay', 'label': 'Default T2MI PLP id',
-        'help': 'Default PLP id used by make_t2mi_decap for T2MI '
-                'transponders when the JSON stream does not carry a "plp" '
-                'field. Leave empty to use 0.'}),
+        'section': 'relay', 'label': 'T2MI PLP id override',
+        'help': 'PLP id override for make_t2mi_decap, applied only to streams '
+                'that already define numeric "t2mi_pid" and "t2mi_plp" (or '
+                'legacy "plp") values, and only when the JSON PLP is 0. '
+                'Streams whose T2MI fields are N/A or missing do not get '
+                'T2MI entries. Leave empty to keep 0.'}),
     ('t2mi_pnr', {
-        'section': 'relay', 'label': 'Default T2MI program number',
-        'help': 'Default program number used by make_t2mi_decap for T2MI '
-                'transponders when the JSON stream does not carry a '
-                '"t2mi_pnr" field. Leave empty to use 0.'}),
+        'section': 'relay', 'label': 'T2MI program number override',
+        'help': 'Program number override for make_t2mi_decap, applied only to '
+                'streams that already define numeric T2MI values, and only '
+                'when the JSON "t2mi_pnr" is 0. Leave empty to keep 0.'}),
     ('gui_scale', {
         'section': 'output', 'label': 'GUI scale factor',
         'help': 'Multiplier for all fonts and widgets of this window (for '
@@ -1088,7 +1127,8 @@ CHECK_FIXTURE = [
      'onid_nid_tid': '12572/8916/1', 'date': '29.04.2026',
      'streams': [
          {'title': 'Stream 3150 - (HS199.1) - MAUT', 'pid_info': '8916-9--12573',
-          'encryption': '', 'sid': '4200', 'cpid': '8150', 'channels': [
+          'encryption': '', 'sid': '4200', 'cpid': '8150',
+          't2mi_pid': 'N/A', 't2mi_plp': 'N/A', 'channels': [
               {'type': 'HD', 'name': 'CMM TV', 'system': 'MPEG-4', 'sid': '2',
                'vpid': '408', 'apid_lang': '456 Spa'}]}]},
 ]
@@ -1153,21 +1193,18 @@ def run_checks():
         assert '1:0:1:1068:1:12572:CE40000:0:0:0' in astx
         assert '/etc/astra/scripts/cellnex 3150' in astx
         assert '/cellnex/pid3150' in astx
-        assert astx.count('make_t2mi_decap') == 3
+        assert astx.count('make_t2mi_decap') == 1
         assert '1:0:1:1388:EA75:1:CE40000:0:0:0' in astx
-        assert 't2mi://f11222aber2025pid4096plp0' in astx
         assert '-- 11222 H 30000 PID2025 Stream' in astx
         assert 'name = "Abertis@11222H30000PID2025"' in astx
-        assert 'name = "11222H30000@ABER2025_PID4096PLP0"' in astx
-        assert 'name = "11222h30000@aber2025_pid4096plp0"' in astx
-        assert 't2mi://f11502cell3150pid4096plp0' in astx
-        assert 'name = "11502V10200@CELL3150_PID4096PLP0"' in astx
         assert 't2mi://f11707aber4000pid257plp1' in astx
-        assert 'http://0.0.0.0:9999/abertis/aber2025_pid4096plp0' in astx
-        assert 'http://0.0.0.0:9999/cellnex/cell3150_pid4096plp0' in astx
+        assert 't2mi://f11222' not in astx
+        assert 't2mi://f11502' not in astx
+        assert 'http://0.0.0.0:9999/abertis/pid2025' in astx
+        assert 'http://0.0.0.0:9999/cellnex/pid3150' in astx
         assert 'http://0.0.0.0:9999/abertis/aber4000_pid257plp1' in astx
-        assert 'http%3A//0.0.0.0%3A9999/abertis/aber2025_pid4096plp0:(TV) TVE La 1 Extremadura' in bq
-        assert 'http%3A//0.0.0.0%3A9999/cellnex/cell3150_pid4096plp0:(TV) CMM TV' in bq
+        assert 'http%3A//0.0.0.0%3A9999/abertis/pid2025:(TV) TVE La 1 Extremadura' in bq
+        assert 'http%3A//0.0.0.0%3A9999/cellnex/pid3150:(TV) CMM TV' in bq
         assert 'http%3A//0.0.0.0%3A9999/abertis/aber4000_pid257plp1:(TV) T2MI Test TV' in bq
         assert '(TV) TVE La 1 Extremadura' in bq
         assert '(RADIO) RNE Radio 1 Extremadura' in bq

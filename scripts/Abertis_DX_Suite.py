@@ -20,7 +20,12 @@ astra:
                               service from streamrelay, pipe it through
                               /etc/astra/scripts/<provider> <PID> and
                               republish it per PID on
-                              http://0.0.0.0:9999/<provider>/pid<PID>
+                              http://0.0.0.0:9999/<provider>/pid<PID>.
+                              When the stream defines numeric "t2mi_pid" and
+                              "t2mi_plp" values, the raw PID is additionally
+                              decapsulated with make_t2mi_decap and the PLP
+                              is republished under a T2MI output name; N/A or
+                              missing values skip the T2MI leg.
   3. userbouquet.abertis.tv    Enigma2 IPTV bouquet listing the real channels
                               of every PID behind the astra outputs,
                               grouped by PID with markers.
@@ -206,7 +211,14 @@ def collect_streams(txps):
             # c:19<xxxx> lamedb cache entry. Empty/invalid -> arithmetic
             # defaults (SID = PID+1000, component PID = PID+5000).
             def id_field(key, fallback, lo, hi):
-                value = str(raw.get(key) or '').strip()
+                keys = (key,) if isinstance(key, str) else tuple(key)
+                value = ''
+                for k in keys:
+                    raw_value = raw.get(k)
+                    value = '' if raw_value is None else str(raw_value).strip()
+                    if value and value.upper() not in ('N/A', 'NA', '-'):
+                        break
+                    value = ''
                 if not value:
                     return fallback
                 try:
@@ -215,18 +227,43 @@ def collect_streams(txps):
                     num = None
                 if num is None or not lo <= num <= hi:
                     print('Warning: invalid %s %r on %r - using %d'
-                          % (key, value, raw.get('title'), fallback))
+                          % (keys[0], value, raw.get('title'), fallback))
                     return fallback
                 return num
 
+            # T2MI metadata is optional: N/A, missing or invalid values keep
+            # the stream out of T2MI generation entirely (no silent default).
+            def t2mi_field(key, lo, hi):
+                keys = (key,) if isinstance(key, str) else tuple(key)
+                for k in keys:
+                    if k not in raw:
+                        continue
+                    raw_value = raw.get(k)
+                    value = '' if raw_value is None else str(raw_value).strip()
+                    if not value or value.upper() in ('N/A', 'NA', '-'):
+                        return None
+                    try:
+                        num = int(value)
+                    except ValueError:
+                        num = None
+                    if num is None or not lo <= num <= hi:
+                        print('Warning: invalid %s %r on %r - T2MI disabled'
+                              % (keys[0], value, raw.get('title')))
+                        return None
+                    return num
+                return None
+
+            t2mi_pid = t2mi_field('t2mi_pid', 0, 0x1FFF)
+            plp = t2mi_field(('t2mi_plp', 'plp'), 0, 255)
             streams.append({
                 'pid': pid,
                 'title': raw.get('title') or '',
                 'encryption': (raw.get('encryption') or '').upper(),
                 'sid': id_field('sid', pid + 1000, 1, 0xFFFF),
                 'cpid': id_field('cpid', pid + 5000, 0, 0xFFFF),
-                'plp': id_field('plp', 0, 0, 255),
-                't2mi_pid': id_field('t2mi_pid', 4096, 0, 0x1FFF),
+                'plp': plp,
+                't2mi_pid': t2mi_pid,
+                't2mi': t2mi_pid is not None and plp is not None,
                 't2mi_pnr': id_field('t2mi_pnr', 0, 0, 0xFFFF),
                 'txp': tp,
                 'channels': channels,
@@ -347,7 +384,6 @@ def astra_text(streams, args):
         sid = stream['sid']
         sref = '1:0:1:%X:%X:%d:%X:0:0:0' % (sid, tp['tsid'], tp['onid'], ns)
         relay = relay_script_for(stream, args.relay_script)
-        t2mi_pid = stream.get('t2mi_pid', 4096) or 4096
 
         # Standard make_channel: pull from streamrelay, pipe through script,
         # republish per PID on http://<out_host>:<http_port>/<relay>/pid<PID>
@@ -370,44 +406,45 @@ def astra_text(streams, args):
             '})',
         ])
 
-        # Every stream is demodulated as T2MI by default: read the standard
-        # pid<PID> output, decapsulate the T2MI container, and republish the
-        # PLP on http://<out_host>:<http_port>/<relay>/<code><PID>_pid<t2mi_pid>plp<plp>.
-        # Defaults: t2mi_pid=4096, plp=0, pnr=0. --t2mi-plp/--t2mi-pnr override
-        # when the stream omits them (value 0).
-        plp = stream.get('plp', 0) or 0
-        if plp == 0 and args.t2mi_plp is not None:
-            plp = args.t2mi_plp
-        pnr = stream.get('t2mi_pnr', 0) or 0
-        if pnr == 0 and args.t2mi_pnr is not None:
-            pnr = args.t2mi_pnr
+        # T2MI decapsulation is generated only when the JSON defines numeric
+        # t2mi_pid and t2mi_plp values. N/A / missing means the feed is not a
+        # T2MI container: keep the raw pid<PID> output and skip these entries.
+        # --t2mi-plp/--t2mi-pnr only override existing values (PLP 0 / PNR 0).
+        if stream.get('t2mi'):
+            t2mi_pid = stream['t2mi_pid']
+            plp = stream['plp']
+            if plp == 0 and args.t2mi_plp is not None:
+                plp = args.t2mi_plp
+            pnr = stream.get('t2mi_pnr', 0) or 0
+            if pnr == 0 and args.t2mi_pnr is not None:
+                pnr = args.t2mi_pnr
 
-        decap_var, decap_name, t2mi_name, output_seg = t2mi_tag(
-            stream, t2mi_pid, plp)
+            decap_var, decap_name, t2mi_name, output_seg = t2mi_tag(
+                stream, t2mi_pid, plp)
 
-        block += '\n\n' + '\n'.join([
-            '%s = make_t2mi_decap({' % decap_var,
-            '        name = "%s",' % decap_name,
-            '        input = "http://%s:%d/%s/pid%d",' % (args.out_host, args.http_port,
-                                                          relay, stream['pid']),
-            '        plp = %d,' % plp,
-            '        pnr = %d,' % pnr,
-            '        pid = %d,' % t2mi_pid,
-            '    })',
-        ])
+            block += '\n\n' + '\n'.join([
+                '%s = make_t2mi_decap({' % decap_var,
+                '        name = "%s",' % decap_name,
+                '        input = "http://%s:%d/%s/pid%d",' % (args.out_host, args.http_port,
+                                                              relay, stream['pid']),
+                '        plp = %d,' % plp,
+                '        pnr = %d,' % pnr,
+                '        pid = %d,' % t2mi_pid,
+                '    })',
+            ])
 
-        block += '\n\n' + '\n'.join([
-            'make_channel({',
-            '  name = "%s",' % t2mi_name,
-            '  input = {',
-            '    "t2mi://%s",' % decap_var,
-            '  },',
-            '  output = {',
-            '    "http://%s:%d/%s/%s",' % (args.out_host, args.http_port,
-                                           relay, output_seg),
-            '  },',
-            '})',
-        ])
+            block += '\n\n' + '\n'.join([
+                'make_channel({',
+                '  name = "%s",' % t2mi_name,
+                '  input = {',
+                '    "t2mi://%s",' % decap_var,
+                '  },',
+                '  output = {',
+                '    "http://%s:%d/%s/%s",' % (args.out_host, args.http_port,
+                                               relay, output_seg),
+                '  },',
+                '})',
+            ])
 
         blocks.append(block)
     return header + '\n\n'.join(blocks) + '\n'
@@ -422,13 +459,18 @@ def bouquet_text(streams, args):
             continue
         tp = stream['txp']
         relay = relay_script_for(stream, args.relay_script)
-        t2mi_pid = stream.get('t2mi_pid', 4096) or 4096
-        plp = stream.get('plp', 0) or 0
-        if plp == 0 and args.t2mi_plp is not None:
-            plp = args.t2mi_plp
-        output_seg = t2mi_tag(stream, t2mi_pid, plp)[3]
-        url = 'http://%s:%d/%s/%s' % (args.out_host, args.http_port,
-                                      relay, output_seg)
+        if stream.get('t2mi'):
+            t2mi_pid = stream['t2mi_pid']
+            plp = stream['plp']
+            if plp == 0 and args.t2mi_plp is not None:
+                plp = args.t2mi_plp
+            output_seg = t2mi_tag(stream, t2mi_pid, plp)[3]
+            url = 'http://%s:%d/%s/%s' % (args.out_host, args.http_port,
+                                          relay, output_seg)
+        else:
+            # No T2MI leg: the bouquet points at the raw pid<PID> channel.
+            url = 'http://%s:%d/%s/pid%d' % (args.out_host, args.http_port,
+                                             relay, stream['pid'])
         marker_name = '##### %s PID %d #####' % (stream['txp']['provider_short'],
                                                  stream['pid'])
         lines.append('#SERVICE 1:64:%X:0:0:0:0:0:0:0::%s' % (stream['pid'], marker_name))
@@ -746,13 +788,15 @@ def main():
                              'for every stream (default: lower-cased provider name, '
                              'e.g. abertis / cellnex)')
     parser.add_argument('--t2mi-plp', type=int, metavar='PLP',
-                        help='default PLP id for make_t2mi_decap on T2MI '
-                             'transponders when the JSON stream omits it '
-                             '(default: 0)')
+                        help='override the PLP id used by make_t2mi_decap for '
+                             'streams that already define numeric T2MI values; '
+                             'only applied when the JSON PLP is 0. Streams '
+                             'with N/A/missing T2MI fields are skipped.')
     parser.add_argument('--t2mi-pnr', type=int, metavar='PNR',
-                        help='default program number for make_t2mi_decap on '
-                             'T2MI transponders when the JSON stream omits it '
-                             '(default: 0)')
+                        help='override the program number used by '
+                             'make_t2mi_decap for streams that already define '
+                             'numeric T2MI values; only applied when the JSON '
+                             'PNR is 0 (default: 0)')
     parser.add_argument('--bouquet', default='userbouquet.abertis.tv',
                         dest='bouquet_name',
                         help='bouquet file name (default: %(default)s)')
