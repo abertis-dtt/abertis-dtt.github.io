@@ -14,7 +14,7 @@
                 "sid": "3025",
                 "cpid": "7025",
                 "changed_by": "ahmedmoselhi",
-                "changes": "-1 ch: RNE Radio 4 Extremadura; apid_lang updated on 3 ch",
+                "changes": "no content changes against the published version",
                 "channels": [
                     {
                         "type": "HD",
@@ -49,7 +49,7 @@
                 "sid": "3026",
                 "cpid": "7026",
                 "changed_by": "ahmedmoselhi",
-                "changes": "-1 ch: RNE Radio 4 La Rioja; apid_lang updated on 3 ch",
+                "changes": "no content changes against the published version",
                 "channels": [
                     {
                         "type": "HD",
@@ -84,7 +84,7 @@
                 "sid": "3027",
                 "cpid": "7027",
                 "changed_by": "ahmedmoselhi",
-                "changes": "-1 ch: RNE Radio 4 Murcia; apid_lang updated on 3 ch",
+                "changes": "no content changes against the published version",
                 "channels": [
                     {
                         "type": "HD",
@@ -119,7 +119,7 @@
                 "sid": "3028",
                 "cpid": "7028",
                 "changed_by": "ahmedmoselhi",
-                "changes": "-1 ch: RNE Radio 4 Valencia; apid_lang updated on 3 ch",
+                "changes": "no content changes against the published version",
                 "channels": [
                     {
                         "type": "HD",
@@ -154,7 +154,7 @@
                 "sid": "3050",
                 "cpid": "7050",
                 "changed_by": "ahmedmoselhi",
-                "changes": "+1 ch: Radio 4 RNE; apid_lang updated on 3 ch",
+                "changes": "no content changes against the published version",
                 "channels": [
                     {
                         "type": "HD",
@@ -166,14 +166,6 @@
                     },
                     {
                         "type": "HD",
-                        "name": "TVE La 2",
-                        "system": "MPEG-4",
-                        "sid": "388",
-                        "vpid": "401",
-                        "apid_lang": "402 Spa 403 org 404 N/A"
-                    },
-                    {
-                        "type": "HD",
                         "name": "Canal 24 Horas",
                         "system": "MPEG-4",
                         "sid": "383",
@@ -181,12 +173,12 @@
                         "apid_lang": "1503 Spa 1504 org 1505 N/A"
                     },
                     {
-                        "type": "Radio",
-                        "name": "RNE Radio 4",
-                        "system": "",
-                        "sid": "387",
-                        "vpid": "",
-                        "apid_lang": "2041 Spa"
+                        "type": "HD",
+                        "name": "TVE La 2",
+                        "system": "MPEG-4",
+                        "sid": "388",
+                        "vpid": "401",
+                        "apid_lang": "402 Spa 403 org 404 N/A"
                     },
                     {
                         "type": "HD",
@@ -214,6 +206,14 @@
                     },
                     {
                         "type": "Radio",
+                        "name": "RNE Radio 4",
+                        "system": "",
+                        "sid": "387",
+                        "vpid": "",
+                        "apid_lang": "2041 Spa"
+                    },
+                    {
+                        "type": "Radio",
                         "name": "RNE Radio Exterior",
                         "system": "",
                         "sid": "390",
@@ -229,7 +229,7 @@
                 "sid": "3060",
                 "cpid": "7060",
                 "changed_by": "ahmedmoselhi",
-                "changes": "renamed: Canal 24 Horas -> 24hHD HEVC Sat; TVE La 1 -> La1HD HEVC Sat; TVE La 2 -> La2HD HEVC Sat; 3 ch updated (pids/codec/type)",
+                "changes": "no content changes against the published version",
                 "channels": [
                     {
                         "type": "HD",
@@ -326,7 +326,9 @@
                         "vpid": "",
                         "apid_lang": "1671 Spa"
                     }
-                ]
+                ],
+                "changes": "no content changes against the published version",
+                "changed_by": "ahmedmoselhi"
             }
         ]
     },
@@ -345,7 +347,7 @@
                 "sid": "3270",
                 "cpid": "7270",
                 "changed_by": "ahmedmoselhi",
-                "changes": "renamed: Teledeporte -> tdp HD; Canal 24 Horas -> 24h HD; TVE La 2 -> La 2 HD; 3 ch updated (pids/codec/type)",
+                "changes": "no content changes against the published version",
                 "channels": [
                     {
                         "type": "HD",
@@ -420,7 +422,7 @@
                 "sid": "3271",
                 "cpid": "7271",
                 "changed_by": "ahmedmoselhi",
-                "changes": "-1 ch: RNE Radio 4 Navarra; renamed: TVE La 1 Navarra -> La 1 HD Navarra; apid_lang updated on 2 ch; 1 ch updated (pids/codec/type)",
+                "changes": "no content changes against the published version",
                 "channels": [
                     {
                         "type": "HD",
@@ -455,7 +457,7 @@
                 "sid": "3272",
                 "cpid": "7272",
                 "changed_by": "ahmedmoselhi",
-                "changes": "-1 ch: RNE Radio 4 Asturias; renamed: TVE La 1 Asturias -> La 1 HD Asturias; apid_lang updated on 2 ch; 1 ch updated (pids/codec/type)",
+                "changes": "no content changes against the published version",
                 "channels": [
                     {
                         "type": "HD",
@@ -490,7 +492,7 @@
                 "sid": "3273",
                 "cpid": "7273",
                 "changed_by": "ahmedmoselhi",
-                "changes": "-1 ch: RNE Radio 4 Aragon; apid_lang updated on 3 ch",
+                "changes": "no content changes against the published version",
                 "channels": [
                     {
                         "type": "HD",
@@ -525,7 +527,7 @@
                 "sid": "3274",
                 "cpid": "7274",
                 "changed_by": "ahmedmoselhi",
-                "changes": "-1 ch: RNE Radio 4 Cantabria; apid_lang updated on 3 ch",
+                "changes": "no content changes against the published version",
                 "channels": [
                     {
                         "type": "HD",
@@ -1014,7 +1016,9 @@
                         "vpid": "",
                         "apid_lang": "1651 Spa"
                     }
-                ]
+                ],
+                "changes": "no content changes against the published version",
+                "changed_by": "ahmedmoselhi"
             }
         ]
     },
@@ -1115,7 +1119,7 @@
                 "channels": [
                     {
                         "type": "SD",
-                        "name": "A7 (Televisi\u00f3n del Princip\u00e1u d'Asturies 7)",
+                        "name": "A7 (Televisión del Principáu d'Asturies 7)",
                         "system": "MPEG-2",
                         "sid": "10220",
                         "vpid": "1010",
@@ -1134,7 +1138,7 @@
                 "channels": [
                     {
                         "type": "HD",
-                        "name": "TVG (Televisi\u00f3n de Galicia)",
+                        "name": "TVG (Televisión de Galicia)",
                         "system": "MPEG-4",
                         "sid": "1",
                         "vpid": "3001",
@@ -1149,11 +1153,11 @@
                 "sid": "3306",
                 "cpid": "7306",
                 "changed_by": "ahmedmoselhi",
-                "changes": "+1 ch: CyL7 (Castilla y Le\u00f3n TV7); -1 ch: CyL7 (Castilla y Le\u00f3n TV7)",
+                "changes": "+1 ch: CyL7 (Castilla y León TV7); -1 ch: CyL7 (Castilla y León TV7)",
                 "channels": [
                     {
                         "type": "HD",
-                        "name": "CyL7 (Castilla y Le\u00f3n TV7)",
+                        "name": "CyL7 (Castilla y León TV7)",
                         "system": "MPEG-4",
                         "sid": "1",
                         "vpid": "8000",
@@ -1162,7 +1166,7 @@
                 ]
             },
             {
-                "title": "Stream 2308 - (HS128.8) - Televisi\u00f3 de Catalunya",
+                "title": "Stream 2308 - (HS128.8) - Televisió de Catalunya",
                 "pid_info": "8916-101--12674",
                 "encryption": "BISS",
                 "sid": "3308",
@@ -1212,7 +1216,7 @@
                     },
                     {
                         "type": "Radio",
-                        "name": "Catalunya R\u00e0dio",
+                        "name": "Catalunya Ràdio",
                         "system": "",
                         "sid": "809",
                         "vpid": "",
@@ -1280,14 +1284,6 @@
                         "apid_lang": "1503 Spa 1504 org 1505 N/A"
                     },
                     {
-                        "type": "Radio",
-                        "name": "RNE Radio 4",
-                        "system": "",
-                        "sid": "387",
-                        "vpid": "",
-                        "apid_lang": "2041 Spa"
-                    },
-                    {
                         "type": "HD",
                         "name": "Clan",
                         "system": "MPEG-4",
@@ -1310,6 +1306,14 @@
                         "sid": "382",
                         "vpid": "",
                         "apid_lang": "2021 Spa"
+                    },
+                    {
+                        "type": "Radio",
+                        "name": "RNE Radio 4",
+                        "system": "",
+                        "sid": "387",
+                        "vpid": "",
+                        "apid_lang": "2041 Spa"
                     },
                     {
                         "type": "Radio",
@@ -1975,7 +1979,7 @@
                 "channels": [
                     {
                         "type": "HD",
-                        "name": "CMM TV (Televisi\u00f3n Castilla-La Mancha)",
+                        "name": "CMM TV (Televisión Castilla-La Mancha)",
                         "system": "MPEG-4",
                         "sid": "2",
                         "vpid": "408",
@@ -2052,7 +2056,7 @@
                 "channels": [
                     {
                         "type": "HD",
-                        "name": "A7 (Televisi\u00f3n del Princip\u00e1u d'Asturies 7)",
+                        "name": "A7 (Televisión del Principáu d'Asturies 7)",
                         "system": "MPEG-4",
                         "sid": "10220",
                         "vpid": "1010",
@@ -2060,7 +2064,7 @@
                     },
                     {
                         "type": "HD",
-                        "name": "A8 (Televisi\u00f3n del Princip\u00e1u d'Asturies 8)",
+                        "name": "A8 (Televisión del Principáu d'Asturies 8)",
                         "system": "MPEG-4",
                         "sid": "10225",
                         "vpid": "1020",
@@ -2136,6 +2140,22 @@
                         "apid_lang": "402 Spa 403 org 405 N/A"
                     },
                     {
+                        "type": "HD",
+                        "name": "Clan Canarias",
+                        "system": "MPEG-4",
+                        "sid": "489",
+                        "vpid": "2501",
+                        "apid_lang": "2502 Spa 2503 org 2508 N/A"
+                    },
+                    {
+                        "type": "Radio",
+                        "name": "RNE Radio 3 HQ",
+                        "system": "",
+                        "sid": "481",
+                        "vpid": "",
+                        "apid_lang": "2011 Spa"
+                    },
+                    {
                         "type": "Radio",
                         "name": "RNE Radio 4 Canarias",
                         "system": "",
@@ -2166,22 +2186,6 @@
                         "sid": "487",
                         "vpid": "",
                         "apid_lang": "2051 SPA"
-                    },
-                    {
-                        "type": "HD",
-                        "name": "Clan Canarias",
-                        "system": "MPEG-4",
-                        "sid": "489",
-                        "vpid": "2501",
-                        "apid_lang": "2502 Spa 2503 org 2508 N/A"
-                    },
-                    {
-                        "type": "Radio",
-                        "name": "RNE Radio 3 HQ",
-                        "system": "",
-                        "sid": "481",
-                        "vpid": "",
-                        "apid_lang": "2011 Spa"
                     }
                 ]
             },
@@ -2192,7 +2196,7 @@
                 "sid": "1303",
                 "cpid": "5303",
                 "changed_by": "ahmedmoselhi",
-                "changes": "renamed: Nova Espa\u00f1a -> Nova ; apid_lang updated on 3 ch; 1 ch updated (pids/codec/type)",
+                "changes": "renamed: Nova España -> Nova ; apid_lang updated on 3 ch; 1 ch updated (pids/codec/type)",
                 "channels": [
                     {
                         "type": "HD",
@@ -2201,6 +2205,14 @@
                         "sid": "149",
                         "vpid": "101",
                         "apid_lang": "103 Spa 104 org 105 N/A"
+                    },
+                    {
+                        "type": "HD",
+                        "name": "A3 Series",
+                        "system": "MPEG-4",
+                        "sid": "150",
+                        "vpid": "201",
+                        "apid_lang": "203 Spa 204 org 205 N/A"
                     },
                     {
                         "type": "HD",
@@ -2220,19 +2232,11 @@
                     },
                     {
                         "type": "HD",
-                        "name": "Nova Espa\u00f1a",
+                        "name": "Nova España",
                         "system": "MPEG-4",
                         "sid": "154",
                         "vpid": "601",
                         "apid_lang": "603 Spa 604 org 605 N/A"
-                    },
-                    {
-                        "type": "HD",
-                        "name": "A3 Series",
-                        "system": "MPEG-4",
-                        "sid": "150",
-                        "vpid": "201",
-                        "apid_lang": "203 Spa 204 org 205 N/A"
                     }
                 ]
             }
@@ -2280,14 +2284,6 @@
                         "apid_lang": "402 Spa 403 org 404 N/A"
                     },
                     {
-                        "type": "Radio",
-                        "name": "RNE Radio 4",
-                        "system": "",
-                        "sid": "387",
-                        "vpid": "",
-                        "apid_lang": "2041 SPA"
-                    },
-                    {
                         "type": "HD",
                         "name": "Clan",
                         "system": "MPEG-4",
@@ -2310,6 +2306,14 @@
                         "sid": "382",
                         "vpid": "",
                         "apid_lang": "2021 Spa"
+                    },
+                    {
+                        "type": "Radio",
+                        "name": "RNE Radio 4",
+                        "system": "",
+                        "sid": "387",
+                        "vpid": "",
+                        "apid_lang": "2041 SPA"
                     },
                     {
                         "type": "Radio",
@@ -2463,7 +2467,7 @@
                 "sid": "1701",
                 "cpid": "5701",
                 "changed_by": "ahmedmoselhi",
-                "changes": "renamed: DMAX Espa\u00f1a -> DMAX; Veo 7 -> VEO7; apid_lang updated on 6 ch; 2 ch updated (pids/codec/type)",
+                "changes": "no content changes against the published version",
                 "channels": [
                     {
                         "type": "HD",
@@ -2483,7 +2487,7 @@
                     },
                     {
                         "type": "HD",
-                        "name": "DMAX Espa\u00f1a",
+                        "name": "DMAX España",
                         "system": "MPEG-4",
                         "sid": "277",
                         "vpid": "301",
@@ -2515,7 +2519,7 @@
                     },
                     {
                         "type": "Radio",
-                        "name": "Radio Mar\u00eda Espa\u00f1a",
+                        "name": "Radio María España",
                         "system": "",
                         "sid": "283",
                         "vpid": "",
@@ -2538,7 +2542,7 @@
                 "sid": "1702",
                 "cpid": "5702",
                 "changed_by": "ahmedmoselhi",
-                "changes": "renamed: Nova Espa\u00f1a -> Nova ; apid_lang updated on 3 ch; 1 ch updated (pids/codec/type)",
+                "changes": "no content changes against the published version",
                 "channels": [
                     {
                         "type": "HD",
@@ -2566,7 +2570,7 @@
                     },
                     {
                         "type": "HD",
-                        "name": "Nova Espa\u00f1a",
+                        "name": "Nova España",
                         "system": "MPEG-4",
                         "sid": "154",
                         "vpid": "601",
@@ -2589,11 +2593,11 @@
                 "sid": "1703",
                 "cpid": "5703",
                 "changed_by": "ahmedmoselhi",
-                "changes": "renamed: FDF (Factor\u00eda de Ficci\u00f3n) -> FDF; Telecinco -> Telecinco HD; Cuatro -> Cuatro HD; apid_lang updated on 1 ch; 3 ch updated (pids/codec/type)",
+                "changes": "no content changes against the published version",
                 "channels": [
                     {
                         "type": "HD",
-                        "name": "FDF (Factor\u00eda de Ficci\u00f3n)",
+                        "name": "FDF (Factoría de Ficción)",
                         "system": "MPEG-4",
                         "sid": "188",
                         "vpid": "1301",
@@ -2650,8 +2654,16 @@
                 "sid": "1008",
                 "cpid": "5008",
                 "changed_by": "ahmedmoselhi",
-                "changes": "sid/cpid corrected from pid+1000/pid+5000 (9008/13008) to real uplink values confirmed by raw PAT in pid_logs (feed HSA190.1)",
+                "changes": "no content changes against the published version",
                 "channels": [
+                    {
+                        "type": "UHD",
+                        "name": "A3",
+                        "system": "HEVC",
+                        "sid": "152",
+                        "vpid": "1701",
+                        "apid_lang": "1702 E-AC3 Spa 1703 E-AC3 org 1704 E-AC3 Spa"
+                    },
                     {
                         "type": "UHD",
                         "name": "TVE La 2",
@@ -2675,14 +2687,6 @@
                         "sid": "40005",
                         "vpid": "2021",
                         "apid_lang": "2022 E-AC3 Spa"
-                    },
-                    {
-                        "type": "UHD",
-                        "name": "A3",
-                        "system": "HEVC",
-                        "sid": "152",
-                        "vpid": "1701",
-                        "apid_lang": "1702 E-AC3 Spa 1703 E-AC3 org 1704 E-AC3 Spa"
                     },
                     {
                         "type": "UHD",
@@ -2711,7 +2715,7 @@
                 "sid": "1001",
                 "cpid": "5001",
                 "changed_by": "ahmedmoselhi",
-                "changes": "sid/cpid corrected from pid+1000/pid+5000 (9001/13001) to real uplink values confirmed by raw PAT in pid_logs (feed HSA-67.1)",
+                "changes": "no content changes against the published version",
                 "channels": [
                     {
                         "type": "HD",
@@ -2746,8 +2750,16 @@
                         "apid_lang": "402 Spa 403 org 404 N/A"
                     },
                     {
+                        "type": "HD",
+                        "name": "Clan Madrid",
+                        "system": "MPEG-4",
+                        "sid": "539",
+                        "vpid": "2501",
+                        "apid_lang": "2502 Spa 2503 org 2508 N/A"
+                    },
+                    {
                         "type": "Radio",
-                        "name": "RNE Radio Nacional de Espa\u00f1a",
+                        "name": "RNE Radio Nacional de España",
                         "system": "",
                         "sid": "535",
                         "vpid": "",
@@ -2768,14 +2780,6 @@
                         "sid": "537",
                         "vpid": "",
                         "apid_lang": "2041 SPA"
-                    },
-                    {
-                        "type": "HD",
-                        "name": "Clan Madrid",
-                        "system": "MPEG-4",
-                        "sid": "539",
-                        "vpid": "2501",
-                        "apid_lang": "2502 Spa 2503 org 2508 N/A"
                     }
                 ]
             },
@@ -2841,7 +2845,7 @@
                 "channels": [
                     {
                         "type": "HD",
-                        "name": "Mega Espa\u00f1a",
+                        "name": "Mega España",
                         "system": "MPEG-4",
                         "sid": "155",
                         "vpid": "1301",
@@ -2849,7 +2853,7 @@
                     },
                     {
                         "type": "HD",
-                        "name": "Trece Espa\u00f1a",
+                        "name": "Trece España",
                         "system": "MPEG-4",
                         "sid": "170",
                         "vpid": "2001",
@@ -2857,7 +2861,7 @@
                     },
                     {
                         "type": "HD",
-                        "name": "Energy Espa\u00f1a",
+                        "name": "Energy España",
                         "system": "MPEG-4",
                         "sid": "192",
                         "vpid": "1101",
@@ -2865,7 +2869,7 @@
                     },
                     {
                         "type": "HD",
-                        "name": "Boing Espa\u00f1a",
+                        "name": "Boing España",
                         "system": "MPEG-4",
                         "sid": "193",
                         "vpid": "1201",
@@ -2881,7 +2885,7 @@
                     },
                     {
                         "type": "Radio",
-                        "name": "Europa FM Espa\u00f1a",
+                        "name": "Europa FM España",
                         "system": "",
                         "sid": "157",
                         "vpid": "",
@@ -2889,7 +2893,7 @@
                     },
                     {
                         "type": "Radio",
-                        "name": "Melod\u00eda FM",
+                        "name": "Melodía FM",
                         "system": "",
                         "sid": "158",
                         "vpid": "",
@@ -2953,7 +2957,7 @@
                 "channels": [
                     {
                         "type": "HD",
-                        "name": "La S\u00e9ptima",
+                        "name": "La Séptima",
                         "system": "MPEG-4",
                         "sid": "101",
                         "vpid": "101",
@@ -2969,7 +2973,7 @@
                     },
                     {
                         "type": "HD",
-                        "name": "Real Madrid TV Espa\u00f1ol",
+                        "name": "Real Madrid TV Español",
                         "system": "MPEG-4",
                         "sid": "103",
                         "vpid": "301",
@@ -3001,7 +3005,7 @@
                     },
                     {
                         "type": "Radio",
-                        "name": "Radiol\u00e9",
+                        "name": "Radiolé",
                         "system": "",
                         "sid": "107",
                         "vpid": "",
@@ -3068,7 +3072,15 @@
                 "channels": [
                     {
                         "type": "HD",
-                        "name": "FDF (Factor\u00eda de Ficci\u00f3n)",
+                        "name": "BeMad",
+                        "system": "MPEG-4",
+                        "sid": "187",
+                        "vpid": "201",
+                        "apid_lang": "203 Spa 204 org 205 N/A"
+                    },
+                    {
+                        "type": "HD",
+                        "name": "FDF (Factoría de Ficción)",
                         "system": "MPEG-4",
                         "sid": "188",
                         "vpid": "1301",
@@ -3097,14 +3109,6 @@
                         "sid": "191",
                         "vpid": "1701",
                         "apid_lang": "1703 Spa 1704 org 1705 N/A"
-                    },
-                    {
-                        "type": "HD",
-                        "name": "BeMad",
-                        "system": "MPEG-4",
-                        "sid": "187",
-                        "vpid": "201",
-                        "apid_lang": "203 Spa 204 org 205 N/A"
                     }
                 ]
             },
@@ -3115,11 +3119,11 @@
                 "sid": "1006",
                 "cpid": "5006",
                 "changed_by": "ahmedmoselhi",
-                "changes": "sid/cpid corrected from pid+1000/pid+5000 (9006/13006) to real uplink values confirmed by raw PAT in pid_logs (feed HSA-68.3)",
+                "changes": "no content changes against the published version",
                 "channels": [
                     {
                         "type": "HD",
-                        "name": "Teledeporte Catalu\u00f1a",
+                        "name": "Teledeporte Cataluña",
                         "system": "MPEG-4",
                         "sid": "490",
                         "vpid": "4001",
@@ -3127,7 +3131,7 @@
                     },
                     {
                         "type": "HD",
-                        "name": "Canal 24 Horas Catalu\u00f1a",
+                        "name": "Canal 24 Horas Cataluña",
                         "system": "MPEG-4",
                         "sid": "493",
                         "vpid": "1501",
@@ -3135,7 +3139,7 @@
                     },
                     {
                         "type": "HD",
-                        "name": "TVE La 1 Catalu\u00f1a",
+                        "name": "TVE La 1 Cataluña",
                         "system": "MPEG-4",
                         "sid": "494",
                         "vpid": "301",
@@ -3143,39 +3147,15 @@
                     },
                     {
                         "type": "HD",
-                        "name": "TVE La 2 Catalu\u00f1a",
+                        "name": "TVE La 2 Cataluña",
                         "system": "MPEG-4",
                         "sid": "498",
                         "vpid": "401",
                         "apid_lang": "402 Spa 403 org 404 N/A"
                     },
                     {
-                        "type": "Radio",
-                        "name": "RNE Radio 1 Catalu\u00f1a",
-                        "system": "",
-                        "sid": "495",
-                        "vpid": "",
-                        "apid_lang": "2001 SPA"
-                    },
-                    {
-                        "type": "Radio",
-                        "name": "RNE Radio 5 Catalu\u00f1a",
-                        "system": "",
-                        "sid": "496",
-                        "vpid": "",
-                        "apid_lang": "2031 SPA"
-                    },
-                    {
-                        "type": "Radio",
-                        "name": "RNE Radio 4 Catalu\u00f1a",
-                        "system": "",
-                        "sid": "497",
-                        "vpid": "",
-                        "apid_lang": "2041 SPA"
-                    },
-                    {
                         "type": "HD",
-                        "name": "Clan Catalu\u00f1a",
+                        "name": "Clan Cataluña",
                         "system": "MPEG-4",
                         "sid": "499",
                         "vpid": "2501",
@@ -3188,6 +3168,30 @@
                         "sid": "491",
                         "vpid": "",
                         "apid_lang": "2011 Spa"
+                    },
+                    {
+                        "type": "Radio",
+                        "name": "RNE Radio 1 Cataluña",
+                        "system": "",
+                        "sid": "495",
+                        "vpid": "",
+                        "apid_lang": "2001 SPA"
+                    },
+                    {
+                        "type": "Radio",
+                        "name": "RNE Radio 5 Cataluña",
+                        "system": "",
+                        "sid": "496",
+                        "vpid": "",
+                        "apid_lang": "2031 SPA"
+                    },
+                    {
+                        "type": "Radio",
+                        "name": "RNE Radio 4 Cataluña",
+                        "system": "",
+                        "sid": "497",
+                        "vpid": "",
+                        "apid_lang": "2041 SPA"
                     }
                 ]
             }
