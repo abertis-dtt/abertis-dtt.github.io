@@ -137,6 +137,7 @@ def parse_transponders(data):
             'pol': POLARISATION_CODES.get(pol, 0),
             'system': system,
             'modulation': modulation,
+            'delivery': delivery,
             'sr_ksps': int(sr_fec[0]) if sr_fec else 0,
             'fec': FEC_CODES.get(sr_fec[1].upper() if len(sr_fec) > 1 else '', 15),
             'onid': onid,
@@ -214,6 +215,9 @@ def collect_streams(txps):
                 'encryption': (raw.get('encryption') or '').upper(),
                 'sid': id_field('sid', pid + 1000, 1, 0xFFFF),
                 'cpid': id_field('cpid', pid + 5000, 0, 0xFFFF),
+                'plp': id_field('plp', 0, 0, 255),
+                't2mi_pid': id_field('t2mi_pid', 4096, 0, 0x1FFF),
+                't2mi_pnr': id_field('t2mi_pnr', 0, 0, 0xFFFF),
                 'txp': tp,
                 'channels': channels,
             })
@@ -311,7 +315,11 @@ def astra_text(streams, args):
         sid = stream['sid']
         sref = '1:0:1:%X:%X:%d:%X:0:0:0' % (sid, tp['tsid'], tp['onid'], ns)
         relay = relay_script_for(stream, args.relay_script)
-        blocks.append('\n'.join([
+        t2mi_pid = stream.get('t2mi_pid', 4096) or 4096
+
+        # Standard make_channel: pull from streamrelay, pipe through script,
+        # republish per PID on http://<out_host>:<http_port>/<relay>/pid<PID>
+        block = '\n'.join([
             'make_channel({',
             '  name = "%s",' % feed_service_name(stream),
             '  input = {',
@@ -326,7 +334,48 @@ def astra_text(streams, args):
                                              relay, stream['pid']),
             '  },',
             '})',
-        ]))
+        ])
+
+        # Every stream is demodulated as T2MI by default: read the standard
+        # pid<PID> output, decapsulate the T2MI container, and republish the
+        # PLP on http://<out_host>:<http_port>/<relay>/pid<PID>pid<t2mi_pid>plp<plp>.
+        # Defaults: t2mi_pid=4096, plp=0, pnr=0. --t2mi-plp/--t2mi-pnr override
+        # when the stream omits them (value 0).
+        plp = stream.get('plp', 0) or 0
+        if plp == 0 and getattr(args, 't2mi_plp', None) is not None:
+            plp = args.t2mi_plp
+        pnr = stream.get('t2mi_pnr', 0) or 0
+        if pnr == 0 and getattr(args, 't2mi_pnr', None) is not None:
+            pnr = args.t2mi_pnr
+
+        decap_var = 'f' + tp['freq_label'] + 'pid%dplp%d' % (t2mi_pid, plp)
+        output_seg = 'pid%dpid%dplp%d' % (stream['pid'], t2mi_pid, plp)
+
+        block += '\n\n' + '\n'.join([
+            '%s = make_t2mi_decap({' % decap_var,
+            '        name = "%s",' % feed_service_name(stream),
+            '        input = "http://%s:%d/%s/pid%d",' % (args.out_host, args.http_port,
+                                                          relay, stream['pid']),
+            '        plp = %d,' % plp,
+            '        pnr = %d,' % pnr,
+            '        pid = %d,' % t2mi_pid,
+            '    })',
+        ])
+
+        block += '\n\n' + '\n'.join([
+            'make_channel({',
+            '  name = "Abertis@%spid%dplp%d",' % (tp['freq_label'], t2mi_pid, plp),
+            '  input = {',
+            '    "t2mi://%s",' % decap_var,
+            '  },',
+            '  output = {',
+            '    "http://%s:%d/%s/%s",' % (args.out_host, args.http_port,
+                                           relay, output_seg),
+            '  },',
+            '})',
+        ])
+
+        blocks.append(block)
     return header + '\n\n'.join(blocks) + '\n'
 
 
@@ -338,13 +387,19 @@ def bouquet_text(streams, args):
             print('Note: PID %d has no channels in the JSON - lamedb/astra '
                   'entries only' % stream['pid'])
             continue
+        tp = stream['txp']
         relay = relay_script_for(stream, args.relay_script)
+        t2mi_pid = stream.get('t2mi_pid', 4096) or 4096
+        plp = stream.get('plp', 0) or 0
+        if plp == 0 and getattr(args, 't2mi_plp', None) is not None:
+            plp = args.t2mi_plp
+        output_seg = 'pid%dpid%dplp%d' % (stream['pid'], t2mi_pid, plp)
+        url = 'http://%s:%d/%s/%s' % (args.out_host, args.http_port,
+                                      relay, output_seg)
         marker_name = '##### %s PID %d #####' % (stream['txp']['provider_short'],
                                                  stream['pid'])
         lines.append('#SERVICE 1:64:%X:0:0:0:0:0:0:0::%s' % (stream['pid'], marker_name))
         lines.append('#DESCRIPTION ##### %s #####' % feed_service_name(stream))
-        url = 'http://%s:%d/%s/pid%d' % (args.out_host, args.http_port,
-                                          relay, stream['pid'])
         # Enigma2 requires colons in URLs to be URL-encoded (uppercase %3A)
         encoded = url.replace(':', '%3A')
         groups = (('1', '(TV)', [c for c in stream['channels'] if not c['radio']]),
@@ -651,6 +706,8 @@ DEFAULTS = {
     'out_host': '0.0.0.0',
     'http_port': 9999,
     'relay_script': '',
+    't2mi_plp': '',
+    't2mi_pnr': '',
     'gui_scale': 1.0,
 }
 
@@ -776,6 +833,16 @@ OPTIONS = OrderedDict((
                 'to derive it per stream from the JSON provider field '
                 '(abertis, cellnex). Set a fixed name only if your box '
                 'ships a single script that handles every provider.'}),
+    ('t2mi_plp', {
+        'section': 'relay', 'label': 'Default T2MI PLP id',
+        'help': 'Default PLP id used by make_t2mi_decap for T2MI '
+                'transponders when the JSON stream does not carry a "plp" '
+                'field. Leave empty to use 0.'}),
+    ('t2mi_pnr', {
+        'section': 'relay', 'label': 'Default T2MI program number',
+        'help': 'Default program number used by make_t2mi_decap for T2MI '
+                'transponders when the JSON stream does not carry a '
+                '"t2mi_pnr" field. Leave empty to use 0.'}),
     ('gui_scale', {
         'section': 'output', 'label': 'GUI scale factor',
         'help': 'Multiplier for all fonts and widgets of this window (for '
@@ -916,7 +983,9 @@ def values_namespace(v):
         relay_port=to_int(v['relay_port'], DEFAULTS['relay_port']),
         out_host=v['out_host'].strip() or DEFAULTS['out_host'],
         http_port=to_int(v['http_port'], DEFAULTS['http_port']),
-        relay_script=v['relay_script'].strip() or None)
+        relay_script=v['relay_script'].strip() or None,
+        t2mi_plp=to_int(v.get('t2mi_plp') or '', None),
+        t2mi_pnr=to_int(v.get('t2mi_pnr') or '', None))
 
 
 def build_cli_command(v):
@@ -950,6 +1019,10 @@ def build_cli_command(v):
               '--http-port', http_port]
     if v['relay_script'].strip():
         parts += ['--relay-script', shlex.quote(v['relay_script'].strip())]
+    if v.get('t2mi_plp'):
+        parts += ['--t2mi-plp', shlex.quote(str(v['t2mi_plp']))]
+    if v.get('t2mi_pnr'):
+        parts += ['--t2mi-pnr', shlex.quote(str(v['t2mi_pnr']))]
     if v['bouquet'].strip() and v['bouquet'].strip() != DEFAULTS['bouquet']:
         parts += ['--bouquet', shlex.quote(v['bouquet'].strip())]
     if v.get('softcam_key_enabled'):
@@ -1094,6 +1167,16 @@ CHECK_FIXTURE = [
           'channels': [
               {'type': 'Radio', 'name': 'RNE Radio 3 Nacion', 'system': '',
                'sid': '300', 'vpid': '', 'apid_lang': '301 Spa'}]}]},
+    {'txp_no': '200', 'freq_pol_mode': '11707.00 V DVB-S2/8PSK T2MI',
+     'provider': 'Abertis DTT', 'sr_fec': '27500 3/4',
+     'onid_nid_tid': '1/60000/60021', 'date': '25.04.2026',
+     'streams': [
+         {'title': 'Stream 4000 - T2MI test',
+          'pid_info': '8916-1--60021', 'encryption': '',
+          'sid': '5000', 'cpid': '9000', 'plp': '1', 't2mi_pid': '257', 't2mi_pnr': '1',
+          'channels': [
+              {'type': 'HD', 'name': 'T2MI Test TV', 'system': 'MPEG-4', 'sid': '10',
+               'vpid': '500', 'apid_lang': '501 Spa'}]}]},
     {'txp_no': '199', 'freq_pol_mode': '11502.12 V DVB-S2/8PSK',
      'provider': 'Cellnex DTT', 'sr_fec': '10200 3/4',
      'onid_nid_tid': '12572/8916/1', 'date': '29.04.2026',
@@ -1153,8 +1236,8 @@ def run_checks():
         v = dict(DEFAULTS, source_mode='file', file=fixture,
                  out_dir=os.path.join(tmp, 'out'))
         _data, txps, streams, raw_by_pid = load_database(v)
-        assert len(txps) == 2 and len(streams) == 2, (len(txps), len(streams))
-        assert 2025 in raw_by_pid and 3150 in raw_by_pid
+        assert len(txps) == 3 and len(streams) == 3, (len(txps), len(streams))
+        assert 2025 in raw_by_pid and 3150 in raw_by_pid and 4000 in raw_by_pid
         result = generate_artifacts(v, txps, streams)
         lam = result['outputs']['lamedb']
         assert lam.startswith('eDVB services /4/\ntransponders\n'
@@ -1171,12 +1254,27 @@ def run_checks():
         assert ('1068:0ce40000:0001:311c:1:0\n'
                 'Cellnex@11502V10200 PID 3150\n'
                 'p:CELLNEX,c:031fff,c:180c4e,c:191fd6,f:01\n') in lam  # sid 4200=0x1068, pid 0xc4e, cpid 8150
+        assert '0ce40000:ea75:0001' in lam          # T2MI transponder header (tsid 60021 / onid 1)
+        assert ('1388:0ce40000:ea75:0001:1:0\n'
+                'Abertis@11707V27500 PID 4000\n'
+                'p:ABERTIS,c:031fff,c:180fa0,c:192328,f:01\n') in lam  # sid 5000=0x1388, pid 4000=0x0fa0, cpid 9000=0x2328
         assert '1:0:1:BD1:EA74:1:CE40000:0:0:0' in astx          # sid 3025 from JSON
         assert '1:0:1:1068:1:12572:CE40000:0:0:0' in astx        # sid 4200, tsid 1, onid 12572
         assert '/etc/astra/scripts/cellnex 3150' in astx
         assert '/cellnex/pid3150' in astx
-        assert 'http%3A//0.0.0.0%3A9999/cellnex/pid3150:(TV) CMM TV' in bq
-        assert '(TV) TVE La 1 Extremadura' in bq
+        # Every stream gets a T2MI decap + republish block by default
+        assert astx.count('make_t2mi_decap') == 3                 # one per stream
+        assert '1:0:1:1388:EA75:1:CE40000:0:0:0' in astx          # stream 4000 sid 0x1388
+        assert 't2mi://f11222pid4096plp0' in astx                 # stream 2025 default t2mi_pid=4096
+        assert 't2mi://f11502pid4096plp0' in astx                 # stream 3150 default t2mi_pid=4096
+        assert 't2mi://f11707pid257plp1' in astx                  # stream 4000 t2mi_pid=257 plp=1
+        assert 'http://0.0.0.0:9999/abertis/pid2025pid4096plp0' in astx  # stream 2025 T2MI output
+        assert 'http://0.0.0.0:9999/cellnex/pid3150pid4096plp0' in astx  # stream 3150 T2MI output
+        assert 'http://0.0.0.0:9999/abertis/pid4000pid257plp1' in astx  # stream 4000 T2MI output
+        # Bouquet channels point to the T2MI output for every stream
+        assert 'http%3A//0.0.0.0%3A9999/abertis/pid2025pid4096plp0:(TV) TVE La 1 Extremadura' in bq
+        assert 'http%3A//0.0.0.0%3A9999/cellnex/pid3150pid4096plp0:(TV) CMM TV' in bq
+        assert 'http%3A//0.0.0.0%3A9999/abertis/pid4000pid257plp1:(TV) T2MI Test TV' in bq
         assert '(RADIO) RNE Radio 1 Extremadura' in bq
         for p in result['written']:
             assert os.path.isfile(p), p
@@ -1319,6 +1417,15 @@ if TK_AVAILABLE:
             super().__init__()
             self.title('%s \u2014 %s' % (APP_NAME, APP_SUBTITLE))
             self.minsize(1080, 660)
+            # Set combobox dropdown listbox colours before any widget is
+            # created so the popdown list is readable on the dark theme.
+            C = PALETTE
+            self.option_add('*Listbox.background', C['field'])
+            self.option_add('*Listbox.foreground', '#000000')
+            self.option_add('*Listbox.selectBackground', C['sel'])
+            self.option_add('*Listbox.selectForeground', '#ffffff')
+            self.option_add('*TCombobox.entry.background', C['field'])
+            self.option_add('*TCombobox.entry.foreground', C['fg'])
             self._setup_fonts()
             self._setup_style()
             self.q = queue.Queue()
@@ -1331,6 +1438,7 @@ if TK_AVAILABLE:
             self.outputs = OrderedDict()
             self._stream_items = {}
             self._busy_widgets = []
+            self._paned = None
             self._build_menu()
             self._build_ui()
             self._restore_settings()
@@ -1363,14 +1471,14 @@ if TK_AVAILABLE:
             sc = self.scale_factor
 
             def sz(base):
-                return max(7, int(round(base * sc)))
+                return max(8, int(round(base * sc)))
             self.fonts = {
-                'base': tkfont.Font(family=ui, size=sz(9)),
-                'small': tkfont.Font(family=ui, size=sz(8)),
-                'bold': tkfont.Font(family=ui, size=sz(9), weight='bold'),
-                'h1': tkfont.Font(family=ui, size=sz(13), weight='bold'),
-                'mono': tkfont.Font(family=mono, size=sz(9)),
-                'mono_small': tkfont.Font(family=mono, size=sz(8)),
+                'base': tkfont.Font(family=ui, size=sz(10)),
+                'small': tkfont.Font(family=ui, size=sz(9)),
+                'bold': tkfont.Font(family=ui, size=sz(10), weight='bold'),
+                'h1': tkfont.Font(family=ui, size=sz(14), weight='bold'),
+                'mono': tkfont.Font(family=mono, size=sz(10)),
+                'mono_small': tkfont.Font(family=mono, size=sz(9)),
             }
 
         def _setup_style(self):
@@ -1395,13 +1503,14 @@ if TK_AVAILABLE:
             style.configure('TEntry', fieldbackground=C['field'],
                             foreground=C['fg'], insertcolor=C['fg'],
                             bordercolor=C['border'], lightcolor=C['border'],
-                            darkcolor=C['border'], padding=3)
+                            darkcolor=C['border'], padding=3,
+                            font=self.fonts['base'])
             style.map('TEntry', bordercolor=[('focus', C['accent'])])
             style.configure('TSpinbox', fieldbackground=C['field'],
                             foreground=C['fg'], arrowcolor=C['fg'],
                             bordercolor=C['border'], lightcolor=C['border'],
                             darkcolor=C['border'], padding=2,
-                            arrowsize=11)
+                            arrowsize=11, font=self.fonts['base'])
             style.configure('TRadiobutton', background=C['panel'],
                             foreground=C['fg'], focuscolor=C['panel'])
             style.map('TRadiobutton',
@@ -1414,11 +1523,14 @@ if TK_AVAILABLE:
                       background=[('active', C['panel'])])
             style.configure('TCombobox', fieldbackground=C['field'],
                             foreground=C['fg'], arrowcolor=C['fg'],
-                            bordercolor=C['border'], padding=3)
-            self.option_add('*TCombobox*Listbox.background', C['field'])
-            self.option_add('*TCombobox*Listbox.foreground', C['fg'])
-            self.option_add('*TCombobox*Listbox.selectBackground', C['sel'])
-            self.option_add('*TCombobox*Listbox.selectForeground', '#ffffff')
+                            bordercolor=C['border'], padding=3,
+                            font=self.fonts['base'])
+            style.map('TCombobox', fieldbackground=[('readonly', C['field']),
+                                                    ('!readonly', C['field']),
+                                                    ('focus', C['field'])],
+                      foreground=[('readonly', C['fg']),
+                                  ('!readonly', C['fg']),
+                                  ('focus', C['fg'])])
             style.configure('TNotebook', background=C['panel'],
                             bordercolor=C['border'], tabmargins=(6, 6, 6, 0))
             style.configure('TNotebook.Tab', background=C['bg'],
@@ -1525,14 +1637,16 @@ if TK_AVAILABLE:
             paned = ttk.PanedWindow(root, orient='horizontal')
             paned.pack(fill='both', expand=True, pady=(8, 0))
 
-            left = ttk.Frame(paned, width=430)
+            left = ttk.Frame(paned)
             left.pack_propagate(False)
+            left.configure(width=int(430 * self.scale_factor))
             right = ttk.Notebook(paned)
             paned.add(left, weight=0)
             paned.add(right, weight=1)
 
             self._build_left(left)
             self._build_right(right)
+            self._paned = paned
 
             status = ttk.Frame(root)
             status.pack(fill='x', pady=(8, 0))
@@ -1675,7 +1789,7 @@ if TK_AVAILABLE:
                 self.v_edit_path = tk.StringVar(value=DEFAULTS['edit_path'])
                 self.e_edit = ttk.Entry(fr, textvariable=self.v_edit_path)
                 self.e_edit.pack(side='left', fill='x', expand=True)
-                b = self.button(fr, 'Browse\\u2026',
+                b = self.button(fr, 'Browse\u2026',
                                 lambda: self._browse('edit_path'))
                 b.pack(side='left', padx=(6, 0))
                 self._attach_help(self.e_edit, OPTIONS['edit_path']['help'],
@@ -1793,6 +1907,20 @@ if TK_AVAILABLE:
                 self._attach_help(e, OPTIONS['relay_script']['help'],
                                   'relay_script')
             self._row(box, 'relay_script', w_script)
+
+            def w_t2mi_plp(holder):
+                self.v_t2mi_plp = tk.StringVar(value='')
+                e = ttk.Entry(holder, textvariable=self.v_t2mi_plp, width=8)
+                e.pack(side='left')
+                self._attach_help(e, OPTIONS['t2mi_plp']['help'], 't2mi_plp')
+            self._row(box, 't2mi_plp', w_t2mi_plp)
+
+            def w_t2mi_pnr(holder):
+                self.v_t2mi_pnr = tk.StringVar(value='')
+                e = ttk.Entry(holder, textvariable=self.v_t2mi_pnr, width=8)
+                e.pack(side='left')
+                self._attach_help(e, OPTIONS['t2mi_pnr']['help'], 't2mi_pnr')
+            self._row(box, 't2mi_pnr', w_t2mi_pnr)
 
             # -- action buttons
             btns = ttk.Frame(parent)
@@ -1954,11 +2082,47 @@ if TK_AVAILABLE:
             self.scale_factor = factor
             self.v_scale.set('%.2f' % factor)
             for name, base in self.FONT_BASE_SIZES.items():
-                sz = max(7, int(round(base * factor)))
+                sz = max(8, int(round(base * factor)))
                 self.fonts[name].configure(size=sz)
+            # Reconfigure ttk styles so paddings, row heights and arrow sizes
+            # scale with the font, keeping the UI readable at every scale.
+            C = PALETTE
+            style = ttk.Style(self)
+            style.configure('.', font=self.fonts['base'])
+            style.configure('TEntry', padding=int(3 * factor),
+                            font=self.fonts['base'])
+            style.configure('TSpinbox', padding=int(2 * factor),
+                            arrowsize=max(8, int(11 * factor)),
+                            font=self.fonts['base'])
+            style.configure('TCombobox', padding=int(3 * factor),
+                            arrowsize=max(8, int(11 * factor)),
+                            font=self.fonts['base'])
+            style.configure('TNotebook.Tab', padding=(int(13 * factor),
+                                                      int(5 * factor)))
+            style.configure('Treeview', rowheight=max(18, int(23 * factor)))
+            style.configure('Treeview.Heading', font=self.fonts['small'])
+            style.configure('TLabelframe.Label', font=self.fonts['bold'])
             try:
                 self.tk.call('tk', 'scaling', factor * 1.33)
             except tk.TclError:
+                pass
+            # Re-apply combobox dropdown list colours so text stays visible
+            # on a dark background regardless of theme or scale changes.
+            self.option_add('*Listbox.background', C['field'])
+            self.option_add('*Listbox.foreground', '#000000')
+            self.option_add('*Listbox.selectBackground', C['sel'])
+            self.option_add('*Listbox.selectForeground', '#ffffff')
+            self.option_add('*TCombobox.entry.background', C['field'])
+            self.option_add('*TCombobox.entry.foreground', C['fg'])
+            # Let the window recalculate its layout so every component
+            # (including the help textbox) stays visible at any scale.
+            self.update_idletasks()
+            # Adjust left pane width so the options panel stays readable
+            # at every scale without clipping.
+            try:
+                self._paned.paneconfigure(self._paned.panes()[0],
+                                          width=int(430 * factor))
+            except (AttributeError, tk.TclError, IndexError):
                 pass
             if not silent:
                 self.status('GUI scale set to %.2f. Saved for next start.'
@@ -2011,6 +2175,8 @@ if TK_AVAILABLE:
                 'out_host': self.v_out_host.get().strip(),
                 'http_port': self.v_http_port.get().strip() or '9999',
                 'relay_script': self.v_script.get().strip(),
+                't2mi_plp': self.v_t2mi_plp.get().strip(),
+                't2mi_pnr': self.v_t2mi_pnr.get().strip(),
                 'gui_scale': float(self.v_scale.get() or self.scale_factor),
             }
 

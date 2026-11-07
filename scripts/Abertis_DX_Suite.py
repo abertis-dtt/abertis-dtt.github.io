@@ -148,6 +148,7 @@ def parse_transponders(data):
             'pol': POLARISATION_CODES.get(pol, 0),
             'system': system,
             'modulation': modulation,
+            'delivery': delivery,
             'sr_ksps': int(sr_fec[0]) if sr_fec else 0,
             'fec': FEC_CODES.get(sr_fec[1].upper() if len(sr_fec) > 1 else '', 15),
             'onid': onid,
@@ -224,6 +225,9 @@ def collect_streams(txps):
                 'encryption': (raw.get('encryption') or '').upper(),
                 'sid': id_field('sid', pid + 1000, 1, 0xFFFF),
                 'cpid': id_field('cpid', pid + 5000, 0, 0xFFFF),
+                'plp': id_field('plp', 0, 0, 255),
+                't2mi_pid': id_field('t2mi_pid', 4096, 0, 0x1FFF),
+                't2mi_pnr': id_field('t2mi_pnr', 0, 0, 0xFFFF),
                 'txp': tp,
                 'channels': channels,
             })
@@ -316,7 +320,11 @@ def astra_text(streams, args):
         sid = stream['sid']
         sref = '1:0:1:%X:%X:%d:%X:0:0:0' % (sid, tp['tsid'], tp['onid'], ns)
         relay = relay_script_for(stream, args.relay_script)
-        blocks.append('\n'.join([
+        t2mi_pid = stream.get('t2mi_pid', 4096) or 4096
+
+        # Standard make_channel: pull from streamrelay, pipe through script,
+        # republish per PID on http://<out_host>:<http_port>/<relay>/pid<PID>
+        block = '\n'.join([
             'make_channel({',
             '  name = "%s",' % feed_service_name(stream),
             '  input = {',
@@ -331,7 +339,48 @@ def astra_text(streams, args):
                                              relay, stream['pid']),
             '  },',
             '})',
-        ]))
+        ])
+
+        # Every stream is demodulated as T2MI by default: read the standard
+        # pid<PID> output, decapsulate the T2MI container, and republish the
+        # PLP on http://<out_host>:<http_port>/<relay>/pid<PID>pid<t2mi_pid>plp<plp>.
+        # Defaults: t2mi_pid=4096, plp=0, pnr=0. --t2mi-plp/--t2mi-pnr override
+        # when the stream omits them (value 0).
+        plp = stream.get('plp', 0) or 0
+        if plp == 0 and args.t2mi_plp is not None:
+            plp = args.t2mi_plp
+        pnr = stream.get('t2mi_pnr', 0) or 0
+        if pnr == 0 and args.t2mi_pnr is not None:
+            pnr = args.t2mi_pnr
+
+        decap_var = 'f' + tp['freq_label'] + 'pid%dplp%d' % (t2mi_pid, plp)
+        output_seg = 'pid%dpid%dplp%d' % (stream['pid'], t2mi_pid, plp)
+
+        block += '\n\n' + '\n'.join([
+            '%s = make_t2mi_decap({' % decap_var,
+            '        name = "%s",' % feed_service_name(stream),
+            '        input = "http://%s:%d/%s/pid%d",' % (args.out_host, args.http_port,
+                                                          relay, stream['pid']),
+            '        plp = %d,' % plp,
+            '        pnr = %d,' % pnr,
+            '        pid = %d,' % t2mi_pid,
+            '    })',
+        ])
+
+        block += '\n\n' + '\n'.join([
+            'make_channel({',
+            '  name = "Abertis@%spid%dplp%d",' % (tp['freq_label'], t2mi_pid, plp),
+            '  input = {',
+            '    "t2mi://%s",' % decap_var,
+            '  },',
+            '  output = {',
+            '    "http://%s:%d/%s/%s",' % (args.out_host, args.http_port,
+                                           relay, output_seg),
+            '  },',
+            '})',
+        ])
+
+        blocks.append(block)
     return header + '\n\n'.join(blocks) + '\n'
 
 
@@ -342,13 +391,19 @@ def bouquet_text(streams, args):
             print('Note: PID %d has no channels in the JSON - lamedb/astra '
                   'entries only' % stream['pid'])
             continue
+        tp = stream['txp']
         relay = relay_script_for(stream, args.relay_script)
+        t2mi_pid = stream.get('t2mi_pid', 4096) or 4096
+        plp = stream.get('plp', 0) or 0
+        if plp == 0 and args.t2mi_plp is not None:
+            plp = args.t2mi_plp
+        output_seg = 'pid%dpid%dplp%d' % (stream['pid'], t2mi_pid, plp)
+        url = 'http://%s:%d/%s/%s' % (args.out_host, args.http_port,
+                                      relay, output_seg)
         marker_name = '##### %s PID %d #####' % (stream['txp']['provider_short'],
                                                  stream['pid'])
         lines.append('#SERVICE 1:64:%X:0:0:0:0:0:0:0::%s' % (stream['pid'], marker_name))
         lines.append('#DESCRIPTION ##### %s #####' % feed_service_name(stream))
-        url = 'http://%s:%d/%s/pid%d' % (args.out_host, args.http_port,
-                                          relay, stream['pid'])
         # Enigma2 requires colons in URLs to be URL-encoded (uppercase %3A)
         encoded = url.replace(':', '%3A')
         groups = (('1', '(TV)', [c for c in stream['channels'] if not c['radio']]),
@@ -661,6 +716,14 @@ def main():
                         help='relay script under /etc/astra/scripts/ and URL segment '
                              'for every stream (default: lower-cased provider name, '
                              'e.g. abertis / cellnex)')
+    parser.add_argument('--t2mi-plp', type=int, metavar='PLP',
+                        help='default PLP id for make_t2mi_decap on T2MI '
+                             'transponders when the JSON stream omits it '
+                             '(default: 0)')
+    parser.add_argument('--t2mi-pnr', type=int, metavar='PNR',
+                        help='default program number for make_t2mi_decap on '
+                             'T2MI transponders when the JSON stream omits it '
+                             '(default: 0)')
     parser.add_argument('--bouquet', default='userbouquet.abertis.tv',
                         dest='bouquet_name',
                         help='bouquet file name (default: %(default)s)')
