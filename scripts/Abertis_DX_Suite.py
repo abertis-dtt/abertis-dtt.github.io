@@ -245,6 +245,33 @@ def feed_service_name(stream):
                                   tp['pol_letter'], tp['sr_ksps'], stream['pid'])
 
 
+def provider_code(stream):
+    """Four-letter provider tag used in astra object names (Abertis -> ABER)."""
+    short = (stream['txp'].get('provider_short') or 'Abertis').strip()
+    return (short[:4] or 'PROV').upper()
+
+
+def astra_feed_name(stream):
+    """Astra name of the raw feed, e.g. Abertis@11653H19680PID301."""
+    tp = stream['txp']
+    return '%s@%s%s%dPID%d' % (tp['provider_short'], tp['freq_label'],
+                               tp['pol_letter'], tp['sr_ksps'], stream['pid'])
+
+
+def t2mi_tag(stream, t2mi_pid, plp):
+    """Names for the T2MI leg: (variable, decap name, channel name, URL segment)."""
+    tp = stream['txp']
+    code = provider_code(stream)
+    low = code.lower()
+    pid = stream['pid']
+    var_name = 'f%s%s%dpid%dplp%d' % (tp['freq_label'], low, pid, t2mi_pid, plp)
+    decap_name = '%s%s%d@%s%d_PID%dPLP%d' % (
+        tp['freq_label'], tp['pol_letter'], tp['sr_ksps'],
+        code, pid, t2mi_pid, plp)
+    return var_name, decap_name, decap_name.lower(), '%s%d_pid%dplp%d' % (
+        low, pid, t2mi_pid, plp)
+
+
 def relay_script_for(stream, override):
     """Relay script name (and URL segment) for a stream's provider."""
     return override or stream['txp']['provider_short'].lower()
@@ -325,8 +352,10 @@ def astra_text(streams, args):
         # Standard make_channel: pull from streamrelay, pipe through script,
         # republish per PID on http://<out_host>:<http_port>/<relay>/pid<PID>
         block = '\n'.join([
+            '-- %s %s %d PID%d Stream' % (tp['freq_label'], tp['pol_letter'],
+                                          tp['sr_ksps'], stream['pid']),
             'make_channel({',
-            '  name = "%s",' % feed_service_name(stream),
+            '  name = "%s",' % astra_feed_name(stream),
             '  input = {',
             '    "http://%s:%d/%s:",' % (args.relay_host, args.relay_port, sref),
             '  },',
@@ -343,7 +372,7 @@ def astra_text(streams, args):
 
         # Every stream is demodulated as T2MI by default: read the standard
         # pid<PID> output, decapsulate the T2MI container, and republish the
-        # PLP on http://<out_host>:<http_port>/<relay>/pid<PID>pid<t2mi_pid>plp<plp>.
+        # PLP on http://<out_host>:<http_port>/<relay>/<code><PID>_pid<t2mi_pid>plp<plp>.
         # Defaults: t2mi_pid=4096, plp=0, pnr=0. --t2mi-plp/--t2mi-pnr override
         # when the stream omits them (value 0).
         plp = stream.get('plp', 0) or 0
@@ -353,12 +382,12 @@ def astra_text(streams, args):
         if pnr == 0 and args.t2mi_pnr is not None:
             pnr = args.t2mi_pnr
 
-        decap_var = 'f' + tp['freq_label'] + 'pid%dplp%d' % (t2mi_pid, plp)
-        output_seg = 'pid%dpid%dplp%d' % (stream['pid'], t2mi_pid, plp)
+        decap_var, decap_name, t2mi_name, output_seg = t2mi_tag(
+            stream, t2mi_pid, plp)
 
         block += '\n\n' + '\n'.join([
             '%s = make_t2mi_decap({' % decap_var,
-            '        name = "%s",' % feed_service_name(stream),
+            '        name = "%s",' % decap_name,
             '        input = "http://%s:%d/%s/pid%d",' % (args.out_host, args.http_port,
                                                           relay, stream['pid']),
             '        plp = %d,' % plp,
@@ -369,7 +398,7 @@ def astra_text(streams, args):
 
         block += '\n\n' + '\n'.join([
             'make_channel({',
-            '  name = "Abertis@%spid%dplp%d",' % (tp['freq_label'], t2mi_pid, plp),
+            '  name = "%s",' % t2mi_name,
             '  input = {',
             '    "t2mi://%s",' % decap_var,
             '  },',
@@ -397,7 +426,7 @@ def bouquet_text(streams, args):
         plp = stream.get('plp', 0) or 0
         if plp == 0 and args.t2mi_plp is not None:
             plp = args.t2mi_plp
-        output_seg = 'pid%dpid%dplp%d' % (stream['pid'], t2mi_pid, plp)
+        output_seg = t2mi_tag(stream, t2mi_pid, plp)[3]
         url = 'http://%s:%d/%s/%s' % (args.out_host, args.http_port,
                                       relay, output_seg)
         marker_name = '##### %s PID %d #####' % (stream['txp']['provider_short'],

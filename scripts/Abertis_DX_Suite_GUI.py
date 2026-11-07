@@ -2,23 +2,7 @@
 # -*- coding: utf-8 -*-
 """Graphical front-end for the Abertis / Cellnex DX Suite (Hispasat 30.0W).
 
-A desktop GUI (Tkinter, standard library only) around the engine in
-Abertis_DX_Suite.py. It exposes every option of the command line tool with
-hover tooltips, a focus-sensitive help pane and an option reference window,
-shows the loaded database as a browsable transponder/stream/channel tree,
-can inspect the exact lamedb/astra/bouquet artifacts of a single stream, and
-bridges back to the CLI with a copy-pasteable command line.
-
-Run it:
-  ./Abertis_DX_Suite_GUI.py            normal start
-  ./Abertis_DX_Suite_GUI.py --check    headless self-test (no display needed)
-
-Keyboard shortcuts:
-  Ctrl+L   load / refresh the database      Ctrl+G   generate the suite
-  Ctrl+O   open a local JSON database       Ctrl+K   copy CLI command
-  F1       option reference                 Ctrl+Q   quit
-
-Requires python3-tk (Debian/Ubuntu: sudo apt install python3-tk).
+A desktop GUI (PyQt6) around the engine in Abertis_DX_Suite.py.
 """
 
 import contextlib
@@ -35,6 +19,17 @@ import types
 import urllib.request
 from collections import OrderedDict
 
+from PyQt6.QtCore import Qt, QThread, pyqtSignal, QSize, QByteArray, QTimer, QEvent
+from PyQt6.QtGui import QFont, QColor, QPalette, QAction, QKeySequence, QTextCursor, QFontDatabase
+from PyQt6.QtWidgets import (
+    QApplication, QMainWindow, QWidget, QVBoxLayout, QHBoxLayout, QGridLayout,
+    QLabel, QLineEdit, QPushButton, QComboBox, QCheckBox, QSpinBox,
+    QDoubleSpinBox, QTreeWidget, QTreeWidgetItem, QTextEdit, QTabWidget,
+    QMenuBar, QStatusBar, QMessageBox, QFileDialog, QSlider, QSplitter,
+    QGroupBox, QRadioButton, QScrollArea, QFrame, QScrollBar,
+    QDialog, QProgressBar, QSizePolicy
+)
+
 import re
 import shutil
 import struct
@@ -42,15 +37,25 @@ import zlib
 
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 
-import re
-import shutil
-import struct
-import sys
-import zlib
-from collections import OrderedDict
 DEFAULT_JSON_URL = 'https://abertis-dtt.github.io/sat_data.json'
 
 BOUQUET_HEADER = u'#NAME \u2022 30,0 W - Abertis & Cellnex DX Suite ( streamrelay )'
+
+
+# Modern dark palette used by the Qt front-end.
+THEME = {
+    'bg': '#0f1115', 'surface': '#171a21', 'surface2': '#1e222b',
+    'field': '#1e222b', 'fg': '#e8eaf0', 'muted': '#98a2b3',
+    'accent': '#4c8dff', 'accent_hi': '#6ba0ff', 'accent_lo': '#3a76e0',
+    'ok': '#3fd07a', 'warn': '#f0b429', 'err': '#ff5c69',
+    'border': '#262b36', 'border_hi': '#343b4a',
+    'tree': '#12151b', 'sel': '#233654', 'sel_hi': '#2d4468',
+}
+
+# Base UI font is 18 pt; the stylesheet was originally tuned for 10.5 pt.
+FONT_BASE_PT = 18.0
+FONT_REFERENCE_PT = 10.5
+UI_UNIT = FONT_BASE_PT / FONT_REFERENCE_PT
 
 
 FEC_CODES = {
@@ -64,28 +69,20 @@ POLARISATION_CODES = {'H': 0, 'V': 1}
 
 
 BISS_CAID = '2600'
-
 BISS_CRC_SEED = 0x2600
-
 DUMMY_BISS_KEY = '0000000000000000'
 
 STREAM_PID_RE = re.compile(r'Stream\s+(\d+)', re.IGNORECASE)
-
 FREQ_POL_MODE_RE = re.compile(r'^\s*([0-9]+(?:\.[0-9]+)?)\s+([HVLR])\s+(.+?)\s*$')
-
 SERVICE_FLAG_PREFIXES = ('p:', 'c:', 'C:', 'f:', 'v:')
 
 
-
 def namespace_for(position_tenths):
-    """DVB namespace for a satellite position; West positions wrap at 3600."""
     pos = position_tenths + 3600 if position_tenths < 0 else position_tenths
     return (pos & 0xFFFF) << 16
 
 
-
 def parse_transponders(data):
-    """Normalise the sat_data.json list into transponders carrying their streams."""
     txps = OrderedDict()
     for entry in data:
         if not isinstance(entry, dict):
@@ -109,8 +106,6 @@ def parse_transponders(data):
                   % (entry.get('txp_no'), entry.get('freq_pol_mode'),
                      delivery[delivery.find('PLS' if 'PLS' in delivery else 'MISO'):]))
         sr_fec = (entry.get('sr_fec') or '').split()
-        # onid is '-' (unconfirmed) on part of the Abertis network; the
-        # confirmed original network id there is 1, so fall back to it.
         parts = [p.strip() for p in (entry.get('onid_nid_tid') or '').split('/')]
         onid, tsid = 1, None
         if len(parts) == 3:
@@ -154,9 +149,7 @@ def parse_transponders(data):
     return list(txps.values())
 
 
-
 def collect_streams(txps):
-    """Flatten (transponder, stream) pairs, extracting PID and channel lists."""
     streams = []
     seen = {}
     channel_lists = []
@@ -164,10 +157,6 @@ def collect_streams(txps):
         for raw in tp['streams']:
             match = STREAM_PID_RE.search(raw.get('title') or '')
             if not match:
-                # Entries without a "Stream <pid>" title (e.g. "RNE",
-                # "TDT Aragon") are whole-transponder channel lists: their
-                # pid_info carries nid/onid/tsid instead of a stream PID,
-                # so there is no single PID to relay through astra.
                 channel_lists.append(raw.get('title') or '(untitled)')
                 continue
             pid = int(match.group(1))
@@ -191,10 +180,6 @@ def collect_streams(txps):
                 radio = 'radio' in ctype or (not ctype and not (ch.get('vpid') or '').strip())
                 channels.append({'sid': sid, 'name': name, 'radio': radio})
 
-            # Stream-level identifiers from the database: the SID of the fake
-            # feed service and the component data PID that goes into the
-            # c:19<xxxx> lamedb cache entry. Empty/invalid -> arithmetic
-            # defaults (SID = PID+1000, component PID = PID+5000).
             def id_field(key, fallback, lo, hi):
                 value = str(raw.get(key) or '').strip()
                 if not value:
@@ -228,23 +213,44 @@ def collect_streams(txps):
     return streams
 
 
-
 def feed_service_name(stream):
-    """lamedb/astra name of the fake feed service, e.g. Abertis@11222H30000 PID 2025."""
     tp = stream['txp']
     return '%s@%s%s%d PID %d' % (tp['provider_short'], tp['freq_label'],
                                   tp['pol_letter'], tp['sr_ksps'], stream['pid'])
 
 
+def provider_code(stream):
+    """Four-letter provider tag used in astra object names (Abertis -> ABER)."""
+    short = (stream['txp'].get('provider_short') or 'Abertis').strip()
+    return (short[:4] or 'PROV').upper()
+
+
+def astra_feed_name(stream):
+    """Astra name of the raw feed, e.g. Abertis@11653H19680PID301."""
+    tp = stream['txp']
+    return '%s@%s%s%dPID%d' % (tp['provider_short'], tp['freq_label'],
+                               tp['pol_letter'], tp['sr_ksps'], stream['pid'])
+
+
+def t2mi_tag(stream, t2mi_pid, plp):
+    """Names for the T2MI leg: (variable, decap name, channel name, URL segment)."""
+    tp = stream['txp']
+    code = provider_code(stream)
+    low = code.lower()
+    pid = stream['pid']
+    var_name = 'f%s%s%dpid%dplp%d' % (tp['freq_label'], low, pid, t2mi_pid, plp)
+    decap_name = '%s%s%d@%s%d_PID%dPLP%d' % (
+        tp['freq_label'], tp['pol_letter'], tp['sr_ksps'],
+        code, pid, t2mi_pid, plp)
+    return var_name, decap_name, decap_name.lower(), '%s%d_pid%dplp%d' % (
+        low, pid, t2mi_pid, plp)
+
 
 def relay_script_for(stream, override):
-    """Relay script name (and URL segment) for a stream's provider."""
     return override or stream['txp']['provider_short'].lower()
 
 
-
 def build_lamedb_entries(txps, streams, position):
-    """Return ((key, lines), ...) for the transponder and service sections."""
     ns = namespace_for(position)
     tp_entries = []
     for tp in txps:
@@ -257,21 +263,14 @@ def build_lamedb_entries(txps, streams, position):
     svc_entries = []
     for stream in streams:
         tp = stream['txp']
-        # SID of the feed service comes straight from the JSON (field "sid"),
-        # never from arithmetic, so it always matches the database.
         sid = stream['sid']
         header = '%04x:%08x:%04x:%04x:1:0' % (sid, ns, tp['tsid'], tp['onid'])
         block = [header, feed_service_name(stream)]
-        # lamedb cache ids are DECIMAL in the file: c:18 = cDATAPID gets the
-        # raw stream PID, c:19 = cPMTPID gets the component data PID
-        # ("cpid" field of the JSON, used by the astra pipe script to
-        # rebuild the PMT). c:031fff = dummy pid, C:2600 = BISS CAID.
         if 'BISS' in stream['encryption']:
             block.append('p:%s,c:031fff,c:18%04x,c:19%04x,C:%s,f:01'
                          % (tp['provider_short'].upper(), stream['pid'],
                             stream['cpid'], BISS_CAID))
         else:
-            # FTA raw PID: same cache entries, no BISS CAID.
             block.append('p:%s,c:031fff,c:18%04x,c:19%04x,f:01'
                          % (tp['provider_short'].upper(), stream['pid'],
                             stream['cpid']))
@@ -279,11 +278,7 @@ def build_lamedb_entries(txps, streams, position):
     return tp_entries, svc_entries
 
 
-
 def lamedb_text(tp_entries, svc_entries, fmt='v4'):
-    """Serialize as lamedb v4 (sectioned, written by current images) or
-    v3 (classic layout for older images). Service and transponder blocks
-    themselves are identical in both versions."""
     lines = ['eDVB services /4/', 'transponders']
     for _key, block in tp_entries:
         lines.extend(block)
@@ -293,7 +288,6 @@ def lamedb_text(tp_entries, svc_entries, fmt='v4'):
         lines.extend(block)
     lines.append('end')
     return '\n'.join(lines) + '\n'
-
 
 
 def astra_text(streams, args):
@@ -317,11 +311,11 @@ def astra_text(streams, args):
         relay = relay_script_for(stream, args.relay_script)
         t2mi_pid = stream.get('t2mi_pid', 4096) or 4096
 
-        # Standard make_channel: pull from streamrelay, pipe through script,
-        # republish per PID on http://<out_host>:<http_port>/<relay>/pid<PID>
         block = '\n'.join([
+            '-- %s %s %d PID%d Stream' % (tp['freq_label'], tp['pol_letter'],
+                                          tp['sr_ksps'], stream['pid']),
             'make_channel({',
-            '  name = "%s",' % feed_service_name(stream),
+            '  name = "%s",' % astra_feed_name(stream),
             '  input = {',
             '    "http://%s:%d/%s:",' % (args.relay_host, args.relay_port, sref),
             '  },',
@@ -336,24 +330,19 @@ def astra_text(streams, args):
             '})',
         ])
 
-        # Every stream is demodulated as T2MI by default: read the standard
-        # pid<PID> output, decapsulate the T2MI container, and republish the
-        # PLP on http://<out_host>:<http_port>/<relay>/pid<PID>pid<t2mi_pid>plp<plp>.
-        # Defaults: t2mi_pid=4096, plp=0, pnr=0. --t2mi-plp/--t2mi-pnr override
-        # when the stream omits them (value 0).
         plp = stream.get('plp', 0) or 0
-        if plp == 0 and getattr(args, 't2mi_plp', None) is not None:
+        if plp == 0 and args.t2mi_plp is not None:
             plp = args.t2mi_plp
         pnr = stream.get('t2mi_pnr', 0) or 0
-        if pnr == 0 and getattr(args, 't2mi_pnr', None) is not None:
+        if pnr == 0 and args.t2mi_pnr is not None:
             pnr = args.t2mi_pnr
 
-        decap_var = 'f' + tp['freq_label'] + 'pid%dplp%d' % (t2mi_pid, plp)
-        output_seg = 'pid%dpid%dplp%d' % (stream['pid'], t2mi_pid, plp)
+        decap_var, decap_name, t2mi_name, output_seg = t2mi_tag(
+            stream, t2mi_pid, plp)
 
         block += '\n\n' + '\n'.join([
             '%s = make_t2mi_decap({' % decap_var,
-            '        name = "%s",' % feed_service_name(stream),
+            '        name = "%s",' % decap_name,
             '        input = "http://%s:%d/%s/pid%d",' % (args.out_host, args.http_port,
                                                           relay, stream['pid']),
             '        plp = %d,' % plp,
@@ -364,7 +353,7 @@ def astra_text(streams, args):
 
         block += '\n\n' + '\n'.join([
             'make_channel({',
-            '  name = "Abertis@%spid%dplp%d",' % (tp['freq_label'], t2mi_pid, plp),
+            '  name = "%s",' % t2mi_name,
             '  input = {',
             '    "t2mi://%s",' % decap_var,
             '  },',
@@ -379,7 +368,6 @@ def astra_text(streams, args):
     return header + '\n\n'.join(blocks) + '\n'
 
 
-
 def bouquet_text(streams, args):
     lines = [BOUQUET_HEADER]
     for stream in streams:
@@ -391,16 +379,15 @@ def bouquet_text(streams, args):
         relay = relay_script_for(stream, args.relay_script)
         t2mi_pid = stream.get('t2mi_pid', 4096) or 4096
         plp = stream.get('plp', 0) or 0
-        if plp == 0 and getattr(args, 't2mi_plp', None) is not None:
+        if plp == 0 and args.t2mi_plp is not None:
             plp = args.t2mi_plp
-        output_seg = 'pid%dpid%dplp%d' % (stream['pid'], t2mi_pid, plp)
+        output_seg = t2mi_tag(stream, t2mi_pid, plp)[3]
         url = 'http://%s:%d/%s/%s' % (args.out_host, args.http_port,
                                       relay, output_seg)
         marker_name = '##### %s PID %d #####' % (stream['txp']['provider_short'],
                                                  stream['pid'])
         lines.append('#SERVICE 1:64:%X:0:0:0:0:0:0:0::%s' % (stream['pid'], marker_name))
         lines.append('#DESCRIPTION ##### %s #####' % feed_service_name(stream))
-        # Enigma2 requires colons in URLs to be URL-encoded (uppercase %3A)
         encoded = url.replace(':', '%3A')
         groups = (('1', '(TV)', [c for c in stream['channels'] if not c['radio']]),
                   ('2', '(RADIO)', [c for c in stream['channels'] if c['radio']]))
@@ -413,23 +400,11 @@ def bouquet_text(streams, args):
     return '\n'.join(lines) + '\n'
 
 
-
 def softcam_key_id(sid, pmt_pid, stream_pid):
-    """BISS key ID = CRC32(seed=0x2600, SID(2) + PMT(2) + stream PID(s)(2)), big-endian.
-
-    Matches OSCam's universal BISS hash: the fake ECM is
-    [sid][pmtpid][pid1][pid2]...[tsid][onid][ens] and the hash covers everything
-    before [tsid][onid][ens]. One feed service carries a single stream PID here.
-    """
     return zlib.crc32(struct.pack('>HHH', sid, pmt_pid, stream_pid), BISS_CRC_SEED) & 0xFFFFFFFF
 
 
-
 def softcam_text(streams):
-    """Serialize dummy BISS SoftCam.Key entries for every BISS-encrypted stream.
-
-    Each line: F <key id> 00000000 0000000000000000 ;<feed service name>
-    """
     lines = [
         '; SoftCam.Key generated by the Abertis DX Suite',
         '; Key ID = CRC32(seed=0x2600, SID + PMT + stream PID), big-endian',
@@ -441,8 +416,6 @@ def softcam_text(streams):
     for stream in streams:
         if 'BISS' not in (stream.get('encryption') or '').upper():
             continue
-        # c:19<cpid> is the cPMTPID cache entry (PMT); stream['pid'] is the raw
-        # stream PID carried in c:18<cDATAPID>.
         key_id = softcam_key_id(stream['sid'], stream['cpid'], stream['pid'])
         entries.setdefault(key_id, []).append(feed_service_name(stream))
     for key_id, comments in entries.items():
@@ -451,13 +424,7 @@ def softcam_text(streams):
     return '\n'.join(lines) + '\n'
 
 
-
 def parse_lamedb(lines):
-    """Parse a lamedb file body into (fmt, tp_blocks, svc_blocks).
-
-    Only the v4 sectioned layout (transponders ... each block closed by '/'
-    ... end / services ... end) is supported.
-    """
     header = lines[0] if lines else ''
     if not header.startswith('eDVB services'):
         sys.exit('Error: not an Enigma2 lamedb (header %r)' % header)
@@ -493,7 +460,7 @@ def parse_lamedb(lines):
                 block.append(lines[idx])
                 idx += 1
             if idx < len(lines) and lines[idx].strip() == '/':
-                idx += 1  # per-block terminator, regenerated on save
+                idx += 1
             tp_blocks[tuple(header_line.split(':')[:3])] = block
 
     svc_blocks = OrderedDict()
@@ -514,18 +481,17 @@ def parse_lamedb(lines):
                         + svc_parts[3])):
             idx += 1
             continue
-        block = [line]  # sid:namespace:tsid:onid:type:number
+        block = [line]
         idx += 1
         if idx < len(lines) and lines[idx].strip() \
                 and not lines[idx].startswith(SERVICE_FLAG_PREFIXES):
-            block.append(lines[idx])  # service name
+            block.append(lines[idx])
             idx += 1
         while idx < len(lines) and lines[idx].startswith(SERVICE_FLAG_PREFIXES):
             block.append(lines[idx])
             idx += 1
         svc_blocks[tuple(line.split(':')[:4])] = block
     return fmt, tp_blocks, svc_blocks
-
 
 
 def normalize_tp_block(block):
@@ -535,7 +501,7 @@ def normalize_tp_block(block):
     sline = ''
     for line in block[1:]:
         st = line.strip()
-        if st.startswith('s ') or st.endswith('\t') is False and '\t' in line:
+        if st.startswith('s ') or (not st.endswith('\t') and '\t' in line):
             sline = line if line.startswith('\t') else '\t' + st
             break
     if not sline:
@@ -544,7 +510,6 @@ def normalize_tp_block(block):
                 sline = line if line.startswith('\t') else '\t' + line.strip()
                 break
     return [header, sline if sline.strip() else '']
-
 
 
 def normalize_svc_block(block):
@@ -563,25 +528,14 @@ def normalize_svc_block(block):
             name = st
         else:
             name = (name + ' ' + st).strip()
-    # Preserve the 3rd line even when flags are missing.
     out = [header, name, ','.join(flags) if flags else '']
     return out
 
 
-
 def merge_lamedb(path, tp_entries, svc_entries):
-    """Insert/replace our transponders and services inside an existing lamedb.
-
-    Only v4 /4/ lamedb files are supported.
-    """
     with open(path, 'r', encoding='utf-8', errors='surrogateescape') as f:
         lines = f.read().split('\n')
-
     fmt, tp_blocks, svc_blocks = parse_lamedb(lines)
-
-    # Clean stale entries first (avoid duplicates): remove transponders
-    # matching the generated ones and services whose name contains
-    # "abertis", then record how many generated keys already existed.
     generated_tp_keys = {key for key, _ in tp_entries}
     original_tp_keys = set(tp_blocks)
     original_svc_keys = set(svc_blocks)
@@ -597,14 +551,12 @@ def merge_lamedb(path, tp_entries, svc_entries):
                 name = candidate.strip()
         if 'abertis' in name.lower():
             del svc_blocks[key]
-
     replaced = sum(1 for key, _ in tp_entries if key in original_tp_keys) \
         + sum(1 for key, _ in svc_entries if key in original_svc_keys)
     for key, block in tp_entries:
         tp_blocks[key] = block
     for key, block in svc_entries:
         svc_blocks[key] = block
-
     out = ['eDVB services /4/', 'transponders']
     for block in tp_blocks.values():
         out.extend(normalize_tp_block(block))
@@ -613,31 +565,24 @@ def merge_lamedb(path, tp_entries, svc_entries):
     for block in svc_blocks.values():
         out.extend(normalize_svc_block(block))
     out.append('end')
-
     shutil.copy2(path, path + '.bak')
     with open(path, 'w', encoding='utf-8', errors='surrogateescape') as f:
         f.write('\n'.join(out) + '\n')
     return len(tp_blocks), len(svc_blocks), replaced
 
 
-
 def edit_lamedb(path, tp_entries, svc_entries):
-    """Edit an external lamedb in place with cleanup before adding entries."""
     with open(path, 'r', encoding='utf-8', errors='surrogateescape') as f:
         lines = f.read().split('\n')
-
     fmt, tp_blocks, svc_blocks = parse_lamedb(lines)
-
     original_tp_keys = set(tp_blocks)
     original_svc_keys = set(svc_blocks)
-
     generated_tp_keys = {key for key, _ in tp_entries}
     removed_tp = 0
     for key in list(tp_blocks):
         if key in generated_tp_keys:
             removed_tp += 1
             del tp_blocks[key]
-
     removed_svc = 0
     for key in list(svc_blocks):
         block = svc_blocks[key]
@@ -649,15 +594,12 @@ def edit_lamedb(path, tp_entries, svc_entries):
         if 'abertis' in name.lower():
             removed_svc += 1
             del svc_blocks[key]
-
     replaced = (sum(1 for key, _ in tp_entries if key in original_tp_keys)
                 + sum(1 for key, _ in svc_entries if key in original_svc_keys))
-
     for key, block in tp_entries:
         tp_blocks[key] = block
     for key, block in svc_entries:
         svc_blocks[key] = block
-
     out = ['eDVB services /4/', 'transponders']
     for block in tp_blocks.values():
         out.extend(normalize_tp_block(block))
@@ -666,22 +608,11 @@ def edit_lamedb(path, tp_entries, svc_entries):
     for block in svc_blocks.values():
         out.extend(normalize_svc_block(block))
     out.append('end')
-
     shutil.copy2(path, path + '.bak')
     with open(path, 'w', encoding='utf-8', errors='surrogateescape') as f:
         f.write('\n'.join(out) + '\n')
     return len(tp_blocks), len(svc_blocks), replaced, removed_tp, removed_svc
 
-
-
-
-try:
-    import tkinter as tk
-    from tkinter import filedialog, messagebox, ttk
-    import tkinter.font as tkfont
-    TK_AVAILABLE = True
-except ImportError:
-    TK_AVAILABLE = False
 
 APP_NAME = 'Abertis / Cellnex DX Suite'
 APP_SUBTITLE = 'Hispasat 30.0\u00b0W \u00b7 streamrelay + astra relay'
@@ -713,13 +644,8 @@ DEFAULTS = {
 
 
 class SuiteError(Exception):
-    """User-facing error with a friendly message."""
+    pass
 
-
-# ---------------------------------------------------------------------------
-# Option registry: single source of truth for labels and help texts, used by
-# the tooltips, the focus help pane and Help > Option Reference.
-# ---------------------------------------------------------------------------
 
 SECTIONS = [
     ('source', '1 \u00b7 Data source'),
@@ -913,13 +839,7 @@ NOTES
 """
 
 
-# ---------------------------------------------------------------------------
-# Pure logic (no Tk): validation, CLI bridge, database load, generation.
-# Used by the GUI and by the headless --check self-test.
-# ---------------------------------------------------------------------------
-
 def position_label(tenths):
-    """-300 -> '30.0° W', 192 -> '19.2° E'."""
     try:
         tenths = int(tenths)
     except (TypeError, ValueError):
@@ -928,7 +848,6 @@ def position_label(tenths):
 
 
 def validate_values(v):
-    """Return a list of human readable problems (empty list = all good)."""
     problems = []
     if v['source_mode'] == 'file':
         if not v['file'].strip():
@@ -971,7 +890,6 @@ def validate_values(v):
 
 
 def values_namespace(v):
-    """Values dict -> the namespace the engine's generators expect."""
     def to_int(value, fallback):
         try:
             return int(str(value).strip())
@@ -989,7 +907,6 @@ def values_namespace(v):
 
 
 def build_cli_command(v):
-    """Equivalent CLI invocation for the current settings."""
     try:
         position = str(int(str(v['position']).strip()))
     except (TypeError, ValueError):
@@ -1033,7 +950,6 @@ def build_cli_command(v):
 
 
 def load_database(v):
-    """Fetch/parse the database. Returns (data, txps, streams, raw_by_pid)."""
     try:
         if v['source_mode'] == 'file':
             with open(os.path.expanduser(v['file'].strip()), 'r',
@@ -1064,7 +980,6 @@ def load_database(v):
 
 
 def generate_artifacts(v, txps, streams):
-    """Run the generation for real. Returns a result dict for the GUI."""
     ns = values_namespace(v)
     out_dir = os.path.expanduser(v['out_dir'].strip() or '.')
     bouquet_name = v['bouquet'].strip() or DEFAULTS['bouquet']
@@ -1137,18 +1052,13 @@ def generate_artifacts(v, txps, streams):
                          if 'BISS' in (s.get('encryption') or '').upper())
             summary.append('SoftCam.Key: %d dummy BISS entries (%s)'
                            % (n_biss, sk_path))
-    except SystemExit as exc:                      # engine guards with sys.exit
+    except SystemExit as exc:
         raise SuiteError(str(exc.code) if exc.code else 'generation failed')
     except OSError as exc:
         raise SuiteError('Cannot write output: %s' % exc)
     return {'outputs': outputs, 'written': written,
             'summary': summary, 'merged': merged, 'edited': edited}
 
-
-# ---------------------------------------------------------------------------
-# Headless self-test (--check): exercises validation, the CLI bridge and a
-# full generation round on an embedded fixture, without needing a display.
-# ---------------------------------------------------------------------------
 
 CHECK_FIXTURE = [
     {'txp_no': '125', 'freq_pol_mode': '11222.00 H DVB-S2/8PSK',
@@ -1162,11 +1072,7 @@ CHECK_FIXTURE = [
               {'type': 'HD', 'name': 'TVE La 1 Extremadura', 'system': 'MPEG-4',
                'sid': '504', 'vpid': '301', 'apid_lang': '302 Spa 303 org'},
               {'type': 'Radio', 'name': 'RNE Radio 1 Extremadura', 'system': '',
-               'sid': '505', 'vpid': '', 'apid_lang': '2001 Spa'}]},
-         {'title': 'RNE', 'pid_info': '1-60020--60000', 'encryption': '',
-          'channels': [
-              {'type': 'Radio', 'name': 'RNE Radio 3 Nacion', 'system': '',
-               'sid': '300', 'vpid': '', 'apid_lang': '301 Spa'}]}]},
+               'sid': '505', 'vpid': '', 'apid_lang': '2001 Spa'}]}]},
     {'txp_no': '200', 'freq_pol_mode': '11707.00 V DVB-S2/8PSK T2MI',
      'provider': 'Abertis DTT', 'sr_fec': '27500 3/4',
      'onid_nid_tid': '1/60000/60021', 'date': '25.04.2026',
@@ -1190,8 +1096,6 @@ CHECK_FIXTURE = [
 
 def run_checks():
     print('== Abertis_DX_Suite_GUI --check ==')
-
-    # 1. registry sanity: every option documented, defaults present
     for key, opt in OPTIONS.items():
         assert opt['label'] and opt['section'] in dict(SECTIONS), key
         assert len(opt['help']) > 60, ('help text too short', key)
@@ -1199,21 +1103,15 @@ def run_checks():
     assert all(len(h) > 40 for h in ACTION_HELP.values())
     print('PASS  option registry: %d options + %d actions documented'
           % (len(OPTIONS), len(ACTION_HELP)))
-
-    # 2. position labels
     assert position_label(-300) == '30.0\u00b0 W'
     assert position_label(192) == '19.2\u00b0 E'
     print('PASS  position labels')
-
-    # 3. validation
     bad = dict(DEFAULTS, source_mode='file', relay_port='notaport',
                position='-9999', file='/nope.json')
     problems = validate_values(bad)
     assert len(problems) == 3, problems
     assert not validate_values(DEFAULTS)
-    print('PASS  validation (rejects bad port/position/file, accepts defaults)')
-
-    # 4. CLI bridge
+    print('PASS  validation')
     v = dict(DEFAULTS, source_mode='file', file='/tmp/sat_data.json',
              out_dir='/tmp/dx', merge_enabled=True,
              merge_path='/etc/enigma2/lamedb', relay_script='abertis')
@@ -1226,8 +1124,6 @@ def run_checks():
         '--relay-port 8001 --out-host 0.0.0.0 --http-port 9999'
         % shlex.quote(os.path.join(SCRIPT_DIR, 'Abertis_DX_Suite.py')))
     print('PASS  CLI command bridge')
-
-    # 5. full generation round on the embedded fixture (GUI code path)
     import tempfile
     with tempfile.TemporaryDirectory() as tmp:
         fixture = os.path.join(tmp, 'fixture.json')
@@ -1243,44 +1139,41 @@ def run_checks():
         assert lam.startswith('eDVB services /4/\ntransponders\n'
                               '0ce40000:ea74:0001')
         assert '\nend\nservices\n' in lam and lam.rstrip('\n').endswith('end')
-        assert '/\n0ce40000:0001:311c' in lam          # one / per transponder
+        assert '/\n0ce40000:0001:311c' in lam
         astx = result['outputs']['astra.conf']
         bq = result['outputs']['userbouquet.abertis.tv']
         assert ('0bd1:0ce40000:ea74:0001:1:0\n'
                 'Abertis@11222H30000 PID 2025\n'
                 'p:ABERTIS,c:031fff,c:1807e9,c:191b71,C:2600,f:01\n') in lam
-        # FTA Cellnex feed with custom JSON sid/cpid overriding the arithmetic
         assert 'Cellnex@11502V10200 PID 3150' in lam
         assert ('1068:0ce40000:0001:311c:1:0\n'
                 'Cellnex@11502V10200 PID 3150\n'
-                'p:CELLNEX,c:031fff,c:180c4e,c:191fd6,f:01\n') in lam  # sid 4200=0x1068, pid 0xc4e, cpid 8150
-        assert '0ce40000:ea75:0001' in lam          # T2MI transponder header (tsid 60021 / onid 1)
-        assert ('1388:0ce40000:ea75:0001:1:0\n'
-                'Abertis@11707V27500 PID 4000\n'
-                'p:ABERTIS,c:031fff,c:180fa0,c:192328,f:01\n') in lam  # sid 5000=0x1388, pid 4000=0x0fa0, cpid 9000=0x2328
-        assert '1:0:1:BD1:EA74:1:CE40000:0:0:0' in astx          # sid 3025 from JSON
-        assert '1:0:1:1068:1:12572:CE40000:0:0:0' in astx        # sid 4200, tsid 1, onid 12572
+                'p:CELLNEX,c:031fff,c:180c4e,c:191fd6,f:01\n') in lam
+        assert '1:0:1:BD1:EA74:1:CE40000:0:0:0' in astx
+        assert '1:0:1:1068:1:12572:CE40000:0:0:0' in astx
         assert '/etc/astra/scripts/cellnex 3150' in astx
         assert '/cellnex/pid3150' in astx
-        # Every stream gets a T2MI decap + republish block by default
-        assert astx.count('make_t2mi_decap') == 3                 # one per stream
-        assert '1:0:1:1388:EA75:1:CE40000:0:0:0' in astx          # stream 4000 sid 0x1388
-        assert 't2mi://f11222pid4096plp0' in astx                 # stream 2025 default t2mi_pid=4096
-        assert 't2mi://f11502pid4096plp0' in astx                 # stream 3150 default t2mi_pid=4096
-        assert 't2mi://f11707pid257plp1' in astx                  # stream 4000 t2mi_pid=257 plp=1
-        assert 'http://0.0.0.0:9999/abertis/pid2025pid4096plp0' in astx  # stream 2025 T2MI output
-        assert 'http://0.0.0.0:9999/cellnex/pid3150pid4096plp0' in astx  # stream 3150 T2MI output
-        assert 'http://0.0.0.0:9999/abertis/pid4000pid257plp1' in astx  # stream 4000 T2MI output
-        # Bouquet channels point to the T2MI output for every stream
-        assert 'http%3A//0.0.0.0%3A9999/abertis/pid2025pid4096plp0:(TV) TVE La 1 Extremadura' in bq
-        assert 'http%3A//0.0.0.0%3A9999/cellnex/pid3150pid4096plp0:(TV) CMM TV' in bq
-        assert 'http%3A//0.0.0.0%3A9999/abertis/pid4000pid257plp1:(TV) T2MI Test TV' in bq
+        assert astx.count('make_t2mi_decap') == 3
+        assert '1:0:1:1388:EA75:1:CE40000:0:0:0' in astx
+        assert 't2mi://f11222aber2025pid4096plp0' in astx
+        assert '-- 11222 H 30000 PID2025 Stream' in astx
+        assert 'name = "Abertis@11222H30000PID2025"' in astx
+        assert 'name = "11222H30000@ABER2025_PID4096PLP0"' in astx
+        assert 'name = "11222h30000@aber2025_pid4096plp0"' in astx
+        assert 't2mi://f11502cell3150pid4096plp0' in astx
+        assert 'name = "11502V10200@CELL3150_PID4096PLP0"' in astx
+        assert 't2mi://f11707aber4000pid257plp1' in astx
+        assert 'http://0.0.0.0:9999/abertis/aber2025_pid4096plp0' in astx
+        assert 'http://0.0.0.0:9999/cellnex/cell3150_pid4096plp0' in astx
+        assert 'http://0.0.0.0:9999/abertis/aber4000_pid257plp1' in astx
+        assert 'http%3A//0.0.0.0%3A9999/abertis/aber2025_pid4096plp0:(TV) TVE La 1 Extremadura' in bq
+        assert 'http%3A//0.0.0.0%3A9999/cellnex/cell3150_pid4096plp0:(TV) CMM TV' in bq
+        assert 'http%3A//0.0.0.0%3A9999/abertis/aber4000_pid257plp1:(TV) T2MI Test TV' in bq
+        assert '(TV) TVE La 1 Extremadura' in bq
         assert '(RADIO) RNE Radio 1 Extremadura' in bq
         for p in result['written']:
             assert os.path.isfile(p), p
         print('PASS  generation round on fixture (standalone mode)')
-
-        # 5b. SoftCam.Key: dummy BISS entries with CRC32(seed=0x2600, SID+ns)
         v_sk = dict(v, softcam_key_enabled=True)
         result_sk = generate_artifacts(v_sk, txps, streams)
         assert 'SoftCam.Key' in result_sk['outputs'], list(result_sk['outputs'])
@@ -1291,8 +1184,6 @@ def run_checks():
         sk_path = os.path.join(tmp, 'out', 'SoftCam.Key')
         assert os.path.isfile(sk_path)
         print('PASS  SoftCam.Key dummy BISS entries')
-
-        # 6. merge round (v4 only)
         existing = os.path.join(tmp, 'lamedb')
         with open(existing, 'w', encoding='utf-8') as f:
             f.write('eDVB services /4/\n'
@@ -1314,8 +1205,6 @@ def run_checks():
         assert 'Abertis@11222H30000 PID 2025' in merged
         assert 'end\nservices\n' in merged and merged.rstrip('\n').endswith('end')
         assert os.path.isfile(existing + '.bak')
-
-        # 7. edit rounds: removes stale abertis services and matching txps
         editfile = os.path.join(tmp, 'lamedb_edit')
         with open(editfile, 'w', encoding='utf-8') as f:
             f.write('eDVB services /4/\n'
@@ -1344,1048 +1233,1188 @@ def run_checks():
 
 
 # ---------------------------------------------------------------------------
-# GUI (requires tkinter)
+# Worker thread
 # ---------------------------------------------------------------------------
 
-if TK_AVAILABLE:
+class WorkerThread(QThread):
+    ok = pyqtSignal(object)
+    fail = pyqtSignal(str)
+    log = pyqtSignal(str)
 
-    PALETTE = {
-        'bg': '#1b1d23', 'panel': '#23252d', 'field': '#2b2d36',
-        'fg': '#e6e7ec', 'muted': '#9aa1ad', 'accent': '#3d8bfd',
-        'accent2': '#2f6cd8', 'ok': '#3fb950', 'warn': '#d8a333',
-        'err': '#f2555a', 'border': '#363943', 'tree': '#22242b',
-        'sel': '#33465f', 'tip': '#101217',
-    }
+    def __init__(self, kind, task):
+        super().__init__()
+        self.kind = kind
+        self.task = task
 
-    class Tooltip:
-        """Hover tooltip with wrapped, multi-line help text."""
+    def run(self):
+        try:
+            payload = self.task()
+            self.ok.emit((self.kind, payload))
+        except SuiteError as exc:
+            self.fail.emit(str(exc))
+        except Exception:
+            self.fail.emit('Unexpected error:\n' + traceback.format_exc())
 
-        def __init__(self, app, widget, text, delay=450):
-            self.app, self.widget, self.text = app, widget, text
-            self.delay, self._after, self._win = delay, None, None
-            widget.bind('<Enter>', self._schedule, add='+')
-            widget.bind('<Leave>', self._hide_now, add='+')
-            widget.bind('<ButtonPress>', self._hide_now, add='+')
 
-        def _schedule(self, _event=None):
-            self._cancel()
-            self._after = self.widget.after(self.delay, self._show)
+# ---------------------------------------------------------------------------
+# GUI
+# ---------------------------------------------------------------------------
 
-        def _cancel(self):
-            if self._after:
-                self.widget.after_cancel(self._after)
-                self._after = None
+if __name__ == '__main__' and '--check' in sys.argv:
+    run_checks()
+    sys.exit(0)
 
-        def _show(self):
-            if self._win or not self.text:
-                return
-            x = self.widget.winfo_rootx() + 14
-            y = self.widget.winfo_rooty() + self.widget.winfo_height() + 4
-            win = tk.Toplevel(self.widget)
-            win.wm_overrideredirect(True)
-            win.wm_geometry('+%d+%d' % (x, y))
-            tk.Label(win, text=self.text, justify='left', wraplength=470,
-                     bg=PALETTE['tip'], fg=PALETTE['fg'], relief='solid',
-                     borderwidth=1, padx=9, pady=6,
-                     font=self.app.fonts['small']).pack()
-            self._win = win
 
-        def _hide_now(self, _event=None):
-            self._cancel()
-            if self._win:
-                self._win.destroy()
-                self._win = None
+class App(QMainWindow):
+    def __init__(self):
+        super().__init__()
+        self.setWindowTitle('%s \u2014 %s' % (APP_NAME, APP_SUBTITLE))
+        self.setMinimumSize(1120, 700)
+        self.C = dict(THEME)
 
-    class QueueLog(io.TextIOBase):
-        """stdout/stderr replacement that feeds the GUI log queue."""
+        self.q = queue.Queue()
+        self.data = None
+        self.txps = None
+        self.streams = None
+        self.raw_by_pid = {}
+        self.outputs = OrderedDict()
+        self._stream_items = {}
+        self._busy = False
+        self.scale_factor = 1.0
+        self._help_keys = {}
+        self._scaled_sizes = []
+        self._first_show = True
+        self._split_user = False
+        self._setting_sizes = False
+        self._last_scale_msg = None
 
-        def __init__(self, app):
-            self.app = app
+        # Debounced scale / filter timers keep the UI responsive while dragging.
+        self._scale_timer = QTimer(self)
+        self._scale_timer.setSingleShot(True)
+        self._scale_timer.setInterval(220)
+        self._scale_timer.timeout.connect(self._apply_gui_scale)
 
-        def write(self, s):
-            for line in s.splitlines():
-                if line.strip():
-                    self.app.q.put(('log', line))
-            return len(s)
+        self._filter_timer = QTimer(self)
+        self._filter_timer.setSingleShot(True)
+        self._filter_timer.setInterval(180)
+        self._filter_timer.timeout.connect(self._populate_tree)
 
-        def flush(self):
-            pass
+        self._build_menu()
+        self._build_ui()
+        self._restore_settings()
 
-    class App(tk.Tk):
+        self.statusBar().showMessage('Ready \u2014 load the database (Ctrl+L) or press Generate (Ctrl+G).')
+        self._poll_timer = self.startTimer(80)
 
-        def __init__(self):
-            super().__init__()
-            self.title('%s \u2014 %s' % (APP_NAME, APP_SUBTITLE))
-            self.minsize(1080, 660)
-            # Set combobox dropdown listbox colours before any widget is
-            # created so the popdown list is readable on the dark theme.
-            C = PALETTE
-            self.option_add('*Listbox.background', C['field'])
-            self.option_add('*Listbox.foreground', '#000000')
-            self.option_add('*Listbox.selectBackground', C['sel'])
-            self.option_add('*Listbox.selectForeground', '#ffffff')
-            self.option_add('*TCombobox.entry.background', C['field'])
-            self.option_add('*TCombobox.entry.foreground', C['fg'])
-            self._setup_fonts()
-            self._setup_style()
-            self.q = queue.Queue()
-            self._log_stream = QueueLog(self)
-            self.busy = False
-            self.data = None
-            self.txps = None
-            self.streams = None
-            self.raw_by_pid = {}
-            self.outputs = OrderedDict()
-            self._stream_items = {}
-            self._busy_widgets = []
-            self._paned = None
-            self._build_menu()
-            self._build_ui()
-            self._restore_settings()
-            self.protocol('WM_DELETE_WINDOW', self._on_close)
-            self.after(80, self._poll)
-            self.status('Ready \u2014 load the database (Ctrl+L) or press '
-                        'Generate (Ctrl+G).')
+    # ------------------------------------------------ fonts & style
+    def _initial_gui_scale(self):
+        try:
+            with open(SETTINGS_FILE, 'r', encoding='utf-8') as f:
+                saved = json.load(f)
+            scale = float(saved.get('values', {}).get(
+                'gui_scale', DEFAULTS.get('gui_scale', 1.0)))
+        except (OSError, ValueError, TypeError):
+            scale = float(DEFAULTS.get('gui_scale', 1.0))
+        if scale < 0.5 or scale > 2.0:
+            scale = 1.0
+        return scale
 
-        # ------------------------------------------------ fonts & style
-        def _initial_gui_scale(self):
-            try:
-                with open(SETTINGS_FILE, 'r', encoding='utf-8') as f:
-                    saved = json.load(f)
-                scale = float(saved.get('values', {}).get(
-                    'gui_scale', DEFAULTS.get('gui_scale', 1.0)))
-            except (OSError, ValueError, TypeError):
-                scale = float(DEFAULTS.get('gui_scale', 1.0))
-            if scale < 0.5 or scale > 3.0:
-                scale = 1.0
-            return scale
+    def _setup_fonts(self, factor=None):
+        if factor is None:
+            factor = self.scale_factor
+        fams = set(QFontDatabase.families())
+        ui = next((f for f in ('Inter', 'Segoe UI', 'Noto Sans', 'Ubuntu',
+                               'DejaVu Sans') if f in fams), 'Sans Serif')
+        mono = next((f for f in ('JetBrains Mono', 'Cascadia Mono', 'Consolas',
+                                 'DejaVu Sans Mono', 'Ubuntu Mono') if f in fams), 'Monospace')
+        sc = factor
 
-        def _setup_fonts(self):
-            self.scale_factor = self._initial_gui_scale()
-            fams = set(tkfont.families(self))
-            ui = ('Segoe UI' if 'Segoe UI' in fams else
-                  'DejaVu Sans' if 'DejaVu Sans' in fams else 'Helvetica')
-            mono = ('Consolas' if 'Consolas' in fams else
-                    'DejaVu Sans Mono' if 'DejaVu Sans Mono' in fams else
-                    'Courier')
-            sc = self.scale_factor
+        def mk(family, base, weight=QFont.Weight.Normal):
+            # Fractional point sizes so 1.0 -> 1.1 is actually visible.
+            fnt = QFont(family)
+            fnt.setPointSizeF(max(7.5, base * sc))
+            fnt.setWeight(weight)
+            return fnt
+        self.fonts = {
+            'base': mk(ui, 18),
+            'small': mk(ui, 18),
+            'bold': mk(ui, 18, QFont.Weight.DemiBold),
+            'h1': mk(ui, 26, QFont.Weight.Bold),
+            'mono': mk(ui, 18),
+            'mono_small': mk(ui, 18),
+        }
+        # Keep menus, tooltips, dialogs and message boxes in step with the UI.
+        app = QApplication.instance()
+        if app is not None:
+            app.setFont(self.fonts['base'])
 
-            def sz(base):
-                return max(8, int(round(base * sc)))
-            self.fonts = {
-                'base': tkfont.Font(family=ui, size=sz(10)),
-                'small': tkfont.Font(family=ui, size=sz(9)),
-                'bold': tkfont.Font(family=ui, size=sz(10), weight='bold'),
-                'h1': tkfont.Font(family=ui, size=sz(14), weight='bold'),
-                'mono': tkfont.Font(family=mono, size=sz(10)),
-                'mono_small': tkfont.Font(family=mono, size=sz(9)),
-            }
+    def _apply_style(self):
+        C = self.C
+        f = self.scale_factor
 
-        def _setup_style(self):
-            C = PALETTE
-            style = ttk.Style(self)
-            try:
-                style.theme_use('clam')
-            except tk.TclError:
-                pass
-            style.configure('.', background=C['panel'], foreground=C['fg'],
-                            font=self.fonts['base'], bordercolor=C['border'],
-                            lightcolor=C['panel'], darkcolor=C['panel'])
-            style.configure('TFrame', background=C['panel'])
-            style.configure('TLabel', background=C['panel'], foreground=C['fg'])
-            style.configure('Muted.TLabel', foreground=C['muted'])
-            style.configure('Title.TLabel', font=self.fonts['h1'])
-            style.configure('TLabelframe', background=C['panel'],
-                            bordercolor=C['border'], relief='solid',
-                            borderwidth=1)
-            style.configure('TLabelframe.Label', background=C['panel'],
-                            foreground=C['accent'], font=self.fonts['bold'])
-            style.configure('TEntry', fieldbackground=C['field'],
-                            foreground=C['fg'], insertcolor=C['fg'],
-                            bordercolor=C['border'], lightcolor=C['border'],
-                            darkcolor=C['border'], padding=3,
-                            font=self.fonts['base'])
-            style.map('TEntry', bordercolor=[('focus', C['accent'])])
-            style.configure('TSpinbox', fieldbackground=C['field'],
-                            foreground=C['fg'], arrowcolor=C['fg'],
-                            bordercolor=C['border'], lightcolor=C['border'],
-                            darkcolor=C['border'], padding=2,
-                            arrowsize=11, font=self.fonts['base'])
-            style.configure('TRadiobutton', background=C['panel'],
-                            foreground=C['fg'], focuscolor=C['panel'])
-            style.map('TRadiobutton',
-                      indicatorcolor=[('selected', C['accent'])],
-                      background=[('active', C['panel'])])
-            style.configure('TCheckbutton', background=C['panel'],
-                            foreground=C['fg'], focuscolor=C['panel'])
-            style.map('TCheckbutton',
-                      indicatorcolor=[('selected', C['accent'])],
-                      background=[('active', C['panel'])])
-            style.configure('TCombobox', fieldbackground=C['field'],
-                            foreground=C['fg'], arrowcolor=C['fg'],
-                            bordercolor=C['border'], padding=3,
-                            font=self.fonts['base'])
-            style.map('TCombobox', fieldbackground=[('readonly', C['field']),
-                                                    ('!readonly', C['field']),
-                                                    ('focus', C['field'])],
-                      foreground=[('readonly', C['fg']),
-                                  ('!readonly', C['fg']),
-                                  ('focus', C['fg'])])
-            style.configure('TNotebook', background=C['panel'],
-                            bordercolor=C['border'], tabmargins=(6, 6, 6, 0))
-            style.configure('TNotebook.Tab', background=C['bg'],
-                            foreground=C['muted'], padding=(13, 5))
-            style.map('TNotebook.Tab',
-                      background=[('selected', C['field'])],
-                      foreground=[('selected', C['fg'])])
-            style.configure('Treeview', background=C['tree'],
-                            foreground=C['fg'], fieldbackground=C['tree'],
-                            bordercolor=C['border'], rowheight=23)
-            style.configure('Treeview.Heading', background=C['bg'],
-                            foreground=C['muted'],
-                            font=self.fonts['small'], bordercolor=C['border'],
-                            relief='flat')
-            style.map('Treeview', background=[('selected', C['sel'])],
-                      foreground=[('selected', '#ffffff')])
-            style.configure('TProgressbar', background=C['accent'],
-                            troughcolor=C['field'], bordercolor=C['field'],
-                            lightcolor=C['accent'], darkcolor=C['accent'])
-            for orient in ('Horizontal', 'Vertical'):
-                style.configure(orient + '.TScrollbar', background=C['field'],
-                                troughcolor=C['bg'], bordercolor=C['bg'],
-                                arrowcolor=C['muted'], relief='flat')
+        def px(v):
+            return max(1, int(round(v * f * UI_UNIT)))
+        sheet = [
+            'QMainWindow, QDialog { background: %s; }' % C['bg'],
+            'QWidget { color: %s; }' % C['fg'],
+            'QWidget#Root { background: %s; }' % C['bg'],
+            'QWidget#Sidebar { background: %s; }' % C['bg'],
+            'QWidget#TabPage { background: %s; }' % C['tree'],
+            'QLabel { background: transparent; }',
+            'QLabel#Muted { color: %s; }' % C['muted'],
 
-        def button(self, parent, text, command, kind='normal', **kw):
-            C = PALETTE
-            bg = {'normal': C['field'], 'accent': C['accent'],
-                  'ghost': C['panel']}[kind]
-            fg = '#ffffff' if kind == 'accent' else C['fg']
-            active = {'normal': '#343743', 'accent': C['accent2'],
-                      'ghost': '#2a2c35'}[kind]
-            return tk.Button(parent, text=text, command=command, bg=bg, fg=fg,
-                             activebackground=active, activeforeground=fg,
-                             disabledforeground=C['muted'], relief='flat',
-                             padx=13, pady=4, borderwidth=0,
-                             highlightthickness=0, cursor='hand2',
-                             font=self.fonts['base'], **kw)
+            # ---- cards / group boxes
+            'QGroupBox { background: %s; border: 1px solid %s; border-radius: %dpx;'
+            ' margin-top: %dpx; padding: %dpx %dpx %dpx %dpx; font-weight: 600; }'
+            % (C['surface'], C['border'], px(10), px(20), px(12), px(12), px(10), px(12)),
+            'QGroupBox::title { subcontrol-origin: margin; left: %dpx; padding: 0 %dpx;'
+            ' color: %s; }' % (px(12), px(6), C['accent']),
 
-        # -------------------------------------------------------- menu
-        def _menu(self, parent):
-            C = PALETTE
-            return tk.Menu(parent, tearoff=0, bg=C['panel'], fg=C['fg'],
-                           activebackground=C['sel'],
-                           activeforeground='#ffffff', bd=0)
+            # ---- inputs
+            'QLineEdit, QComboBox, QSpinBox, QDoubleSpinBox {'
+            ' background: %s; color: %s; border: 1px solid %s;'
+            ' border-radius: %dpx; padding: %dpx %dpx;'
+            ' selection-background-color: %s; selection-color: #ffffff; }'
+            % (C['field'], C['fg'], C['border'], px(7), px(6), px(9), C['sel_hi']),
+            'QLineEdit:hover, QComboBox:hover, QSpinBox:hover, QDoubleSpinBox:hover {'
+            ' border-color: %s; }' % C['border_hi'],
+            'QLineEdit:focus, QComboBox:focus, QSpinBox:focus, QDoubleSpinBox:focus {'
+            ' border-color: %s; }' % C['accent'],
+            'QLineEdit:disabled, QComboBox:disabled, QSpinBox:disabled,'
+            ' QDoubleSpinBox:disabled { color: #6b7280; background: #191c23;'
+            ' border-color: #232833; }',
+            'QComboBox { background: #000000; padding-right: %dpx; }' % px(22),
+            'QComboBox::drop-down { background: #000000; }',
+            'QComboBox::drop-down { border: none; width: %dpx; }' % px(22),
+            'QComboBox::down-arrow { image: none; width: 0; height: 0;'
+            ' border-left: %dpx solid transparent; border-right: %dpx solid transparent;'
+            ' border-top: %dpx solid %s; margin-right: %dpx; }'
+            % (px(5), px(5), px(6), C['muted'], px(7)),
+            'QComboBox QAbstractItemView { background: #000000; color: %s;'
+            ' border: 1px solid %s; border-radius: %dpx; padding: %dpx;'
+            ' selection-background-color: %s; selection-color: #ffffff; outline: 0; }'
+            % (C['fg'], C['border_hi'], px(8), px(4), C['sel']),
+            'QSpinBox::up-button, QDoubleSpinBox::up-button { subcontrol-origin: border;'
+            ' subcontrol-position: top right; width: %dpx; border: none;'
+            ' border-left: 1px solid %s; background: transparent; }' % (px(18), C['border']),
+            'QSpinBox::down-button, QDoubleSpinBox::down-button { subcontrol-origin: border;'
+            ' subcontrol-position: bottom right; width: %dpx; border: none;'
+            ' border-left: 1px solid %s; background: transparent; }' % (px(18), C['border']),
+            'QSpinBox::up-arrow, QDoubleSpinBox::up-arrow { image: none; width: 0; height: 0;'
+            ' border-left: %dpx solid transparent; border-right: %dpx solid transparent;'
+            ' border-bottom: %dpx solid %s; }' % (px(4), px(4), px(5), C['muted']),
+            'QSpinBox::down-arrow, QDoubleSpinBox::down-arrow { image: none; width: 0; height: 0;'
+            ' border-left: %dpx solid transparent; border-right: %dpx solid transparent;'
+            ' border-top: %dpx solid %s; }' % (px(4), px(4), px(5), C['muted']),
+            'QSpinBox::up-button:hover, QSpinBox::down-button:hover,'
+            ' QDoubleSpinBox::up-button:hover, QDoubleSpinBox::down-button:hover {'
+            ' background: %s; }' % C['surface2'],
 
-        def _build_menu(self):
-            menubar = self._menu(self)
-            m_file = self._menu(menubar)
-            m_file.add_command(label='Open local JSON\u2026',
-                               accelerator='Ctrl+O',
-                               command=self._menu_open_json)
-            m_file.add_separator()
-            m_file.add_command(label='Save settings profile\u2026',
-                               command=self._save_profile)
-            m_file.add_command(label='Load settings profile\u2026',
-                               command=self._load_profile)
-            m_file.add_separator()
-            m_file.add_command(label='Quit', accelerator='Ctrl+Q',
-                               command=self._on_close)
-            m_act = self._menu(menubar)
-            m_act.add_command(label='Load database', accelerator='Ctrl+L',
-                              command=lambda: self._on_load())
-            m_act.add_command(label='Generate suite', accelerator='Ctrl+G',
-                              command=lambda: self._on_generate())
-            m_act.add_command(label='Copy CLI command', accelerator='Ctrl+K',
-                              command=self._on_cli)
-            m_act.add_separator()
-            m_act.add_command(label='Clear log', command=self._clear_log)
-            m_help = self._menu(menubar)
-            m_help.add_command(label='Option reference', accelerator='F1',
-                               command=self._show_reference)
-            m_help.add_command(label='Quick guide', command=self._show_guide)
-            m_help.add_separator()
-            m_help.add_command(label='About', command=self._show_about)
-            for label, menu in (('File', m_file), ('Actions', m_act),
-                                ('Help', m_help)):
-                menubar.add_cascade(label=label, menu=menu)
-            self.config(menu=menubar)
-            self.bind_all('<Control-l>', lambda e: self._on_load())
-            self.bind_all('<Control-L>', lambda e: self._on_load())
-            self.bind_all('<Control-g>', lambda e: self._on_generate())
-            self.bind_all('<Control-G>', lambda e: self._on_generate())
-            self.bind_all('<Control-o>', lambda e: self._menu_open_json())
-            self.bind_all('<Control-O>', lambda e: self._menu_open_json())
-            self.bind_all('<Control-k>', lambda e: self._on_cli())
-            self.bind_all('<Control-K>', lambda e: self._on_cli())
-            self.bind_all('<Control-q>', lambda e: self._on_close())
-            self.bind_all('<Control-Q>', lambda e: self._on_close())
-            self.bind_all('<F1>', lambda e: self._show_reference())
+            # ---- buttons
+            'QPushButton { background: %s; color: %s; border: 1px solid %s;'
+            ' border-radius: %dpx; padding: %dpx %dpx; font-weight: 600; }'
+            % (C['surface2'], C['fg'], C['border_hi'], px(8), px(7), px(15)),
+            'QPushButton:hover { background: #2b3140; border-color: #414a5d; }',
+            'QPushButton:pressed { background: #232833; }',
+            'QPushButton:disabled { color: #6b7280; background: #191c23;'
+            ' border-color: #232833; }',
+            'QPushButton#Primary { background: %s; border: 1px solid %s; color: #071120; }'
+            % (C['accent'], C['accent']),
+            'QPushButton#Primary:hover { background: %s; border-color: %s; }'
+            % (C['accent_hi'], C['accent_hi']),
+            'QPushButton#Primary:pressed { background: %s; border-color: %s; }'
+            % (C['accent_lo'], C['accent_lo']),
+            'QPushButton#Primary:disabled { background: #24344f; border-color: #24344f;'
+            ' color: #71809a; }',
 
-        # ------------------------------------------------------ layout
-        def _build_ui(self):
-            self.configure(bg=PALETTE['panel'])
-            root = ttk.Frame(self)
-            root.pack(fill='both', expand=True, padx=10, pady=8)
+            # ---- checkboxes / radios
+            'QCheckBox, QRadioButton { background: transparent; spacing: %dpx; }' % px(8),
+            'QCheckBox::indicator { width: %dpx; height: %dpx; border: 1px solid %s;'
+            ' border-radius: %dpx; background: %s; }' % (px(16), px(16), C['border_hi'], px(4), C['field']),
+            'QCheckBox::indicator:hover { border-color: %s; }' % C['accent'],
+            'QCheckBox::indicator:checked { background: %s; border-color: %s; }'
+            % (C['accent'], C['accent']),
+            'QRadioButton::indicator { width: %dpx; height: %dpx; border: 1px solid %s;'
+            ' border-radius: %dpx; background: %s; }' % (px(16), px(16), C['border_hi'], px(8), C['field']),
+            'QRadioButton::indicator:hover { border-color: %s; }' % C['accent'],
+            'QRadioButton::indicator:checked { border: %dpx solid %s; background: %s; }'
+            % (px(5), C['accent'], C['field']),
 
-            header = ttk.Frame(root)
-            header.pack(fill='x')
-            ttk.Label(header, text=APP_NAME, style='Title.TLabel') \
-                .pack(side='left')
-            ttk.Label(header, text='   %s' % APP_SUBTITLE,
-                      style='Muted.TLabel').pack(side='left')
+            # ---- tree
+            'QTreeWidget { background: %s; alternate-background-color: #151922; color: %s;'
+            ' border: none; outline: 0; selection-background-color: %s;'
+            ' selection-color: #ffffff; }' % (C['tree'], C['fg'], C['sel']),
+            'QTreeWidget::item { padding: %dpx %dpx; border: none; }' % (px(4), px(2)),
+            'QTreeWidget::item:hover { background: #1b2029; }',
+            'QTreeWidget::item:selected { background: %s; color: #ffffff; }' % C['sel'],
+            'QHeaderView::section { background: %s; color: %s; border: none;'
+            ' border-bottom: 1px solid %s; padding: %dpx %dpx; font-weight: 600; }'
+            % (C['surface'], C['muted'], C['border'], px(6), px(8)),
 
-            paned = ttk.PanedWindow(root, orient='horizontal')
-            paned.pack(fill='both', expand=True, pady=(8, 0))
+            # ---- text areas
+            'QTextEdit { background: %s; color: %s; border: 1px solid %s;'
+            ' border-radius: %dpx; padding: %dpx; selection-background-color: %s; }'
+            % (C['tree'], C['fg'], C['border'], px(8), px(6), C['sel_hi']),
 
-            left = ttk.Frame(paned)
-            left.pack_propagate(False)
-            left.configure(width=int(430 * self.scale_factor))
-            right = ttk.Notebook(paned)
-            paned.add(left, weight=0)
-            paned.add(right, weight=1)
+            # ---- tabs
+            'QTabWidget::pane { border: 1px solid %s; border-radius: %dpx;'
+            ' background: %s; top: -1px; }' % (C['border'], px(10), C['tree']),
+            'QTabBar::tab { background: transparent; color: %s; padding: %dpx %dpx;'
+            ' margin-right: %dpx; border: none; border-bottom: 2px solid transparent; }'
+            % (C['muted'], px(8), px(16), px(4)),
+            'QTabBar::tab:hover { color: %s; }' % C['fg'],
+            'QTabBar::tab:selected { color: %s; border-bottom: 2px solid %s; }'
+            % (C['fg'], C['accent']),
 
-            self._build_left(left)
-            self._build_right(right)
-            self._paned = paned
+            # ---- menu / status
+            'QMenuBar { background: %s; color: %s; border: none; padding: %dpx; }'
+            % (C['surface'], C['muted'], px(2)),
+            'QMenuBar::item { padding: %dpx %dpx; border-radius: %dpx; background: transparent; }'
+            % (px(5), px(10), px(6)),
+            'QMenuBar::item:selected { background: %s; color: %s; }' % (C['sel'], C['fg']),
+            'QMenu { background: %s; color: %s; border: 1px solid %s;'
+            ' border-radius: %dpx; padding: %dpx; }'
+            % (C['surface'], C['fg'], C['border_hi'], px(8), px(6)),
+            'QMenu::item { padding: %dpx %dpx; border-radius: %dpx; }'
+            % (px(6), px(22), px(6)),
+            'QMenu::item:selected { background: %s; }' % C['sel'],
+            'QMenu::separator { height: 1px; background: %s; margin: %dpx %dpx; }'
+            % (C['border'], px(4), px(8)),
+            'QStatusBar { background: %s; color: %s; border-top: 1px solid %s; }'
+            % (C['surface'], C['muted'], C['border']),
+            'QStatusBar::item { border: none; }',
 
-            status = ttk.Frame(root)
-            status.pack(fill='x', pady=(8, 0))
-            self.v_status = tk.StringVar(value='')
-            ttk.Label(status, textvariable=self.v_status,
-                      style='Muted.TLabel').pack(side='left')
-            self.progress = ttk.Progressbar(status, mode='indeterminate',
-                                            length=130)
-            self.progress.pack(side='right')
-            self.v_counts = tk.StringVar(value='')
-            ttk.Label(status, textvariable=self.v_counts,
-                      style='Muted.TLabel').pack(side='right', padx=(0, 14))
+            # ---- scroll bars
+            'QScrollArea { background: transparent; border: none; }',
+            'QScrollArea > QWidget > QWidget { background: transparent; }',
+            'QScrollBar:vertical { background: transparent; width: %dpx; margin: %dpx; }' % (px(10), px(2)),
+            'QScrollBar::handle:vertical { background: #333a48; border-radius: %dpx;'
+            ' min-height: %dpx; }' % (px(5), px(28)),
+            'QScrollBar::handle:vertical:hover { background: #455066; }',
+            'QScrollBar:horizontal { background: transparent; height: %dpx; margin: %dpx; }' % (px(10), px(2)),
+            'QScrollBar::handle:horizontal { background: #333a48; border-radius: %dpx;'
+            ' min-width: %dpx; }' % (px(5), px(28)),
+            'QScrollBar::handle:horizontal:hover { background: #455066; }',
+            'QScrollBar::add-line, QScrollBar::sub-line { width: 0; height: 0; }',
+            'QScrollBar::add-page, QScrollBar::sub-page { background: transparent; }',
 
-            ttk.Label(status, text='Scale:', style='Muted.TLabel') \
-                .pack(side='right')
-            self.v_scale = tk.StringVar(value='%.2f' % self.scale_factor)
-            self.scale_spin = ttk.Spinbox(
-                status, from_=0.5, to=3.0, increment=0.1, width=5,
-                textvariable=self.v_scale)
-            self.scale_spin.pack(side='right', padx=(4, 10))
-            self.scale_apply_btn = self.button(status, 'Apply scale',
-                                              self._apply_gui_scale)
-            self.scale_apply_btn.pack(side='right', padx=(4, 6))
+            # ---- splitter / progress / tooltip
+            'QSplitter::handle { background: transparent; width: %dpx; }' % px(12),
+            'QSplitter::handle:hover { background: %s; }' % C['border'],
+            'QProgressBar { background: #191c23; border: 1px solid %s;'
+            ' border-radius: %dpx; text-align: center; color: %s; }'
+            % (C['border'], px(6), C['fg']),
+            'QProgressBar::chunk { background: %s; border-radius: %dpx; }'
+            % (C['accent'], px(5)),
+            'QToolTip { background: %s; color: %s; border: 1px solid %s;'
+            ' border-radius: %dpx; padding: %dpx; }'
+            % (C['surface2'], C['fg'], C['border_hi'], px(6), px(6)),
+        ]
+        self.setStyleSheet('\n'.join(sheet))
 
-        def _attach_help(self, widget, text, key=None):
-            Tooltip(self, widget, text)
+    # -------------------------------------------------------- menu
+    def _build_menu(self):
+        menubar = self.menuBar()
+        m_file = menubar.addMenu('File')
+        m_file.addAction(QAction('Open local JSON\u2026', self, shortcut=QKeySequence('Ctrl+O'), triggered=self._menu_open_json))
+        m_file.addSeparator()
+        m_file.addAction(QAction('Save settings profile\u2026', self, triggered=self._save_profile))
+        m_file.addAction(QAction('Load settings profile\u2026', self, triggered=self._load_profile))
+        m_file.addSeparator()
+        m_file.addAction(QAction('Quit', self, shortcut=QKeySequence('Ctrl+Q'), triggered=self.close))
+
+        m_act = menubar.addMenu('Actions')
+        m_act.addAction(QAction('Load database', self, shortcut=QKeySequence('Ctrl+L'), triggered=self._on_load))
+        m_act.addAction(QAction('Generate suite', self, shortcut=QKeySequence('Ctrl+G'), triggered=self._on_generate))
+        m_act.addAction(QAction('Copy CLI command', self, shortcut=QKeySequence('Ctrl+K'), triggered=self._on_cli))
+        m_act.addSeparator()
+        m_act.addAction(QAction('Clear log', self, triggered=self._clear_log))
+
+        m_help = menubar.addMenu('Help')
+        m_help.addAction(QAction('Option reference', self, shortcut=QKeySequence('F1'), triggered=self._show_reference))
+        m_help.addAction(QAction('Quick guide', self, triggered=self._show_guide))
+        m_help.addSeparator()
+        m_help.addAction(QAction('About', self, triggered=self._show_about))
+
+    # ------------------------------------------------------ layout
+    def _build_ui(self):
+        C = self.C
+        self._setup_fonts()
+        self._apply_style()
+
+        central = QWidget()
+        central.setObjectName('Root')
+        self.setCentralWidget(central)
+        root = QVBoxLayout(central)
+        root.setContentsMargins(14, 10, 14, 8)
+        root.setSpacing(10)
+
+        # ---- header
+        header = QHBoxLayout()
+        header.setContentsMargins(2, 0, 2, 0)
+        title = QLabel(APP_NAME)
+        title.setFont(self.fonts['h1'])
+        title.setStyleSheet('color: %s;' % C['accent'])
+        self.title_label = title
+        subtitle = QLabel(APP_SUBTITLE)
+        subtitle.setFont(self.fonts['small'])
+        subtitle.setStyleSheet('color: %s;' % C['muted'])
+        self.subtitle_label = subtitle
+        header.addWidget(title)
+        header.addSpacing(10)
+        header.addWidget(subtitle)
+        header.addStretch()
+        self.v_counts = QLabel('')
+        self.v_counts.setStyleSheet('color: %s;' % C['muted'])
+        header.addWidget(self.v_counts)
+        root.addLayout(header)
+
+        # ---- two panes (draggable splitter, left never collapses)
+        self.splitter = QSplitter(Qt.Orientation.Horizontal)
+        self.splitter.setChildrenCollapsible(False)
+        self.splitter.setHandleWidth(12)
+        self.splitter.setStretchFactor(0, 0)
+        self.splitter.setStretchFactor(1, 1)
+        self.splitter.splitterMoved.connect(self._on_splitter_moved)
+        root.addWidget(self.splitter, stretch=1)
+
+        # ---------- left panel (settings)
+        left = QWidget()
+        left.setObjectName('Sidebar')
+        self.left_panel = left
+        left_v = QVBoxLayout(left)
+        left_v.setContentsMargins(0, 0, 0, 0)
+        left_v.setSpacing(8)
+
+        scroll = QScrollArea()
+        scroll.setWidgetResizable(True)
+        scroll.setFrameShape(QFrame.Shape.NoFrame)
+        scroll.setVerticalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAsNeeded)
+        scroll.setHorizontalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAsNeeded)
+        scroll_content = QWidget()
+        self.scroll_content = scroll_content
+        scroll_layout = QVBoxLayout(scroll_content)
+        scroll_layout.setContentsMargins(0, 0, 6, 0)
+        scroll_layout.setSpacing(10)
+
+        self._build_left(scroll_layout, C)
+
+        # help pane (inside the scroller: it is reached with the same
+        # vertical scrollbar and grows together with the UI scale)
+        helpbox = QGroupBox('Help \u2014 focus or hover an option')
+        helpbox.setFont(self.fonts['bold'])
+        self.help_box = helpbox
+        help_v = QVBoxLayout(helpbox)
+        self.help_title = QLabel('')
+        self.help_title.setStyleSheet('color: %s;' % C['muted'])
+        help_v.addWidget(self.help_title)
+        self.help_text = QTextEdit()
+        self.help_text.setReadOnly(True)
+        self._scaled_size(self.help_text, 110, 'max_h')
+        help_v.addWidget(self.help_text)
+        scroll_layout.addWidget(helpbox)
+
+        scroll_layout.addStretch()
+        scroll.setWidget(scroll_content)
+        left_v.addWidget(scroll, stretch=1)
+
+        # action buttons stay pinned below the scroller
+        btns = QHBoxLayout()
+        btns.setSpacing(8)
+        self.btn_load = QPushButton('\u21bb  Load database')
+        self.btn_gen = QPushButton('\u25b6  Generate suite')
+        self.btn_gen.setObjectName('Primary')
+        self.btn_cli = QPushButton('Copy CLI')
+        btns.addWidget(self.btn_load)
+        btns.addWidget(self.btn_gen)
+        btns.addWidget(self.btn_cli)
+        left_v.addLayout(btns)
+        self.splitter.addWidget(left)
+
+        # ---------- right panel (tabs)
+        right = QTabWidget()
+        right.setFont(self.fonts['base'])
+        right.setDocumentMode(True)
+        right.setMinimumWidth(0)
+        self.right_panel = right
+
+        # preview tab
+        prev = QWidget()
+        prev.setObjectName('TabPage')
+        prev_v = QVBoxLayout(prev)
+        prev_v.setContentsMargins(10, 8, 10, 10)
+        prev_v.setSpacing(8)
+        prev_bar = QHBoxLayout()
+        prev_bar.setSpacing(8)
+        flab = QLabel('Filter')
+        flab.setStyleSheet('color: %s;' % C['muted'])
+        prev_bar.addWidget(flab)
+        self.v_filter = QLineEdit()
+        self.v_filter.setPlaceholderText('Type to filter transponders, streams and channels\u2026')
+        self.v_filter.setClearButtonEnabled(True)
+        self.v_filter.textChanged.connect(lambda *_: self._filter_timer.start())
+        prev_bar.addWidget(self.v_filter, stretch=1)
+        self.v_tree_info = QLabel('No database loaded yet.')
+        self.v_tree_info.setStyleSheet('color: %s;' % C['muted'])
+        prev_bar.addWidget(self.v_tree_info)
+        prev_v.addLayout(prev_bar)
+
+        self.tree = QTreeWidget()
+        self.tree.setColumnCount(2)
+        self.tree.setHeaderLabels(['Transponder / stream / channel', 'Details'])
+        self.tree.setSelectionMode(QTreeWidget.SelectionMode.SingleSelection)
+        self.tree.setAlternatingRowColors(True)
+        self.tree.setUniformRowHeights(True)
+        self.tree.setMinimumWidth(0)
+        self.tree.setAnimated(False)
+        self.tree.setIndentation(int(18 * self.scale_factor * UI_UNIT))
+        self.tree.header().setStretchLastSection(True)
+        self.tree.header().setSectionResizeMode(0, self.tree.header().ResizeMode.Interactive)
+        self.tree.setColumnWidth(0, int(320 * self.scale_factor * UI_UNIT))
+        self.tree.itemDoubleClicked.connect(self._on_tree_double)
+        prev_v.addWidget(self.tree, stretch=1)
+        right.addTab(prev, '  Preview  ')
+
+        # output tab
+        out = QWidget()
+        out.setObjectName('TabPage')
+        out_v = QVBoxLayout(out)
+        out_v.setContentsMargins(10, 8, 10, 10)
+        out_v.setSpacing(8)
+        out_bar = QHBoxLayout()
+        out_bar.setSpacing(8)
+        olab = QLabel('File')
+        olab.setStyleSheet('color: %s;' % C['muted'])
+        out_bar.addWidget(olab)
+        self.v_outfile = QComboBox()
+        self.v_outfile.setEditable(False)
+        self._dark_combo(self.v_outfile)
+        self.v_outfile.currentIndexChanged.connect(lambda *_: self._show_output_file())
+        out_bar.addWidget(self.v_outfile)
+        self.btn_save_out = QPushButton('Save as\u2026')
+        self.btn_copy_out = QPushButton('Copy')
+        out_bar.addWidget(self.btn_save_out)
+        out_bar.addWidget(self.btn_copy_out)
+        out_bar.addStretch()
+        self.v_out_info = QLabel('Generate the suite to populate this view.')
+        self.v_out_info.setStyleSheet('color: %s;' % C['muted'])
+        out_bar.addWidget(self.v_out_info)
+        out_v.addLayout(out_bar)
+
+        self.out_text = QTextEdit()
+        self.out_text.setReadOnly(True)
+        self.out_text.setFont(self.fonts['mono'])
+        self.out_text.setLineWrapMode(QTextEdit.LineWrapMode.NoWrap)
+        out_v.addWidget(self.out_text, stretch=1)
+        right.addTab(out, '  Generated output  ')
+
+        # log tab
+        logf = QWidget()
+        logf.setObjectName('TabPage')
+        log_v = QVBoxLayout(logf)
+        log_v.setContentsMargins(10, 8, 10, 10)
+        self.log_text = QTextEdit()
+        self.log_text.setReadOnly(True)
+        self.log_text.setFont(self.fonts['mono_small'])
+        log_v.addWidget(self.log_text)
+        right.addTab(logf, '  Log  ')
+
+        self.splitter.addWidget(right)
+
+        # ---- status bar: hints on the left, scale controls on the right
+        sb = self.statusBar()
+        sb.setSizeGripEnabled(False)
+        self.progress = QProgressBar()
+        self.progress.setTextVisible(False)
+        self._scaled_size(self.progress, 140, 'fixed_w')
+        self.progress.setVisible(False)
+        sb.addPermanentWidget(self.progress)
+        scale_lbl = QLabel('Scale')
+        scale_lbl.setStyleSheet('color: %s;' % C['muted'])
+        sb.addPermanentWidget(scale_lbl)
+        self.v_scale_slider = QSlider(Qt.Orientation.Horizontal)
+        self.v_scale_slider.setRange(50, 200)
+        self.v_scale_slider.setSingleStep(5)
+        self.v_scale_slider.setPageStep(10)
+        self.v_scale_slider.setValue(int(round(self.scale_factor * 100)))
+        self._scaled_size(self.v_scale_slider, 160, 'fixed_w')
+        self.v_scale_slider.setToolTip('Drag to resize the whole interface')
+        sb.addPermanentWidget(self.v_scale_slider)
+        self.v_scale = QDoubleSpinBox()
+        self.v_scale.setRange(0.5, 2.0)
+        self.v_scale.setSingleStep(0.05)
+        self.v_scale.setDecimals(2)
+        self.v_scale.setValue(self.scale_factor)
+        self._scaled_size(self.v_scale, 70, 'fixed_w')
+        sb.addPermanentWidget(self.v_scale)
+        self.scale_apply_btn = QPushButton('Apply')
+        self.scale_apply_btn.setToolTip('Apply the selected UI scale and save it')
+        sb.addPermanentWidget(self.scale_apply_btn)
+
+        self.btn_load.clicked.connect(self._on_load)
+        self.btn_gen.clicked.connect(self._on_generate)
+        self.btn_cli.clicked.connect(self._on_cli)
+        self.btn_save_out.clicked.connect(self._save_output_as)
+        self.btn_copy_out.clicked.connect(self._copy_output)
+        self.scale_apply_btn.clicked.connect(self._apply_gui_scale)
+        self.v_scale.valueChanged.connect(self._on_scale_spin)
+        self.v_scale_slider.valueChanged.connect(self._on_scale_slider)
+
+        self._update_pos_label()
+        self._apply_scaled_sizes()
+        self._reapply_fonts()
+
+    def _form_label(self, text, key=None):
+        lbl = QLabel(text)
+        lbl.setStyleSheet('color: %s;' % self.C['muted'])
+        if key:
+            self._attach_help(lbl, key)
+        return lbl
+
+    def _dark_combo(self, combo):
+        """Force a pure-black field and popup for a combo box."""
+        view = combo.view()
+        am = view.palette()
+        for role in (QPalette.ColorRole.Base, QPalette.ColorRole.Window,
+                     QPalette.ColorRole.AlternateBase):
+            am.setColor(role, QColor('#000000'))
+        am.setColor(QPalette.ColorRole.Text, QColor(self.C['fg']))
+        view.setPalette(am)
+        view.setAutoFillBackground(True)
+        view.window().setStyleSheet(
+            'background: #000000; color: %s;' % self.C['fg'])
+        return combo
+
+    def _build_left(self, layout, C):
+        # -- 1 data source
+        box = QGroupBox(SECTIONS[0][1])
+        box.setFont(self.fonts['bold'])
+        grid = QGridLayout(box)
+        grid.setHorizontalSpacing(12)
+        grid.setVerticalSpacing(10)
+        grid.setColumnStretch(1, 1)
+
+        srcrow = QHBoxLayout()
+        self.v_source_url = QRadioButton('Download from URL')
+        self.v_source_file = QRadioButton('Local file')
+        self.v_source_url.toggled.connect(self._sync_source_state)
+        srcrow.addWidget(self.v_source_url)
+        srcrow.addSpacing(18)
+        srcrow.addWidget(self.v_source_file)
+        srcrow.addStretch()
+        grid.addLayout(srcrow, 0, 0, 1, 3)
+
+        self.e_url = QLineEdit(DEFAULTS['url'])
+        self.e_url.setPlaceholderText('https://abertis-dtt.github.io/sat_data.json')
+        self._attach_help(self.e_url, 'url')
+        grid.addWidget(self._form_label('Database URL', 'url'), 1, 0)
+        grid.addWidget(self.e_url, 1, 1, 1, 2)
+
+        self.v_file = QLineEdit(DEFAULTS['file'])
+        self.e_file = self.v_file
+        b_file = QPushButton('Browse\u2026')
+        b_file.clicked.connect(lambda: self._browse('file'))
+        self._attach_help(self.v_file, 'file')
+        self._attach_help(b_file, 'file')
+        self._browse_btn_file = b_file
+        grid.addWidget(self._form_label('Local JSON', 'file'), 2, 0)
+        grid.addWidget(self.v_file, 2, 1)
+        grid.addWidget(b_file, 2, 2)
+
+        layout.addWidget(box)
+
+        # -- 2 output
+        box = QGroupBox(SECTIONS[1][1])
+        box.setFont(self.fonts['bold'])
+        grid = QGridLayout(box)
+        grid.setHorizontalSpacing(12)
+        grid.setVerticalSpacing(10)
+        grid.setColumnStretch(1, 1)
+
+        self.v_out_dir = QLineEdit(DEFAULTS['out_dir'])
+        self.e_out_dir = self.v_out_dir
+        b_out = QPushButton('Browse\u2026')
+        b_out.clicked.connect(lambda: self._browse('out_dir'))
+        self._attach_help(self.e_out_dir, 'out_dir')
+        self._attach_help(b_out, 'out_dir')
+        grid.addWidget(self._form_label('Output folder', 'out_dir'), 0, 0)
+        grid.addWidget(self.v_out_dir, 0, 1)
+        grid.addWidget(b_out, 0, 2)
+
+        self.v_merge = QCheckBox('merge into existing lamedb')
+        self.v_merge.stateChanged.connect(self._sync_merge_state)
+        self._attach_help(self.v_merge, 'merge_enabled')
+        grid.addWidget(self.v_merge, 1, 0, 1, 3)
+
+        self.v_merge_path = QLineEdit(DEFAULTS['merge_path'])
+        self.e_merge = self.v_merge_path
+        b_mpath = QPushButton('Browse\u2026')
+        b_mpath.clicked.connect(lambda: self._browse('merge_path'))
+        self._attach_help(self.e_merge, 'merge_path')
+        self._attach_help(b_mpath, 'merge_path')
+        grid.addWidget(self._form_label('Merge target', 'merge_path'), 2, 0)
+        grid.addWidget(self.v_merge_path, 2, 1)
+        grid.addWidget(b_mpath, 2, 2)
+
+        self.v_edit = QCheckBox('edit external lamedb')
+        self.v_edit.stateChanged.connect(self._sync_edit_state)
+        self._attach_help(self.v_edit, 'edit_enabled')
+        grid.addWidget(self.v_edit, 3, 0, 1, 3)
+
+        self.v_edit_path = QLineEdit(DEFAULTS['edit_path'])
+        self.e_edit = self.v_edit_path
+        b_epath = QPushButton('Browse\u2026')
+        b_epath.clicked.connect(lambda: self._browse('edit_path'))
+        self._attach_help(self.e_edit, 'edit_path')
+        self._attach_help(b_epath, 'edit_path')
+        grid.addWidget(self._form_label('Edit target', 'edit_path'), 4, 0)
+        grid.addWidget(self.v_edit_path, 4, 1)
+        grid.addWidget(b_epath, 4, 2)
+
+        fr_fmt = QHBoxLayout()
+        fr_fmt.setSpacing(10)
+        self.v_format = QComboBox()
+        self.v_format.addItems(['v4'])
+        self._scaled_size(self.v_format, 90, 'max_w')
+        self._dark_combo(self.v_format)
+        note = QLabel('v4 = current images only')
+        note.setStyleSheet('color: %s;' % C['muted'])
+        fr_fmt.addWidget(self.v_format)
+        fr_fmt.addWidget(note)
+        fr_fmt.addStretch()
+        self._attach_help(self.v_format, 'lamedb_format')
+        self._attach_help(note, 'lamedb_format')
+        grid.addWidget(self._form_label('lamedb type', 'lamedb_format'), 5, 0)
+        grid.addLayout(fr_fmt, 5, 1, 1, 2)
+
+        self.v_bouquet = QLineEdit(DEFAULTS['bouquet'])
+        self._attach_help(self.v_bouquet, 'bouquet')
+        grid.addWidget(self._form_label('Bouquet file', 'bouquet'), 6, 0)
+        grid.addWidget(self.v_bouquet, 6, 1, 1, 2)
+
+        self.v_softcam_key = QCheckBox('also write SoftCam.Key (dummy BISS keys)')
+        self.v_softcam_key.stateChanged.connect(self._sync_softcam_state)
+        self._attach_help(self.v_softcam_key, 'softcam_key_enabled')
+        grid.addWidget(self.v_softcam_key, 7, 0, 1, 3)
+
+        self.v_softcam_key_path = QLineEdit(DEFAULTS['softcam_key_path'])
+        self.e_softcam_key_path = self.v_softcam_key_path
+        b_skpath = QPushButton('Browse\u2026')
+        b_skpath.clicked.connect(lambda: self._browse('softcam_key_path'))
+        self._attach_help(self.e_softcam_key_path, 'softcam_key_path')
+        self._attach_help(b_skpath, 'softcam_key_path')
+        grid.addWidget(self._form_label('SoftCam.Key', 'softcam_key_path'), 8, 0)
+        grid.addWidget(self.v_softcam_key_path, 8, 1)
+        grid.addWidget(b_skpath, 8, 2)
+
+        layout.addWidget(box)
+
+        # -- 3 satellite
+        box = QGroupBox(SECTIONS[2][1])
+        box.setFont(self.fonts['bold'])
+        grid = QGridLayout(box)
+        grid.setHorizontalSpacing(12)
+        grid.setVerticalSpacing(10)
+        grid.setColumnStretch(1, 1)
+
+        self.v_position = QSpinBox()
+        self.v_position.setRange(-1800, 1800)
+        self.v_position.setSingleStep(10)
+        self.v_position.setValue(DEFAULTS['position'])
+        self.v_position.valueChanged.connect(lambda *_: self._update_pos_label())
+        self.v_pos_label = QLabel('')
+        self.v_pos_label.setStyleSheet('color: %s;' % C['muted'])
+        self._attach_help(self.v_position, 'position')
+        self._attach_help(self.v_pos_label, 'position')
+        fr_pos = QHBoxLayout()
+        fr_pos.setSpacing(10)
+        fr_pos.addWidget(self.v_position)
+        fr_pos.addWidget(self.v_pos_label)
+        fr_pos.addStretch()
+        grid.addWidget(self._form_label('Orbital position', 'position'), 0, 0)
+        grid.addLayout(fr_pos, 0, 1)
+
+        layout.addWidget(box)
+
+        # -- 4 relay
+        box = QGroupBox(SECTIONS[3][1])
+        box.setFont(self.fonts['bold'])
+        grid = QGridLayout(box)
+        grid.setHorizontalSpacing(12)
+        grid.setVerticalSpacing(10)
+        grid.setColumnStretch(1, 1)
+
+        fr_relay = QHBoxLayout()
+        fr_relay.setSpacing(6)
+        fr_relay.addWidget(QLabel('http://'))
+        self.v_relay_host = QLineEdit(DEFAULTS['relay_host'])
+        self._scaled_size(self.v_relay_host, 140, 'max_w')
+        fr_relay.addWidget(self.v_relay_host)
+        fr_relay.addWidget(QLabel(':'))
+        self.v_relay_port = QSpinBox()
+        self.v_relay_port.setRange(1, 65535)
+        self.v_relay_port.setValue(DEFAULTS['relay_port'])
+        self._scaled_size(self.v_relay_port, 90, 'max_w')
+        fr_relay.addWidget(self.v_relay_port)
+        fr_relay.addStretch()
+        self._attach_help(self.v_relay_host, 'relay_host')
+        self._attach_help(self.v_relay_port, 'relay_host')
+        grid.addWidget(self._form_label('Relay listen', 'relay_host'), 0, 0)
+        grid.addLayout(fr_relay, 0, 1)
+
+        fr_outaddr = QHBoxLayout()
+        fr_outaddr.setSpacing(6)
+        self.v_out_host = QLineEdit(DEFAULTS['out_host'])
+        self._scaled_size(self.v_out_host, 140, 'max_w')
+        fr_outaddr.addWidget(self.v_out_host)
+        fr_outaddr.addWidget(QLabel(':'))
+        self.v_http_port = QSpinBox()
+        self.v_http_port.setRange(1, 65535)
+        self.v_http_port.setValue(DEFAULTS['http_port'])
+        self._scaled_size(self.v_http_port, 90, 'max_w')
+        fr_outaddr.addWidget(self.v_http_port)
+        hint = QLabel('/<provider>/pid<PID>')
+        hint.setStyleSheet('color: %s;' % C['muted'])
+        fr_outaddr.addWidget(hint)
+        fr_outaddr.addStretch()
+        self._attach_help(self.v_out_host, 'out_host')
+        self._attach_help(self.v_http_port, 'out_host')
+        grid.addWidget(self._form_label('HTTP output', 'out_host'), 1, 0)
+        grid.addLayout(fr_outaddr, 1, 1)
+
+        self.v_script = QLineEdit(DEFAULTS['relay_script'])
+        self._attach_help(self.v_script, 'relay_script')
+        grid.addWidget(self._form_label('Relay script', 'relay_script'), 2, 0)
+        grid.addWidget(self.v_script, 2, 1)
+
+        fr_t2 = QHBoxLayout()
+        fr_t2.setSpacing(8)
+        lbl_plp = QLabel('PLP')
+        lbl_plp.setStyleSheet('color: %s;' % C['muted'])
+        self.v_t2mi_plp = QLineEdit(DEFAULTS['t2mi_plp'])
+        self._scaled_size(self.v_t2mi_plp, 80, 'max_w')
+        lbl_pnr = QLabel('PNR')
+        lbl_pnr.setStyleSheet('color: %s;' % C['muted'])
+        self.v_t2mi_pnr = QLineEdit(DEFAULTS['t2mi_pnr'])
+        self._scaled_size(self.v_t2mi_pnr, 80, 'max_w')
+        fr_t2.addWidget(lbl_plp)
+        fr_t2.addWidget(self.v_t2mi_plp)
+        fr_t2.addWidget(lbl_pnr)
+        fr_t2.addWidget(self.v_t2mi_pnr)
+        fr_t2.addStretch()
+        self._attach_help(lbl_plp, 't2mi_plp')
+        self._attach_help(self.v_t2mi_plp, 't2mi_plp')
+        self._attach_help(lbl_pnr, 't2mi_pnr')
+        self._attach_help(self.v_t2mi_pnr, 't2mi_pnr')
+        grid.addWidget(self._form_label('T2MI', 't2mi_plp'), 3, 0)
+        grid.addLayout(fr_t2, 3, 1)
+
+        layout.addWidget(box)
+
+    # ------------------------------------------------ helpers
+    def _attach_help(self, widget, key):
+        opt = OPTIONS.get(key)
+        if not opt:
+            return
+        widget.setToolTip(opt['help'])
+        self._help_keys[id(widget)] = key
+        widget.installEventFilter(self)
+
+    def eventFilter(self, obj, event):
+        if event.type() in (QEvent.Type.FocusIn, QEvent.Type.Enter):
+            key = self._help_keys.get(id(obj))
             if key:
-                widget.bind('<FocusIn>',
-                            lambda e, k=key: self.show_help(k), add='+')
-                widget.bind('<Enter>',
-                            lambda e, k=key: self.show_help(k), add='+')
+                self.show_help(key)
+        return super().eventFilter(obj, event)
 
-        def _row(self, parent, key, widget, full=False):
-            """Label + widget row; wires tooltip + help pane."""
-            opt = OPTIONS[key]
-            row = ttk.Frame(parent)
-            row.pack(fill='x', pady=(4, 0))
-            lbl = ttk.Label(row, text=opt['label'] + ':',
-                            style='Muted.TLabel', width=19, anchor='nw')
-            lbl.pack(side='left', pady=(3, 0))
-            holder = ttk.Frame(row)
-            holder.pack(side='left', fill='x', expand=True)
-            widget(holder)
-            for w in (lbl, row):
-                self._attach_help(w, opt['help'], key)
-            return row
+    def show_help(self, key):
+        opt = OPTIONS.get(key)
+        if not opt:
+            return
+        self.help_title.setText(opt['label'])
+        self.help_text.setPlainText(opt['help'])
 
-        def _build_left(self, parent):
-            # -- 1 data source
-            box = ttk.LabelFrame(parent, text=SECTIONS[0][1])
-            box.pack(fill='x', pady=(0, 6), ipadx=6, ipady=5)
+    # ---------------------------------------------------- scaling
+    def showEvent(self, event):
+        super().showEvent(event)
+        if self._first_show:
+            self._first_show = False
+            QTimer.singleShot(0, self._set_splitter_sizes)
 
-            srcrow = ttk.Frame(box)
-            srcrow.pack(fill='x', pady=(3, 0))
-            self.v_source = tk.StringVar(value=DEFAULTS['source_mode'])
-            rb1 = ttk.Radiobutton(srcrow, text='Download from URL',
-                                  value='url', variable=self.v_source,
-                                  command=self._sync_source_state)
-            rb2 = ttk.Radiobutton(srcrow, text='Local file',
-                                  value='file', variable=self.v_source,
-                                  command=self._sync_source_state)
-            rb1.pack(side='left')
-            rb2.pack(side='left', padx=(14, 0))
-            for rb in (rb1, rb2):
-                self._attach_help(rb, OPTIONS['source_mode']['help'],
-                                  'source_mode')
+    def _left_min_width(self, factor=None):
+        if factor is None:
+            factor = self.scale_factor
+        # Enough for the form grid (labels + fields + Browse buttons), but
+        # never more than ~70% of the window (extreme scale can scroll).
+        content = 0
+        try:
+            content = self.scroll_content.minimumSizeHint().width() + 34
+        except (AttributeError, RuntimeError):
+            pass
+        base = int(360 * factor * UI_UNIT)
+        return max(300, min(max(base, content), int(self.width() * 0.70)))
 
-            def w_url(holder):
-                self.v_url = tk.StringVar(value=DEFAULTS['url'])
-                self.e_url = ttk.Entry(holder, textvariable=self.v_url)
-                self.e_url.pack(side='left', fill='x', expand=True)
-                self._attach_help(self.e_url, OPTIONS['url']['help'], 'url')
-            self._row(box, 'url', w_url)
+    def _set_splitter_sizes(self, factor=None):
+        if factor is None:
+            factor = self.scale_factor
+        self.left_panel.setMinimumWidth(self._left_min_width(factor))
+        if self._split_user:
+            return
+        total = self.splitter.width()
+        if total <= 1:
+            total = max(self.width() - 28, 960)
+        # Grow the sidebar together with the fonts; allow it to take what
+        # the form needs (extreme scales fall back to a horizontal bar).
+        left = int(total * 0.47 * factor)
+        left = max(self.left_panel.minimumWidth(), min(left, int(total * 0.70)))
+        right = max(280, total - left)
+        self._setting_sizes = True
+        try:
+            self.splitter.setSizes([left, right])
+        finally:
+            self._setting_sizes = False
 
-            def w_file(holder):
-                fr = ttk.Frame(holder)
-                fr.pack(fill='x')
-                self.v_file = tk.StringVar(value=DEFAULTS['file'])
-                self.e_file = ttk.Entry(fr, textvariable=self.v_file)
-                self.e_file.pack(side='left', fill='x', expand=True)
-                b = self.button(fr, 'Browse\u2026',
-                                lambda: self._browse('file'))
-                b.pack(side='left', padx=(6, 0))
-                self._browse_btn_file = b
-            self._row(box, 'file', w_file)
+    def _on_splitter_moved(self, pos, index):
+        # Only a real mouse drag counts as a manual split; layout passes and
+        # constraint clamping also emit this signal with no button pressed.
+        if self._setting_sizes:
+            return
+        if not (QApplication.mouseButtons() & Qt.MouseButton.LeftButton):
+            return
+        self._split_user = True
 
-            # -- 2 output
-            box = ttk.LabelFrame(parent, text=SECTIONS[1][1])
-            box.pack(fill='x', pady=(0, 6), ipadx=6, ipady=5)
+    def resizeEvent(self, event):
+        super().resizeEvent(event)
+        if not self._first_show:
+            self._set_splitter_sizes()
 
-            def w_out(holder):
-                fr = ttk.Frame(holder)
-                fr.pack(fill='x')
-                self.v_out_dir = tk.StringVar(value=DEFAULTS['out_dir'])
-                e = ttk.Entry(fr, textvariable=self.v_out_dir)
-                e.pack(side='left', fill='x', expand=True)
-                b = self.button(fr, 'Browse\u2026',
-                                lambda: self._browse('out_dir'))
-                b.pack(side='left', padx=(6, 0))
-                self._attach_help(e, OPTIONS['out_dir']['help'], 'out_dir')
-                self._attach_help(b, OPTIONS['out_dir']['help'], 'out_dir')
-            self._row(box, 'out_dir', w_out)
+    def _on_scale_spin(self, value):
+        self.v_scale_slider.blockSignals(True)
+        self.v_scale_slider.setValue(int(round(value * 100)))
+        self.v_scale_slider.blockSignals(False)
+        self._scale_timer.start()
 
-            def w_merge(holder):
-                self.v_merge = tk.BooleanVar(value=DEFAULTS['merge_enabled'])
-                cb = ttk.Checkbutton(
-                    holder, text='merge into existing lamedb',
-                    variable=self.v_merge, command=self._sync_merge_state)
-                cb.pack(side='left')
-                self._attach_help(cb, OPTIONS['merge_enabled']['help'],
-                                  'merge_enabled')
-            self._row(box, 'merge_enabled', w_merge)
+    def _on_scale_slider(self, value):
+        self.v_scale.blockSignals(True)
+        self.v_scale.setValue(value / 100.0)
+        self.v_scale.blockSignals(False)
+        self._scale_timer.start()
 
-            def w_mpath(holder):
-                fr = ttk.Frame(holder)
-                fr.pack(fill='x')
-                self.v_merge_path = tk.StringVar(value=DEFAULTS['merge_path'])
-                self.e_merge = ttk.Entry(fr, textvariable=self.v_merge_path)
-                self.e_merge.pack(side='left', fill='x', expand=True)
-                b = self.button(fr, 'Browse\u2026',
-                                lambda: self._browse('merge_path'))
-                b.pack(side='left', padx=(6, 0))
-                self._attach_help(self.e_merge, OPTIONS['merge_path']['help'],
-                                  'merge_path')
-            self._row(box, 'merge_path', w_mpath)
+    def _apply_gui_scale(self, *_):
+        self._scale_timer.stop()
+        try:
+            factor = float(self.v_scale.value())
+        except (TypeError, ValueError):
+            factor = self.scale_factor
+        factor = min(2.0, max(0.5, factor))
+        changed = abs(factor - self.scale_factor) > 0.001
+        self.scale_factor = factor
 
-            def w_edit(holder):
-                self.v_edit = tk.BooleanVar(value=DEFAULTS['edit_enabled'])
-                cb = ttk.Checkbutton(
-                    holder, text='edit external lamedb',
-                    variable=self.v_edit, command=self._sync_edit_state)
-                cb.pack(side='left')
-                self._attach_help(cb, OPTIONS['edit_enabled']['help'],
-                                  'edit_enabled')
-            self._row(box, 'edit_enabled', w_edit)
+        if abs(self.v_scale_slider.value() - int(round(factor * 100))) > 0:
+            self.v_scale_slider.blockSignals(True)
+            self.v_scale_slider.setValue(int(round(factor * 100)))
+            self.v_scale_slider.blockSignals(False)
 
-            def w_epath(holder):
-                fr = ttk.Frame(holder)
-                fr.pack(fill='x')
-                self.v_edit_path = tk.StringVar(value=DEFAULTS['edit_path'])
-                self.e_edit = ttk.Entry(fr, textvariable=self.v_edit_path)
-                self.e_edit.pack(side='left', fill='x', expand=True)
-                b = self.button(fr, 'Browse\u2026',
-                                lambda: self._browse('edit_path'))
-                b.pack(side='left', padx=(6, 0))
-                self._attach_help(self.e_edit, OPTIONS['edit_path']['help'],
-                                  'edit_path')
-            self._row(box, 'edit_path', w_epath)
+        self._setup_fonts(factor)
+        self._apply_style()
+        self._reapply_fonts()
 
-            def w_fmt(holder):
-                self.v_format = tk.StringVar(value=DEFAULTS['lamedb_format'])
-                cb = ttk.Combobox(holder, textvariable=self.v_format,
-                                  state='readonly', width=5,
-                                  values=('v4',))
-                cb.pack(side='left')
-                note = ttk.Label(holder, text='v4 = current images only',
-                                 style='Muted.TLabel')
-                note.pack(side='left', padx=(8, 0))
-                for w in (cb, note):
-                    self._attach_help(w, OPTIONS['lamedb_format']['help'],
-                                      'lamedb_format')
-            self._row(box, 'lamedb_format', w_fmt)
+        self._apply_scaled_sizes()
+        self.tree.setIndentation(int(18 * factor * UI_UNIT))
+        self.tree.setColumnWidth(0, int(320 * factor * UI_UNIT))
+        self._set_splitter_sizes(factor)
 
-            def w_bq(holder):
-                self.v_bouquet = tk.StringVar(value=DEFAULTS['bouquet'])
-                e = ttk.Entry(holder, textvariable=self.v_bouquet)
-                e.pack(side='left', fill='x', expand=True)
-                self._attach_help(e, OPTIONS['bouquet']['help'], 'bouquet')
-            self._row(box, 'bouquet', w_bq)
+        if changed:
+            self.statusBar().showMessage(
+                'UI scale set to %.2f \u2014 saved for next start.' % factor, 4000)
 
-            def w_softcam(holder):
-                self.v_softcam_key = tk.BooleanVar(value=DEFAULTS['softcam_key_enabled'])
-                cb = ttk.Checkbutton(
-                    holder, text='also write SoftCam.Key (dummy BISS keys)',
-                    variable=self.v_softcam_key, command=self._sync_softcam_state)
-                cb.pack(side='left')
-                self._attach_help(cb, OPTIONS['softcam_key_enabled']['help'],
-                                  'softcam_key_enabled')
-            self._row(box, 'softcam_key_enabled', w_softcam)
+    def _scaled_size(self, widget, base, mode='max_w'):
+        """Remember a base size (in unscaled px) and re-apply it on scale changes."""
+        self._scaled_sizes.append((widget, base, mode))
+        return widget
 
-            def w_softcam_path(holder):
-                fr = ttk.Frame(holder)
-                fr.pack(fill='x')
-                self.v_softcam_key_path = tk.StringVar(value=DEFAULTS['softcam_key_path'])
-                self.e_softcam_key_path = ttk.Entry(fr, textvariable=self.v_softcam_key_path)
-                self.e_softcam_key_path.pack(side='left', fill='x', expand=True)
-                b = self.button(fr, 'Browse\u2026',
-                                lambda: self._browse('softcam_key_path'))
-                b.pack(side='left', padx=(6, 0))
-                self._attach_help(self.e_softcam_key_path, OPTIONS['softcam_key_path']['help'],
-                                  'softcam_key_path')
-                self._attach_help(b, OPTIONS['softcam_key_path']['help'],
-                                  'softcam_key_path')
-            self._row(box, 'softcam_key_path', w_softcam_path)
+    def _apply_scaled_sizes(self):
+        f = self.scale_factor
+        for widget, base, mode in self._scaled_sizes:
+            px = max(1, int(round(base * f * UI_UNIT)))
+            try:
+                if mode == 'fixed_w':
+                    widget.setFixedWidth(px)
+                elif mode == 'max_w':
+                    widget.setMaximumWidth(px)
+                elif mode == 'min_w':
+                    widget.setMinimumWidth(px)
+                elif mode == 'fixed_h':
+                    widget.setFixedHeight(px)
+                elif mode == 'max_h':
+                    widget.setMaximumHeight(px)
+            except RuntimeError:
+                pass
 
-            # -- 3 satellite
-            box = ttk.LabelFrame(parent, text=SECTIONS[2][1])
-            box.pack(fill='x', pady=(0, 6), ipadx=6, ipady=5)
+    def _reapply_fonts(self):
+        base = self.fonts['base']
+        small = self.fonts['small']
+        mono = self.fonts['mono']
+        mono_small = self.fonts['mono_small']
+        bold = self.fonts['bold']
 
-            def w_pos(holder):
-                fr = ttk.Frame(holder)
-                fr.pack(fill='x')
-                self.v_position = tk.StringVar(value=str(DEFAULTS['position']))
-                sp = ttk.Spinbox(fr, from_=-1800, to=1800, increment=10,
-                                 width=7, textvariable=self.v_position,
-                                 command=self._update_pos_label)
-                sp.pack(side='left')
-                self.v_pos_label = tk.StringVar(value='')
-                lbl = ttk.Label(fr, textvariable=self.v_pos_label,
-                                style='Muted.TLabel')
-                lbl.pack(side='left', padx=(10, 0))
-                sp.bind('<KeyRelease>', lambda e: self._update_pos_label())
-                self._attach_help(sp, OPTIONS['position']['help'], 'position')
-                self._attach_help(lbl, OPTIONS['position']['help'], 'position')
-            self._row(box, 'position', w_pos)
+        # Explicit pass: a stylesheet re-polish otherwise resets inherited
+        # widget fonts to the tiny application default.
+        for w in self.findChildren(QWidget):
+            if isinstance(w, QGroupBox):
+                w.setFont(bold)
+            elif isinstance(w, (QPushButton, QLineEdit, QComboBox, QSpinBox,
+                                QDoubleSpinBox, QCheckBox, QRadioButton,
+                                QTreeWidget, QTabWidget, QLabel)):
+                w.setFont(base)
 
-            # -- 4 relay
-            box = ttk.LabelFrame(parent, text=SECTIONS[3][1])
-            box.pack(fill='x', pady=(0, 6), ipadx=6, ipady=5)
+        self.tree.header().setFont(small)
+        self.title_label.setFont(self.fonts['h1'])
+        self.subtitle_label.setFont(small)
+        self.v_counts.setFont(small)
+        self.v_tree_info.setFont(small)
+        self.v_out_info.setFont(small)
+        self.v_pos_label.setFont(small)
+        self.help_title.setFont(bold)
+        self.help_text.setFont(base)
+        self.out_text.setFont(mono)
+        self.log_text.setFont(mono_small)
+        self.statusBar().setFont(small)
 
-            def w_relay(holder):
-                fr = ttk.Frame(holder)
-                fr.pack(fill='x')
-                self.v_relay_host = tk.StringVar(value=DEFAULTS['relay_host'])
-                self.v_relay_port = tk.StringVar(value=str(DEFAULTS['relay_port']))
-                ttk.Label(fr, text='http://', style='Muted.TLabel') \
-                    .pack(side='left')
-                e1 = ttk.Entry(fr, textvariable=self.v_relay_host, width=12)
-                e1.pack(side='left', padx=(2, 0))
-                ttk.Label(fr, text=':', style='Muted.TLabel').pack(side='left')
-                e2 = ttk.Entry(fr, textvariable=self.v_relay_port, width=6)
-                e2.pack(side='left')
-                for w in (e1, e2):
-                    self._attach_help(w, OPTIONS['relay_host']['help'],
-                                      'relay_host')
-            self._row(box, 'relay_host', w_relay)
+    def _update_pos_label(self):
+        try:
+            pos = int(self.v_position.value())
+            ns = namespace_for(pos)
+            self.v_pos_label.setText('= %s  (namespace 0x%08X)' % (position_label(pos), ns))
+        except ValueError:
+            self.v_pos_label.setText('= ?')
 
-            def w_outaddr(holder):
-                fr = ttk.Frame(holder)
-                fr.pack(fill='x')
-                self.v_out_host = tk.StringVar(value=DEFAULTS['out_host'])
-                self.v_http_port = tk.StringVar(value=str(DEFAULTS['http_port']))
-                e1 = ttk.Entry(fr, textvariable=self.v_out_host, width=12)
-                e1.pack(side='left')
-                ttk.Label(fr, text=':', style='Muted.TLabel').pack(side='left')
-                e2 = ttk.Entry(fr, textvariable=self.v_http_port, width=6)
-                e2.pack(side='left')
-                ttk.Label(fr, text='/<provider>/pid<PID>',
-                          style='Muted.TLabel').pack(side='left', padx=(8, 0))
-                for w in (e1, e2):
-                    self._attach_help(w, OPTIONS['out_host']['help'], 'out_host')
-            self._row(box, 'out_host', w_outaddr)
-
-            def w_script(holder):
-                self.v_script = tk.StringVar(value=DEFAULTS['relay_script'])
-                e = ttk.Entry(holder, textvariable=self.v_script)
-                e.pack(side='left', fill='x', expand=True)
-                self._attach_help(e, OPTIONS['relay_script']['help'],
-                                  'relay_script')
-            self._row(box, 'relay_script', w_script)
-
-            def w_t2mi_plp(holder):
-                self.v_t2mi_plp = tk.StringVar(value='')
-                e = ttk.Entry(holder, textvariable=self.v_t2mi_plp, width=8)
-                e.pack(side='left')
-                self._attach_help(e, OPTIONS['t2mi_plp']['help'], 't2mi_plp')
-            self._row(box, 't2mi_plp', w_t2mi_plp)
-
-            def w_t2mi_pnr(holder):
-                self.v_t2mi_pnr = tk.StringVar(value='')
-                e = ttk.Entry(holder, textvariable=self.v_t2mi_pnr, width=8)
-                e.pack(side='left')
-                self._attach_help(e, OPTIONS['t2mi_pnr']['help'], 't2mi_pnr')
-            self._row(box, 't2mi_pnr', w_t2mi_pnr)
-
-            # -- action buttons
-            btns = ttk.Frame(parent)
-            btns.pack(fill='x', pady=(4, 6))
-            self.btn_load = self.button(btns, '\u21bb  Load database',
-                                        self._on_load)
-            self.btn_gen = self.button(btns, '\u25b6  Generate suite',
-                                       self._on_generate, kind='accent')
-            self.btn_cli = self.button(btns, 'Copy CLI', self._on_cli)
-            self.btn_load.pack(side='left')
-            self.btn_gen.pack(side='left', padx=(8, 0))
-            self.btn_cli.pack(side='left', padx=(8, 0))
-            for btn, key in ((self.btn_load, 'load'), (self.btn_gen, 'generate'),
-                             (self.btn_cli, 'cli')):
-                self._attach_help(btn, ACTION_HELP[key])
-            self._busy_widgets = [self.btn_load, self.btn_gen, self.btn_cli]
-
-            # -- help pane
-            helpbox = ttk.LabelFrame(parent, text='Help \u2014 focus or hover '
-                                                  'an option')
-            helpbox.pack(fill='both', expand=True, ipadx=6, ipady=4)
-            self.help_title = tk.StringVar(value='')
-            ttk.Label(helpbox, textvariable=self.help_title,
-                      style='Muted.TLabel').pack(anchor='w', padx=8,
-                                                 pady=(4, 0))
-            self.help_text = tk.Text(helpbox, height=7, wrap='word',
-                                     bg=PALETTE['bg'], fg=PALETTE['fg'],
-                                     relief='flat', highlightthickness=0,
-                                     padx=8, pady=5,
-                                     font=self.fonts['small'], state='disabled')
-            self.help_text.pack(fill='both', expand=True, padx=6, pady=(0, 4))
-
-        def _build_right(self, notebook):
-            C = PALETTE
-
-            # ---- preview tab
-            prev = ttk.Frame(notebook)
-            notebook.add(prev, text='  Preview  ')
-            bar = ttk.Frame(prev)
-            bar.pack(fill='x', padx=8, pady=(8, 4))
-            ttk.Label(bar, text='Filter:', style='Muted.TLabel') \
-                .pack(side='left')
-            self.v_filter = tk.StringVar(value='')
-            filt = ttk.Entry(bar, textvariable=self.v_filter, width=28)
-            filt.pack(side='left', padx=(6, 0))
-            self.v_filter.trace_add('write', lambda *_: self._populate_tree())
-            Tooltip(self, filt, 'Type to filter the tree by transponder, PID, '
-                                'feed name or channel name (case-insensitive). '
-                                'Double-click a PID row to inspect the exact '
-                                'generated artifacts for that stream.')
-            self.v_tree_info = tk.StringVar(value='No database loaded yet.')
-            ttk.Label(bar, textvariable=self.v_tree_info,
-                      style='Muted.TLabel').pack(side='right')
-
-            wrap = ttk.Frame(prev)
-            wrap.pack(fill='both', expand=True, padx=8, pady=(0, 8))
-            self.tree = ttk.Treeview(wrap, columns=('detail',),
-                                     selectmode='browse')
-            ysb = ttk.Scrollbar(wrap, orient='vertical', command=self.tree.yview)
-            self.tree.configure(yscrollcommand=ysb.set)
-            self.tree.pack(side='left', fill='both', expand=True)
-            ysb.pack(side='right', fill='y')
-            self.tree.heading('#0', text='Transponder / stream / channel',
-                              anchor='w')
-            self.tree.heading('detail', text='Details', anchor='w')
-            self.tree.column('#0', width=430, stretch=True, anchor='w')
-            self.tree.column('detail', width=330, anchor='w')
-            self.tree.tag_configure('tp', foreground=C['accent'],
-                                    font=self.fonts['bold'])
-            self.tree.tag_configure('biss', foreground=C['warn'])
-            self.tree.tag_configure('fta', foreground=C['ok'])
-            self.tree.tag_configure('ch', foreground=C['muted'])
-            self.tree.bind('<Double-1>', self._on_tree_double)
-
-            # ---- output tab
-            out = ttk.Frame(notebook)
-            notebook.add(out, text='  Generated output  ')
-            bar = ttk.Frame(out)
-            bar.pack(fill='x', padx=8, pady=(8, 4))
-            ttk.Label(bar, text='File:', style='Muted.TLabel').pack(side='left')
-            self.v_outfile = tk.StringVar(value='')
-            self.cb_outfile = ttk.Combobox(bar, textvariable=self.v_outfile,
-                                           state='readonly', width=28)
-            self.cb_outfile.pack(side='left', padx=(6, 0))
-            self.cb_outfile.bind('<<ComboboxSelected>>',
-                                 lambda e: self._show_output_file())
-            b1 = self.button(bar, 'Save as\u2026', self._save_output_as)
-            b2 = self.button(bar, 'Copy', self._copy_output)
-            b1.pack(side='left', padx=(10, 0))
-            b2.pack(side='left', padx=(6, 0))
-            Tooltip(self, b1, 'Save the currently displayed generated file '
-                              'under a new name.')
-            Tooltip(self, b2, 'Copy the currently displayed generated file '
-                              'to the clipboard.')
-            self.v_out_info = tk.StringVar(value='Generate the suite to '
-                                                 'populate this view.')
-            ttk.Label(bar, textvariable=self.v_out_info,
-                      style='Muted.TLabel').pack(side='right')
-
-            wrap = ttk.Frame(out)
-            wrap.pack(fill='both', expand=True, padx=8, pady=(0, 8))
-            self.out_text = tk.Text(wrap, wrap='none', undo=False,
-                                    bg=C['tree'], fg=C['fg'], relief='flat',
-                                    highlightthickness=0, padx=8, pady=6,
-                                    font=self.fonts['mono'], state='disabled')
-            xsb = ttk.Scrollbar(wrap, orient='horizontal',
-                                command=self.out_text.xview)
-            ysb2 = ttk.Scrollbar(wrap, orient='vertical',
-                                 command=self.out_text.yview)
-            self.out_text.configure(xscrollcommand=xsb.set,
-                                    yscrollcommand=ysb2.set)
-            self.out_text.grid(row=0, column=0, sticky='nsew')
-            ysb2.grid(row=0, column=1, sticky='ns')
-            xsb.grid(row=1, column=0, sticky='ew')
-            wrap.rowconfigure(0, weight=1)
-            wrap.columnconfigure(0, weight=1)
-
-            # ---- log tab
-            logf = ttk.Frame(notebook)
-            notebook.add(logf, text='  Log  ')
-            wrap = ttk.Frame(logf)
-            wrap.pack(fill='both', expand=True, padx=8, pady=8)
-            self.log_text = tk.Text(wrap, wrap='word', undo=False,
-                                    bg=C['bg'], fg=C['fg'], relief='flat',
-                                    highlightthickness=0, padx=8, pady=6,
-                                    font=self.fonts['mono_small'],
-                                    state='disabled')
-            ysb3 = ttk.Scrollbar(wrap, orient='vertical',
-                                 command=self.log_text.yview)
-            self.log_text.configure(yscrollcommand=ysb3.set)
-            self.log_text.pack(side='left', fill='both', expand=True)
-            ysb3.pack(side='right', fill='y')
-            self.log_text.tag_configure('muted', foreground=C['muted'])
-            self._log_line('welcome to the %s' % APP_NAME, muted=True)
-
-        # ------------------------------------------------- help pane
-        def show_help(self, key):
-            opt = OPTIONS.get(key)
-            if not opt:
-                return
-            self.help_title.set(opt['label'])
-            self.help_text.configure(state='normal')
-            self.help_text.delete('1.0', 'end')
-            self.help_text.insert('1.0', opt['help'])
-            self.help_text.configure(state='disabled')
-
-        # ---------------------------------------------------- helpers
-        FONT_BASE_SIZES = {
-            'base': 9, 'small': 8, 'bold': 9, 'h1': 13, 'mono': 9,
-            'mono_small': 8,
+    # ---------------------------------------------------- values
+    def collect_values(self):
+        return {
+            'source_mode': 'url' if self.v_source_url.isChecked() else 'file',
+            'url': self.e_url.text().strip(),
+            'file': self.v_file.text().strip(),
+            'out_dir': self.v_out_dir.text().strip(),
+            'bouquet': self.v_bouquet.text().strip() or DEFAULTS['bouquet'],
+            'merge_enabled': self.v_merge.isChecked(),
+            'merge_path': self.v_merge_path.text().strip(),
+            'edit_enabled': self.v_edit.isChecked(),
+            'edit_path': self.v_edit_path.text().strip(),
+            'softcam_key_enabled': self.v_softcam_key.isChecked(),
+            'softcam_key_path': self.v_softcam_key_path.text().strip(),
+            'lamedb_format': self.v_format.currentText() or 'v4',
+            'position': str(self.v_position.value()),
+            'relay_host': self.v_relay_host.text().strip(),
+            'relay_port': str(self.v_relay_port.value()),
+            'out_host': self.v_out_host.text().strip(),
+            'http_port': str(self.v_http_port.value()),
+            'relay_script': self.v_script.text().strip(),
+            't2mi_plp': self.v_t2mi_plp.text().strip(),
+            't2mi_pnr': self.v_t2mi_pnr.text().strip(),
+            'gui_scale': float(self.v_scale.value()),
         }
 
-        def _apply_gui_scale(self, silent=False, event=None):
+    def _sync_source_state(self):
+        url_mode = self.v_source_url.isChecked()
+        self.e_url.setEnabled(url_mode)
+        self.e_file.setEnabled(not url_mode)
+        self._browse_btn_file.setEnabled(not url_mode)
+
+    def _sync_merge_state(self):
+        en = self.v_merge.isChecked()
+        self.e_merge.setEnabled(en)
+
+    def _sync_edit_state(self):
+        en = self.v_edit.isChecked()
+        self.e_edit.setEnabled(en)
+
+    def _sync_softcam_state(self):
+        en = self.v_softcam_key.isChecked()
+        self.e_softcam_key_path.setEnabled(en)
+
+    def _browse(self, what):
+        if what == 'file':
+            path, _ = QFileDialog.getOpenFileName(self, 'Select sat_data.json',
+                                                  filter='JSON database (*.json);;All files (*)')
+            if path:
+                self.v_file.setText(path)
+                self.v_source_file.setChecked(True)
+                self._sync_source_state()
+        elif what == 'out_dir':
+            path = QFileDialog.getExistingDirectory(self, 'Select output directory')
+            if path:
+                self.v_out_dir.setText(path)
+        elif what == 'merge_path':
+            path, _ = QFileDialog.getOpenFileName(self, 'Select the lamedb to merge into',
+                                                  filter='lamedb (*);;All files (*)')
+            if path:
+                self.v_merge_path.setText(path)
+        elif what == 'edit_path':
+            path, _ = QFileDialog.getOpenFileName(self, 'Select the lamedb to edit',
+                                                  filter='lamedb (*);;All files (*)')
+            if path:
+                self.v_edit_path.setText(path)
+        elif what == 'softcam_key_path':
+            path, _ = QFileDialog.getSaveFileName(self, 'Select SoftCam.Key output file',
+                                                  initialFile='SoftCam.Key',
+                                                  filter='SoftCam.Key (*.Key *SoftCam.Key);;All files (*)')
+            if path:
+                self.v_softcam_key_path.setText(path)
+                self.v_softcam_key.setChecked(True)
+                self._sync_softcam_state()
+
+    # --------------------------------------------------- workers
+    def _set_busy(self, busy, what=''):
+        self._busy = busy
+        for w in (self.btn_load, self.btn_gen, self.btn_cli):
+            w.setEnabled(not busy)
+        if busy:
+            self.progress.setVisible(True)
+            self.progress.setRange(0, 0)
+            self.statusBar().showMessage('Working: %s \u2026' % what)
+        else:
+            self.progress.setVisible(False)
+            self.statusBar().showMessage('Ready.')
+
+    def _start_worker(self, kind, task):
+        if self._busy:
+            QMessageBox.information(self, APP_NAME, 'Busy \u2014 please wait for the current task to finish.')
+            return
+
+        def runner():
             try:
-                factor = float(self.v_scale.get())
-            except (TypeError, ValueError):
-                factor = self.scale_factor
-            factor = min(3.0, max(0.5, factor))
-            self.scale_factor = factor
-            self.v_scale.set('%.2f' % factor)
-            for name, base in self.FONT_BASE_SIZES.items():
-                sz = max(8, int(round(base * factor)))
-                self.fonts[name].configure(size=sz)
-            # Reconfigure ttk styles so paddings, row heights and arrow sizes
-            # scale with the font, keeping the UI readable at every scale.
-            C = PALETTE
-            style = ttk.Style(self)
-            style.configure('.', font=self.fonts['base'])
-            style.configure('TEntry', padding=int(3 * factor),
-                            font=self.fonts['base'])
-            style.configure('TSpinbox', padding=int(2 * factor),
-                            arrowsize=max(8, int(11 * factor)),
-                            font=self.fonts['base'])
-            style.configure('TCombobox', padding=int(3 * factor),
-                            arrowsize=max(8, int(11 * factor)),
-                            font=self.fonts['base'])
-            style.configure('TNotebook.Tab', padding=(int(13 * factor),
-                                                      int(5 * factor)))
-            style.configure('Treeview', rowheight=max(18, int(23 * factor)))
-            style.configure('Treeview.Heading', font=self.fonts['small'])
-            style.configure('TLabelframe.Label', font=self.fonts['bold'])
-            try:
-                self.tk.call('tk', 'scaling', factor * 1.33)
-            except tk.TclError:
-                pass
-            # Re-apply combobox dropdown list colours so text stays visible
-            # on a dark background regardless of theme or scale changes.
-            self.option_add('*Listbox.background', C['field'])
-            self.option_add('*Listbox.foreground', '#000000')
-            self.option_add('*Listbox.selectBackground', C['sel'])
-            self.option_add('*Listbox.selectForeground', '#ffffff')
-            self.option_add('*TCombobox.entry.background', C['field'])
-            self.option_add('*TCombobox.entry.foreground', C['fg'])
-            # Let the window recalculate its layout so every component
-            # (including the help textbox) stays visible at any scale.
-            self.update_idletasks()
-            # Adjust left pane width so the options panel stays readable
-            # at every scale without clipping.
-            try:
-                self._paned.paneconfigure(self._paned.panes()[0],
-                                          width=int(430 * factor))
-            except (AttributeError, tk.TclError, IndexError):
-                pass
-            if not silent:
-                self.status('GUI scale set to %.2f. Saved for next start.'
-                            % factor)
-
-        def _reconfigure_fonts(self):
-            self._apply_gui_scale(silent=True)
-
-        def _set_text(self, widget, content):
-            widget.configure(state='normal')
-            widget.delete('1.0', 'end')
-            widget.insert('1.0', content)
-            widget.configure(state='disabled')
-
-        def _log_line(self, line, muted=False):
-            stamp = time.strftime('%H:%M:%S')
-            self.log_text.configure(state='normal')
-            if muted:
-                self.log_text.insert('end', '%s  %s\n' % (stamp, line), 'muted')
-            else:
-                self.log_text.insert('end', '%s  %s\n' % (stamp, line))
-            self.log_text.see('end')
-            self.log_text.configure(state='disabled')
-
-        def _clear_log(self):
-            self.log_text.configure(state='normal')
-            self.log_text.delete('1.0', 'end')
-            self.log_text.configure(state='disabled')
-
-        def status(self, text, kind=None):
-            self.v_status.set(text)
-
-        def collect_values(self):
-            return {
-                'source_mode': self.v_source.get(),
-                'url': self.v_url.get().strip(),
-                'file': self.v_file.get().strip(),
-                'out_dir': self.v_out_dir.get().strip(),
-                'bouquet': self.v_bouquet.get().strip() or DEFAULTS['bouquet'],
-                'merge_enabled': bool(self.v_merge.get()),
-                'merge_path': self.v_merge_path.get().strip(),
-                'edit_enabled': bool(self.v_edit.get()),
-                'edit_path': self.v_edit_path.get().strip(),
-                'softcam_key_enabled': bool(self.v_softcam_key.get()),
-                'softcam_key_path': self.v_softcam_key_path.get().strip(),
-                'lamedb_format': self.v_format.get() or 'v4',
-                'position': self.v_position.get().strip() or '-300',
-                'relay_host': self.v_relay_host.get().strip(),
-                'relay_port': self.v_relay_port.get().strip() or '8001',
-                'out_host': self.v_out_host.get().strip(),
-                'http_port': self.v_http_port.get().strip() or '9999',
-                'relay_script': self.v_script.get().strip(),
-                't2mi_plp': self.v_t2mi_plp.get().strip(),
-                't2mi_pnr': self.v_t2mi_pnr.get().strip(),
-                'gui_scale': float(self.v_scale.get() or self.scale_factor),
-            }
-
-        def _sync_source_state(self):
-            mode = self.v_source.get()
-            for entry in (self.e_url,):
-                entry.configure(state='normal' if mode == 'url' else 'disabled')
-            self.e_file.configure(
-                state='normal' if mode == 'file' else 'disabled')
-            self._browse_btn_file.configure(
-                state='normal' if mode == 'file' else 'disabled')
-
-        def _sync_merge_state(self):
-            state = 'normal' if self.v_merge.get() else 'disabled'
-            self.e_merge.configure(state=state)
-
-        def _sync_edit_state(self):
-            state = 'normal' if self.v_edit.get() else 'disabled'
-            self.e_edit.configure(state=state)
-
-        def _sync_softcam_state(self):
-            state = 'normal' if self.v_softcam_key.get() else 'disabled'
-            self.e_softcam_key_path.configure(state=state)
-
-        def _update_pos_label(self):
-            try:
-                pos = int(self.v_position.get())
-                ns = namespace_for(pos)
-                self.v_pos_label.set(
-                    '= %s  (namespace 0x%08X)' % (position_label(pos), ns))
-            except ValueError:
-                self.v_pos_label.set('= ?')
-
-        def _browse(self, what):
-            if what == 'file':
-                path = filedialog.askopenfilename(
-                    parent=self, title='Select sat_data.json',
-                    filetypes=[('JSON database', '*.json'), ('All files', '*')])
-                if path:
-                    self.v_file.set(path)
-                    self.v_source.set('file')
-                    self._sync_source_state()
-            elif what == 'out_dir':
-                path = filedialog.askdirectory(
-                    parent=self, title='Select output directory')
-                if path:
-                    self.v_out_dir.set(path)
-            elif what == 'merge_path':
-                path = filedialog.askopenfilename(
-                    parent=self, title='Select the lamedb to merge into',
-                    filetypes=[('lamedb', 'lamedb*'), ('All files', '*')])
-                if path:
-                    self.v_merge_path.set(path)
-            elif what == 'edit_path':
-                path = filedialog.askopenfilename(
-                    parent=self, title='Select the lamedb to edit',
-                    filetypes=[('lamedb', 'lamedb*'), ('All files', '*')])
-                if path:
-                    self.v_edit_path.set(path)
-            elif what == 'softcam_key_path':
-                path = filedialog.asksaveasfilename(
-                    parent=self, title='Select SoftCam.Key output file',
-                    initialfile='SoftCam.Key',
-                    filetypes=[('SoftCam.Key', '*.Key *SoftCam.Key'), ('All files', '*')])
-                if path:
-                    self.v_softcam_key_path.set(path)
-                    self.v_softcam_key.set(True)
-
-        # --------------------------------------------------- workers
-        def _set_busy(self, busy, what=''):
-            self.busy = busy
-            state = 'disabled' if busy else 'normal'
-            for w in self._busy_widgets:
-                w.configure(state=state)
-            if busy:
-                self.progress.start(12)
-                self.status('Working: %s \u2026' % what)
-            else:
-                self.progress.stop()
-
-        def _start_worker(self, kind, task):
-            if self.busy:
-                messagebox.showinfo(APP_NAME, 'Busy \u2014 please wait for the '
-                                              'current task to finish.',
-                                    parent=self)
+                payload = task()
+            except SuiteError as exc:
+                self.q.put(('fail', kind, str(exc)))
                 return
+            except Exception:
+                self.q.put(('fail', kind, 'Unexpected error:\n' + traceback.format_exc()))
+                return
+            self.q.put(('ok', kind, payload))
 
-            def runner():
-                try:
-                    payload = task()
-                    self.q.put(('ok', kind, payload))
-                except SuiteError as exc:
-                    self.q.put(('fail', kind, str(exc)))
-                except Exception:
-                    self.q.put(('fail', kind,
-                                'Unexpected error:\n' + traceback.format_exc()))
-            self._set_busy(True, {'load': 'loading database',
-                                  'generate': 'generating suite'}[kind])
-            threading.Thread(target=runner, daemon=True).start()
+        self._set_busy(True, {'load': 'loading database',
+                              'generate': 'generating suite'}[kind])
+        t = threading.Thread(target=runner, daemon=True)
+        t.start()
 
-        def _on_load(self):
-            self._start_worker('load', self._task_load)
+    def _on_load(self):
+        self._start_worker('load', self._task_load)
 
-        def _on_generate(self):
-            self._start_worker('generate', self._task_generate)
+    def _on_generate(self):
+        self._start_worker('generate', self._task_generate)
 
-        def _task_load(self):
-            v = self.collect_values()
-            problems = validate_values(v)
-            if problems:
-                raise SuiteError('\n'.join(problems))
-            with contextlib.redirect_stdout(self._log_stream), \
-                    contextlib.redirect_stderr(self._log_stream):
+    def _task_load(self):
+        v = self.collect_values()
+        problems = validate_values(v)
+        if problems:
+            raise SuiteError('\n'.join(problems))
+        with contextlib.redirect_stdout(LogStream(self._log_line)), \
+                contextlib.redirect_stderr(LogStream(self._log_line)):
+            loaded = load_database(v)
+        return loaded
+
+    def _task_generate(self):
+        v = self.collect_values()
+        problems = validate_values(v)
+        if problems:
+            raise SuiteError('\n'.join(problems))
+        with contextlib.redirect_stdout(LogStream(self._log_line)), \
+                contextlib.redirect_stderr(LogStream(self._log_line)):
+            loaded = None
+            if self.txps is None:
                 loaded = load_database(v)
-            return loaded
-
-        def _task_generate(self):
-            v = self.collect_values()
-            problems = validate_values(v)
-            if problems:
-                raise SuiteError('\n'.join(problems))
-            with contextlib.redirect_stdout(self._log_stream), \
-                    contextlib.redirect_stderr(self._log_stream):
-                loaded = None
-                if self.txps is None:
-                    loaded = load_database(v)
-                    txps, streams = loaded[1], loaded[2]
-                else:
-                    txps, streams = self.txps, self.streams
-                result = generate_artifacts(v, txps, streams)
-            return {'loaded': loaded, 'result': result, 'values': v}
-
-        def _poll(self):
-            try:
-                while True:
-                    msg = self.q.get_nowait()
-                    if msg[0] == 'log':
-                        self._log_line(msg[1])
-                    elif msg[0] == 'ok':
-                        self._finished_ok(msg[1], msg[2])
-                    else:
-                        self._finished_fail(msg[1], msg[2])
-            except queue.Empty:
-                pass
-            self.after(80, self._poll)
-
-        def _finished_ok(self, kind, payload):
-            self._set_busy(False)
-            if kind == 'load':
-                self._apply_loaded(payload)
-                self.status('Database loaded \u2014 ready to generate.')
+                txps, streams = loaded[1], loaded[2]
             else:
-                if payload['loaded']:
-                    self._apply_loaded(payload['loaded'])
-                result = payload['result']
-                self.outputs = result['outputs']
-                names = list(self.outputs.keys())
-                self.cb_outfile.configure(values=names)
-                if names:
-                    self.cb_outfile.set(names[0])
-                    self._show_output_file()
-                self.v_out_info.set('%d files written'
-                                    % len(result['written']))
-                self.status('Suite generated.')
-                self._log_line('generation finished: %s'
-                               % '; '.join(result['summary']), muted=True)
-                messagebox.showinfo(
-                    APP_NAME,
-                    'Suite generated successfully:\n\n'
-                    + '\n'.join(result['summary'])
-                    + '\n\nRestart Enigma2 after replacing/merging the lamedb.',
-                    parent=self)
+                txps, streams = self.txps, self.streams
+            result = generate_artifacts(v, txps, streams)
+        return {'loaded': loaded, 'result': result, 'values': v}
 
-        def _finished_fail(self, kind, message):
-            self._set_busy(False)
-            self.status('Failed \u2014 see the message / log.')
-            self._log_line('ERROR (%s)' % kind, muted=True)
-            for line in message.splitlines():
-                self._log_line('  ' + line, muted=True)
-            messagebox.showerror(APP_NAME, message, parent=self)
+    def timerEvent(self, event):
+        if event.timerId() == self._poll_timer:
+            self._poll()
 
-        def _apply_loaded(self, loaded):
-            self.data, self.txps, self.streams, self.raw_by_pid = loaded
-            self._populate_tree()
-            n_ch = sum(len(s['channels']) for s in self.streams)
-            n_lists = sum(len(tp['streams']) for tp in self.txps) \
-                - len(self.streams)
-            self.v_counts.set('%d transponders \u00b7 %d PID streams \u00b7 '
-                              '%d channels' % (len(self.txps), len(self.streams),
-                                               n_ch))
-            self._log_line('database loaded: %d transponders, %d PID streams, '
-                           '%d channels, %d whole-tp lists skipped'
-                           % (len(self.txps), len(self.streams), n_ch, n_lists))
+    def _poll(self):
+        try:
+            while True:
+                msg = self.q.get_nowait()
+                if msg[0] == 'log':
+                    self._log_line(msg[1])
+                elif msg[0] == 'ok':
+                    self._finished_ok(msg[1], msg[2])
+                elif msg[0] == 'fail':
+                    self._finished_fail(msg[1], msg[2])
+        except queue.Empty:
+            pass
 
-        # ---------------------------------------------------- preview
-        def _populate_tree(self):
-            query = self.v_filter.get().strip().lower()
-            tree = self.tree
-            tree.delete(*tree.get_children())
-            self._stream_items = {}
+    def _finished_ok(self, kind, payload):
+        self._set_busy(False)
+        if kind == 'load':
+            self._apply_loaded(payload)
+            self.statusBar().showMessage('Database loaded \u2014 ready to generate.')
+        else:
+            if payload['loaded']:
+                self._apply_loaded(payload['loaded'])
+            result = payload['result']
+            self.outputs = result['outputs']
+            names = list(self.outputs.keys())
+            self.v_outfile.clear()
+            self.v_outfile.addItems(names)
+            if names:
+                self.v_outfile.setCurrentIndex(0)
+                self._show_output_file()
+            self.v_out_info.setText('%d files written' % len(result['written']))
+            self.statusBar().showMessage('Suite generated.')
+            self._log_line('generation finished: %s' % '; '.join(result['summary']), muted=True)
+            QMessageBox.information(
+                self, APP_NAME,
+                'Suite generated successfully:\n\n'
+                + '\n'.join(result['summary'])
+                + '\n\nRestart Enigma2 after replacing/merging the lamedb.')
 
-            def match(*parts):
-                return not query or any(query in (p or '').lower()
-                                        for p in parts)
+    def _finished_fail(self, kind, message):
+        self._set_busy(False)
+        self.statusBar().showMessage('Failed \u2014 see the message / log.')
+        self._log_line('ERROR (%s)' % kind, muted=True)
+        for line in message.splitlines():
+            self._log_line('  ' + line, muted=True)
+        QMessageBox.critical(self, APP_NAME, message)
 
+    def _apply_loaded(self, loaded):
+        self.data, self.txps, self.streams, self.raw_by_pid = loaded
+        self._populate_tree()
+        n_ch = sum(len(s['channels']) for s in self.streams)
+        n_lists = sum(len(tp['streams']) for tp in self.txps) - len(self.streams)
+        self.v_counts.setText('%d transponders \u00b7 %d PID streams \u00b7 %d channels'
+                          % (len(self.txps), len(self.streams), n_ch))
+        self._log_line('database loaded: %d transponders, %d PID streams, '
+                       '%d channels, %d whole-tp lists skipped'
+                       % (len(self.txps), len(self.streams), n_ch, n_lists))
+
+    # ---------------------------------------------------- preview
+    def _populate_tree(self):
+        query = self.v_filter.text().strip().lower()
+        tree = self.tree
+
+        def match(*parts):
+            return not query or any(query in (p or '').lower() for p in parts)
+
+        tree.setUpdatesEnabled(False)
+        try:
+            tree.clear()
             if not self.txps:
-                self.v_tree_info.set('No database loaded yet.')
+                self.v_tree_info.setText('No database loaded yet.')
                 return
             mod_names = {0: 'QPSK', 2: '8PSK', 3: '16APSK', 4: '32APSK'}
+            base = self.fonts['base']
+            bold = self.fonts['bold']
+            muted = QColor('#98a2b3')
+
+            # Group streams by transponder once (avoids O(transponders x streams)).
+            by_tp = {}
+            for s in self.streams:
+                by_tp.setdefault(id(s['txp']), []).append(s)
+
             shown = {'tp': 0, 'stream': 0}
             for tp in self.txps:
                 tp_text = 'TxP %s \u00b7 %s%s %d \u00b7 %s' % (
@@ -2397,342 +2426,391 @@ if TK_AVAILABLE:
                     mod_names.get(tp['modulation'], ''))
                 tp_match = match(tp_text, tp_detail)
                 children = []
-                for s in self.streams:
-                    if s['txp'] is not tp:
-                        continue
-                    label = s['title'].split(' - ')[-1] if ' - ' in s['title'] \
-                        else s['title']
+                for s in by_tp.get(id(tp), ()):
+                    label = s['title'].split(' - ')[-1] if ' - ' in s['title'] else s['title']
                     s_text = 'PID %d \u00b7 %s \u00b7 %s' % (
                         s['pid'], s['encryption'] or 'FTA', label)
                     s_detail = '%s \u00b7 SID %d \u00b7 CPID %d \u00b7 %d channel%s' % (
                         feed_service_name(s), s['sid'], s['cpid'],
-                        len(s['channels']),
-                        '' if len(s['channels']) == 1 else 's')
+                        len(s['channels']), '' if len(s['channels']) == 1 else 's')
                     if query and not (tp_match or match(s_text, s_detail)):
                         continue
                     children.append((s, s_text, s_detail))
                 if query and not (tp_match or children):
                     continue
-                iid = tree.insert('', 'end', text=tp_text, values=(tp_detail,),
-                                  open=not query, tags=('tp',))
+                item = QTreeWidgetItem([tp_text, tp_detail])
+                item.setFont(0, bold)
+                item.setForeground(1, muted)
+                tree.addTopLevelItem(item)
                 shown['tp'] += 1
                 for s, s_text, s_detail in children:
-                    tag = 'biss' if 'BISS' in s['encryption'] else 'fta'
-                    siid = tree.insert(iid, 'end', text=s_text,
-                                       values=(s_detail,), tags=(tag,))
+                    tag_color = QColor('#f0b429' if 'BISS' in s['encryption'] else '#3fd07a')
+                    siid = QTreeWidgetItem([s_text, s_detail])
+                    siid.setForeground(0, tag_color)
+                    siid.setForeground(1, muted)
+                    siid.setData(0, Qt.ItemDataRole.UserRole, s['pid'])
+                    item.addChild(siid)
                     shown['stream'] += 1
-                    self._stream_items[siid] = s['pid']
                     for ch in s['channels']:
-                        tree.insert(siid, 'end',
-                                    text='%s %s' % ('(RADIO)' if ch['radio']
-                                                    else '(TV)', ch['name']),
-                                    values=('SID %d' % ch['sid'],),
-                                    tags=('ch',))
+                        ch_item = QTreeWidgetItem([
+                            '%s %s' % ('(RADIO)' if ch['radio'] else '(TV)', ch['name']),
+                            'SID %d' % ch['sid']])
+                        ch_item.setForeground(0, muted)
+                        ch_item.setForeground(1, muted)
+                        siid.addChild(ch_item)
+                item.setExpanded(not query)
             if query:
-                self.v_tree_info.set('filter: %d transponders, %d streams'
-                                     % (shown['tp'], shown['stream']))
+                self.v_tree_info.setText('filter: %d transponders, %d streams'
+                                         % (shown['tp'], shown['stream']))
             else:
-                self.v_tree_info.set('%d transponders \u00b7 %d PID streams'
-                                     % (len(self.txps), len(self.streams)))
+                self.v_tree_info.setText('%d transponders \u00b7 %d PID streams'
+                                         % (len(self.txps), len(self.streams)))
+        finally:
+            tree.setUpdatesEnabled(True)
 
-        def _on_tree_double(self, event):
-            iid = self.tree.identify_row(event.y)
-            if not iid:
-                return
-            pid = getattr(self, '_stream_items', {}).get(iid)
-            if pid is not None:
-                self._show_stream_dialog(pid)
+    def _on_tree_double(self, item, column):
+        pid = item.data(0, Qt.ItemDataRole.UserRole)
+        if pid is not None:
+            self._show_stream_dialog(pid)
 
-        # ------------------------------------------------- inspectors
-        def _popup(self, title, size='780x560'):
-            C = PALETTE
-            win = tk.Toplevel(self)
-            win.title(title)
-            win.configure(bg=C['panel'])
-            win.geometry(size)
-            win.transient(self)
-            win.grab_set()
-            return win
+    # ------------------------------------------------- inspectors
+    def _show_stream_dialog(self, pid):
+        stream = next((s for s in self.streams if s['pid'] == pid), None)
+        if stream is None:
+            return
+        raw = self.raw_by_pid.get(pid, {})
+        v = self.collect_values()
+        ns = values_namespace(v)
+        tp = stream['txp']
+        tp_e, svc_e = build_lamedb_entries([tp], [stream], ns.position)
+        lam = lamedb_text(tp_e, svc_e)
+        astx = astra_text([stream], ns)
+        bqx = bouquet_text([stream], ns)
+        sid = stream.get('sid', pid + 1000)
+        cpid = stream.get('cpid', pid + 5000)
+        raw_sid = str(raw.get('sid') or '').strip()
+        raw_cpid = str(raw.get('cpid') or '').strip()
+        sid_src = '' if raw_sid else '   (auto = PID + 1000)'
+        cpid_src = '' if raw_cpid else '   (auto = PID + 5000)'
+        info = [
+            'Title        %s' % stream['title'],
+            'Stream PID   %d' % pid,
+            'Feed SID     %d  (0x%04X)%s' % (sid, sid, sid_src),
+            'Comp. PID    %d  (0x%04X)%s' % (cpid, cpid, cpid_src),
+            'Cache flags  c:18%04x = data PID (stream PID) \u00b7 c:19%04x = cpid (PMT)' % (pid, cpid),
+            'Encryption   %s' % (stream['encryption'] or 'FTA (clear)'),
+            'Provider     %s' % tp['provider'],
+            'Transponder  %s%s %d \u00b7 sr %d \u00b7 tsid %d \u00b7 onid %d'
+            % (tp['freq_label'], tp['pol_letter'], tp['sr_ksps'],
+               tp['sr_ksps'], tp['tsid'], tp['onid']),
+            'pid_info     %s' % (raw.get('pid_info') or '-'),
+            'Channels     %d' % len(stream['channels']),
+        ]
+        sep = '\u2500' * 74
+        content = '\n'.join(info) + '\n\n' + sep + ' lamedb\n' + sep + '\n' \
+            + lam + '\n' + sep + ' astra.conf\n' + sep + '\n' + astx
+        if stream['channels']:
+            content += '\n' + sep + ' userbouquet\n' + sep + '\n' + bqx
+        else:
+            content += '\n(no channels in the JSON \u2014 no bouquet lines)'
+        win = QDialog(self)
+        win.setFont(self.fonts['base'])
+        win.setWindowTitle('Stream inspector \u2014 PID %d' % pid)
+        win.setMinimumSize(780, 560)
+        win_l = QVBoxLayout(win)
+        bar = QHBoxLayout()
+        btn_copy = QPushButton('Copy all')
+        btn_copy.clicked.connect(lambda: self._copy_to_clipboard(content))
+        bar.addWidget(btn_copy)
+        bar.addWidget(QLabel('exact artifacts generated with the current settings'))
+        bar.addStretch()
+        win_l.addLayout(bar)
+        txt = QTextEdit()
+        txt.setFont(self.fonts['mono'])
+        txt.setPlainText(content)
+        txt.setReadOnly(True)
+        win_l.addWidget(txt, stretch=1)
+        win.exec()
 
-        def _show_stream_dialog(self, pid):
-            stream = next((s for s in self.streams if s['pid'] == pid), None)
-            if stream is None:
-                return
-            raw = self.raw_by_pid.get(pid, {})
-            v = self.collect_values()
-            ns = values_namespace(v)
-            tp = stream['txp']
-            tp_e, svc_e = build_lamedb_entries([tp], [stream], ns.position)
-            with contextlib.redirect_stdout(self._log_stream):
-                lam = lamedb_text(tp_e, svc_e)
-                astx = astra_text([stream], ns)
-                bqx = bouquet_text([stream], ns)
-            sid = stream.get('sid', pid + 1000)
-            cpid = stream.get('cpid', pid + 5000)
-            raw_sid = str(raw.get('sid') or '').strip()
-            raw_cpid = str(raw.get('cpid') or '').strip()
-            sid_src = '' if raw_sid else '   (auto = PID + 1000)'
-            cpid_src = '' if raw_cpid else '   (auto = PID + 5000)'
-            info = [
-                'Title        %s' % stream['title'],
-                'Stream PID   %d' % pid,
-                'Feed SID     %d  (0x%04X)%s' % (sid, sid, sid_src),
-                'Comp. PID    %d  (0x%04X)%s' % (cpid, cpid, cpid_src),
-                'Cache flags  c:18%04x = data PID (stream PID) \u00b7 '
-                'c:19%04x = cpid (PMT)' % (pid, cpid),
-                'Encryption   %s' % (stream['encryption'] or 'FTA (clear)'),
-                'Provider     %s' % tp['provider'],
-                'Transponder  %s%s %d \u00b7 sr %d \u00b7 tsid %d \u00b7 onid %d'
-                % (tp['freq_label'], tp['pol_letter'], tp['sr_ksps'],
-                   tp['sr_ksps'], tp['tsid'], tp['onid']),
-                'pid_info     %s' % (raw.get('pid_info') or '-'),
-                'Channels     %d' % len(stream['channels']),
-            ]
-            sep = '\u2500' * 74
-            content = '\n'.join(info) + '\n\n' + sep + ' lamedb\n' + sep + '\n' \
-                + lam + '\n' + sep + ' astra.conf\n' + sep + '\n' + astx
-            if stream['channels']:
-                content += '\n' + sep + ' userbouquet\n' + sep + '\n' + bqx
-            else:
-                content += '\n(no channels in the JSON \u2014 no bouquet lines)'
-            win = self._popup('Stream inspector \u2014 PID %d' % pid)
-            bar = ttk.Frame(win)
-            bar.pack(fill='x', padx=8, pady=(8, 4))
-            self.button(bar, 'Copy all', lambda: self._copy_to_clipboard(
-                content)).pack(side='left')
-            ttk.Label(bar, text='exact artifacts generated with the current '
-                                'settings', style='Muted.TLabel') \
-                .pack(side='left', padx=(10, 0))
-            txt = tk.Text(win, wrap='none', bg=PALETTE['tree'], fg=PALETTE['fg'],
-                          relief='flat', highlightthickness=0, padx=8, pady=6,
-                          font=self.fonts['mono'])
-            ysb = ttk.Scrollbar(win, orient='vertical', command=txt.yview)
-            xsb = ttk.Scrollbar(win, orient='horizontal', command=txt.xview)
-            txt.configure(yscrollcommand=ysb.set, xscrollcommand=xsb.set)
-            txt.grid(row=1, column=0, sticky='nsew', padx=(8, 0), pady=(0, 8))
-            ysb.grid(row=1, column=1, sticky='ns', pady=(0, 8))
-            xsb.grid(row=2, column=0, sticky='ew', padx=(8, 0))
-            win.rowconfigure(1, weight=1)
-            win.columnconfigure(0, weight=1)
-            txt.insert('1.0', content)
-            txt.configure(state='disabled')
+    # ------------------------------------------------- output
+    def _set_text(self, widget, content):
+        widget.setPlainText(content)
 
-        def _copy_to_clipboard(self, text):
-            self.clipboard_clear()
-            self.clipboard_append(text)
-            self.update_idletasks()
-            self.status('Copied to clipboard.')
+    def _log_line(self, line, muted=False):
+        stamp = time.strftime('%H:%M:%S')
+        doc = self.log_text.document()
+        if doc.blockCount() > 3000:
+            self.log_text.clear()
+        self.log_text.append('%s  %s' % (stamp, line))
+        self.log_text.moveCursor(QTextCursor.MoveOperation.End)
 
-        def _show_output_file(self):
-            name = self.v_outfile.get()
-            content = self.outputs.get(name)
-            if content is not None:
-                self._set_text(self.out_text, content)
+    def _clear_log(self):
+        self.log_text.clear()
 
-        def _save_output_as(self):
-            name = self.v_outfile.get()
-            content = self.outputs.get(name)
-            if content is None:
-                return
-            path = filedialog.asksaveasfilename(
-                parent=self, title='Save as\u2026', initialfile=name)
-            if path:
-                with open(path, 'w', encoding='utf-8') as f:
-                    f.write(content)
-                self.status('Saved %s' % path)
+    def status(self, text, kind=None):
+        self.statusBar().showMessage(text)
 
-        def _copy_output(self):
-            name = self.v_outfile.get()
-            content = self.outputs.get(name)
-            if content is not None:
-                self._copy_to_clipboard(content)
+    def _show_output_file(self):
+        name = self.v_outfile.currentText()
+        content = self.outputs.get(name)
+        if content is not None:
+            self._set_text(self.out_text, content)
 
-        # ------------------------------------------------ doc windows
-        def _doc_window(self, title, content):
-            win = self._popup(title, '820x600')
-            bar = ttk.Frame(win)
-            bar.pack(fill='x', padx=8, pady=(8, 4))
-            self.button(bar, 'Copy', lambda: self._copy_to_clipboard(
-                content)).pack(side='left')
-            txt = tk.Text(win, wrap='word', bg=PALETTE['tree'], fg=PALETTE['fg'],
-                          relief='flat', highlightthickness=0, padx=10, pady=8,
-                          font=self.fonts['mono_small'])
-            ysb = ttk.Scrollbar(win, orient='vertical', command=txt.yview)
-            txt.configure(yscrollcommand=ysb.set)
-            txt.grid(row=1, column=0, sticky='nsew', padx=(8, 0), pady=(0, 8))
-            ysb.grid(row=1, column=1, sticky='ns', pady=(0, 8))
-            win.rowconfigure(1, weight=1)
-            win.columnconfigure(0, weight=1)
-            txt.insert('1.0', content)
-            txt.configure(state='disabled')
-
-        def _show_reference(self):
-            lines = ['OPTION REFERENCE', '=' * 60, '']
-            for sec_key, sec_title in SECTIONS:
-                lines.append(sec_title.upper())
-                lines.append('-' * len(sec_title) + '-')
-                for key, opt in OPTIONS.items():
-                    if opt['section'] != sec_key:
-                        continue
-                    default = DEFAULTS.get(key, '')
-                    lines.append('%s   (%s)' % (opt['label'], key))
-                    lines.append('default: %r' % (default,))
-                    for chunk in opt['help'].split('\n'):
-                        lines.append('  ' + chunk)
-                    lines.append('')
-            lines.append('ACTIONS')
-            lines.append('-------')
-            for key, help_ in ACTION_HELP.items():
-                lines.append(key)
-                lines.append('  ' + help_)
-                lines.append('')
-            lines.append('SHORTCUTS')
-            lines.append('---------')
-            lines.append('  Ctrl+L  load database        Ctrl+G  generate suite')
-            lines.append('  Ctrl+O  open local JSON      Ctrl+K  copy CLI command')
-            lines.append('  F1      this reference       Ctrl+Q  quit')
-            self._doc_window('Option reference', '\n'.join(lines))
-
-        def _show_guide(self):
-            self._doc_window('Quick guide', QUICK_GUIDE)
-
-        def _show_about(self):
-            messagebox.showinfo(
-                'About',
-                '%s\n%s\n\nGUI front-end for Abertis_DX_Suite.py\n'
-                'Engine: lamedb + astra relay + Enigma2 bouquet generator '
-                'for the Abertis / Cellnex DTT feeds on Hispasat 30.0\u00b0W.\n\n'
-                'Standard library only (tkinter). Data source:\n%s'
-                % (APP_NAME, APP_SUBTITLE, DEFAULT_JSON_URL),
-                parent=self)
-
-        # ----------------------------------------------- CLI command
-        def _on_cli(self):
-            v = self.collect_values()
-            problems = validate_values(v)
-            cmd = build_cli_command(v)
-            win = self._popup('CLI command', '760x200')
-            bar = ttk.Frame(win)
-            bar.pack(fill='x', padx=8, pady=(8, 4))
-            self.button(bar, 'Copy',
-                        lambda: self._copy_to_clipboard(cmd)).pack(side='left')
-            hint = ('equivalent command line for the current settings'
-                    if not problems else
-                    'note: current settings have validation problems')
-            ttk.Label(bar, text=hint, style='Muted.TLabel') \
-                .pack(side='left', padx=(10, 0))
-            txt = tk.Text(win, wrap='char', bg=PALETTE['tree'], fg=PALETTE['fg'],
-                          relief='flat', highlightthickness=0, padx=10, pady=8,
-                          font=self.fonts['mono'])
-            txt.pack(fill='both', expand=True, padx=8, pady=(0, 8))
-            txt.insert('1.0', cmd)
-            txt.configure(state='disabled')
-
-        # ------------------------------------------ profiles & state
-        def _menu_open_json(self):
-            self._browse('file')
-
-        def _save_profile(self):
-            path = filedialog.asksaveasfilename(
-                parent=self, title='Save settings profile',
-                defaultextension='.json', initialfile='dx_suite_profile.json',
-                filetypes=[('DX suite profile', '*.json')])
-            if not path:
-                return
+    def _save_output_as(self):
+        name = self.v_outfile.currentText()
+        content = self.outputs.get(name)
+        if content is None:
+            return
+        path, _ = QFileDialog.getSaveFileName(self, 'Save as\u2026', initialFile=name)
+        if path:
             with open(path, 'w', encoding='utf-8') as f:
-                json.dump({'values': self.collect_values(),
-                           'geometry': self.geometry()}, f, indent=2)
-            self.status('Profile saved: %s' % path)
+                f.write(content)
+            self.statusBar().showMessage('Saved %s' % path)
 
-        def _load_profile(self):
-            path = filedialog.askopenfilename(
-                parent=self, title='Load settings profile',
-                filetypes=[('DX suite profile', '*.json'),
-                           ('All files', '*')])
-            if not path:
-                return
-            try:
-                with open(path, 'r', encoding='utf-8') as f:
-                    profile = json.load(f)
-                self._apply_values(profile.get('values', {}))
-                if profile.get('geometry'):
+    def _copy_output(self):
+        name = self.v_outfile.currentText()
+        content = self.outputs.get(name)
+        if content is not None:
+            self._copy_to_clipboard(content)
+
+    def _copy_to_clipboard(self, text):
+        QApplication.clipboard().setText(text)
+        self.statusBar().showMessage('Copied to clipboard.')
+
+    # ------------------------------------------------ doc windows
+    def _doc_window(self, title, content):
+        win = QDialog(self)
+        win.setFont(self.fonts['base'])
+        win.setWindowTitle(title)
+        win.setMinimumSize(820, 600)
+        win_l = QVBoxLayout(win)
+        bar = QHBoxLayout()
+        btn_copy = QPushButton('Copy')
+        btn_copy.clicked.connect(lambda: self._copy_to_clipboard(content))
+        bar.addWidget(btn_copy)
+        bar.addStretch()
+        win_l.addLayout(bar)
+        txt = QTextEdit()
+        txt.setFont(self.fonts['mono_small'])
+        txt.setPlainText(content)
+        txt.setReadOnly(True)
+        win_l.addWidget(txt, stretch=1)
+        win.exec()
+
+    def _show_reference(self):
+        lines = ['OPTION REFERENCE', '=' * 60, '']
+        for sec_key, sec_title in SECTIONS:
+            lines.append(sec_title.upper())
+            lines.append('-' * len(sec_title) + '-')
+            for key, opt in OPTIONS.items():
+                if opt['section'] != sec_key:
+                    continue
+                default = DEFAULTS.get(key, '')
+                lines.append('%s   (%s)' % (opt['label'], key))
+                lines.append('default: %r' % (default,))
+                for chunk in opt['help'].split('\n'):
+                    lines.append('  ' + chunk)
+                lines.append('')
+        lines.append('ACTIONS')
+        lines.append('-------')
+        for key, help_ in ACTION_HELP.items():
+            lines.append(key)
+            lines.append('  ' + help_)
+            lines.append('')
+        lines.append('SHORTCUTS')
+        lines.append('---------')
+        lines.append('  Ctrl+L  load database        Ctrl+G  generate suite')
+        lines.append('  Ctrl+O  open local JSON      Ctrl+K  copy CLI command')
+        lines.append('  F1      this reference       Ctrl+Q   quit')
+        self._doc_window('Option reference', '\n'.join(lines))
+
+    def _show_guide(self):
+        self._doc_window('Quick guide', QUICK_GUIDE)
+
+    def _show_about(self):
+        QMessageBox.information(
+            self, 'About',
+            '%s\n%s\n\nGUI front-end for Abertis_DX_Suite.py\n'
+            'Engine: lamedb + astra relay + Enigma2 bouquet generator '
+            'for the Abertis / Cellnex DTT feeds on Hispasat 30.0\u00b0W.\n\n'
+            'PyQt6. Data source:\n%s'
+            % (APP_NAME, APP_SUBTITLE, DEFAULT_JSON_URL))
+
+    # ----------------------------------------------- CLI command
+    def _on_cli(self):
+        v = self.collect_values()
+        problems = validate_values(v)
+        cmd = build_cli_command(v)
+        win = QDialog(self)
+        win.setFont(self.fonts['base'])
+        win.setWindowTitle('CLI command')
+        win.setMinimumSize(760, 200)
+        win_l = QVBoxLayout(win)
+        bar = QHBoxLayout()
+        btn_copy = QPushButton('Copy')
+        btn_copy.clicked.connect(lambda: self._copy_to_clipboard(cmd))
+        bar.addWidget(btn_copy)
+        hint = ('equivalent command line for the current settings'
+                if not problems else
+                'note: current settings have validation problems')
+        lbl = QLabel(hint)
+        lbl.setStyleSheet('color: #9aa1ad;')
+        bar.addWidget(lbl)
+        bar.addStretch()
+        win_l.addLayout(bar)
+        txt = QTextEdit()
+        txt.setFont(self.fonts['mono'])
+        txt.setPlainText(cmd)
+        txt.setReadOnly(True)
+        win_l.addWidget(txt, stretch=1)
+        win.exec()
+
+    # ------------------------------------------ profiles & state
+    def _menu_open_json(self):
+        self._browse('file')
+
+    def _save_profile(self):
+        path, _ = QFileDialog.getSaveFileName(self, 'Save settings profile',
+                                              'dx_suite_profile.json',
+                                              'DX suite profile (*.json)')
+        if not path:
+            return
+        with open(path, 'w', encoding='utf-8') as f:
+            json.dump({'font_version': 2, 'values': self.collect_values(),
+                       'geometry': self.saveGeometry().data().hex()}, f, indent=2)
+        self.statusBar().showMessage('Profile saved: %s' % path)
+
+    def _load_profile(self):
+        path, _ = QFileDialog.getOpenFileName(self, 'Load settings profile',
+                                              filter='DX suite profile (*.json);;All files (*)')
+        if not path:
+            return
+        try:
+            with open(path, 'r', encoding='utf-8') as f:
+                profile = json.load(f)
+            self._apply_values(profile.get('values', {}))
+            if profile.get('geometry'):
+                try:
+                    self.restoreGeometry(QByteArray.fromhex(profile['geometry']))
+                except Exception:
+                    pass
+        except (OSError, ValueError) as exc:
+            QMessageBox.critical(self, 'Cannot load profile', '%s' % exc)
+        else:
+            self.statusBar().showMessage('Profile loaded: %s' % path)
+
+    def _apply_values(self, values):
+        if 'source_mode' in values:
+            self.v_source_url.setChecked(values['source_mode'] == 'url')
+            self.v_source_file.setChecked(values['source_mode'] == 'file')
+            self._sync_source_state()
+        var_map = {
+            'url': self.e_url, 'file': self.v_file,
+            'out_dir': self.v_out_dir, 'bouquet': self.v_bouquet,
+            'merge_path': self.v_merge_path,
+            'edit_path': self.v_edit_path,
+            'lamedb_format': self.v_format,
+            'softcam_key_enabled': self.v_softcam_key,
+            'softcam_key_path': self.v_softcam_key_path,
+            'position': self.v_position,
+            'relay_host': self.v_relay_host, 'relay_port': self.v_relay_port,
+            'out_host': self.v_out_host, 'http_port': self.v_http_port,
+            'relay_script': self.v_script,
+            't2mi_plp': self.v_t2mi_plp, 't2mi_pnr': self.v_t2mi_pnr,
+            'gui_scale': self.v_scale,
+        }
+        for key, widget in var_map.items():
+            if key in values and widget is not None:
+                if isinstance(widget, QCheckBox):
+                    widget.setChecked(bool(values[key]))
+                elif isinstance(widget, QComboBox):
+                    widget.setCurrentText(str(values[key]))
+                elif isinstance(widget, (QSpinBox, QDoubleSpinBox)):
                     try:
-                        self.geometry(profile['geometry'])
-                    except tk.TclError:
+                        widget.setValue(float(values[key]))
+                    except (TypeError, ValueError):
                         pass
-            except (OSError, ValueError) as exc:
-                messagebox.showerror(APP_NAME,
-                                     'Cannot load profile: %s' % exc,
-                                     parent=self)
-            else:
-                self.status('Profile loaded: %s' % path)
-
-        def _apply_values(self, values):
-            var_map = {
-                'source_mode': self.v_source,
-                'url': self.v_url, 'file': self.v_file,
-                'out_dir': self.v_out_dir, 'bouquet': self.v_bouquet,
-                'merge_path': self.v_merge_path,
-                'edit_path': self.v_edit_path,
-                'lamedb_format': self.v_format,
-                'softcam_key_enabled': self.v_softcam_key,
-                'softcam_key_path': self.v_softcam_key_path,
-                'position': self.v_position,
-                'relay_host': self.v_relay_host, 'relay_port': self.v_relay_port,
-                'out_host': self.v_out_host, 'http_port': self.v_http_port,
-                'relay_script': self.v_script,
-                'gui_scale': self.v_scale,
-            }
-            for key, var in var_map.items():
-                if key in values:
-                    var.set(str(values[key]))
-            if 'merge_enabled' in values:
-                self.v_merge.set(bool(values['merge_enabled']))
-            if 'edit_enabled' in values:
-                self.v_edit.set(bool(values['edit_enabled']))
-            if 'edit_path' in values:
-                self.v_edit_path.set(str(values['edit_path']))
-            self._sync_source_state()
+                else:
+                    widget.setText(str(values[key]))
+        if 'merge_enabled' in values:
+            self.v_merge.setChecked(bool(values['merge_enabled']))
             self._sync_merge_state()
+        if 'edit_enabled' in values:
+            self.v_edit.setChecked(bool(values['edit_enabled']))
             self._sync_edit_state()
-            self._update_pos_label()
-            self._apply_gui_scale(silent=True)
+        self._sync_source_state()
+        self._sync_edit_state()
+        self._update_pos_label()
+        self._apply_gui_scale()
 
-        def _restore_settings(self):
-            self._sync_source_state()
-            self._sync_merge_state()
-            self._sync_edit_state()
-            self._update_pos_label()
-            self._apply_gui_scale(silent=True)
-            try:
-                with open(SETTINGS_FILE, 'r', encoding='utf-8') as f:
-                    saved = json.load(f)
-                self._apply_values(saved.get('values', {}))
-                if saved.get('geometry'):
-                    self.geometry(saved['geometry'])
-            except (OSError, ValueError):
-                pass
+    def _restore_settings(self):
+        self._sync_source_state()
+        self._sync_merge_state()
+        self._sync_edit_state()
+        self._update_pos_label()
+        try:
+            with open(SETTINGS_FILE, 'r', encoding='utf-8') as f:
+                saved = json.load(f)
+            values = saved.get('values', {})
+            if int(saved.get('font_version', 0)) < 2:
+                # Previous builds used a ~10 pt base, so a saved 1.6x was
+                # chosen only to compensate. Reset to 1.0 for the 18 pt base.
+                values['gui_scale'] = 1.0
+            self._apply_values(values)
+            if saved.get('geometry'):
+                try:
+                    self.restoreGeometry(QByteArray.fromhex(saved['geometry']))
+                except Exception:
+                    pass
+        except (OSError, ValueError):
+            pass
 
-        def _on_close(self):
-            try:
-                with open(SETTINGS_FILE, 'w', encoding='utf-8') as f:
-                    json.dump({'values': self.collect_values(),
-                               'geometry': self.geometry()}, f, indent=2)
-            except OSError:
-                pass
-            self.destroy()
+    def closeEvent(self, event):
+        try:
+            with open(SETTINGS_FILE, 'w', encoding='utf-8') as f:
+                json.dump({'font_version': 2, 'values': self.collect_values(),
+                           'geometry': self.saveGeometry().data().hex()}, f, indent=2)
+        except OSError:
+            pass
+        event.accept()
 
 
-    def main():
-        app = App()
-        app.mainloop()
+class LogStream(io.TextIOBase):
+    def __init__(self, emit_fn):
+        self.emit_fn = emit_fn
 
-else:
+    def write(self, s):
+        for line in s.splitlines():
+            if line.strip():
+                self.emit_fn(line)
+        return len(s)
 
-    def main():
-        sys.exit('tkinter is not available - install it with\n'
-                 '  sudo apt install python3-tk\n'
-                 'or use the command line version: Abertis_DX_Suite.py --help')
+    def flush(self):
+        pass
+
+
+def main():
+    app = QApplication(sys.argv)
+    app.setApplicationName(APP_NAME)
+    app.setStyle('Fusion')
+    pal = QPalette()
+    pal.setColor(QPalette.ColorRole.Window, QColor(THEME['bg']))
+    pal.setColor(QPalette.ColorRole.WindowText, QColor(THEME['fg']))
+    pal.setColor(QPalette.ColorRole.Base, QColor(THEME['field']))
+    pal.setColor(QPalette.ColorRole.AlternateBase, QColor('#151922'))
+    pal.setColor(QPalette.ColorRole.Text, QColor(THEME['fg']))
+    pal.setColor(QPalette.ColorRole.Button, QColor(THEME['surface2']))
+    pal.setColor(QPalette.ColorRole.ButtonText, QColor(THEME['fg']))
+    pal.setColor(QPalette.ColorRole.Highlight, QColor(THEME['accent']))
+    pal.setColor(QPalette.ColorRole.HighlightedText, QColor('#ffffff'))
+    pal.setColor(QPalette.ColorRole.ToolTipBase, QColor(THEME['surface2']))
+    pal.setColor(QPalette.ColorRole.ToolTipText, QColor(THEME['fg']))
+    pal.setColor(QPalette.ColorRole.PlaceholderText, QColor(THEME['muted']))
+    app.setPalette(pal)
+
+    window = App()
+    window.showMaximized()
+    sys.exit(app.exec())
 
 
 if __name__ == '__main__':
