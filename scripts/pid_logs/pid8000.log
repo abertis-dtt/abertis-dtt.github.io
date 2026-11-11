@@ -1,25 +1,47 @@
-Oct 14 17:03:07: INFO: Starting Astra SM 0.2
-Oct 14 17:03:08: INFO: Bitrate: 0 Kbit/s
-Oct 14 17:03:09: INFO: Bitrate: 1077 Kbit/s
-Oct 14 17:03:10: INFO: Bitrate: 0 Kbit/s
-Oct 14 17:03:11: INFO: Bitrate: 1112 Kbit/s
-Oct 14 17:03:12: INFO: Bitrate: 1284 Kbit/s
-Oct 14 17:03:13: INFO: Bitrate: 1096 Kbit/s
-Oct 14 17:03:13: ERROR: CC: PID:0=1 
-Oct 14 17:03:13: ERROR: Scrambled: 0=1 
-Oct 14 17:03:14: INFO: Bitrate: 0 Kbit/s
-Oct 14 17:03:15: INFO: Bitrate: 2302 Kbit/s
-Oct 14 17:03:16: INFO: Bitrate: 0 Kbit/s
-Oct 14 17:03:17: INFO: Bitrate: 1102 Kbit/s
-Oct 14 17:03:18: INFO: Bitrate: 1070 Kbit/s
-Oct 14 17:03:19: INFO: Bitrate: 1066 Kbit/s
-Oct 14 17:03:20: INFO: Bitrate: 1089 Kbit/s
-Oct 14 17:03:21: INFO: Bitrate: 0 Kbit/s
-Oct 14 17:03:22: INFO: Bitrate: 1106 Kbit/s
-Oct 14 17:03:23: INFO: Bitrate: 1134 Kbit/s
-Oct 14 17:03:24: INFO: Bitrate: 1270 Kbit/s
-Oct 14 17:03:25: INFO: Bitrate: 1085 Kbit/s
-Oct 14 17:03:26: INFO: Bitrate: 1058 Kbit/s
-Oct 14 17:03:27: INFO: Bitrate: 0 Kbit/s
-Oct 14 17:03:28: INFO: Bitrate: 2143 Kbit/s
-Oct 14 17:03:29: INFO: [main] shutting down
+Nov 11 15:17:15: INFO: Starting Astra SM 0.2
+Nov 11 15:17:16: INFO: PAT: tsid: 1
+Nov 11 15:17:16: INFO: PAT: pid: 32 PMT pnr: 110
+Nov 11 15:17:16: INFO: PAT: crc32: 0xAE967DD9
+Nov 11 15:17:16: INFO: PMT: pnr: 110
+Nov 11 15:17:16: INFO: PMT: pid: 256 PCR
+Nov 11 15:17:16: INFO: VIDEO: pid: 256 type: MPEG-2 video, ISO/IEC 13818-2 (0x02)
+Nov 11 15:17:16: INFO: AUDIO: pid: 257 type: MPEG-1 audio, ISO/IEC 11172-3 (0x03)
+Nov 11 15:17:16: INFO: AUDIO: descriptor: 0x030167
+Nov 11 15:17:16: INFO: AUDIO: Language: eng
+Nov 11 15:17:16: INFO: PMT: crc32: 0xB8F69EA2
+Nov 11 15:17:16: INFO: Bitrate: 1174 Kbit/s
+Nov 11 15:17:17: INFO: SDT: tsid: 1
+Nov 11 15:17:17: INFO: SDT: sid: 110
+Nov 11 15:17:17: INFO: SDT:    Service: ALERTA
+Nov 11 15:17:17: INFO: SDT:    Provider: Cellnex
+Nov 11 15:17:17: INFO: SDT: crc32: 0x7186D9FB
+Nov 11 15:17:17: INFO: Bitrate: 2291 Kbit/s
+Nov 11 15:17:17: ERROR: CC: PID:17=1 
+Nov 11 15:17:18: INFO: Bitrate: 1078 Kbit/s
+Nov 11 15:17:19: INFO: Bitrate: 3569 Kbit/s
+Nov 11 15:17:20: INFO: Bitrate: 1080 Kbit/s
+Nov 11 15:17:21: INFO: Bitrate: 2227 Kbit/s
+Nov 11 15:17:22: INFO: Bitrate: 3273 Kbit/s
+Nov 11 15:17:23: INFO: Bitrate: 1145 Kbit/s
+Nov 11 15:17:24: INFO: Bitrate: 2521 Kbit/s
+Nov 11 15:17:25: INFO: Bitrate: 2193 Kbit/s
+Nov 11 15:17:26: INFO: Bitrate: 2194 Kbit/s
+Nov 11 15:17:27: INFO: Bitrate: 2291 Kbit/s
+Nov 11 15:17:28: INFO: Bitrate: 2194 Kbit/s
+Nov 11 15:17:29: INFO: Bitrate: 2194 Kbit/s
+Nov 11 15:17:30: INFO: Bitrate: 2390 Kbit/s
+Nov 11 15:17:31: INFO: Bitrate: 1145 Kbit/s
+Nov 11 15:17:32: INFO: Bitrate: 2552 Kbit/s
+Nov 11 15:17:33: INFO: Bitrate: 2781 Kbit/s
+Nov 11 15:17:34: INFO: Bitrate: 2291 Kbit/s
+Nov 11 15:17:35: INFO: Bitrate: 2324 Kbit/s
+Nov 11 15:17:36: INFO: Bitrate: 2227 Kbit/s
+Nov 11 15:17:37: INFO: Bitrate: 2291 Kbit/s
+Nov 11 15:17:38: INFO: Bitrate: 2192 Kbit/s
+Nov 11 15:17:39: INFO: Bitrate: 1047 Kbit/s
+Nov 11 15:17:40: INFO: Bitrate: 3339 Kbit/s
+Nov 11 15:17:41: INFO: Bitrate: 2224 Kbit/s
+Nov 11 15:17:42: INFO: Bitrate: 1046 Kbit/s
+Nov 11 15:17:43: INFO: Bitrate: 3404 Kbit/s
+Nov 11 15:17:44: INFO: Bitrate: 2161 Kbit/s
+Nov 11 15:17:45: INFO: [main] shutting down

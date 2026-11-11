@@ -1,42 +1,50 @@
-Oct 14 16:54:03: INFO: Starting Astra SM 0.2
-Oct 14 16:54:04: INFO: Bitrate: 0 Kbit/s
-Oct 14 16:54:04: INFO: PAT: tsid: 1
-Oct 14 16:54:04: INFO: PAT: pid: 8020 PMT pnr: 2
-Oct 14 16:54:04: INFO: PAT: crc32: 0xC750AC3B
-Oct 14 16:54:05: INFO: PMT: pnr: 2
-Oct 14 16:54:05: INFO: PMT: pid: 8000 PCR
-Oct 14 16:54:05: INFO: VIDEO: pid: 8000 type: MPEG-4 AVC/H.264, ISO/IEC 14496-10 (0x1B)
-Oct 14 16:54:05: INFO: VIDEO: descriptor: 0x28046400283F
-Oct 14 16:54:05: INFO: VIDEO: Maximum bitrate: 7916
-Oct 14 16:54:05: INFO: AUDIO: pid: 8001 type: MPEG-1 audio, ISO/IEC 11172-3 (0x03)
-Oct 14 16:54:05: INFO: AUDIO: Language: spa
-Oct 14 16:54:05: INFO: AUDIO: Maximum bitrate: 517
-Oct 14 16:54:05: INFO: PMT: crc32: 0x52306071
-Oct 14 16:54:05: INFO: Bitrate: 3041 Kbit/s
-Oct 14 16:54:05: ERROR: CC: PID:0=1 PID:1=1 PID:8000=1 PID:8020=1 
-Oct 14 16:54:05: INFO: SDT: tsid: 1
-Oct 14 16:54:05: INFO: SDT: sid: 2
-Oct 14 16:54:05: INFO: SDT:    Service: CyL7
-Oct 14 16:54:05: INFO: SDT:    Provider: 
-Oct 14 16:54:05: INFO: SDT: crc32: 0xEFFA05DF
-Oct 14 16:54:06: INFO: Bitrate: 3078 Kbit/s
-Oct 14 16:54:06: ERROR: CC: PID:17=1 
-Oct 14 16:54:07: INFO: Bitrate: 3112 Kbit/s
-Oct 14 16:54:08: INFO: Bitrate: 5042 Kbit/s
-Oct 14 16:54:09: INFO: Bitrate: 3045 Kbit/s
-Oct 14 16:54:10: INFO: Bitrate: 2914 Kbit/s
-Oct 14 16:54:11: INFO: Bitrate: 3735 Kbit/s
-Oct 14 16:54:12: INFO: Bitrate: 3995 Kbit/s
-Oct 14 16:54:13: INFO: Bitrate: 2652 Kbit/s
-Oct 14 16:54:14: INFO: Bitrate: 2848 Kbit/s
-Oct 14 16:54:15: INFO: Bitrate: 4650 Kbit/s
-Oct 14 16:54:16: INFO: Bitrate: 2750 Kbit/s
-Oct 14 16:54:17: INFO: Bitrate: 3012 Kbit/s
-Oct 14 16:54:18: INFO: Bitrate: 4094 Kbit/s
-Oct 14 16:54:19: INFO: Bitrate: 3929 Kbit/s
-Oct 14 16:54:20: INFO: Bitrate: 2555 Kbit/s
-Oct 14 16:54:21: INFO: Bitrate: 2750 Kbit/s
-Oct 14 16:54:22: INFO: Bitrate: 3995 Kbit/s
-Oct 14 16:54:23: INFO: Bitrate: 4092 Kbit/s
-Oct 14 16:54:24: INFO: Bitrate: 3078 Kbit/s
-Oct 14 16:54:25: INFO: [main] shutting down
+Nov 11 15:12:14: INFO: Starting Astra SM 0.2
+Nov 11 15:12:15: INFO: PAT: tsid: 1
+Nov 11 15:12:15: INFO: PAT: pid: 8020 PMT pnr: 2
+Nov 11 15:12:15: INFO: PAT: crc32: 0xC750AC3B
+Nov 11 15:12:15: INFO: Bitrate: 2321 Kbit/s
+Nov 11 15:12:15: INFO: PMT: pnr: 2
+Nov 11 15:12:15: INFO: PMT: pid: 8000 PCR
+Nov 11 15:12:15: INFO: VIDEO: pid: 8000 type: MPEG-4 AVC/H.264, ISO/IEC 14496-10 (0x1B)
+Nov 11 15:12:15: INFO: VIDEO: descriptor: 0x28046400283F
+Nov 11 15:12:15: INFO: VIDEO: Maximum bitrate: 7916
+Nov 11 15:12:15: INFO: AUDIO: pid: 8001 type: MPEG-1 audio, ISO/IEC 11172-3 (0x03)
+Nov 11 15:12:15: INFO: AUDIO: Language: spa
+Nov 11 15:12:15: INFO: AUDIO: Maximum bitrate: 517
+Nov 11 15:12:15: INFO: PMT: crc32: 0x52306071
+Nov 11 15:12:16: INFO: Bitrate: 3472 Kbit/s
+Nov 11 15:12:16: ERROR: CC: PID:8000=1 PID:8001=1 PID:8020=1 
+Nov 11 15:12:16: INFO: SDT: tsid: 1
+Nov 11 15:12:16: INFO: SDT: sid: 2
+Nov 11 15:12:16: INFO: SDT:    Service: CyL7
+Nov 11 15:12:16: INFO: SDT:    Provider: 
+Nov 11 15:12:16: INFO: SDT: crc32: 0xEFFA05DF
+Nov 11 15:12:17: INFO: Bitrate: 3340 Kbit/s
+Nov 11 15:12:17: ERROR: CC: PID:17=1 
+Nov 11 15:12:18: INFO: Bitrate: 3309 Kbit/s
+Nov 11 15:12:19: INFO: Bitrate: 3537 Kbit/s
+Nov 11 15:12:20: INFO: Bitrate: 3568 Kbit/s
+Nov 11 15:12:21: INFO: Bitrate: 2422 Kbit/s
+Nov 11 15:12:22: INFO: Bitrate: 3406 Kbit/s
+Nov 11 15:12:23: INFO: Bitrate: 4487 Kbit/s
+Nov 11 15:12:24: INFO: Bitrate: 2129 Kbit/s
+Nov 11 15:12:25: INFO: Bitrate: 3537 Kbit/s
+Nov 11 15:12:26: INFO: Bitrate: 4585 Kbit/s
+Nov 11 15:12:27: INFO: Bitrate: 2520 Kbit/s
+Nov 11 15:12:28: INFO: Bitrate: 4586 Kbit/s
+Nov 11 15:12:29: INFO: Bitrate: 2192 Kbit/s
+Nov 11 15:12:30: INFO: Bitrate: 3570 Kbit/s
+Nov 11 15:12:31: INFO: Bitrate: 4389 Kbit/s
+Nov 11 15:12:32: INFO: Bitrate: 2356 Kbit/s
+Nov 11 15:12:33: INFO: Bitrate: 3538 Kbit/s
+Nov 11 15:12:34: INFO: Bitrate: 3472 Kbit/s
+Nov 11 15:12:35: INFO: Bitrate: 3667 Kbit/s
+Nov 11 15:12:36: INFO: Bitrate: 3504 Kbit/s
+Nov 11 15:12:37: INFO: Bitrate: 3504 Kbit/s
+Nov 11 15:12:38: INFO: Bitrate: 3342 Kbit/s
+Nov 11 15:12:39: INFO: Bitrate: 3538 Kbit/s
+Nov 11 15:12:40: INFO: Bitrate: 2552 Kbit/s
+Nov 11 15:12:41: INFO: Bitrate: 3537 Kbit/s
+Nov 11 15:12:42: INFO: Bitrate: 3668 Kbit/s
+Nov 11 15:12:43: INFO: Bitrate: 3570 Kbit/s
+Nov 11 15:12:44: INFO: [main] shutting down

@@ -1,46 +1,113 @@
-Oct 14 16:33:26: INFO: Starting Astra SM 0.2
-Oct 14 16:33:27: INFO: Bitrate: 2159 Kbit/s
-Oct 14 16:33:28: INFO: Bitrate: 7956 Kbit/s
-Oct 14 16:33:29: INFO: Bitrate: 8728 Kbit/s
-Oct 14 16:33:29: ERROR: CC: PID:0=1 
-Oct 14 16:33:29: ERROR: Scrambled: 0=1 
-Oct 14 16:33:30: INFO: Bitrate: 8911 Kbit/s
-Oct 14 16:33:31: INFO: Bitrate: 7685 Kbit/s
-Oct 14 16:33:32: INFO: Bitrate: 8807 Kbit/s
-Oct 14 16:33:32: ERROR: CC: PID:0=1 PID:1=1 
-Oct 14 16:33:32: ERROR: Scrambled: 0=1 1=1 
-Oct 14 16:33:33: INFO: Bitrate: 8867 Kbit/s
-Oct 14 16:33:34: INFO: Bitrate: 8862 Kbit/s
-Oct 14 16:33:34: ERROR: CC: PID:18=1 
-Oct 14 16:33:34: ERROR: Scrambled: 18=1 
-Oct 14 16:33:35: INFO: Bitrate: 7631 Kbit/s
-Oct 14 16:33:35: ERROR: CC: PID:0=1 
-Oct 14 16:33:35: ERROR: Scrambled: 0=1 
-Oct 14 16:33:36: INFO: Bitrate: 9065 Kbit/s
-Oct 14 16:33:36: ERROR: CC: PID:1=1 PID:18=1 
-Oct 14 16:33:36: ERROR: Scrambled: 1=1 18=1 
-Oct 14 16:33:37: INFO: Bitrate: 8379 Kbit/s
-Oct 14 16:33:37: ERROR: CC: PID:18=1 
-Oct 14 16:33:38: INFO: Bitrate: 8661 Kbit/s
-Oct 14 16:33:39: INFO: Bitrate: 8828 Kbit/s
-Oct 14 16:33:40: INFO: Bitrate: 7877 Kbit/s
-Oct 14 16:33:40: ERROR: CC: PID:0=1 PID:18=2 
-Oct 14 16:33:40: ERROR: Scrambled: 18=2 
-Oct 14 16:33:41: INFO: Bitrate: 8818 Kbit/s
-Oct 14 16:33:41: ERROR: CC: PID:0=1 
-Oct 14 16:33:41: ERROR: Scrambled: 0=1 
-Oct 14 16:33:42: INFO: Bitrate: 7970 Kbit/s
-Oct 14 16:33:43: INFO: Bitrate: 8840 Kbit/s
-Oct 14 16:33:43: ERROR: CC: PID:1=1 
-Oct 14 16:33:43: ERROR: Scrambled: 1=1 
-Oct 14 16:33:44: INFO: Bitrate: 8919 Kbit/s
-Oct 14 16:33:45: INFO: Bitrate: 8794 Kbit/s
-Oct 14 16:33:45: ERROR: CC: PID:0=1 PID:1=1 
-Oct 14 16:33:45: ERROR: Scrambled: 0=1 1=1 
-Oct 14 16:33:46: INFO: Bitrate: 7621 Kbit/s
-Oct 14 16:33:46: ERROR: CC: PID:0=1 
-Oct 14 16:33:46: ERROR: Scrambled: 0=1 
-Oct 14 16:33:47: INFO: Bitrate: 8976 Kbit/s
-Oct 14 16:33:47: ERROR: CC: PID:0=3 PID:17=1 
-Oct 14 16:33:47: ERROR: Scrambled: 0=3 
-Oct 14 16:33:48: INFO: [main] shutting down
+Nov 11 15:01:34: INFO: Starting Astra SM 0.2
+Nov 11 15:01:35: INFO: PAT: tsid: 5200
+Nov 11 15:01:35: INFO: PAT: pid: 16 NIT
+Nov 11 15:01:35: INFO: PAT: pid: 1019 PMT pnr: 10220
+Nov 11 15:01:35: INFO: PAT: pid: 1029 PMT pnr: 10225
+Nov 11 15:01:35: INFO: PAT: pid: 1059 PMT pnr: 10234
+Nov 11 15:01:35: INFO: PAT: pid: 1049 PMT pnr: 10235
+Nov 11 15:01:35: INFO: PAT: crc32: 0x7F317DFE
+Nov 11 15:01:35: INFO: Bitrate: 5107 Kbit/s
+Nov 11 15:01:35: INFO: PMT: pnr: 10225
+Nov 11 15:01:35: INFO: PMT: pid: 1020 PCR
+Nov 11 15:01:35: INFO: VIDEO: pid: 1020 type: MPEG-4 AVC/H.264, ISO/IEC 14496-10 (0x1B)
+Nov 11 15:01:35: INFO: VIDEO: descriptor: 0x28046400283F
+Nov 11 15:01:35: INFO: AUDIO: pid: 1021 type: Private PES, ISO/IEC 13818-1 (0x06)
+Nov 11 15:01:35: INFO: AUDIO: Type: AC3, component_type: 66, mainid: 0
+Nov 11 15:01:35: INFO: AUDIO: descriptor: 0x050441432D33
+Nov 11 15:01:35: INFO: AUDIO: Language: spa
+Nov 11 15:01:35: INFO: AUDIO: pid: 1022 type: Private PES, ISO/IEC 13818-1 (0x06)
+Nov 11 15:01:35: INFO: AUDIO: Type: AC3, component_type: 66, mainid: 0
+Nov 11 15:01:35: INFO: AUDIO: descriptor: 0x050441432D33
+Nov 11 15:01:35: INFO: AUDIO: Language: qaa
+Nov 11 15:01:35: INFO: AUDIO: pid: 1023 type: Private PES, ISO/IEC 13818-1 (0x06)
+Nov 11 15:01:35: INFO: AUDIO: Type: AC3, component_type: 64, mainid: 0
+Nov 11 15:01:35: INFO: AUDIO: descriptor: 0x050441432D33
+Nov 11 15:01:35: INFO: AUDIO: Language: spa
+Nov 11 15:01:35: INFO: SUB: pid: 1025 type: Private PES, ISO/IEC 13818-1 (0x06)
+Nov 11 15:01:35: INFO: SUB: type: teletext
+Nov 11 15:01:35: INFO: SUB:    page: 001 (subtitle page), language: spa
+Nov 11 15:01:35: INFO: SUB:    page: 101 (subtitle page), language: ast
+Nov 11 15:01:35: INFO: SUB:    page: 201 (subtitle page), language: eng
+Nov 11 15:01:35: INFO: DATA: pid: 1026 type: Private sections, ISO/IEC 13818-1 (0x05)
+Nov 11 15:01:35: INFO: DATA: descriptor: 0x6F030010E0
+Nov 11 15:01:35: INFO: PMT: crc32: 0xF86314E8
+Nov 11 15:01:35: INFO: PMT: pnr: 10235
+Nov 11 15:01:35: INFO: PMT: pid: 49 PCR
+Nov 11 15:01:35: INFO: AUDIO: pid: 1041 type: MPEG-1 audio, ISO/IEC 11172-3 (0x03)
+Nov 11 15:01:35: INFO: AUDIO: Language: spa
+Nov 11 15:01:35: INFO: PMT: crc32: 0x582D5B3
+Nov 11 15:01:35: INFO: PMT: pnr: 10234
+Nov 11 15:01:35: INFO: PMT: pid: 257 PCR
+Nov 11 15:01:35: INFO: AUDIO: pid: 1051 type: MPEG-1 audio, ISO/IEC 11172-3 (0x03)
+Nov 11 15:01:35: INFO: AUDIO: Language: spa
+Nov 11 15:01:35: INFO: PMT: crc32: 0x89D5982
+Nov 11 15:01:35: INFO: PMT: pnr: 10220
+Nov 11 15:01:35: INFO: PMT: pid: 1010 PCR
+Nov 11 15:01:35: INFO: VIDEO: pid: 1010 type: MPEG-4 AVC/H.264, ISO/IEC 14496-10 (0x1B)
+Nov 11 15:01:35: INFO: VIDEO: descriptor: 0x28046400283F
+Nov 11 15:01:35: INFO: AUDIO: pid: 1011 type: Private PES, ISO/IEC 13818-1 (0x06)
+Nov 11 15:01:35: INFO: AUDIO: Type: AC3, component_type: 66, mainid: 0
+Nov 11 15:01:35: INFO: AUDIO: descriptor: 0x050441432D33
+Nov 11 15:01:35: INFO: AUDIO: Language: spa
+Nov 11 15:01:35: INFO: AUDIO: pid: 1012 type: Private PES, ISO/IEC 13818-1 (0x06)
+Nov 11 15:01:35: INFO: AUDIO: Type: AC3, component_type: 66, mainid: 0
+Nov 11 15:01:35: INFO: AUDIO: descriptor: 0x050441432D33
+Nov 11 15:01:35: INFO: AUDIO: Language: qaa
+Nov 11 15:01:35: INFO: AUDIO: pid: 1013 type: Private PES, ISO/IEC 13818-1 (0x06)
+Nov 11 15:01:35: INFO: AUDIO: Type: AC3, component_type: 64, mainid: 0
+Nov 11 15:01:35: INFO: AUDIO: descriptor: 0x050441432D33
+Nov 11 15:01:35: INFO: AUDIO: Language: spa
+Nov 11 15:01:35: INFO: SUB: pid: 1014 type: Private PES, ISO/IEC 13818-1 (0x06)
+Nov 11 15:01:35: INFO: SUB: type: teletext
+Nov 11 15:01:35: INFO: SUB:    page: 001 (subtitle page), language: spa
+Nov 11 15:01:35: INFO: SUB:    page: 101 (subtitle page), language: ast
+Nov 11 15:01:35: INFO: SUB:    page: 201 (subtitle page), language: eng
+Nov 11 15:01:35: INFO: DATA: pid: 1015 type: Private sections, ISO/IEC 13818-1 (0x05)
+Nov 11 15:01:35: INFO: DATA: descriptor: 0x6F030010E0
+Nov 11 15:01:35: INFO: PMT: crc32: 0xEC040C1E
+Nov 11 15:01:36: INFO: Bitrate: 19951 Kbit/s
+Nov 11 15:01:36: ERROR: CC: PID:1010=1 PID:1012=1 PID:1013=1 PID:1019=1 PID:1020=1 PID:1021=1 PID:1022=1 PID:1023=1 PID:1025=1 PID:1029=1 PID:1041=1 PID:1049=1 PID:1051=1 PID:1059=1 
+Nov 11 15:01:36: INFO: SDT: tsid: 5200
+Nov 11 15:01:36: INFO: SDT: sid: 10220
+Nov 11 15:01:36: INFO: SDT:    Service: A7
+Nov 11 15:01:36: INFO: SDT:    Provider: TPA
+Nov 11 15:01:36: INFO: SDT: sid: 10225
+Nov 11 15:01:36: INFO: SDT:    Service: A8
+Nov 11 15:01:36: INFO: SDT:    Provider: TPA
+Nov 11 15:01:36: INFO: SDT: sid: 10234
+Nov 11 15:01:36: INFO: SDT:    Service: R. Langreo
+Nov 11 15:01:36: INFO: SDT:    Provider: TPA
+Nov 11 15:01:36: INFO: SDT: sid: 10235
+Nov 11 15:01:36: INFO: SDT:    Service: RPA
+Nov 11 15:01:36: INFO: SDT:    Provider: TPA
+Nov 11 15:01:36: INFO: SDT: crc32: 0xDF25A2A1
+Nov 11 15:01:37: INFO: Bitrate: 20996 Kbit/s
+Nov 11 15:01:37: ERROR: CC: PID:17=1 PID:1015=1 PID:1026=1 
+Nov 11 15:01:38: INFO: Bitrate: 19687 Kbit/s
+Nov 11 15:01:39: INFO: Bitrate: 19951 Kbit/s
+Nov 11 15:01:40: INFO: Bitrate: 19719 Kbit/s
+Nov 11 15:01:41: INFO: Bitrate: 20471 Kbit/s
+Nov 11 15:01:42: INFO: Bitrate: 19817 Kbit/s
+Nov 11 15:01:42: ERROR: CC: PID:16=1 
+Nov 11 15:01:43: INFO: Bitrate: 19097 Kbit/s
+Nov 11 15:01:44: INFO: Bitrate: 20474 Kbit/s
+Nov 11 15:01:45: INFO: Bitrate: 20275 Kbit/s
+Nov 11 15:01:46: INFO: Bitrate: 19624 Kbit/s
+Nov 11 15:01:47: INFO: Bitrate: 19588 Kbit/s
+Nov 11 15:01:48: INFO: Bitrate: 19850 Kbit/s
+Nov 11 15:01:49: INFO: Bitrate: 19882 Kbit/s
+Nov 11 15:01:50: INFO: Bitrate: 20802 Kbit/s
+Nov 11 15:01:51: INFO: Bitrate: 19163 Kbit/s
+Nov 11 15:01:52: INFO: Bitrate: 19981 Kbit/s
+Nov 11 15:01:53: INFO: Bitrate: 19950 Kbit/s
+Nov 11 15:01:54: INFO: Bitrate: 20603 Kbit/s
+Nov 11 15:01:55: INFO: Bitrate: 19619 Kbit/s
+Nov 11 15:01:56: INFO: Bitrate: 19656 Kbit/s
+Nov 11 15:01:57: INFO: Bitrate: 20470 Kbit/s
+Nov 11 15:01:58: INFO: Bitrate: 19455 Kbit/s
+Nov 11 15:01:59: INFO: Bitrate: 19786 Kbit/s
+Nov 11 15:02:00: INFO: Bitrate: 20668 Kbit/s
+Nov 11 15:02:01: INFO: Bitrate: 19423 Kbit/s
+Nov 11 15:02:02: INFO: Bitrate: 19458 Kbit/s
+Nov 11 15:02:03: INFO: Bitrate: 19456 Kbit/s
+Nov 11 15:02:04: INFO: [main] shutting down

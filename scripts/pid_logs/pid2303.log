@@ -1,55 +1,63 @@
-Oct 14 16:51:35: INFO: Starting Astra SM 0.2
-Oct 14 16:51:36: INFO: Bitrate: 0 Kbit/s
-Oct 14 16:51:36: INFO: PAT: tsid: 5200
-Oct 14 16:51:36: INFO: PAT: pid: 16 NIT
-Oct 14 16:51:36: INFO: PAT: pid: 1019 PMT pnr: 10220
-Oct 14 16:51:36: INFO: PAT: crc32: 0xB0D274CF
-Oct 14 16:51:36: INFO: PMT: pnr: 10220
-Oct 14 16:51:36: INFO: PMT: pid: 1010 PCR
-Oct 14 16:51:36: INFO: VIDEO: pid: 1010 type: MPEG-2 video, ISO/IEC 13818-2 (0x02)
-Oct 14 16:51:36: INFO: VIDEO: descriptor: 0x02031A4840
-Oct 14 16:51:36: INFO: AUDIO: pid: 1011 type: MPEG-1 audio, ISO/IEC 11172-3 (0x03)
-Oct 14 16:51:36: INFO: AUDIO: Language: spa
-Oct 14 16:51:36: INFO: SUB: pid: 1014 type: Private PES, ISO/IEC 13818-1 (0x06)
-Oct 14 16:51:36: INFO: SUB: type: teletext
-Oct 14 16:51:36: INFO: SUB:    page: 001 (subtitle page), language: spa
-Oct 14 16:51:36: INFO: SUB:    page: 101 (subtitle page), language: ast
-Oct 14 16:51:36: INFO: SUB:    page: 201 (subtitle page), language: eng
-Oct 14 16:51:36: INFO: PMT: crc32: 0xF38FAFF9
-Oct 14 16:51:37: INFO: Bitrate: 2519 Kbit/s
-Oct 14 16:51:37: ERROR: CC: PID:0=1 PID:1=1 PID:1010=1 PID:1011=1 PID:1014=1 PID:1019=1 
-Oct 14 16:51:37: INFO: SDT: tsid: 5200
-Oct 14 16:51:37: INFO: SDT: sid: 10220
-Oct 14 16:51:37: INFO: SDT:    Service: A7
-Oct 14 16:51:37: INFO: SDT:    Provider: TPA
-Oct 14 16:51:37: INFO: SDT: sid: 10225
-Oct 14 16:51:37: INFO: SDT:    Service: A8
-Oct 14 16:51:37: INFO: SDT:    Provider: TPA
-Oct 14 16:51:37: INFO: SDT: sid: 10234
-Oct 14 16:51:37: INFO: SDT:    Service: R. Langreo
-Oct 14 16:51:37: INFO: SDT:    Provider: TPA
-Oct 14 16:51:37: INFO: SDT: sid: 10235
-Oct 14 16:51:37: INFO: SDT:    Service: RPA
-Oct 14 16:51:37: INFO: SDT:    Provider: TPA
-Oct 14 16:51:37: INFO: SDT: crc32: 0xDF25A2A1
-Oct 14 16:51:38: INFO: Bitrate: 3078 Kbit/s
-Oct 14 16:51:38: ERROR: CC: PID:17=1 
-Oct 14 16:51:39: INFO: Bitrate: 2553 Kbit/s
-Oct 14 16:51:40: INFO: Bitrate: 3013 Kbit/s
-Oct 14 16:51:41: INFO: Bitrate: 2849 Kbit/s
-Oct 14 16:51:42: INFO: Bitrate: 3831 Kbit/s
-Oct 14 16:51:43: INFO: Bitrate: 3047 Kbit/s
-Oct 14 16:51:44: INFO: Bitrate: 3078 Kbit/s
-Oct 14 16:51:45: INFO: Bitrate: 2554 Kbit/s
-Oct 14 16:51:46: INFO: Bitrate: 2552 Kbit/s
-Oct 14 16:51:47: INFO: Bitrate: 2588 Kbit/s
-Oct 14 16:51:48: INFO: Bitrate: 3109 Kbit/s
-Oct 14 16:51:49: INFO: Bitrate: 3833 Kbit/s
-Oct 14 16:51:50: INFO: Bitrate: 2454 Kbit/s
-Oct 14 16:51:51: INFO: Bitrate: 3079 Kbit/s
-Oct 14 16:51:52: INFO: Bitrate: 3699 Kbit/s
-Oct 14 16:51:53: INFO: Bitrate: 2651 Kbit/s
-Oct 14 16:51:54: INFO: Bitrate: 2554 Kbit/s
-Oct 14 16:51:55: INFO: Bitrate: 2915 Kbit/s
-Oct 14 16:51:56: INFO: Bitrate: 3209 Kbit/s
-Oct 14 16:51:57: INFO: [main] shutting down
+Nov 11 15:10:49: INFO: Starting Astra SM 0.2
+Nov 11 15:10:49: INFO: PAT: tsid: 5200
+Nov 11 15:10:49: INFO: PAT: pid: 16 NIT
+Nov 11 15:10:49: INFO: PAT: pid: 1019 PMT pnr: 10220
+Nov 11 15:10:49: INFO: PAT: crc32: 0xB0D274CF
+Nov 11 15:10:49: INFO: SDT: tsid: 5200
+Nov 11 15:10:49: INFO: SDT: sid: 10220
+Nov 11 15:10:49: INFO: SDT:    Service: A7
+Nov 11 15:10:49: INFO: SDT:    Provider: TPA
+Nov 11 15:10:49: INFO: SDT: sid: 10225
+Nov 11 15:10:49: INFO: SDT:    Service: A8
+Nov 11 15:10:49: INFO: SDT:    Provider: TPA
+Nov 11 15:10:49: INFO: SDT: sid: 10234
+Nov 11 15:10:49: INFO: SDT:    Service: R. Langreo
+Nov 11 15:10:49: INFO: SDT:    Provider: TPA
+Nov 11 15:10:49: INFO: SDT: sid: 10235
+Nov 11 15:10:49: INFO: SDT:    Service: RPA
+Nov 11 15:10:49: INFO: SDT:    Provider: TPA
+Nov 11 15:10:49: INFO: SDT: crc32: 0xDF25A2A1
+Nov 11 15:10:50: INFO: Bitrate: 1109 Kbit/s
+Nov 11 15:10:50: INFO: PMT: pnr: 10220
+Nov 11 15:10:50: INFO: PMT: pid: 1010 PCR
+Nov 11 15:10:50: INFO: VIDEO: pid: 1010 type: MPEG-2 video, ISO/IEC 13818-2 (0x02)
+Nov 11 15:10:50: INFO: VIDEO: descriptor: 0x02031A4840
+Nov 11 15:10:50: INFO: AUDIO: pid: 1011 type: MPEG-1 audio, ISO/IEC 11172-3 (0x03)
+Nov 11 15:10:50: INFO: AUDIO: Language: spa
+Nov 11 15:10:50: INFO: SUB: pid: 1014 type: Private PES, ISO/IEC 13818-1 (0x06)
+Nov 11 15:10:50: INFO: SUB: type: teletext
+Nov 11 15:10:50: INFO: SUB:    page: 001 (subtitle page), language: spa
+Nov 11 15:10:50: INFO: SUB:    page: 101 (subtitle page), language: ast
+Nov 11 15:10:50: INFO: SUB:    page: 201 (subtitle page), language: eng
+Nov 11 15:10:50: INFO: PMT: crc32: 0xF38FAFF9
+Nov 11 15:10:51: INFO: Bitrate: 3602 Kbit/s
+Nov 11 15:10:51: ERROR: CC: PID:1010=1 PID:1014=1 PID:1019=1 
+Nov 11 15:10:52: INFO: Bitrate: 3373 Kbit/s
+Nov 11 15:10:53: INFO: Bitrate: 2489 Kbit/s
+Nov 11 15:10:54: INFO: Bitrate: 2586 Kbit/s
+Nov 11 15:10:55: INFO: Bitrate: 2553 Kbit/s
+Nov 11 15:10:56: INFO: Bitrate: 3732 Kbit/s
+Nov 11 15:10:57: INFO: Bitrate: 3274 Kbit/s
+Nov 11 15:10:57: ERROR: CC: PID:16=1 
+Nov 11 15:10:58: INFO: Bitrate: 2322 Kbit/s
+Nov 11 15:10:59: INFO: Bitrate: 3864 Kbit/s
+Nov 11 15:11:00: INFO: Bitrate: 2260 Kbit/s
+Nov 11 15:11:01: INFO: Bitrate: 3307 Kbit/s
+Nov 11 15:11:02: INFO: Bitrate: 2488 Kbit/s
+Nov 11 15:11:03: INFO: Bitrate: 3406 Kbit/s
+Nov 11 15:11:04: INFO: Bitrate: 3306 Kbit/s
+Nov 11 15:11:05: INFO: Bitrate: 3309 Kbit/s
+Nov 11 15:11:06: INFO: Bitrate: 2224 Kbit/s
+Nov 11 15:11:07: INFO: Bitrate: 2620 Kbit/s
+Nov 11 15:11:08: INFO: Bitrate: 3308 Kbit/s
+Nov 11 15:11:09: INFO: Bitrate: 3372 Kbit/s
+Nov 11 15:11:10: INFO: Bitrate: 2323 Kbit/s
+Nov 11 15:11:11: INFO: Bitrate: 3570 Kbit/s
+Nov 11 15:11:12: INFO: Bitrate: 3536 Kbit/s
+Nov 11 15:11:13: INFO: Bitrate: 2324 Kbit/s
+Nov 11 15:11:14: INFO: Bitrate: 3273 Kbit/s
+Nov 11 15:11:15: INFO: Bitrate: 2554 Kbit/s
+Nov 11 15:11:16: INFO: Bitrate: 2520 Kbit/s
+Nov 11 15:11:17: INFO: Bitrate: 3569 Kbit/s
+Nov 11 15:11:18: INFO: Bitrate: 3635 Kbit/s
+Nov 11 15:11:19: INFO: [main] shutting down
