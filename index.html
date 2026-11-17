@@ -19,39 +19,154 @@
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
 
     <style>
-        body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #030712; color: #f3f4f6; }
-        .code-font { font-family: 'JetBrains Mono', monospace; }
-        .glass-card { background: rgba(17, 24, 39, 0.75); backdrop-filter: blur(16px); border: 1px solid rgba(255, 255, 255, 0.08); transition: transform 0.2s ease, box-shadow 0.2s ease; }
-        .glass-card:hover { border-color: rgba(59, 130, 246, 0.3); box-shadow: 0 10px 40px -10px rgba(0,0,0,0.5); }
-        .glass-nav { background: rgba(3, 7, 18, 0.85); backdrop-filter: blur(20px); border-bottom: 1px solid rgba(255, 255, 255, 0.08); }
-        ::-webkit-scrollbar { width: 8px; height: 8px; }
-        ::-webkit-scrollbar-track { background: #030712; }
-        ::-webkit-scrollbar-thumb { background: #1f2937; border-radius: 4px; }
-        ::-webkit-scrollbar-thumb:hover { background: #3b82f6; }
+        /* ── Design tokens ─────────────────────────────────────── */
+        :root {
+            --surface: #030712;
+            --card: rgba(15, 23, 42, 0.74);
+            --line: rgba(148, 163, 184, 0.14);
+            --line-bright: rgba(96, 165, 250, 0.38);
+            --accent: #3b82f6;
+            --accent-2: #6366f1;
+            --accent-3: #22d3ee;
+            --shadow: 0 24px 60px -34px rgba(0, 0, 0, 0.95);
+        }
+
+        html { color-scheme: dark; background: var(--surface); scroll-behavior: smooth; }
+        body { font-family: 'Plus Jakarta Sans', sans-serif; color: #f3f4f6; background: transparent; }
+        [x-cloak] { display: none !important; }
+        ::selection { background: rgba(59, 130, 246, 0.45); color: #fff; }
+
+        /* ── Ambient page surface ─────────────────────────────── */
+        .page-surface { position: relative; isolation: isolate; min-height: 100vh; }
+        .page-surface::before {
+            content: ''; position: fixed; inset: 0; z-index: -1; pointer-events: none;
+            background:
+                radial-gradient(900px 520px at 8% -10%, rgba(37, 99, 235, 0.25), transparent 65%),
+                radial-gradient(760px 520px at 92% 2%, rgba(99, 102, 241, 0.20), transparent 62%),
+                radial-gradient(620px 520px at 50% 112%, rgba(6, 182, 212, 0.08), transparent 65%),
+                linear-gradient(rgba(148, 163, 184, 0.045) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(148, 163, 184, 0.045) 1px, transparent 1px);
+            background-size: auto, auto, auto, 52px 52px, 52px 52px;
+            -webkit-mask-image: linear-gradient(to bottom, #000 0%, #000 55%, transparent 100%);
+            mask-image: linear-gradient(to bottom, #000 0%, #000 55%, transparent 100%);
+        }
+        .page-surface::after {
+            content: ''; position: fixed; z-index: -1; right: -170px; top: 30%;
+            width: 440px; height: 440px; border-radius: 9999px; pointer-events: none;
+            background: radial-gradient(circle, rgba(59, 130, 246, 0.16), transparent 70%);
+            filter: blur(24px); animation: floatGlow 16s ease-in-out infinite alternate;
+        }
+
+        /* ── Glass surfaces & header ──────────────────────────── */
+        .glass-nav { background: rgba(3, 7, 18, 0.80); backdrop-filter: blur(22px) saturate(140%); border-bottom: 1px solid rgba(148, 163, 184, 0.13); box-shadow: 0 12px 40px -28px rgba(0, 0, 0, 0.95); }
+        .glass-card {
+            position: relative; background: linear-gradient(155deg, rgba(30, 41, 59, 0.82), rgba(15, 23, 42, 0.64));
+            border: 1px solid var(--line); box-shadow: var(--shadow), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(18px); transition: transform .25s ease, border-color .25s ease, box-shadow .25s ease;
+        }
+        .glass-card::before {
+            content: ''; position: absolute; inset: 0; border-radius: inherit; padding: 1px; pointer-events: none;
+            background: linear-gradient(135deg, rgba(96, 165, 250, .30), transparent 34%, transparent 70%, rgba(99, 102, 241, .20));
+            -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+            -webkit-mask-composite: xor; mask-composite: exclude;
+        }
+        .glass-card:hover { transform: translateY(-2px); border-color: var(--line-bright); box-shadow: 0 30px 70px -36px #000, 0 0 0 1px rgba(59, 130, 246, .07), inset 0 1px 0 rgba(255, 255, 255, .09); }
+        .brand-mark { position: relative; isolation: isolate; box-shadow: 0 12px 30px -12px rgba(59, 130, 246, .75), inset 0 1px 0 rgba(255, 255, 255, .28); }
+        .brand-mark::after { content: ''; position: absolute; inset: -5px; border-radius: inherit; border: 1px solid rgba(96, 165, 250, .4); animation: ringPulse 3.2s ease-out infinite; }
+        .brand-title { background: linear-gradient(100deg, #fff 8%, #e2e8f0 45%, #60a5fa 92%); -webkit-background-clip: text; background-clip: text; color: transparent; }
+        .live-dot { position: relative; }
+        .live-dot::after { content: ''; position: absolute; inset: -4px; border-radius: 9999px; border: 1px solid rgba(52, 211, 153, .65); animation: ringPulse 2.2s ease-out infinite; }
+
+        /* ── Buttons, fields & chips ──────────────────────────── */
+        .nav-btn, .primary-btn, .ghost-btn, .icon-btn { position: relative; overflow: hidden; }
+        .nav-btn { border: 1px solid var(--line); background: rgba(15, 23, 42, .72); box-shadow: inset 0 1px 0 rgba(255, 255, 255, .05); }
+        .primary-btn { border: 1px solid rgba(147, 197, 253, .35); background: linear-gradient(120deg, #2563eb, #4f46e5); box-shadow: 0 14px 30px -14px rgba(59, 130, 246, .8), inset 0 1px 0 rgba(255, 255, 255, .22); }
+        .ghost-btn { border: 1px solid var(--line); background: rgba(15, 23, 42, .6); }
+        .nav-btn::after, .primary-btn::after, .ghost-btn::after, .icon-btn::after {
+            content: ''; position: absolute; inset: 0; pointer-events: none;
+            background: linear-gradient(110deg, transparent 32%, rgba(255, 255, 255, .16), transparent 68%);
+            transform: translateX(-130%); transition: transform .55s ease;
+        }
+        .nav-btn:hover::after, .primary-btn:hover::after, .ghost-btn:hover::after, .icon-btn:hover::after { transform: translateX(130%); }
+        .icon-btn { display: inline-flex; align-items: center; justify-content: center; border: 1px solid var(--line); background: rgba(15, 23, 42, .75); }
+        .icon-btn:disabled { opacity: .3; cursor: not-allowed; }
+        .icon-btn:disabled::after { display: none; }
+
+        .page-surface input:not(.search-input), .page-surface select, .page-surface textarea {
+            border-radius: 12px !important; border: 1px solid rgba(148, 163, 184, .17) !important;
+            background: rgba(2, 6, 23, .74) !important; box-shadow: inset 0 1px 0 rgba(255, 255, 255, .025);
+            transition: border-color .2s ease, box-shadow .2s ease, background .2s ease;
+        }
+        .page-surface input:not(.search-input):hover, .page-surface select:hover, .page-surface textarea:hover { border-color: rgba(148, 163, 184, .32) !important; background: rgba(2, 6, 23, .9) !important; }
+        .page-surface input:not(.search-input):focus, .page-surface select:focus, .page-surface textarea:focus {
+            outline: none !important; border-color: rgba(59, 130, 246, .68) !important; background: rgba(2, 6, 23, .95) !important;
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, .15), inset 0 1px 0 rgba(255, 255, 255, .04) !important;
+        }
+        .page-surface ::placeholder { color: #64748b; }
+
+        .chip { display: inline-flex; align-items: center; gap: .4rem; padding: .3rem .65rem; border-radius: 9999px; border: 1px solid var(--line); background: rgba(15, 23, 42, .8); color: #cbd5e1; font-size: 10px; font-weight: 800; letter-spacing: .05em; }
+        .stat-card { overflow: hidden; }
+        .stat-watermark { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; pointer-events: none; opacity: .06; transition: opacity .5s ease; }
+        .stat-watermark i { font-size: clamp(2.75rem, 5.5vw, 4.5rem); transition: transform .5s ease; }
+        .stat-card:hover .stat-watermark { opacity: .12; }
+        .stat-card:hover .stat-watermark i { transform: scale(1.1); }
+        .stat-card::after { content: ''; position: absolute; left: 12%; right: 12%; bottom: 0; height: 2px; border-radius: 9999px; background: linear-gradient(90deg, transparent, var(--stat-color, #3b82f6), transparent); opacity: .75; }
+        .stat-icon { display: inline-flex; align-items: center; justify-content: center; width: 38px; height: 38px; border-radius: 12px; background: color-mix(in srgb, var(--stat-color, #3b82f6) 16%, transparent); border: 1px solid color-mix(in srgb, var(--stat-color, #3b82f6) 32%, transparent); }
+        .search-shell { transition: border-color .2s ease, box-shadow .2s ease, background .2s ease; }
+        .search-shell:focus-within { border-color: rgba(59, 130, 246, .55); box-shadow: 0 0 0 4px rgba(59, 130, 246, .12), inset 0 1px 0 rgba(255, 255, 255, .05); background: rgba(15, 23, 42, .9); }
+        .search-input { background: transparent; }
+        .search-input:focus { outline: none; }
+        .search-hint { display: inline-flex; align-items: center; justify-content: center; min-width: 1.6rem; height: 1.6rem; border-radius: 6px; border: 1px solid var(--line); background: rgba(2, 6, 23, .7); color: #64748b; font-size: 10px; font-weight: 800; }
+
+        .data-table thead th { background: linear-gradient(180deg, rgba(15, 23, 42, .96), rgba(2, 6, 23, .85)); }
+        .data-table tbody tr { transition: background .2s ease, box-shadow .2s ease; }
+        .data-table tbody tr:hover { background: rgba(30, 41, 59, .55); }
+        .section-eyebrow { display: inline-flex; align-items: center; gap: .55rem; font-size: 10px; font-weight: 800; letter-spacing: .2em; text-transform: uppercase; color: #60a5fa; }
+        .section-eyebrow::before { content: ''; width: 22px; height: 1px; background: linear-gradient(90deg, #3b82f6, transparent); }
+
+        .animate-in { animation: fadeUp .5s cubic-bezier(.22, 1, .36, 1) both; }
+        .stagger-1 { animation-delay: 60ms; } .stagger-2 { animation-delay: 120ms; }
+        .stagger-3 { animation-delay: 180ms; } .stagger-4 { animation-delay: 240ms; }
+        .skeleton { background: linear-gradient(90deg, rgba(30, 41, 59, .6), rgba(51, 65, 85, .55), rgba(30, 41, 59, .6)); background-size: 200% 100%; animation: shimmer 1.6s linear infinite; }
 
         /* ── PID / SID display animations ─────────────────────── */
         .pid-row { animation: pidSlideIn 0.3s cubic-bezier(0.21, 1.02, 0.73, 1) both; }
         @keyframes pidSlideIn { from { opacity: 0; transform: translateX(-8px); } to { opacity: 1; transform: translateX(0); } }
         .sid-badge { animation: sidPop 0.35s cubic-bezier(0.34, 1.56, 0.64, 1) both; }
         @keyframes sidPop { from { opacity: 0; transform: scale(0.85); } to { opacity: 1; transform: scale(1); } }
+        @keyframes ringPulse { 0% { transform: scale(.92); opacity: .75; } 100% { transform: scale(1.35); opacity: 0; } }
+        @keyframes floatGlow { 0% { transform: translate3d(0, -4%, 0) scale(1); } 100% { transform: translate3d(-8%, 8%, 0) scale(1.18); } }
+        @keyframes fadeUp { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes shimmer { from { background-position: 200% 0; } to { background-position: -200% 0; } }
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after { animation-duration: .001ms !important; animation-iteration-count: 1 !important; transition-duration: .001ms !important; scroll-behavior: auto !important; }
+        }
+
+        /* ── Scrollbars ───────────────────────────────────────── */
+        ::-webkit-scrollbar { width: 9px; height: 9px; }
+        ::-webkit-scrollbar-track { background: #030712; }
+        ::-webkit-scrollbar-thumb { background: #1f2937; border: 2px solid #030712; border-radius: 9999px; }
+        ::-webkit-scrollbar-thumb:hover { background: #3b82f6; }
     </style>
 </head>
-<body x-data="appData()" x-init="init()" class="min-h-screen bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-blue-950/40 via-slate-950 to-black antialiased selection:bg-blue-500 selection:text-white pb-20">
+<body x-data="appData()" x-init="init()"
+      @keydown.window="if ($event.key === '/' && !['INPUT', 'TEXTAREA'].includes($event.target.tagName)) { $event.preventDefault(); $refs.searchInput.focus(); }"
+      class="min-h-screen page-surface antialiased selection:bg-blue-500 selection:text-white pb-20">
 
     <header class="sticky top-0 z-40 glass-nav shadow-lg shadow-black/50">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
             <div class="flex items-center gap-4">
-                <div class="relative flex items-center justify-center w-12 h-12 rounded-2xl bg-gradient-to-tr from-blue-600 to-indigo-500 text-white shadow-[0_0_20px_rgba(59,130,246,0.4)] border border-blue-400/30">
+                <div class="brand-mark relative flex items-center justify-center w-12 h-12 rounded-2xl bg-gradient-to-tr from-blue-600 to-indigo-500 text-white border border-blue-400/30">
                     <i class="fa-solid fa-satellite-dish text-xl"></i>
                 </div>
                 <div>
-                    <h1 class="text-xl font-extrabold tracking-tight bg-gradient-to-r from-white via-slate-200 to-blue-400 bg-clip-text text-transparent">
+                    <h1 class="brand-title text-xl font-extrabold tracking-tight">
                         Hispasat 30.0°W - Abertis & Cellnex Package
                     </h1>
                     <p class="text-xs text-slate-400 font-medium flex items-center gap-2">
                         <span>SAT Chart</span>
                         <span class="inline-block w-1 h-1 rounded-full bg-slate-600"></span>
-                        <span class="text-emerald-400 drop-shadow-[0_0_5px_rgba(52,211,153,0.5)]">Live Sync</span>
+                        <span class="live-dot text-emerald-400 drop-shadow-[0_0_5px_rgba(52,211,153,0.5)]">Live Sync</span>
                     </p>
                 </div>
             </div>
@@ -60,10 +175,10 @@
 				<a href="https://github.com/abertis-dtt/abertis-dtt.github.io" target="_blank" rel="noopener noreferrer"
 				title="View source on GitHub"
 				aria-label="GitHub repository"
-				class="w-10 h-10 flex items-center justify-center rounded-2xl bg-slate-800/80 hover:bg-slate-700 text-slate-300 hover:text-white text-lg border border-slate-700 hover:border-slate-500 transition-all shadow-lg group/gh hover:shadow-[0_0_15px_rgba(148,163,184,0.35)]">
+				class="nav-btn icon-btn w-10 h-10 flex items-center justify-center rounded-2xl bg-slate-800/80 hover:bg-slate-700 text-slate-300 hover:text-white text-lg border border-slate-700 hover:border-slate-500 transition-all shadow-lg group/gh hover:shadow-[0_0_15px_rgba(148,163,184,0.35)]">
 					<i class="fa-brands fa-github group-hover/gh:scale-110 group-hover/gh:-rotate-6 transition-transform duration-200"></i>
 				</a>
-				<a href="edit.html" class="px-5 py-2.5 rounded-2xl bg-slate-800/80 hover:bg-blue-600 text-white text-xs font-bold border border-slate-700 hover:border-blue-500 transition-all flex items-center gap-2 group shadow-lg">
+				<a href="edit.html" class="nav-btn px-5 py-2.5 rounded-2xl bg-slate-800/80 hover:bg-blue-600 text-white text-xs font-bold border border-slate-700 hover:border-blue-500 transition-all flex items-center gap-2 group shadow-lg">
 					<i class="fa-solid fa-pen-to-square group-hover:scale-110 transition-transform"></i>
 					<span>Edit Data</span>
 				</a>
@@ -75,63 +190,123 @@
         <!-- Stats Grid -->
         <section class="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
             <template x-for="(stat, i) in [
-                { label: 'Transponders', val: stats.totalTxp, icon: 'fa-tower-broadcast', color: 'text-blue-400' },
-                { label: 'Streams', val: stats.totalStreams, icon: 'fa-network-wired', color: 'text-indigo-400' },
-                { label: 'TV Channels', val: stats.totalTv, icon: 'fa-tv', color: 'text-emerald-400' },
-                { label: 'Radio Stations', val: stats.totalRadio, icon: 'fa-radio', color: 'text-amber-400' }
+                { label: 'Transponders', val: stats.totalTxp, icon: 'fa-tower-broadcast', color: 'text-blue-400', accent: '#60a5fa' },
+                { label: 'Streams', val: stats.totalStreams, icon: 'fa-network-wired', color: 'text-indigo-400', accent: '#818cf8' },
+                { label: 'TV Channels', val: stats.totalTv, icon: 'fa-tv', color: 'text-emerald-400', accent: '#34d399' },
+                { label: 'Radio Stations', val: stats.totalRadio, icon: 'fa-radio', color: 'text-amber-400', accent: '#fbbf24' }
             ]">
-                <div class="glass-card rounded-3xl p-5 relative overflow-hidden group">
-                    <div class="absolute -right-4 -bottom-4 opacity-5 group-hover:opacity-10 transition-opacity transform group-hover:scale-110 duration-500">
-                        <i :class="`fa-solid ${stat.icon} text-8xl`"></i>
+                <div class="glass-card stat-card animate-in rounded-3xl p-5 relative overflow-hidden group"
+                     :style="`--stat-color: ${stat.accent}; animation-delay: ${i * 70}ms`">
+                    <div class="stat-watermark">
+                        <i :class="`fa-solid ${stat.icon}`"></i>
                     </div>
-                    <div class="text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-2 flex items-center gap-2">
-                        <i :class="`fa-solid ${stat.icon} ${stat.color}`"></i>
-                        <span x-text="stat.label"></span>
+                    <div class="relative z-10 flex items-start justify-between gap-3 mb-4">
+                        <span class="text-[11px] font-bold text-slate-400 uppercase tracking-wider pt-2" x-text="stat.label"></span>
+                        <span class="stat-icon text-lg" :class="stat.color"><i :class="`fa-solid ${stat.icon}`"></i></span>
                     </div>
-                    <div class="text-4xl font-black text-white tracking-tight drop-shadow-md" x-text="stat.val"></div>
+                    <div class="relative z-10 flex items-end justify-between gap-2">
+                        <div class="text-4xl font-black text-white tracking-tight drop-shadow-md" x-text="stat.val"></div>
+                        <span class="text-[9px] font-extrabold uppercase tracking-[0.16em] text-slate-600 mb-2">live</span>
+                    </div>
                 </div>
             </template>
         </section>
 
         <!-- Search Filters -->
-        <section class="glass-card rounded-3xl p-2 md:p-3 flex items-center bg-slate-900/80 shadow-[0_4px_20px_rgba(0,0,0,0.3)]">
+        <section class="glass-card search-shell rounded-3xl p-2 md:p-3 flex items-center bg-slate-900/60 shadow-[0_10px_30px_-18px_rgba(0,0,0,0.8)]">
             <div class="relative w-full">
-                <i class="fa-solid fa-magnifying-glass absolute left-5 top-1/2 -translate-y-1/2 text-blue-500 text-lg"></i>
-                <input type="text" x-model="search" placeholder="Search channels, PIDs, SIDs, streams, frequencies..."
-                       class="w-full pl-14 pr-4 py-4 rounded-2xl bg-transparent border-none text-slate-100 placeholder-slate-500 focus:outline-none focus:ring-0 text-sm font-medium transition-colors">
+                <i class="fa-solid fa-magnifying-glass absolute left-5 top-1/2 -translate-y-1/2 text-blue-400 text-lg drop-shadow-[0_0_8px_rgba(59,130,246,0.45)]"></i>
+                <input type="text" x-ref="searchInput" x-model="search" placeholder="Search channels, PIDs, SIDs, streams, frequencies..."
+                       class="search-input w-full pl-14 pr-28 py-4 rounded-2xl bg-transparent border-none text-slate-100 placeholder-slate-500 text-sm font-medium transition-colors">
+                <div class="absolute right-3 top-1/2 -translate-y-1/2 flex items-center gap-2">
+                    <button x-show="search" @click="search = ''; $refs.searchInput.focus()" title="Clear search"
+                            class="icon-btn w-7 h-7 rounded-lg text-slate-400 hover:text-white transition-colors">
+                        <i class="fa-solid fa-xmark text-[10px]"></i>
+                    </button>
+                    <span class="search-hint" x-show="!search" title="Press / to search">/</span>
+                </div>
             </div>
         </section>
 
         <!-- Transponders List -->
-        <div class="space-y-6">
+        <section class="space-y-6">
+            <div class="flex flex-wrap items-end justify-between gap-4 px-1">
+                <div>
+                    <span class="section-eyebrow">Satellite bundle</span>
+                    <h2 class="mt-2 text-lg font-extrabold tracking-tight text-white">Transponder directory</h2>
+                </div>
+                <div class="flex items-center gap-2">
+                    <span class="chip"><i class="fa-solid fa-layer-group text-blue-400"></i><span x-text="`${filteredData.length} shown`"></span></span>
+                    <span class="chip hidden sm:inline-flex"><i class="fa-solid fa-hand-pointer text-slate-400"></i><span>Click to expand</span></span>
+                </div>
+            </div>
+
+            <!-- Loading state -->
+            <template x-if="!rawData.length">
+                <div class="glass-card rounded-3xl p-6 space-y-4">
+                    <template x-for="n in 3" :key="n">
+                        <div class="flex items-center gap-4">
+                            <div class="skeleton w-14 h-14 rounded-2xl shrink-0"></div>
+                            <div class="flex-1 space-y-2">
+                                <div class="skeleton h-3 w-1/3 rounded-full"></div>
+                                <div class="skeleton h-2.5 w-2/3 rounded-full"></div>
+                            </div>
+                        </div>
+                    </template>
+                </div>
+            </template>
+
+            <!-- No results state -->
+            <template x-if="rawData.length && !filteredData.length">
+                <div class="glass-card rounded-3xl px-6 py-14 text-center">
+                    <div class="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-2xl bg-blue-500/10 border border-blue-500/25 text-blue-400 text-xl">
+                        <i class="fa-solid fa-magnifying-glass-circle"></i>
+                    </div>
+                    <h3 class="text-base font-extrabold text-white">No matching transponders</h3>
+                    <p class="mt-1 text-xs text-slate-400">Try a frequency, channel name, SID or PID.</p>
+                    <button @click="search = ''" class="nav-btn mt-5 px-4 py-2 rounded-xl text-xs font-bold text-slate-200">Clear search</button>
+                </div>
+            </template>
+
             <template x-for="(txp, index) in filteredData" :key="index">
                 <!-- Dropdown TXP State -->
-                <div x-data="{ txpExpanded: false }" class="glass-card rounded-3xl overflow-hidden border border-slate-800/80 shadow-xl shadow-black/40">
+                <div x-data="{ txpExpanded: false }" class="glass-card animate-in rounded-3xl overflow-hidden border border-slate-800/80 shadow-xl shadow-black/40"
+                     :style="`animation-delay: ${Math.min(index, 8) * 45}ms`">
 
                     <!-- TXP Header (Clickable) -->
                     <div @click="txpExpanded = !txpExpanded"
-                         class="p-5 md:p-6 bg-gradient-to-r from-slate-900 via-slate-900/95 to-slate-800/50 border-b border-slate-800/80 flex flex-col md:flex-row md:items-center justify-between gap-4 relative overflow-hidden cursor-pointer hover:bg-slate-800/60 transition-colors group/header">
+                         class="group/header relative p-5 md:p-6 bg-gradient-to-r from-slate-900 via-slate-900/95 to-slate-800/50 border-b border-slate-800/80 flex flex-col md:flex-row md:items-center justify-between gap-4 overflow-hidden cursor-pointer transition-colors hover:bg-slate-800/55">
+                        <div class="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-blue-400/60 to-transparent"></div>
                         <div class="absolute top-0 left-0 w-1.5 h-full bg-gradient-to-b from-blue-400 to-blue-600 shadow-[0_0_15px_rgba(59,130,246,0.6)]"></div>
 
-                        <div>
-                            <div class="flex items-center gap-3 mb-2">
-                                <span class="px-3 py-1 rounded-lg bg-blue-600/20 border border-blue-500/30 text-blue-400 font-extrabold text-xs shadow-[0_0_10px_rgba(59,130,246,0.15)]" x-text="`TXP ${txp.txp_no}`"></span>
-                                <h2 class="text-xl md:text-2xl font-black text-white tracking-tight group-hover/header:text-blue-200 transition-colors" x-text="txp.freq_pol_mode"></h2>
+                        <div class="relative flex items-start gap-4">
+                            <div class="hidden sm:flex w-11 h-11 shrink-0 items-center justify-center rounded-2xl bg-blue-500/10 border border-blue-400/25 text-blue-400 shadow-[0_0_18px_rgba(59,130,246,0.18)]">
+                                <i class="fa-solid fa-satellite-dish"></i>
                             </div>
-                            <div class="flex flex-wrap items-center gap-x-5 gap-y-2 text-xs font-medium text-slate-400">
-                                <span class="flex items-center gap-2"><i class="fa-solid fa-building text-slate-500"></i> <span x-text="txp.provider"></span></span>
-                                <span class="flex items-center gap-2"><i class="fa-solid fa-wave-square text-slate-500"></i> <span class="text-slate-300 font-bold" x-text="`SR: ${txp.sr_fec}`"></span></span>
-                                <span class="flex items-center gap-2 code-font bg-slate-950/50 px-2.5 py-1 rounded-md text-slate-300 border border-slate-800" x-text="`ID: ${txp.onid_nid_tid}`"></span>
+                            <div>
+                                <div class="flex flex-wrap items-center gap-3 mb-2">
+                                    <span class="px-3 py-1 rounded-lg bg-blue-600/20 border border-blue-500/30 text-blue-400 font-extrabold text-xs shadow-[0_0_10px_rgba(59,130,246,0.15)]" x-text="`TXP ${txp.txp_no}`"></span>
+                                    <h2 class="text-xl md:text-2xl font-black text-white tracking-tight group-hover/header:text-blue-200 transition-colors" x-text="txp.freq_pol_mode"></h2>
+                                    <span class="chip text-blue-300 border-blue-500/25 bg-blue-500/10">
+                                        <i class="fa-solid fa-layer-group"></i>
+                                        <span x-text="`${(txp.streams || []).length} streams`"></span>
+                                    </span>
+                                </div>
+                                <div class="flex flex-wrap items-center gap-x-5 gap-y-2 text-xs font-medium text-slate-400">
+                                    <span class="flex items-center gap-2"><i class="fa-solid fa-building text-slate-500"></i> <span x-text="txp.provider"></span></span>
+                                    <span class="flex items-center gap-2"><i class="fa-solid fa-wave-square text-slate-500"></i> <span class="text-slate-300 font-bold" x-text="`SR: ${txp.sr_fec}`"></span></span>
+                                    <span class="flex items-center gap-2 code-font bg-slate-950/50 px-2.5 py-1 rounded-md text-slate-300 border border-slate-800" x-text="`ID: ${txp.onid_nid_tid}`"></span>
+                                </div>
                             </div>
                         </div>
 
-                        <div class="flex items-center gap-4 self-start md:self-center">
+                        <div class="relative flex items-center gap-3 self-start md:self-center">
                             <div class="text-xs font-bold text-emerald-400 bg-emerald-500/10 px-3 py-1.5 rounded-xl border border-emerald-500/20 shadow-[0_0_10px_rgba(16,185,129,0.1)] flex items-center gap-2">
                                 <i class="fa-solid fa-clock-rotate-left"></i>
                                 <span x-text="`Updated: ${txp.date}`"></span>
                             </div>
                             <!-- Expand Arrow -->
-                            <div class="w-8 h-8 flex items-center justify-center rounded-full bg-slate-800 border border-slate-700 group-hover/header:bg-slate-700 transition-colors">
+                            <div class="icon-btn w-9 h-9 rounded-full bg-slate-800 border border-slate-700 group-hover/header:bg-slate-700 transition-colors">
                                 <i class="fa-solid fa-chevron-down text-slate-400 transition-transform duration-300" :class="txpExpanded ? 'rotate-180' : ''"></i>
                             </div>
                         </div>
@@ -142,13 +317,15 @@
                         <div class="p-4 md:p-6 space-y-5 bg-slate-950/70">
                             <template x-for="(stream, sIndex) in txp.streams" :key="sIndex">
                                 <!-- Dropdown Stream State -->
-                                <div x-data="{ streamExpanded: true }" class="rounded-2xl border border-slate-800/60 bg-slate-900/40 overflow-hidden group/stream hover:border-slate-700 transition-colors shadow-lg shadow-black/20">
+                                <div x-data="{ streamExpanded: true }" class="relative rounded-2xl border border-slate-800/60 bg-slate-900/40 overflow-hidden group/stream hover:border-slate-700 transition-colors shadow-lg shadow-black/20">
+                                    <div class="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-indigo-400/40 to-transparent"></div>
 
                                     <!-- Stream Header (Clickable) -->
                                     <div @click="streamExpanded = !streamExpanded"
                                          class="px-5 py-3.5 bg-slate-900/90 border-b border-slate-800/60 flex flex-wrap items-center justify-between gap-3 cursor-pointer hover:bg-slate-800/80 transition-colors">
                                         <div class="flex items-center gap-3">
                                             <div class="w-2 h-2 rounded-full bg-indigo-500 shadow-[0_0_8px_rgba(99,102,241,0.8)]"></div>
+                                            <span class="code-font text-[9px] font-extrabold text-indigo-300/80 bg-indigo-500/10 border border-indigo-400/20 rounded-md px-1.5 py-0.5" x-text="`S${sIndex + 1}`"></span>
                                             <h3 class="font-bold text-sm text-slate-100" x-text="stream.title"></h3>
                                             <template x-if="stream.encryption">
                                                 <span class="px-2.5 py-0.5 rounded text-[10px] font-bold bg-amber-500/10 text-amber-400 border border-amber-500/20 shadow-[0_0_8px_rgba(245,158,11,0.15)] flex items-center gap-1.5 ml-2">
@@ -198,7 +375,7 @@
 
                                     <!-- Stream Body / Channels Table (Collapsible) -->
                                     <div x-show="streamExpanded" x-collapse class="overflow-x-auto">
-                                        <table class="w-full text-left text-xs whitespace-nowrap">
+                                        <table class="data-table w-full text-left text-xs whitespace-nowrap">
                                             <thead class="bg-slate-950/80 text-slate-400 uppercase font-bold tracking-wider border-b border-slate-800 text-[10px]">
                                                 <tr>
                                                     <th class="py-4 px-5 w-24"><span class="inline-flex items-center gap-1.5"><i class="fa-solid fa-shapes text-blue-500/50"></i>Type</span></th>
@@ -303,8 +480,15 @@
                     </div>
                 </div>
             </template>
-        </div>
+        </section>
     </main>
+
+    <footer class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-2 text-center">
+        <span class="inline-flex items-center gap-2 text-[11px] font-semibold text-slate-600">
+            <i class="fa-solid fa-satellite-dish text-blue-500/60"></i>
+            Hispasat 30.0°W · Abertis & Cellnex SAT Chart
+        </span>
+    </footer>
 
     <script>
         /* ═══════════════ PID / SID DISPLAY HELPERS ═══════════════ */

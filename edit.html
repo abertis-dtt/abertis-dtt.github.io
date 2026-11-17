@@ -22,39 +22,161 @@
     <script defer src="https://cdn.jsdelivr.net/npm/@alpinejs/collapse@3.x.x/dist/cdn.min.js"></script>
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
     <style>
-        body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #030712; color: #f3f4f6; }
-        .code-font { font-family: 'JetBrains Mono', monospace; }
-        .glass-card { background: rgba(17, 24, 39, 0.8); backdrop-filter: blur(16px); border: 1px solid rgba(255, 255, 255, 0.08); }
-        .glass-nav { background: rgba(3, 7, 18, 0.9); backdrop-filter: blur(20px); border-bottom: 1px solid rgba(255, 255, 255, 0.08); }
-        ::-webkit-scrollbar { width: 8px; height: 8px; }
+        /* ── Design tokens ─────────────────────────────────────── */
+        :root {
+            --surface: #030712;
+            --card: rgba(15, 23, 42, 0.74);
+            --line: rgba(148, 163, 184, 0.14);
+            --line-bright: rgba(96, 165, 250, 0.38);
+            --accent: #3b82f6;
+            --accent-2: #6366f1;
+            --accent-3: #22d3ee;
+            --shadow: 0 24px 60px -34px rgba(0, 0, 0, 0.95);
+        }
+
+        html { color-scheme: dark; background: var(--surface); scroll-behavior: smooth; }
+        body { font-family: 'Plus Jakarta Sans', sans-serif; color: #f3f4f6; background: transparent; }
+        [x-cloak] { display: none !important; }
+        ::selection { background: rgba(59, 130, 246, 0.45); color: #fff; }
+
+        /* ── Ambient page surface ─────────────────────────────── */
+        .page-surface { position: relative; isolation: isolate; min-height: 100vh; }
+        .page-surface::before {
+            content: ''; position: fixed; inset: 0; z-index: -1; pointer-events: none;
+            background:
+                radial-gradient(900px 520px at 8% -10%, rgba(37, 99, 235, 0.25), transparent 65%),
+                radial-gradient(760px 520px at 92% 2%, rgba(99, 102, 241, 0.20), transparent 62%),
+                radial-gradient(620px 520px at 50% 112%, rgba(6, 182, 212, 0.08), transparent 65%),
+                linear-gradient(rgba(148, 163, 184, 0.045) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(148, 163, 184, 0.045) 1px, transparent 1px);
+            background-size: auto, auto, auto, 52px 52px, 52px 52px;
+            -webkit-mask-image: linear-gradient(to bottom, #000 0%, #000 55%, transparent 100%);
+            mask-image: linear-gradient(to bottom, #000 0%, #000 55%, transparent 100%);
+        }
+        .page-surface::after {
+            content: ''; position: fixed; z-index: -1; right: -170px; top: 30%;
+            width: 440px; height: 440px; border-radius: 9999px; pointer-events: none;
+            background: radial-gradient(circle, rgba(59, 130, 246, 0.16), transparent 70%);
+            filter: blur(24px); animation: floatGlow 16s ease-in-out infinite alternate;
+        }
+
+        /* ── Glass surfaces & header ──────────────────────────── */
+        .glass-nav { background: rgba(3, 7, 18, 0.80); backdrop-filter: blur(22px) saturate(140%); border-bottom: 1px solid rgba(148, 163, 184, 0.13); box-shadow: 0 12px 40px -28px rgba(0, 0, 0, 0.95); }
+        .glass-card {
+            position: relative; background: linear-gradient(155deg, rgba(30, 41, 59, 0.82), rgba(15, 23, 42, 0.64));
+            border: 1px solid var(--line); box-shadow: var(--shadow), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(18px); transition: transform .25s ease, border-color .25s ease, box-shadow .25s ease;
+        }
+        .glass-card::before {
+            content: ''; position: absolute; inset: 0; border-radius: inherit; padding: 1px; pointer-events: none;
+            background: linear-gradient(135deg, rgba(96, 165, 250, .30), transparent 34%, transparent 70%, rgba(99, 102, 241, .20));
+            -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+            -webkit-mask-composite: xor; mask-composite: exclude;
+        }
+        .glass-card:hover { transform: translateY(-2px); border-color: var(--line-bright); box-shadow: 0 30px 70px -36px #000, 0 0 0 1px rgba(59, 130, 246, .07), inset 0 1px 0 rgba(255, 255, 255, .09); }
+        .modal-panel.glass-card:hover { transform: none; box-shadow: 0 40px 100px -30px rgba(0, 0, 0, .95), 0 0 0 1px rgba(59, 130, 246, .12); }
+        .brand-mark { position: relative; isolation: isolate; box-shadow: 0 12px 30px -12px rgba(59, 130, 246, .75), inset 0 1px 0 rgba(255, 255, 255, .28); }
+        .brand-mark::after { content: ''; position: absolute; inset: -5px; border-radius: inherit; border: 1px solid rgba(96, 165, 250, .4); animation: ringPulse 3.2s ease-out infinite; }
+        .brand-title { background: linear-gradient(100deg, #fff 8%, #e2e8f0 45%, #60a5fa 92%); -webkit-background-clip: text; background-clip: text; color: transparent; }
+        .live-dot { position: relative; }
+        .live-dot::after { content: ''; position: absolute; inset: -4px; border-radius: 9999px; border: 1px solid rgba(52, 211, 153, .65); animation: ringPulse 2.2s ease-out infinite; }
+
+        /* ── Buttons, fields & chips ──────────────────────────── */
+        .nav-btn, .primary-btn, .ghost-btn, .icon-btn { position: relative; overflow: hidden; }
+        .nav-btn { border: 1px solid var(--line); background: rgba(15, 23, 42, .72); box-shadow: inset 0 1px 0 rgba(255, 255, 255, .05); }
+        .primary-btn { border: 1px solid rgba(147, 197, 253, .35); background: linear-gradient(120deg, #2563eb, #4f46e5); box-shadow: 0 14px 30px -14px rgba(59, 130, 246, .8), inset 0 1px 0 rgba(255, 255, 255, .22); }
+        .ghost-btn { border: 1px solid var(--line); background: rgba(15, 23, 42, .6); }
+        .nav-btn::after, .primary-btn::after, .ghost-btn::after, .icon-btn::after {
+            content: ''; position: absolute; inset: 0; pointer-events: none;
+            background: linear-gradient(110deg, transparent 32%, rgba(255, 255, 255, .16), transparent 68%);
+            transform: translateX(-130%); transition: transform .55s ease;
+        }
+        .nav-btn:hover::after, .primary-btn:hover::after, .ghost-btn:hover::after, .icon-btn:hover::after { transform: translateX(130%); }
+        .icon-btn { display: inline-flex; align-items: center; justify-content: center; border: 1px solid var(--line); background: rgba(15, 23, 42, .75); }
+        .icon-btn:disabled { opacity: .3; cursor: not-allowed; }
+        .icon-btn:disabled::after { display: none; }
+
+        .page-surface input:not(.search-input), .page-surface select, .page-surface textarea {
+            border-radius: 12px !important; border: 1px solid rgba(148, 163, 184, .17) !important;
+            background: rgba(2, 6, 23, .74) !important; box-shadow: inset 0 1px 0 rgba(255, 255, 255, .025);
+            transition: border-color .2s ease, box-shadow .2s ease, background .2s ease;
+        }
+        .page-surface input:not(.search-input):hover, .page-surface select:hover, .page-surface textarea:hover { border-color: rgba(148, 163, 184, .32) !important; background: rgba(2, 6, 23, .9) !important; }
+        .page-surface input:not(.search-input):focus, .page-surface select:focus, .page-surface textarea:focus {
+            outline: none !important; border-color: rgba(59, 130, 246, .68) !important; background: rgba(2, 6, 23, .95) !important;
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, .15), inset 0 1px 0 rgba(255, 255, 255, .04) !important;
+        }
+        .page-surface ::placeholder { color: #64748b; }
+
+        .chip { display: inline-flex; align-items: center; gap: .4rem; padding: .3rem .65rem; border-radius: 9999px; border: 1px solid var(--line); background: rgba(15, 23, 42, .8); color: #cbd5e1; font-size: 10px; font-weight: 800; letter-spacing: .05em; }
+        .stat-card { overflow: hidden; }
+        .stat-card::after { content: ''; position: absolute; left: 12%; right: 12%; bottom: 0; height: 2px; border-radius: 9999px; background: linear-gradient(90deg, transparent, var(--stat-color, #3b82f6), transparent); opacity: .75; }
+        .stat-icon { display: inline-flex; align-items: center; justify-content: center; width: 38px; height: 38px; border-radius: 12px; background: color-mix(in srgb, var(--stat-color, #3b82f6) 16%, transparent); border: 1px solid color-mix(in srgb, var(--stat-color, #3b82f6) 32%, transparent); }
+        .search-shell { transition: border-color .2s ease, box-shadow .2s ease, background .2s ease; }
+        .search-shell:focus-within { border-color: rgba(59, 130, 246, .55); box-shadow: 0 0 0 4px rgba(59, 130, 246, .12), inset 0 1px 0 rgba(255, 255, 255, .05); background: rgba(15, 23, 42, .9); }
+        .search-input { background: transparent; }
+        .search-input:focus { outline: none; }
+        .search-hint { display: inline-flex; align-items: center; justify-content: center; min-width: 1.6rem; height: 1.6rem; border-radius: 6px; border: 1px solid var(--line); background: rgba(2, 6, 23, .7); color: #64748b; font-size: 10px; font-weight: 800; }
+
+        .data-table thead th { background: linear-gradient(180deg, rgba(15, 23, 42, .96), rgba(2, 6, 23, .85)); }
+        .data-table tbody tr { transition: background .2s ease, box-shadow .2s ease; }
+        .data-table tbody tr:hover { background: rgba(30, 41, 59, .55); }
+        .section-eyebrow { display: inline-flex; align-items: center; gap: .55rem; font-size: 10px; font-weight: 800; letter-spacing: .2em; text-transform: uppercase; color: #60a5fa; }
+        .section-eyebrow::before { content: ''; width: 22px; height: 1px; background: linear-gradient(90deg, #3b82f6, transparent); }
+
+        .animate-in { animation: fadeUp .5s cubic-bezier(.22, 1, .36, 1) both; }
+        .stagger-1 { animation-delay: 60ms; } .stagger-2 { animation-delay: 120ms; }
+        .stagger-3 { animation-delay: 180ms; } .stagger-4 { animation-delay: 240ms; }
+        .skeleton { background: linear-gradient(90deg, rgba(30, 41, 59, .6), rgba(51, 65, 85, .55), rgba(30, 41, 59, .6)); background-size: 200% 100%; animation: shimmer 1.6s linear infinite; }
+
+        /* ── PID / SID display animations ─────────────────────── */
+        .pid-row { animation: pidSlideIn 0.3s cubic-bezier(0.21, 1.02, 0.73, 1) both; }
+        @keyframes pidSlideIn { from { opacity: 0; transform: translateX(-8px); } to { opacity: 1; transform: translateX(0); } }
+        .sid-badge { animation: sidPop 0.35s cubic-bezier(0.34, 1.56, 0.64, 1) both; }
+        @keyframes sidPop { from { opacity: 0; transform: scale(0.85); } to { opacity: 1; transform: scale(1); } }
+        @keyframes ringPulse { 0% { transform: scale(.92); opacity: .75; } 100% { transform: scale(1.35); opacity: 0; } }
+        @keyframes floatGlow { 0% { transform: translate3d(0, -4%, 0) scale(1); } 100% { transform: translate3d(-8%, 8%, 0) scale(1.18); } }
+        @keyframes fadeUp { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes shimmer { from { background-position: 200% 0; } to { background-position: -200% 0; } }
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after { animation-duration: .001ms !important; animation-iteration-count: 1 !important; transition-duration: .001ms !important; scroll-behavior: auto !important; }
+        }
+
+        /* ── Scrollbars ───────────────────────────────────────── */
+        ::-webkit-scrollbar { width: 9px; height: 9px; }
         ::-webkit-scrollbar-track { background: #030712; }
-        ::-webkit-scrollbar-thumb { background: #1f2937; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb { background: #1f2937; border: 2px solid #030712; border-radius: 9999px; }
         ::-webkit-scrollbar-thumb:hover { background: #3b82f6; }
     </style>
 </head>
-<body x-data="editorApp()" x-init="init()" class="min-h-screen bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-blue-950/30 via-slate-950 to-gray-950 antialiased pb-20">
+<body x-data="editorApp()" x-init="init()" class="min-h-screen page-surface antialiased pb-20">
 
     <!-- Top Sticky Navigation Bar -->
     <header class="sticky top-0 z-40 glass-nav">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
             <div class="flex items-center gap-4">
-                <div class="flex items-center justify-center w-12 h-12 rounded-2xl bg-gradient-to-tr from-blue-600 to-indigo-600 text-white shadow-lg border border-blue-400/30">
+                <div class="brand-mark flex items-center justify-center w-12 h-12 rounded-2xl bg-gradient-to-tr from-blue-600 to-indigo-600 text-white border border-blue-400/30">
                     <i class="fa-solid fa-pen-to-square text-xl"></i>
                 </div>
                 <div>
-                    <h1 class="text-xl font-extrabold text-white tracking-tight">Transponder & PID Editor</h1>
-                    <p class="text-xs text-slate-400 font-medium">GitHub Pages PR Creator & Channel Reorder Integration</p>
+                    <h1 class="brand-title text-xl font-extrabold tracking-tight">Transponder & PID Editor</h1>
+                    <p class="mt-0.5 flex items-center gap-2 text-xs text-slate-400 font-medium">
+                        <span>GitHub Pages PR Creator &amp; Channel Reorder Integration</span>
+                        <span class="chip hidden sm:inline-flex text-emerald-300 border-emerald-500/25 bg-emerald-500/10">
+                            <span class="live-dot inline-block w-1.5 h-1.5 rounded-full bg-emerald-400"></span> Ready
+                        </span>
+                    </p>
                 </div>
             </div>
 
             <div class="flex items-center gap-3">
-                <a href="index.html" class="px-4 py-2.5 rounded-2xl bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white text-xs font-bold border border-slate-700 transition-all flex items-center gap-2">
+                <a href="index.html" class="nav-btn px-4 py-2.5 rounded-2xl bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white text-xs font-bold border border-slate-700 transition-all flex items-center gap-2">
                     <i class="fa-solid fa-arrow-left"></i><span>Back to View</span>
                 </a>
-                <button @click="downloadJson()" class="px-4 py-2.5 rounded-2xl bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-bold border border-slate-700 transition-all flex items-center gap-2">
+                <button @click="downloadJson()" class="nav-btn px-4 py-2.5 rounded-2xl bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-bold border border-slate-700 transition-all flex items-center gap-2">
                     <i class="fa-solid fa-download"></i><span>Export JSON</span>
                 </button>
-                <button @click="openPrModal = true" class="px-5 py-2.5 rounded-2xl bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white text-xs font-extrabold shadow-lg shadow-blue-500/25 border border-blue-400/30 transition-all flex items-center gap-2">
+                <button @click="openPrModal = true" class="primary-btn px-5 py-2.5 rounded-2xl hover:brightness-110 text-white text-xs font-extrabold transition-all flex items-center gap-2">
                     <i class="fa-solid fa-code-pull-request"></i><span>Create Pull Request</span>
                 </button>
             </div>
@@ -62,50 +184,77 @@
     </header>
 
     <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-6">
+        <div class="flex flex-wrap items-end justify-between gap-4 px-1">
+            <div>
+                <span class="section-eyebrow">Workspace</span>
+                <h2 class="mt-2 text-lg font-extrabold tracking-tight text-white">Dataset editor</h2>
+            </div>
+            <span class="chip">
+                <i class="fa-solid fa-database text-blue-400"></i>
+                <span x-text="`${transponders.length} transponders loaded`"></span>
+            </span>
+        </div>
+
         <!-- Control Toolbar -->
-        <div class="glass-card rounded-3xl p-4 md:p-6 flex flex-col md:flex-row items-center justify-between gap-4">
+        <div class="glass-card animate-in rounded-3xl p-4 md:p-6 flex flex-col md:flex-row items-center justify-between gap-4">
             <div class="flex items-center p-1.5 rounded-2xl bg-slate-900 border border-slate-800 w-full md:w-auto">
-                <button @click="editorMode = 'visual'" :class="editorMode === 'visual' ? 'bg-blue-600 text-white shadow' : 'text-slate-400 hover:text-slate-200'" class="px-5 py-2 rounded-xl text-xs font-bold transition-all flex items-center gap-2">
+                <button @click="editorMode = 'visual'" :class="editorMode === 'visual' ? 'primary-btn text-white' : 'text-slate-400 hover:text-slate-200'" class="px-5 py-2 rounded-xl text-xs font-bold transition-all flex items-center gap-2">
                     <i class="fa-solid fa-sitemap"></i><span>Visual Editor</span>
                 </button>
-                <button @click="syncToRawJson(); editorMode = 'raw'" :class="editorMode === 'raw' ? 'bg-blue-600 text-white shadow' : 'text-slate-400 hover:text-slate-200'" class="px-5 py-2 rounded-xl text-xs font-bold transition-all flex items-center gap-2">
+                <button @click="syncToRawJson(); editorMode = 'raw'" :class="editorMode === 'raw' ? 'primary-btn text-white' : 'text-slate-400 hover:text-slate-200'" class="px-5 py-2 rounded-xl text-xs font-bold transition-all flex items-center gap-2">
                     <i class="fa-solid fa-code"></i><span>Raw JSON Editor</span>
                 </button>
             </div>
 
-            <div x-show="editorMode === 'visual'" class="relative w-full md:w-80">
-                <i class="fa-solid fa-magnifying-glass absolute left-4 top-1/2 -translate-y-1/2 text-slate-500 text-xs"></i>
-                <input type="text" x-model="search" placeholder="Filter transponders, frequencies, PIDs..." class="w-full pl-10 pr-4 py-2.5 rounded-2xl bg-slate-900 border border-slate-800 text-xs text-slate-200 placeholder-slate-500 focus:outline-none focus:border-blue-500">
+            <div x-show="editorMode === 'visual'" class="search-shell relative w-full md:w-80 rounded-2xl bg-slate-900/60 border border-slate-800">
+                <i class="fa-solid fa-magnifying-glass absolute left-4 top-1/2 -translate-y-1/2 text-blue-400 text-xs"></i>
+                <input type="text" x-ref="filterInput" x-model="search" placeholder="Filter transponders, frequencies, PIDs..."
+                       class="search-input w-full pl-10 pr-10 py-2.5 rounded-2xl text-xs text-slate-200 placeholder-slate-500">
+                <button x-show="search" @click="search = ''; $refs.filterInput.focus()" title="Clear filter"
+                        class="icon-btn absolute right-2 top-1/2 -translate-y-1/2 w-6 h-6 rounded-lg text-slate-400 hover:text-white">
+                    <i class="fa-solid fa-xmark text-[9px]"></i>
+                </button>
             </div>
 
-            <div class="flex items-center gap-2" title="Remembered in this browser and used to stamp the 'Changed by' field.">
-                <i class="fa-solid fa-user-pen text-slate-500 text-xs"></i>
+            <div class="glass-card flex items-center gap-2 rounded-2xl px-2 py-1" title="Remembered in this browser and used to stamp the 'Changed by' field.">
+                <span class="icon-btn w-7 h-7 rounded-xl text-violet-300 shrink-0"><i class="fa-solid fa-user-pen text-[10px]"></i></span>
                 <input type="text" x-model="editorName" @input="rememberEditorName()" placeholder="Your name (change log)"
-                       class="w-full md:w-48 px-3 py-2 rounded-2xl bg-slate-900 border border-slate-800 text-xs text-violet-300 placeholder-slate-500 focus:outline-none focus:border-blue-500">
+                       class="w-full md:w-44 px-1 py-1.5 rounded-xl text-xs text-violet-300 placeholder-slate-500">
             </div>
 
-            <button x-show="editorMode === 'visual'" @click="addTransponder()" class="w-full md:w-auto px-5 py-2.5 rounded-2xl bg-emerald-600/10 hover:bg-emerald-600/20 text-emerald-400 text-xs font-bold border border-emerald-500/30 transition-all flex items-center justify-center gap-2">
+            <button x-show="editorMode === 'visual'" @click="addTransponder()" class="nav-btn w-full md:w-auto px-5 py-2.5 rounded-2xl bg-emerald-600/10 hover:bg-emerald-600/20 text-emerald-400 text-xs font-bold border border-emerald-500/30 transition-all flex items-center justify-center gap-2">
                 <i class="fa-solid fa-plus-circle"></i><span>Add Transponder</span>
             </button>
         </div>
 
         <!-- VISUAL TREE EDITOR -->
-        <div x-show="editorMode === 'visual'" class="space-y-6">
+        <div x-show="editorMode === 'visual'" x-cloak class="space-y-6">
+            <div class="flex items-center justify-between px-1 pt-2">
+                <div>
+                    <span class="section-eyebrow">Tree view</span>
+                    <h3 class="mt-1 text-sm font-extrabold text-white">Transponders</h3>
+                </div>
+                <span class="chip text-slate-400"><i class="fa-solid fa-list-tree text-blue-400"></i><span x-text="`${filteredTransponders.length} visible`"></span></span>
+            </div>
+
             <template x-for="(txp, tIdx) in filteredTransponders" :key="tIdx">
                 <!-- Wrapper for Accordion Functionality -->
-                <div x-data="{ expanded: false }" class="glass-card rounded-3xl overflow-hidden border border-slate-800 transition-all">
+                <div x-data="{ expanded: false }" class="glass-card animate-in rounded-3xl overflow-hidden border border-slate-800 transition-all"
+                     :style="`animation-delay: ${Math.min(tIdx, 8) * 45}ms`">
                     
                     <!-- Accordion Header Bar -->
-                    <div class="p-5 bg-slate-900/90 border-b border-slate-800 flex flex-col xl:flex-row xl:items-center justify-between gap-4">
-                        <div class="flex items-center gap-4 cursor-pointer w-full xl:w-auto group" @click="expanded = !expanded">
-                            <button class="w-8 h-8 rounded-full bg-slate-800 flex items-center justify-center text-slate-400 group-hover:bg-slate-700 transition-colors">
+                    <div class="relative p-5 bg-gradient-to-r from-slate-900 via-slate-900/95 to-slate-800/50 border-b border-slate-800 flex flex-col xl:flex-row xl:items-center justify-between gap-4">
+                        <div class="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-blue-400/50 to-transparent"></div>
+                        <div class="absolute top-0 left-0 w-1 h-full bg-gradient-to-b from-blue-400 to-blue-600 shadow-[0_0_15px_rgba(59,130,246,0.6)]"></div>
+                        <div class="relative flex items-center gap-4 cursor-pointer w-full xl:w-auto group" @click="expanded = !expanded">
+                            <span class="icon-btn w-8 h-8 rounded-full bg-slate-800 text-slate-400 group-hover:text-white transition-colors">
                                 <i class="fa-solid fa-chevron-down transition-transform duration-300" :class="expanded ? 'rotate-180' : ''"></i>
-                            </button>
-                            <div class="w-12 h-12 rounded-2xl bg-blue-600/20 text-blue-400 flex items-center justify-center font-black text-sm border border-blue-500/30 shrink-0">
+                            </span>
+                            <div class="brand-mark w-12 h-12 rounded-2xl bg-blue-600/20 text-blue-400 flex items-center justify-center font-black text-sm border border-blue-500/30 shrink-0">
                                 <span x-text="`T${txp.txp_no || '?'}`"></span>
                             </div>
                             <div class="space-y-1">
-                                <span class="text-[10px] font-extrabold uppercase tracking-wider text-blue-400" x-text="`Streams: ${txp.streams ? txp.streams.length : 0}`"></span>
+                                <span class="chip text-blue-300 border-blue-500/25 bg-blue-500/10" x-text="`Streams: ${txp.streams ? txp.streams.length : 0}`"></span>
                                 <h2 class="text-base font-bold text-white group-hover:text-blue-300 transition-colors" x-text="formatFreqPolMode(txp)"></h2>
                             </div>
                         </div>
@@ -155,19 +304,27 @@
 
                         <!-- Header Control Actions -->
                         <div class="flex items-center gap-2 self-end xl:self-center">
-                            <button @click="addStream(tIdx); expanded = true;" class="px-3 py-1.5 rounded-lg bg-blue-500/10 hover:bg-blue-500/20 text-blue-400 border border-blue-500/30 text-xs font-bold transition-all flex items-center gap-1">
+                            <button @click="addStream(tIdx); expanded = true;" class="nav-btn px-3 py-1.5 rounded-lg bg-blue-500/10 hover:bg-blue-500/20 text-blue-400 border border-blue-500/30 text-xs font-bold transition-all flex items-center gap-1">
                                 <i class="fa-solid fa-plus text-[10px]"></i><span>Stream</span>
                             </button>
-                            <button @click="deleteTransponder(tIdx)" class="p-1.5 px-2.5 rounded-lg bg-red-500/10 hover:bg-red-500/20 text-red-400 border border-red-500/30 transition-all text-xs">
+                            <button @click="deleteTransponder(tIdx)" class="nav-btn icon-btn p-1.5 px-2.5 rounded-lg bg-red-500/10 hover:bg-red-500/20 text-red-400 border border-red-500/30 transition-all text-xs">
                                 <i class="fa-solid fa-trash-can"></i>
                             </button>
                         </div>
                     </div>
 
                     <!-- Expandable Streams Container -->
-                    <div x-show="expanded" x-collapse class="p-6 space-y-6 bg-slate-950/40">
+                    <div x-show="expanded" x-collapse class="p-6 space-y-5 bg-slate-950/40">
                         <template x-for="(stream, sIdx) in txp.streams" :key="sIdx">
-                            <div class="rounded-2xl border border-slate-800 bg-slate-900/70 p-4 space-y-4">
+                            <div class="relative rounded-2xl border border-slate-800 bg-slate-900/70 p-4 space-y-4 overflow-hidden hover:border-slate-700 transition-colors shadow-lg shadow-black/20">
+                                <div class="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-indigo-400/40 to-transparent"></div>
+                                <div class="absolute left-0 top-0 w-1 h-full bg-gradient-to-b from-indigo-400/70 to-transparent"></div>
+                                <div class="relative flex items-center justify-between gap-2">
+                                    <span class="chip text-indigo-300 border-indigo-500/25 bg-indigo-500/10">
+                                        <i class="fa-solid fa-wave-square"></i><span x-text="`PIPE ${sIdx + 1}`"></span>
+                                    </span>
+                                    <span class="text-[9px] font-extrabold uppercase tracking-[0.18em] text-slate-600">stream settings</span>
+                                </div>
                                 <div class="grid grid-cols-1 md:grid-cols-12 gap-3 items-center">
                                     <div class="md:col-span-5">
                                         <label class="block text-[10px] font-bold text-slate-400 uppercase mb-1">Stream / Pipe Title</label>
@@ -183,16 +340,16 @@
                                     </div>
                                     <div class="md:col-span-2 flex items-center justify-end gap-2 pt-4 md:pt-0">
                                         <!-- Stream Reorder Controls -->
-                                        <button @click="moveStreamUp(tIdx, sIdx)" :disabled="sIdx === 0" class="p-1.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 disabled:opacity-30 transition-all text-xs" title="Move Stream Up">
+                                        <button @click="moveStreamUp(tIdx, sIdx)" :disabled="sIdx === 0" class="icon-btn p-1.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 transition-all text-xs" title="Move Stream Up">
                                             <i class="fa-solid fa-arrow-up text-[10px]"></i>
                                         </button>
-                                        <button @click="moveStreamDown(tIdx, sIdx)" :disabled="sIdx === txp.streams.length - 1" class="p-1.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 disabled:opacity-30 transition-all text-xs" title="Move Stream Down">
+                                        <button @click="moveStreamDown(tIdx, sIdx)" :disabled="sIdx === txp.streams.length - 1" class="icon-btn p-1.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 transition-all text-xs" title="Move Stream Down">
                                             <i class="fa-solid fa-arrow-down text-[10px]"></i>
                                         </button>
-                                        <button @click="addChannel(tIdx, sIdx)" class="px-3 py-1.5 rounded-xl bg-indigo-500/10 hover:bg-indigo-500/20 text-indigo-400 border border-indigo-500/30 text-xs font-bold transition-all flex items-center gap-1.5">
+                                        <button @click="addChannel(tIdx, sIdx)" class="nav-btn px-3 py-1.5 rounded-xl bg-indigo-500/10 hover:bg-indigo-500/20 text-indigo-400 border border-indigo-500/30 text-xs font-bold transition-all flex items-center gap-1.5">
                                             <i class="fa-solid fa-plus text-[10px]"></i><span>Channel</span>
                                         </button>
-                                        <button @click="deleteStream(tIdx, sIdx)" class="p-1.5 rounded-xl bg-red-500/10 hover:bg-red-500/20 text-red-400 border border-red-500/30 transition-all text-xs">
+                                        <button @click="deleteStream(tIdx, sIdx)" class="nav-btn icon-btn p-1.5 rounded-xl bg-red-500/10 hover:bg-red-500/20 text-red-400 border border-red-500/30 transition-all text-xs">
                                             <i class="fa-solid fa-trash-can"></i>
                                         </button>
                                     </div>
@@ -238,7 +395,7 @@
                                     <div class="col-span-2 md:col-span-4 flex items-center justify-end gap-2">
                                         <span class="text-[10px] text-slate-500 code-font truncate max-w-[13rem]" x-text="editorName.trim() ? `editing as ${editorName.trim()}` : ''"></span>
                                         <button @click="autoChangeSummary(tIdx, sIdx)"
-                                                class="px-3 py-1.5 rounded-xl bg-violet-500/10 hover:bg-violet-500/20 text-violet-300 border border-violet-500/30 text-xs font-bold transition-all flex items-center gap-1.5 shrink-0"
+                                                class="nav-btn px-3 py-1.5 rounded-xl bg-violet-500/10 hover:bg-violet-500/20 text-violet-300 border border-violet-500/30 text-xs font-bold transition-all flex items-center gap-1.5 shrink-0"
                                                 title="Diff this stream against the published sat_data.json, fill the summary automatically and stamp 'Changed by' with your name.">
                                             <i class="fa-solid fa-wand-magic-sparkles text-[10px]"></i><span>Summarize</span>
                                         </button>
@@ -246,8 +403,8 @@
                                 </div>
 
                                 <!-- Editable Channels Table with Reordering Controls -->
-                                <div x-show="stream.channels && stream.channels.length > 0" class="overflow-x-auto rounded-xl border border-slate-800/80">
-                                    <table class="w-full text-left text-xs">
+                                <div x-show="stream.channels && stream.channels.length > 0" class="overflow-x-auto rounded-xl border border-slate-800/80 shadow-lg shadow-black/20">
+                                    <table class="data-table w-full text-left text-xs">
                                         <thead class="bg-slate-950/80 text-slate-400 uppercase font-bold tracking-wider border-b border-slate-800">
                                             <tr>
                                                 <th class="py-2.5 px-3 w-28">Type</th>
@@ -278,15 +435,15 @@
                                                     <td class="py-2 px-3 text-right">
                                                         <div class="flex items-center justify-end gap-1">
                                                             <!-- Move Channel Up -->
-                                                            <button @click="moveChannelUp(tIdx, sIdx, cIdx)" :disabled="cIdx === 0" class="p-1 px-1.5 rounded-lg bg-slate-900 hover:bg-slate-800 text-slate-400 hover:text-blue-400 border border-slate-800 disabled:opacity-20 transition-all" title="Move Channel Up">
+                                                            <button @click="moveChannelUp(tIdx, sIdx, cIdx)" :disabled="cIdx === 0" class="icon-btn p-1 px-1.5 rounded-lg bg-slate-900 hover:bg-slate-800 text-slate-400 hover:text-blue-400 border border-slate-800 transition-all" title="Move Channel Up">
                                                                 <i class="fa-solid fa-arrow-up text-[10px]"></i>
                                                             </button>
                                                             <!-- Move Channel Down -->
-                                                            <button @click="moveChannelDown(tIdx, sIdx, cIdx)" :disabled="cIdx === stream.channels.length - 1" class="p-1 px-1.5 rounded-lg bg-slate-900 hover:bg-slate-800 text-slate-400 hover:text-blue-400 border border-slate-800 disabled:opacity-20 transition-all" title="Move Channel Down">
+                                                            <button @click="moveChannelDown(tIdx, sIdx, cIdx)" :disabled="cIdx === stream.channels.length - 1" class="icon-btn p-1 px-1.5 rounded-lg bg-slate-900 hover:bg-slate-800 text-slate-400 hover:text-blue-400 border border-slate-800 transition-all" title="Move Channel Down">
                                                                 <i class="fa-solid fa-arrow-down text-[10px]"></i>
                                                             </button>
                                                             <!-- Delete Channel -->
-                                                            <button @click="deleteChannel(tIdx, sIdx, cIdx)" class="p-1 px-1.5 rounded-lg text-slate-500 hover:text-red-400 hover:bg-slate-800 transition-colors" title="Delete Channel">
+                                                            <button @click="deleteChannel(tIdx, sIdx, cIdx)" class="icon-btn p-1 px-1.5 rounded-lg text-slate-500 hover:text-red-400 hover:bg-slate-800 transition-colors" title="Delete Channel">
                                                                 <i class="fa-solid fa-xmark text-xs"></i>
                                                             </button>
                                                         </div>
@@ -296,6 +453,12 @@
                                         </tbody>
                                     </table>
                                 </div>
+
+                                <div x-show="!stream.channels || !stream.channels.length" class="rounded-xl border border-dashed border-slate-700/70 bg-slate-950/30 px-4 py-6 text-center">
+                                    <i class="fa-solid fa-circle-plus mb-2 text-xl text-slate-600"></i>
+                                    <p class="text-xs font-semibold text-slate-400">No channels in this stream yet.</p>
+                                    <button @click="addChannel(tIdx, sIdx)" class="nav-btn mt-3 px-3 py-1.5 rounded-xl text-[11px] font-bold text-indigo-300">Add first channel</button>
+                                </div>
                             </div>
                         </template>
                     </div>
@@ -304,19 +467,38 @@
         </div>
 
         <!-- RAW JSON EDITOR MODE -->
-        <div x-show="editorMode === 'raw'" class="glass-card rounded-3xl p-6 space-y-4">
+        <div x-show="editorMode === 'raw'" x-cloak class="glass-card rounded-3xl p-6 space-y-4">
             <div class="flex items-center justify-between">
-                <label for="rawJsonArea" class="text-xs font-bold text-slate-300 uppercase tracking-wider flex items-center gap-2">
+                <label for="rawJsonArea" class="section-eyebrow text-xs normal-case tracking-normal">
                     <i class="fa-solid fa-code text-blue-400"></i><span>Raw JSON Code Editor</span>
                 </label>
-                <button @click="formatRawJson()" class="px-3 py-1 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs font-semibold transition-all">Format & Prettify JSON</button>
+                <button @click="formatRawJson()" class="nav-btn px-3 py-1.5 rounded-xl text-slate-300 text-xs font-semibold transition-all">
+                    <i class="fa-solid fa-wand-magic-sparkles mr-1 text-blue-400"></i>Format &amp; Prettify JSON
+                </button>
             </div>
-            <textarea id="rawJsonArea" x-model="rawJsonText" rows="28" class="w-full p-4 rounded-2xl bg-slate-950 border border-slate-800 text-xs text-slate-200 code-font focus:outline-none focus:border-blue-500 leading-relaxed"></textarea>
+            <div class="overflow-hidden rounded-2xl border border-slate-800 bg-slate-950 shadow-inner shadow-black/50">
+                <div class="flex items-center gap-2 border-b border-slate-800 bg-slate-900/80 px-4 py-2.5">
+                    <span class="w-2.5 h-2.5 rounded-full bg-rose-500/80"></span>
+                    <span class="w-2.5 h-2.5 rounded-full bg-amber-400/80"></span>
+                    <span class="w-2.5 h-2.5 rounded-full bg-emerald-400/80"></span>
+                    <span class="ml-3 code-font text-[10px] font-semibold text-slate-500">sat_data.json</span>
+                    <span class="ml-auto chip text-slate-500">JSON</span>
+                </div>
+                <textarea id="rawJsonArea" x-model="rawJsonText" rows="28" spellcheck="false"
+                          class="w-full p-4 bg-transparent border-0 text-xs text-slate-200 code-font focus:outline-none leading-relaxed resize-y"></textarea>
+            </div>
         </div>
     </main>
 
+    <footer class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-2 text-center">
+        <span class="inline-flex items-center gap-2 text-[11px] font-semibold text-slate-600">
+            <i class="fa-solid fa-shield-halved text-blue-500/60"></i>
+            Local-first editing · nothing is published until you create a pull request
+        </span>
+    </footer>
+
     <!-- GitHub Pull Request Modal Dialog -->
-    <div x-show="openPrModal" 
+    <div x-show="openPrModal" x-cloak
          x-transition:enter="transition ease-out duration-300"
          x-transition:enter-start="opacity-0"
          x-transition:enter-end="opacity-100"
@@ -326,10 +508,13 @@
          class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-md"
          style="display: none;">
         
-        <div class="glass-card rounded-3xl max-w-xl w-full p-6 space-y-6 border border-slate-700 shadow-2xl relative">
+        <div x-transition:enter="transition ease-out duration-300"
+             x-transition:enter-start="opacity-0 translate-y-3 scale-95"
+             x-transition:enter-end="opacity-100 translate-y-0 scale-100"
+             class="modal-panel glass-card rounded-3xl max-w-xl w-full p-6 space-y-6 border border-slate-700 shadow-2xl relative">
             <div class="flex items-center justify-between border-b border-slate-800 pb-4">
                 <div class="flex items-center gap-3">
-                    <div class="w-10 h-10 rounded-xl bg-blue-600/20 text-blue-400 flex items-center justify-center text-lg border border-blue-500/30">
+                    <div class="brand-mark w-10 h-10 rounded-xl bg-blue-600/20 text-blue-400 flex items-center justify-center text-lg border border-blue-500/30">
                         <i class="fa-solid fa-code-pull-request"></i>
                     </div>
                     <div>
@@ -337,7 +522,7 @@
                         <p class="text-xs text-slate-400">Propose changes directly to abertis-dtt/abertis-dtt.github.io</p>
                     </div>
                 </div>
-                <button @click="openPrModal = false" class="text-slate-400 hover:text-white text-lg">
+                <button @click="openPrModal = false" class="nav-btn icon-btn w-8 h-8 rounded-xl text-slate-400 hover:text-white text-lg">
                     <i class="fa-solid fa-xmark"></i>
                 </button>
             </div>
@@ -390,10 +575,10 @@
             </div>
 
             <div class="flex items-center justify-end gap-3 border-t border-slate-800 pt-4">
-                <button @click="openPrModal = false" class="px-4 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs font-bold transition-all">
+                <button @click="openPrModal = false" class="nav-btn px-4 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs font-bold transition-all">
                     Cancel
                 </button>
-                <button @click="submitPullRequest()" :disabled="prLoading" class="px-5 py-2 rounded-xl bg-blue-600 hover:bg-blue-500 text-white text-xs font-bold shadow-lg transition-all flex items-center gap-2">
+                <button @click="submitPullRequest()" :disabled="prLoading" class="primary-btn px-5 py-2 rounded-xl text-white text-xs font-bold transition-all flex items-center gap-2">
                     <i x-show="prLoading" class="fa-solid fa-spinner animate-spin"></i>
                     <span x-text="prLoading ? 'Processing...' : (github.token.trim() ? 'Submit Pull Request' : 'Copy JSON & Open GitHub PR')"></span>
                 </button>
