@@ -106,7 +106,7 @@
         <div class="space-y-6">
             <template x-for="(txp, index) in filteredData" :key="index">
                 <!-- Dropdown TXP State -->
-                <div x-data="{ txpExpanded: true }" class="glass-card rounded-3xl overflow-hidden border border-slate-800/80 shadow-xl shadow-black/40">
+                <div x-data="{ txpExpanded: false }" class="glass-card rounded-3xl overflow-hidden border border-slate-800/80 shadow-xl shadow-black/40">
 
                     <!-- TXP Header (Clickable) -->
                     <div @click="txpExpanded = !txpExpanded"
