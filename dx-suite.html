@@ -1,0 +1,1024 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DX Suite Generator — Hispasat 30.0°W</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: { extend: { colors: { brand: { 500: '#3b82f6', 600: '#2563eb', 700: '#1d4ed8' } } } }
+        }
+    </script>
+    <!-- FontAwesome CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <!-- ZIP packaging -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+    <!-- Alpine.js Plugins & Core -->
+    <script defer src="https://cdn.jsdelivr.net/npm/@alpinejs/collapse@3.x.x/dist/cdn.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <style>
+        /* ── Design tokens ─────────────────────────────────────── */
+        :root {
+            --surface: #030712;
+            --card: rgba(15, 23, 42, 0.74);
+            --line: rgba(148, 163, 184, 0.14);
+            --line-bright: rgba(96, 165, 250, 0.38);
+            --accent: #3b82f6;
+            --accent-2: #6366f1;
+            --accent-3: #22d3ee;
+            --shadow: 0 24px 60px -34px rgba(0, 0, 0, 0.95);
+        }
+
+        html { color-scheme: dark; background: var(--surface); scroll-behavior: smooth; }
+        body { font-family: 'Plus Jakarta Sans', sans-serif; color: #f3f4f6; background: transparent; }
+        [x-cloak] { display: none !important; }
+        ::selection { background: rgba(59, 130, 246, 0.45); color: #fff; }
+        .code-font { font-family: 'JetBrains Mono', monospace; }
+
+        /* ── Ambient page surface ─────────────────────────────── */
+        .page-surface { position: relative; isolation: isolate; min-height: 100vh; }
+        .page-surface::before {
+            content: ''; position: fixed; inset: 0; z-index: -1; pointer-events: none;
+            background:
+                radial-gradient(900px 520px at 8% -10%, rgba(37, 99, 235, 0.25), transparent 65%),
+                radial-gradient(760px 520px at 92% 2%, rgba(99, 102, 241, 0.20), transparent 62%),
+                radial-gradient(620px 520px at 50% 112%, rgba(6, 182, 212, 0.08), transparent 65%),
+                linear-gradient(rgba(148, 163, 184, 0.045) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(148, 163, 184, 0.045) 1px, transparent 1px);
+            background-size: auto, auto, auto, 52px 52px, 52px 52px;
+            -webkit-mask-image: linear-gradient(to bottom, #000 0%, #000 55%, transparent 100%);
+            mask-image: linear-gradient(to bottom, #000 0%, #000 55%, transparent 100%);
+        }
+        .page-surface::after {
+            content: ''; position: fixed; z-index: -1; right: -170px; top: 30%;
+            width: 440px; height: 440px; border-radius: 9999px; pointer-events: none;
+            background: radial-gradient(circle, rgba(59, 130, 246, 0.16), transparent 70%);
+            filter: blur(24px); animation: floatGlow 16s ease-in-out infinite alternate;
+        }
+
+        /* ── Glass surfaces & header ──────────────────────────── */
+        .glass-nav { background: rgba(3, 7, 18, 0.80); backdrop-filter: blur(22px) saturate(140%); border-bottom: 1px solid rgba(148, 163, 184, 0.13); box-shadow: 0 12px 40px -28px rgba(0, 0, 0, 0.95); }
+        .glass-card {
+            position: relative; background: linear-gradient(155deg, rgba(30, 41, 59, 0.82), rgba(15, 23, 42, 0.64));
+            border: 1px solid var(--line); box-shadow: var(--shadow), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(18px); transition: transform .25s ease, border-color .25s ease, box-shadow .25s ease;
+        }
+        .glass-card::before {
+            content: ''; position: absolute; inset: 0; border-radius: inherit; padding: 1px; pointer-events: none;
+            background: linear-gradient(135deg, rgba(96, 165, 250, .30), transparent 34%, transparent 70%, rgba(99, 102, 241, .20));
+            -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+            -webkit-mask-composite: xor; mask-composite: exclude;
+        }
+        .glass-card:hover { border-color: var(--line-bright); }
+        .brand-mark { position: relative; isolation: isolate; box-shadow: 0 12px 30px -12px rgba(59, 130, 246, .75), inset 0 1px 0 rgba(255, 255, 255, .28); }
+        .brand-mark::after { content: ''; position: absolute; inset: -5px; border-radius: inherit; border: 1px solid rgba(96, 165, 250, .4); animation: ringPulse 3.2s ease-out infinite; }
+        .brand-title { background: linear-gradient(100deg, #fff 8%, #e2e8f0 45%, #60a5fa 92%); -webkit-background-clip: text; background-clip: text; color: transparent; }
+        .live-dot { position: relative; }
+        .live-dot::after { content: ''; position: absolute; inset: -4px; border-radius: 9999px; border: 1px solid rgba(52, 211, 153, .65); animation: ringPulse 2.2s ease-out infinite; }
+
+        /* ── Buttons, fields & chips ──────────────────────────── */
+        .nav-btn, .primary-btn, .ghost-btn, .icon-btn { position: relative; overflow: hidden; }
+        .nav-btn { border: 1px solid var(--line); background: rgba(15, 23, 42, .72); box-shadow: inset 0 1px 0 rgba(255, 255, 255, .05); }
+        .primary-btn { border: 1px solid rgba(147, 197, 253, .35); background: linear-gradient(120deg, #2563eb, #4f46e5); box-shadow: 0 14px 30px -14px rgba(59, 130, 246, .8), inset 0 1px 0 rgba(255, 255, 255, .22); }
+        .ghost-btn { border: 1px solid var(--line); background: rgba(15, 23, 42, .6); }
+        .nav-btn::after, .primary-btn::after, .ghost-btn::after, .icon-btn::after {
+            content: ''; position: absolute; inset: 0; pointer-events: none;
+            background: linear-gradient(110deg, transparent 32%, rgba(255, 255, 255, .16), transparent 68%);
+            transform: translateX(-130%); transition: transform .55s ease;
+        }
+        .nav-btn:hover::after, .primary-btn:hover::after, .ghost-btn:hover::after, .icon-btn:hover::after { transform: translateX(130%); }
+        .icon-btn { display: inline-flex; align-items: center; justify-content: center; border: 1px solid var(--line); background: rgba(15, 23, 42, .75); }
+        .icon-btn:disabled { opacity: .3; cursor: not-allowed; }
+        .icon-btn:disabled::after { display: none; }
+        .primary-btn:disabled { opacity: .55; cursor: progress; }
+
+        .page-surface input:not(.search-input), .page-surface select, .page-surface textarea {
+            border-radius: 12px !important; border: 1px solid rgba(148, 163, 184, .17) !important;
+            background: rgba(2, 6, 23, .74) !important; box-shadow: inset 0 1px 0 rgba(255, 255, 255, .025);
+            transition: border-color .2s ease, box-shadow .2s ease, background .2s ease;
+            color: #e2e8f0;
+        }
+        .page-surface input:not(.search-input):hover, .page-surface select:hover, .page-surface textarea:hover { border-color: rgba(148, 163, 184, .32) !important; background: rgba(2, 6, 23, .9) !important; }
+        .page-surface input:not(.search-input):focus, .page-surface select:focus, .page-surface textarea:focus {
+            outline: none !important; border-color: rgba(59, 130, 246, .68) !important; background: rgba(2, 6, 23, .95) !important;
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, .15), inset 0 1px 0 rgba(255, 255, 255, .04) !important;
+        }
+        .page-surface input:disabled, .page-surface select:disabled { opacity: .55; cursor: not-allowed; }
+        .page-surface ::placeholder { color: #64748b; }
+        .page-surface input[type="file"] { padding: .55rem .75rem; font-size: 11px; color: #94a3b8; }
+        .page-surface input[type="file"]::file-selector-button {
+            margin-right: .75rem; padding: .25rem .6rem; border-radius: .5rem; border: 1px solid rgba(96, 165, 250, .35);
+            background: rgba(37, 99, 235, .18); color: #bfdbfe; font-size: 10px; font-weight: 800; cursor: pointer;
+        }
+        .page-surface input[type="checkbox"] { width: 1rem; height: 1rem; accent-color: #3b82f6; border-radius: 4px; }
+
+        .chip { display: inline-flex; align-items: center; gap: .4rem; padding: .3rem .65rem; border-radius: 9999px; border: 1px solid var(--line); background: rgba(15, 23, 42, .8); color: #cbd5e1; font-size: 10px; font-weight: 800; letter-spacing: .05em; }
+        .stat-card { overflow: hidden; }
+        .stat-card::after { content: ''; position: absolute; left: 12%; right: 12%; bottom: 0; height: 2px; border-radius: 9999px; background: linear-gradient(90deg, transparent, var(--stat-color, #3b82f6), transparent); opacity: .75; }
+        .stat-icon { display: inline-flex; align-items: center; justify-content: center; width: 38px; height: 38px; border-radius: 12px; background: color-mix(in srgb, var(--stat-color, #3b82f6) 16%, transparent); border: 1px solid color-mix(in srgb, var(--stat-color, #3b82f6) 32%, transparent); }
+        .section-eyebrow { display: inline-flex; align-items: center; gap: .55rem; font-size: 10px; font-weight: 800; letter-spacing: .2em; text-transform: uppercase; color: #60a5fa; }
+        .section-eyebrow::before { content: ''; width: 22px; height: 1px; background: linear-gradient(90deg, #3b82f6, transparent); }
+
+        .step-card { transition: border-color .25s ease, box-shadow .25s ease; }
+        .step-card:focus-within { border-color: rgba(59, 130, 246, .40); box-shadow: 0 0 0 4px rgba(59, 130, 246, .06), var(--shadow); }
+        .step-num { display: inline-flex; align-items: center; justify-content: center; width: 26px; height: 26px; border-radius: 9px; background: rgba(59, 130, 246, .14); border: 1px solid rgba(96, 165, 250, .32); color: #93c5fd; font-size: 11px; font-weight: 800; }
+        .field-label { display: flex; align-items: center; gap: .4rem; font-size: 10px; font-weight: 800; letter-spacing: .09em; text-transform: uppercase; color: #94a3b8; margin-bottom: .45rem; }
+        .field-help { margin-top: .4rem; font-size: 10.5px; line-height: 1.55; color: #64748b; }
+        .field-help code { color: #93c5fd; font-family: 'JetBrains Mono', monospace; font-size: 10px; }
+        .divider { height: 1px; background: linear-gradient(90deg, transparent, rgba(148, 163, 184, .16), transparent); }
+
+        .segmented { display: flex; padding: .25rem; border-radius: 14px; background: rgba(2, 6, 23, .72); border: 1px solid rgba(148, 163, 184, .15); }
+        .segmented button { flex: 1; border-radius: 10px; padding: .5rem .7rem; font-size: 11px; font-weight: 800; color: #94a3b8; transition: all .2s ease; display: inline-flex; align-items: center; justify-content: center; gap: .45rem; }
+        .segmented button:hover { color: #e2e8f0; }
+        .segmented button.active { background: linear-gradient(120deg, rgba(37, 99, 235, .95), rgba(79, 70, 229, .9)); color: #fff; box-shadow: 0 8px 20px -12px rgba(59, 130, 246, .9), inset 0 1px 0 rgba(255, 255, 255, .2); }
+
+        .drop-zone { display: flex; flex-direction: column; align-items: center; gap: .35rem; padding: 1.1rem 1rem; border-radius: 14px; border: 1px dashed rgba(96, 165, 250, .32); background: rgba(30, 64, 175, .07); text-align: center; transition: all .2s ease; }
+        .drop-zone:hover { border-color: rgba(96, 165, 250, .6); background: rgba(30, 64, 175, .13); }
+
+        .status-pill { display: inline-flex; align-items: center; gap: .4rem; padding: .28rem .6rem; border-radius: 9999px; font-size: 10px; font-weight: 800; letter-spacing: .03em; border: 1px solid; }
+        .status-idle { color: #94a3b8; background: rgba(30, 41, 59, .5); border-color: rgba(100, 116, 139, .3); }
+        .status-loading { color: #93c5fd; background: rgba(59, 130, 246, .1); border-color: rgba(96, 165, 250, .3); }
+        .status-ok { color: #6ee7b7; background: rgba(16, 185, 129, .1); border-color: rgba(52, 211, 153, .3); }
+        .status-error { color: #fda4af; background: rgba(244, 63, 94, .1); border-color: rgba(251, 113, 133, .3); }
+
+        .log-row { display: flex; gap: .6rem; padding: .42rem .6rem; border-radius: .65rem; font-size: 11.5px; line-height: 1.5; border: 1px solid transparent; }
+        .log-info { color: #a8b6c9; background: rgba(30, 41, 59, .35); border-color: rgba(71, 85, 105, .25); }
+        .log-warn { color: #fcd34d; background: rgba(245, 158, 11, .08); border-color: rgba(245, 158, 11, .22); }
+        .log-error { color: #fda4af; background: rgba(244, 63, 94, .08); border-color: rgba(244, 63, 94, .25); }
+
+        .file-tab { display: inline-flex; align-items: center; gap: .55rem; padding: .6rem .85rem; border-radius: .8rem; border: 1px solid rgba(148, 163, 184, .14); background: rgba(15, 23, 42, .6); color: #94a3b8; font-size: 11px; font-weight: 800; transition: all .2s ease; }
+        .file-tab:hover { color: #e2e8f0; border-color: rgba(148, 163, 184, .3); }
+        .file-tab.active { color: #bfdbfe; background: rgba(37, 99, 235, .16); border-color: rgba(96, 165, 250, .42); box-shadow: 0 0 0 1px rgba(59, 130, 246, .08); }
+
+        .code-preview { max-height: 30rem; overflow: auto; border-radius: 0 0 1rem 1rem; background: rgba(2, 6, 23, .9); border-top: 1px solid rgba(148, 163, 184, .12); }
+        .code-preview pre { padding: 1rem 1.15rem; font-family: 'JetBrains Mono', monospace; font-size: 11px; line-height: 1.65; color: #cbd5e1; white-space: pre; tab-size: 4; }
+
+        .animate-in { animation: fadeUp .5s cubic-bezier(.22, 1, .36, 1) both; }
+        @keyframes ringPulse { 0% { transform: scale(.92); opacity: .75; } 100% { transform: scale(1.35); opacity: 0; } }
+        @keyframes floatGlow { 0% { transform: translate3d(0, -4%, 0) scale(1); } 100% { transform: translate3d(-8%, 8%, 0) scale(1.18); } }
+        @keyframes fadeUp { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: translateY(0); } }
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after { animation-duration: .001ms !important; animation-iteration-count: 1 !important; transition-duration: .001ms !important; scroll-behavior: auto !important; }
+        }
+
+        /* ── Scrollbars ───────────────────────────────────────── */
+        ::-webkit-scrollbar { width: 9px; height: 9px; }
+        ::-webkit-scrollbar-track { background: #030712; }
+        ::-webkit-scrollbar-thumb { background: #1f2937; border: 2px solid #030712; border-radius: 9999px; }
+        ::-webkit-scrollbar-thumb:hover { background: #3b82f6; }
+    </style>
+</head>
+<body x-data="dxApp()" x-init="init()" class="min-h-screen page-surface antialiased pb-20">
+
+    <header class="sticky top-0 z-40 glass-nav">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between gap-4">
+            <div class="flex items-center gap-4 min-w-0">
+                <div class="brand-mark flex items-center justify-center w-12 h-12 shrink-0 rounded-2xl bg-gradient-to-tr from-blue-600 to-indigo-500 text-white border border-blue-400/30">
+                    <i class="fa-solid fa-wand-magic-sparkles text-xl"></i>
+                </div>
+                <div class="min-w-0">
+                    <h1 class="brand-title text-lg sm:text-xl font-extrabold tracking-tight truncate">DX Suite Generator</h1>
+                    <p class="mt-0.5 flex items-center gap-2 text-xs text-slate-400 font-medium">
+                        <span class="truncate">lamedb · astra.conf · bouquet · SoftCam.Key</span>
+                        <span class="chip hidden md:inline-flex text-cyan-300 border-cyan-500/25 bg-cyan-500/10">
+                            <i class="fa-solid fa-bolt text-[9px]"></i> In-browser
+                        </span>
+                    </p>
+                </div>
+            </div>
+
+            <div class="flex items-center gap-2 sm:gap-3">
+                <a href="index.html" class="nav-btn px-3 sm:px-4 py-2.5 rounded-2xl bg-slate-800/80 hover:bg-slate-700 text-slate-300 hover:text-white text-xs font-bold border border-slate-700 transition-all flex items-center gap-2">
+                    <i class="fa-solid fa-arrow-left"></i><span class="hidden sm:inline">Back to View</span>
+                </a>
+                <a href="edit.html" class="nav-btn px-3 sm:px-4 py-2.5 rounded-2xl bg-slate-800/80 hover:bg-slate-700 text-slate-300 hover:text-white text-xs font-bold border border-slate-700 transition-all flex items-center gap-2">
+                    <i class="fa-solid fa-pen-to-square"></i><span class="hidden sm:inline">Edit Data</span>
+                </a>
+                <a href="https://github.com/abertis-dtt/abertis-dtt.github.io" target="_blank" rel="noopener noreferrer"
+                   title="View source on GitHub" aria-label="GitHub repository"
+                   class="nav-btn icon-btn w-10 h-10 rounded-2xl bg-slate-800/80 hover:bg-slate-700 text-slate-300 hover:text-white text-lg border border-slate-700 transition-all">
+                    <i class="fa-brands fa-github"></i>
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8">
+
+        <!-- Intro -->
+        <section class="glass-card animate-in rounded-3xl p-5 md:p-7 overflow-hidden">
+            <div class="absolute top-0 left-0 w-1.5 h-full bg-gradient-to-b from-blue-400 to-indigo-600 shadow-[0_0_18px_rgba(59,130,246,0.6)]"></div>
+            <div class="relative flex flex-col lg:flex-row lg:items-center justify-between gap-5 pl-2">
+                <div class="max-w-3xl">
+                    <span class="section-eyebrow">Abertis / Cellnex · Hispasat 30.0°W</span>
+                    <h2 class="mt-2 text-xl md:text-2xl font-extrabold tracking-tight text-white">Generate the complete DX suite from your browser</h2>
+                    <p class="mt-2 text-sm leading-relaxed text-slate-400">
+                        Web port of <code class="code-font text-blue-300 text-xs">scripts/Abertis_DX_Suite.py</code>. It reads the
+                        channel database and produces identical Enigma2 <strong class="text-slate-200">lamedb</strong> feed services,
+                        the <strong class="text-slate-200">astra.conf</strong> relay config, the IPTV
+                        <strong class="text-slate-200">bouquet</strong> and an optional <strong class="text-slate-200">SoftCam.Key</strong>.
+                        Everything runs locally in your browser — nothing is uploaded or written to your receiver.
+                    </p>
+                </div>
+                <div class="flex flex-wrap gap-2 shrink-0">
+                    <span class="chip"><i class="fa-solid fa-shield-halved text-emerald-400"></i>Client-side</span>
+                    <span class="chip"><i class="fa-solid fa-file-arrow-down text-blue-400"></i>ZIP export</span>
+                    <span class="chip"><i class="fa-solid fa-code-compare text-violet-400"></i>Byte-identical</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Form + action sidebar -->
+        <div class="grid grid-cols-1 xl:grid-cols-12 gap-6">
+
+            <!-- Settings -->
+            <div class="xl:col-span-8 space-y-6">
+
+                <!-- 1. Data source -->
+                <section class="glass-card step-card animate-in rounded-3xl p-5 md:p-6">
+                    <div class="flex items-start justify-between gap-3 mb-5">
+                        <div class="flex items-center gap-3">
+                            <span class="step-num">1</span>
+                            <div>
+                                <h3 class="text-sm font-extrabold text-white">Data source</h3>
+                                <p class="text-[11px] text-slate-500 mt-0.5">Where the transponder / stream database comes from (script: <code class="code-font text-slate-400">--url</code> / <code class="code-font text-slate-400">--file</code>)</p>
+                            </div>
+                        </div>
+                        <span class="status-pill" :class="'status-' + source.state">
+                            <i class="fa-solid text-[9px]" :class="source.state === 'loading' ? 'fa-spinner fa-spin' : (source.state === 'ok' ? 'fa-circle-check' : (source.state === 'error' ? 'fa-circle-exclamation' : 'fa-circle-dot'))"></i>
+                            <span x-text="source.label"></span>
+                        </span>
+                    </div>
+
+                    <div class="segmented mb-4">
+                        <button type="button" @click="form.sourceMode = 'url'" :class="form.sourceMode === 'url' ? 'active' : ''">
+                            <i class="fa-solid fa-globe"></i> Live URL
+                        </button>
+                        <button type="button" @click="form.sourceMode = 'file'" :class="form.sourceMode === 'file' ? 'active' : ''">
+                            <i class="fa-solid fa-folder-open"></i> Upload JSON
+                        </button>
+                    </div>
+
+                    <div x-show="form.sourceMode === 'url'" x-cloak>
+                        <label class="field-label" for="json-url"><i class="fa-solid fa-link text-blue-400/70"></i> JSON URL</label>
+                        <div class="flex flex-col sm:flex-row gap-2">
+                            <input id="json-url" type="url" x-model="form.url" spellcheck="false"
+                                   placeholder="https://abertis-dtt.github.io/sat_data.json"
+                                   class="w-full px-3.5 py-2.5 text-xs code-font">
+                            <button type="button" @click="loadSource()" :disabled="loadingSource"
+                                    class="nav-btn shrink-0 px-4 py-2.5 rounded-xl bg-slate-800 hover:bg-blue-600 text-white text-xs font-bold border border-slate-700 transition-all flex items-center justify-center gap-2">
+                                <i class="fa-solid" :class="loadingSource ? 'fa-spinner fa-spin' : 'fa-cloud-arrow-down'"></i>
+                                <span x-text="loadingSource ? 'Loading…' : 'Load'"></span>
+                            </button>
+                        </div>
+                        <p class="field-help">
+                            Default: the live <code>sat_data.json</code> published with this site. Remote servers must allow CORS;
+                            if a URL is blocked, download the JSON and use <strong class="text-slate-400">Upload JSON</strong>.
+                        </p>
+                    </div>
+
+                    <div x-show="form.sourceMode === 'file'" x-cloak>
+                        <label class="field-label"><i class="fa-solid fa-file-code text-blue-400/70"></i> Local JSON file</label>
+                        <label class="drop-zone cursor-pointer block">
+                            <input type="file" accept=".json,application/json" @change="readJsonFile($event)" class="w-full">
+                            <span class="text-[11px] font-bold text-slate-300"><i class="fa-solid fa-cloud-arrow-up mr-1.5 text-blue-400"></i>Choose a local <span class="code-font">sat_data.json</span></span>
+                            <span class="text-[10px] text-slate-500">Saved copy of the database — useful offline or to pin a version.</span>
+                        </label>
+                    </div>
+
+                    <div x-show="source.detail" x-cloak class="mt-3 flex flex-wrap items-center gap-2 text-[10px] text-slate-500">
+                        <span class="chip"><i class="fa-solid fa-database text-blue-400/80"></i><span x-text="source.detail"></span></span>
+                    </div>
+                </section>
+
+                <!-- 2. Output -->
+                <section class="glass-card step-card animate-in rounded-3xl p-5 md:p-6" style="animation-delay: 60ms">
+                    <div class="flex items-center gap-3 mb-5">
+                        <span class="step-num">2</span>
+                        <div>
+                            <h3 class="text-sm font-extrabold text-white">Output</h3>
+                            <p class="text-[11px] text-slate-500 mt-0.5">Files, lamedb mode and bouquet (script: <code class="code-font text-slate-400">--out-dir</code>, <code class="code-font text-slate-400">--merge-lamedb</code>, <code class="code-font text-slate-400">--edit-lamedb</code>)</p>
+                        </div>
+                    </div>
+
+                    <div class="grid sm:grid-cols-2 gap-4">
+                        <div>
+                            <label class="field-label" for="out-dir"><i class="fa-solid fa-folder-tree text-blue-400/70"></i> Output folder</label>
+                            <input id="out-dir" type="text" x-model="form.outDir" spellcheck="false" placeholder="."
+                                   class="w-full px-3.5 py-2.5 text-xs code-font">
+                            <p class="field-help">Folder prefix inside the ZIP (e.g. <code>dx</code> or <code>.</code>). The CLI writes files here on disk.</p>
+                        </div>
+                        <div>
+                            <label class="field-label" for="lamedb-format"><i class="fa-solid fa-layer-group text-blue-400/70"></i> lamedb format</label>
+                            <select id="lamedb-format" x-model="form.lamedbFormat" class="w-full px-3.5 py-2.5 text-xs">
+                                <option value="v4">v4 — sectioned (current images)</option>
+                            </select>
+                            <p class="field-help">Only <code>v4 /4/</code> is supported, matching the current CLI.</p>
+                        </div>
+                    </div>
+
+                    <div class="divider my-5"></div>
+
+                    <div>
+                        <label class="field-label" for="lamedb-mode"><i class="fa-solid fa-database text-blue-400/70"></i> lamedb generation mode</label>
+                        <select id="lamedb-mode" x-model="form.lamedbMode" class="w-full px-3.5 py-2.5 text-xs">
+                            <option value="standalone">Standalone — write a fresh lamedb</option>
+                            <option value="merge">Merge — inject into an existing lamedb</option>
+                            <option value="edit">Edit — clean matching entries, then inject</option>
+                        </select>
+                        <p class="field-help" x-show="form.lamedbMode === 'standalone'">Produces a ready-to-copy <code>lamedb</code> with the real transponders and one feed service per stream PID.</p>
+                        <p class="field-help" x-show="form.lamedbMode === 'merge'" x-cloak>Preserves every other entry. Generated transponders and services whose name contains “abertis” are replaced; a <code>.bak</code> is written on the receiver.</p>
+                        <p class="field-help" x-show="form.lamedbMode === 'edit'" x-cloak>Also removes transponders matching the generated ones and stale “abertis” services, then adds the fresh entries (script <code>--edit-lamedb</code>).</p>
+                    </div>
+
+                    <div x-show="form.lamedbMode !== 'standalone'" x-cloak class="mt-4 space-y-2">
+                        <label class="field-label"><i class="fa-solid fa-file-import text-amber-400/80"></i> Existing lamedb to <span x-text="form.lamedbMode"></span></label>
+                        <input type="file" accept=".lamedb,text/plain" @change="readLamedbFile($event)" class="w-full">
+                        <div class="flex flex-wrap items-center gap-2">
+                            <button type="button" @click="loadSiteLamedb()" :disabled="loadingLamedb"
+                                    class="nav-btn px-3 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 text-[11px] font-bold border border-slate-700 transition-all flex items-center gap-2">
+                                <i class="fa-solid" :class="loadingLamedb ? 'fa-spinner fa-spin' : 'fa-cloud-arrow-down'"></i>
+                                <span>Use site lamedb</span>
+                            </button>
+                            <span class="status-pill" :class="'status-' + lamedb.state">
+                                <i class="fa-solid text-[9px]" :class="lamedb.state === 'ok' ? 'fa-circle-check' : (lamedb.state === 'error' ? 'fa-circle-exclamation' : 'fa-circle-dot')"></i>
+                                <span x-text="lamedb.label"></span>
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="grid sm:grid-cols-2 gap-4 mt-4">
+                        <div>
+                            <label class="field-label" for="bouquet-name"><i class="fa-solid fa-list text-blue-400/70"></i> Bouquet file name</label>
+                            <input id="bouquet-name" type="text" x-model="form.bouquetName" spellcheck="false"
+                                   placeholder="userbouquet.abertis.tv" class="w-full px-3.5 py-2.5 text-xs code-font">
+                            <p class="field-help">Register it from <code>bouquets.tv</code> after copying.</p>
+                        </div>
+                        <div>
+                            <label class="field-label"><i class="fa-solid fa-key text-amber-400/80"></i> SoftCam.Key</label>
+                            <label class="flex items-center gap-2.5 px-3 py-2.5 rounded-xl bg-slate-950/50 border border-slate-800 cursor-pointer">
+                                <input type="checkbox" x-model="form.softcamEnabled">
+                                <span class="text-[11px] font-bold text-slate-300">Write dummy BISS entries</span>
+                            </label>
+                            <p class="field-help">One <code>F &lt;crc32&gt; 00000000 0000000000000000</code> line per BISS stream. Replace the dummy key with the real one.</p>
+                        </div>
+                    </div>
+
+                    <div x-show="form.softcamEnabled" x-cloak class="mt-4">
+                        <label class="field-label" for="softcam-path"><i class="fa-solid fa-file-signature text-amber-400/80"></i> SoftCam.Key file name <span class="text-slate-600 normal-case font-semibold">(optional)</span></label>
+                        <input id="softcam-path" type="text" x-model="form.softcamPath" spellcheck="false" placeholder="SoftCam.Key"
+                               class="w-full px-3.5 py-2.5 text-xs code-font">
+                        <p class="field-help">Leave empty to write <code>SoftCam.Key</code> next to the other outputs. In the browser, the basename is used inside the ZIP.</p>
+                    </div>
+                </section>
+
+                <!-- 3. Satellite -->
+                <section class="glass-card step-card animate-in rounded-3xl p-5 md:p-6" style="animation-delay: 120ms">
+                    <div class="flex items-center gap-3 mb-5">
+                        <span class="step-num">3</span>
+                        <div>
+                            <h3 class="text-sm font-extrabold text-white">Satellite</h3>
+                            <p class="text-[11px] text-slate-500 mt-0.5">Orbital position and DVB namespace (script: <code class="code-font text-slate-400">--position</code>)</p>
+                        </div>
+                    </div>
+
+                    <div class="grid sm:grid-cols-2 gap-4">
+                        <div>
+                            <label class="field-label" for="position"><i class="fa-solid fa-satellite text-blue-400/70"></i> Orbital position <span class="text-slate-600 normal-case font-semibold">(tenths of a degree)</span></label>
+                            <input id="position" type="number" step="1" x-model="form.position" placeholder="-300"
+                                   class="w-full px-3.5 py-2.5 text-xs code-font">
+                            <div class="flex flex-wrap items-center gap-2 mt-2">
+                                <span class="chip"><i class="fa-solid fa-location-dot text-blue-400"></i><span x-text="positionLabel"></span></span>
+                                <span class="chip code-font"><i class="fa-solid fa-hashtag text-indigo-400"></i><span x-text="'ns 0x' + namespaceHex"></span></span>
+                                <button type="button" @click="form.position = -300" class="text-[10px] font-bold text-blue-400 hover:text-blue-300">30.0°W</button>
+                                <button type="button" @click="form.position = 192" class="text-[10px] font-bold text-blue-400 hover:text-blue-300">19.2°E</button>
+                            </div>
+                            <p class="field-help">Negative = West. Hispasat 30.0°W = <code>-300</code>. Drives the namespace and astra service references.</p>
+                        </div>
+                        <div class="rounded-2xl border border-slate-800/70 bg-slate-950/40 p-4">
+                            <p class="text-[10px] font-extrabold uppercase tracking-[0.16em] text-slate-500 mb-2">Derived values</p>
+                            <div class="space-y-1.5 text-[11px] code-font">
+                                <div class="flex justify-between gap-3"><span class="text-slate-500">Position</span><span class="text-slate-200" x-text="positionLabel"></span></div>
+                                <div class="flex justify-between gap-3"><span class="text-slate-500">Namespace</span><span class="text-blue-300" x-text="'0x' + namespaceHex"></span></div>
+                                <div class="flex justify-between gap-3"><span class="text-slate-500">lamedb s-line</span><span class="text-slate-300" x-text="form.position"></span></div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- 4. Relay -->
+                <section class="glass-card step-card animate-in rounded-3xl p-5 md:p-6" style="animation-delay: 180ms">
+                    <div class="flex items-center gap-3 mb-5">
+                        <span class="step-num">4</span>
+                        <div>
+                            <h3 class="text-sm font-extrabold text-white">Relay · streamrelay → astra</h3>
+                            <p class="text-[11px] text-slate-500 mt-0.5">Input, output and T2MI options (script: <code class="code-font text-slate-400">--relay-host</code>, <code class="code-font text-slate-400">--relay-port</code>, <code class="code-font text-slate-400">--out-host</code>, <code class="code-font text-slate-400">--http-port</code>)</p>
+                        </div>
+                    </div>
+
+                    <div class="grid sm:grid-cols-2 gap-4">
+                        <div class="rounded-2xl border border-slate-800/70 bg-slate-950/30 p-4 space-y-3">
+                            <p class="text-[10px] font-extrabold uppercase tracking-[0.16em] text-slate-500">Streamrelay input</p>
+                            <div>
+                                <label class="field-label" for="relay-host"><i class="fa-solid fa-server text-cyan-400/80"></i> Relay host</label>
+                                <input id="relay-host" type="text" x-model="form.relayHost" spellcheck="false" placeholder="localhost"
+                                       class="w-full px-3.5 py-2.5 text-xs code-font">
+                            </div>
+                            <div>
+                                <label class="field-label" for="relay-port"><i class="fa-solid fa-plug text-cyan-400/80"></i> Relay port</label>
+                                <input id="relay-port" type="number" min="1" max="65535" x-model="form.relayPort" placeholder="8001"
+                                       class="w-full px-3.5 py-2.5 text-xs code-font">
+                            </div>
+                            <p class="field-help">Enigma2 streamrelay address astra pulls the tuned service from.</p>
+                        </div>
+
+                        <div class="rounded-2xl border border-slate-800/70 bg-slate-950/30 p-4 space-y-3">
+                            <p class="text-[10px] font-extrabold uppercase tracking-[0.16em] text-slate-500">astra HTTP output</p>
+                            <div>
+                                <label class="field-label" for="out-host"><i class="fa-solid fa-network-wired text-indigo-400/80"></i> Output host</label>
+                                <input id="out-host" type="text" x-model="form.outHost" spellcheck="false" placeholder="0.0.0.0"
+                                       class="w-full px-3.5 py-2.5 text-xs code-font">
+                            </div>
+                            <div>
+                                <label class="field-label" for="http-port"><i class="fa-solid fa-tower-broadcast text-indigo-400/80"></i> HTTP port</label>
+                                <input id="http-port" type="number" min="1" max="65535" x-model="form.httpPort" placeholder="9999"
+                                       class="w-full px-3.5 py-2.5 text-xs code-font">
+                            </div>
+                            <p class="field-help">Each PID is published as <code>/&lt;provider&gt;/pid&lt;PID&gt;</code> under this address.</p>
+                        </div>
+                    </div>
+
+                    <div class="grid sm:grid-cols-3 gap-4 mt-4">
+                        <div>
+                            <label class="field-label" for="relay-script"><i class="fa-solid fa-terminal text-violet-400/80"></i> Relay script <span class="text-slate-600 normal-case font-semibold">(optional)</span></label>
+                            <input id="relay-script" type="text" x-model="form.relayScript" spellcheck="false" placeholder="abertis / cellnex"
+                                   class="w-full px-3.5 py-2.5 text-xs code-font">
+                            <p class="field-help">Fixed script name under <code>/etc/astra/scripts/</code>. Empty = derived per provider.</p>
+                        </div>
+                        <div>
+                            <label class="field-label" for="t2mi-plp"><i class="fa-solid fa-layer-group text-teal-400/80"></i> T2MI PLP override</label>
+                            <input id="t2mi-plp" type="number" min="0" max="255" x-model="form.t2miPlp" placeholder="JSON value"
+                                   class="w-full px-3.5 py-2.5 text-xs code-font">
+                            <p class="field-help">Only applied when the stream defines numeric T2MI values and its PLP is 0.</p>
+                        </div>
+                        <div>
+                            <label class="field-label" for="t2mi-pnr"><i class="fa-solid fa-clapperboard text-teal-400/80"></i> T2MI PNR override</label>
+                            <input id="t2mi-pnr" type="number" min="0" max="65535" x-model="form.t2miPnr" placeholder="JSON value"
+                                   class="w-full px-3.5 py-2.5 text-xs code-font">
+                            <p class="field-help">Only applied when the stream defines numeric T2MI values and its PNR is 0.</p>
+                        </div>
+                    </div>
+                </section>
+            </div>
+
+            <!-- Action sidebar -->
+            <aside class="xl:col-span-4">
+                <div class="xl:sticky xl:top-28 space-y-4">
+                    <div class="glass-card animate-in rounded-3xl p-5 md:p-6" style="animation-delay: 100ms">
+                        <div class="flex items-center justify-between gap-3 mb-4">
+                            <h3 class="text-sm font-extrabold text-white">Run the generator</h3>
+                            <span class="chip"><i class="fa-solid fa-microchip text-blue-400"></i>local</span>
+                        </div>
+
+                        <button type="button" @click="run()" :disabled="busy"
+                                class="primary-btn w-full px-5 py-3.5 rounded-2xl text-white text-sm font-extrabold transition-all flex items-center justify-center gap-2.5">
+                            <i class="fa-solid" :class="busy ? 'fa-spinner fa-spin' : 'fa-wand-magic-sparkles'"></i>
+                            <span x-text="busy ? 'Generating…' : 'Generate DX suite'"></span>
+                        </button>
+
+                        <div class="flex items-center gap-2 mt-3">
+                            <button type="button" @click="resetForm()" :disabled="busy"
+                                    class="ghost-btn flex-1 px-3 py-2.5 rounded-xl text-slate-300 text-[11px] font-bold transition-all flex items-center justify-center gap-2">
+                                <i class="fa-solid fa-rotate-left"></i> Reset defaults
+                            </button>
+                            <button type="button" @click="downloadAll()" :disabled="!result || !result.ok || busy"
+                                    class="ghost-btn flex-1 px-3 py-2.5 rounded-xl text-slate-300 text-[11px] font-bold transition-all flex items-center justify-center gap-2 disabled:opacity-40 disabled:cursor-not-allowed">
+                                <i class="fa-solid fa-file-zipper"></i> Download ZIP
+                            </button>
+                        </div>
+
+                        <p x-show="error" x-cloak class="mt-3 text-[11px] leading-relaxed text-rose-300 bg-rose-500/10 border border-rose-500/25 rounded-xl px-3 py-2">
+                            <i class="fa-solid fa-circle-exclamation mr-1"></i><span x-text="error"></span>
+                        </p>
+
+                        <div class="divider my-5"></div>
+
+                        <div class="space-y-3 text-[11px]">
+                            <div class="flex items-start justify-between gap-3">
+                                <span class="text-slate-500">Source</span>
+                                <span class="text-right font-bold" :class="data ? 'text-emerald-300' : 'text-slate-400'"
+                                      x-text="data ? `${data.length} transponders` : 'not loaded'"></span>
+                            </div>
+                            <div class="flex items-start justify-between gap-3">
+                                <span class="text-slate-500">lamedb mode</span>
+                                <span class="text-right font-bold text-slate-300 capitalize" x-text="form.lamedbMode"></span>
+                            </div>
+                            <div class="flex items-start justify-between gap-3">
+                                <span class="text-slate-500">Position</span>
+                                <span class="text-right font-bold text-blue-300" x-text="positionLabel"></span>
+                            </div>
+                            <div class="flex items-start justify-between gap-3">
+                                <span class="text-slate-500">Relay</span>
+                                <span class="text-right font-bold text-slate-300 code-font break-all" x-text="`${form.relayHost}:${form.relayPort}`"></span>
+                            </div>
+                            <div class="flex items-start justify-between gap-3">
+                                <span class="text-slate-500">Output</span>
+                                <span class="text-right font-bold text-slate-300 code-font break-all" x-text="`${form.outHost}:${form.httpPort}`"></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="glass-card rounded-3xl p-4 md:p-5">
+                        <div class="flex items-start gap-3">
+                            <span class="icon-btn w-8 h-8 rounded-xl text-blue-300 shrink-0"><i class="fa-solid fa-circle-info text-[11px]"></i></span>
+                            <div class="text-[11px] leading-relaxed text-slate-400">
+                                <p class="font-bold text-slate-200 mb-1">Browser vs. script</p>
+                                <p>The web port generates the files and a ZIP download. The Python CLI additionally writes directly to disk and can modify <code class="code-font text-blue-300">/etc/enigma2/lamedb</code>.</p>
+                                <p class="mt-2">Upload a copy of your receiver lamedb for <strong class="text-slate-300">merge</strong> or <strong class="text-slate-300">edit</strong> mode, then copy the result back with a backup.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </aside>
+        </div>
+
+        <!-- Results -->
+        <section x-show="result" x-cloak class="space-y-6">
+            <div class="flex flex-wrap items-end justify-between gap-4 px-1">
+                <div>
+                    <span class="section-eyebrow">Generated output</span>
+                    <h2 class="mt-2 text-lg font-extrabold tracking-tight text-white">DX suite result</h2>
+                </div>
+                <div class="flex flex-wrap items-center gap-2">
+                    <span class="chip"><i class="fa-solid fa-file-arrow-down text-blue-400"></i><span x-text="`${result && result.ok ? result.files.length : 0} files`"></span></span>
+                    <button type="button" @click="downloadAll()" :disabled="!result || !result.ok"
+                            class="primary-btn px-4 py-2 rounded-xl text-white text-[11px] font-extrabold transition-all flex items-center gap-2 disabled:opacity-40">
+                        <i class="fa-solid fa-file-zipper"></i> Download ZIP
+                    </button>
+                </div>
+            </div>
+
+            <!-- Stats -->
+            <div x-show="result && result.ok" class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                <template x-for="(stat, i) in [
+                    { label: 'Transponders', key: 'transponders', icon: 'fa-tower-broadcast', color: 'text-blue-400', accent: '#60a5fa' },
+                    { label: 'Streams', key: 'streams', icon: 'fa-network-wired', color: 'text-indigo-400', accent: '#818cf8' },
+                    { label: 'TV Channels', key: 'tv', icon: 'fa-tv', color: 'text-emerald-400', accent: '#34d399' },
+                    { label: 'Radio Stations', key: 'radio', icon: 'fa-radio', color: 'text-amber-400', accent: '#fbbf24' }
+                ]" :key="stat.key">
+                    <div class="glass-card stat-card animate-in rounded-3xl p-5 relative overflow-hidden"
+                         :style="`--stat-color: ${stat.accent}; animation-delay: ${i * 70}ms`">
+                        <div class="relative z-10 flex items-start justify-between gap-3 mb-3">
+                            <span class="text-[10px] font-bold text-slate-400 uppercase tracking-wider pt-2" x-text="stat.label"></span>
+                            <span class="stat-icon text-lg" :class="stat.color"><i :class="`fa-solid ${stat.icon}`"></i></span>
+                        </div>
+                        <div class="relative z-10 text-3xl font-black text-white tracking-tight" x-text="result ? result.stats[stat.key] : '—'"></div>
+                    </div>
+                </template>
+            </div>
+
+            <div class="grid grid-cols-1 xl:grid-cols-12 gap-6 items-start">
+                <!-- Files preview -->
+                <div class="xl:col-span-8 glass-card animate-in rounded-3xl overflow-hidden">
+                    <div class="p-4 md:p-5 border-b border-slate-800/70 flex flex-wrap items-center justify-between gap-3">
+                        <div class="flex flex-wrap gap-2" x-show="result && result.ok">
+                            <template x-for="(file, index) in (result ? result.files : [])" :key="file.name">
+                                <button type="button" @click="activeFile = index" class="file-tab" :class="activeFile === index ? 'active' : ''">
+                                    <i class="fa-solid text-[10px]" :class="fileIcon(file.name)"></i>
+                                    <span x-text="file.name"></span>
+                                </button>
+                            </template>
+                        </div>
+                        <div class="flex items-center gap-2" x-show="result && result.ok && activeFileObj">
+                            <span class="chip hidden sm:inline-flex" x-text="activeFileObj ? activeFileObj.description : ''"></span>
+                            <button type="button" @click="copyActive()" class="icon-btn w-8 h-8 rounded-lg text-slate-400 hover:text-white" :title="copied ? 'Copied!' : 'Copy file'">
+                                <i class="fa-solid text-[11px]" :class="copied ? 'fa-check text-emerald-400' : 'fa-copy'"></i>
+                            </button>
+                            <button type="button" @click="downloadActive()" class="icon-btn w-8 h-8 rounded-lg text-slate-300 hover:text-white" title="Download file">
+                                <i class="fa-solid fa-download text-[11px]"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div x-show="result && result.ok && activeFileObj">
+                        <div class="px-4 pt-3 pb-0 flex items-center justify-between gap-3 text-[10px] text-slate-500 code-font">
+                            <span x-text="activeFileObj ? activeFileObj.path : ''"></span>
+                            <span x-text="activeFileObj ? formatBytes(new Blob([activeFileObj.content]).size) : ''"></span>
+                        </div>
+                        <div class="code-preview"><pre x-text="activeFileObj ? activeFileObj.content : ''"></pre></div>
+                    </div>
+
+                    <div x-show="result && !result.ok" class="p-6">
+                        <div class="flex items-start gap-3 rounded-2xl border border-rose-500/25 bg-rose-500/10 p-4">
+                            <i class="fa-solid fa-triangle-exclamation text-rose-400 mt-0.5"></i>
+                            <div>
+                                <p class="text-xs font-extrabold text-rose-200">Generation failed</p>
+                                <p class="mt-1 text-[11px] leading-relaxed text-rose-200/80" x-text="result ? result.error : ''"></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Logs and CLI -->
+                <div class="xl:col-span-4 space-y-4">
+                    <div class="glass-card animate-in rounded-3xl p-4 md:p-5">
+                        <div class="flex items-center justify-between gap-3 mb-3">
+                            <h3 class="text-xs font-extrabold text-white flex items-center gap-2"><i class="fa-solid fa-list-check text-blue-400"></i> Generation log</h3>
+                            <span class="chip" x-text="logSummary"></span>
+                        </div>
+                        <div class="space-y-1.5 max-h-72 overflow-auto pr-1">
+                            <template x-for="(entry, i) in (result ? result.logs : [])" :key="i">
+                                <div class="log-row" :class="'log-' + entry.level">
+                                    <i class="fa-solid text-[10px] mt-0.5 shrink-0"
+                                       :class="entry.level === 'warn' ? 'fa-triangle-exclamation' : (entry.level === 'error' ? 'fa-circle-xmark' : 'fa-circle-dot')"></i>
+                                    <span class="break-words min-w-0" x-text="entry.message"></span>
+                                </div>
+                            </template>
+                            <p x-show="result && (!result.logs || !result.logs.length)" class="text-[11px] text-slate-500 italic px-1">No log entries.</p>
+                        </div>
+                    </div>
+
+                    <div class="glass-card rounded-3xl p-4 md:p-5" x-show="result && result.ok">
+                        <div class="flex items-center justify-between gap-3 mb-2">
+                            <h3 class="text-xs font-extrabold text-white flex items-center gap-2"><i class="fa-solid fa-terminal text-violet-400"></i> Equivalent CLI</h3>
+                            <button type="button" @click="copyCommand()" class="icon-btn w-8 h-8 rounded-lg text-slate-400 hover:text-white" :title="commandCopied ? 'Copied!' : 'Copy command'">
+                                <i class="fa-solid text-[11px]" :class="commandCopied ? 'fa-check text-emerald-400' : 'fa-copy'"></i>
+                            </button>
+                        </div>
+                        <pre class="code-font text-[10px] leading-relaxed text-slate-400 whitespace-pre-wrap break-words bg-slate-950/60 border border-slate-800/60 rounded-xl p-3" x-text="cliCommand"></pre>
+                        <p class="field-help mt-2">Same options, for running the original Python script on the receiver.</p>
+                    </div>
+
+                    <div class="glass-card rounded-3xl p-4 md:p-5">
+                        <h3 class="text-xs font-extrabold text-white flex items-center gap-2 mb-3"><i class="fa-solid fa-circle-info text-blue-400"></i> Install checklist</h3>
+                        <ol class="space-y-2 text-[11px] leading-relaxed text-slate-400 list-none">
+                            <li class="flex gap-2"><span class="text-blue-400 font-bold">1.</span><span>Copy <code class="code-font text-slate-300">lamedb</code> to <code class="code-font text-slate-300">/etc/enigma2/lamedb</code> (keep a backup) and restart Enigma2.</span></li>
+                            <li class="flex gap-2"><span class="text-blue-400 font-bold">2.</span><span>Ensure relay scripts exist at <code class="code-font text-slate-300">/etc/astra/scripts/&lt;provider&gt; &lt;PID&gt;</code>, then run astra with <code class="code-font text-slate-300">astra.conf</code>.</span></li>
+                            <li class="flex gap-2"><span class="text-blue-400 font-bold">3.</span><span>Copy the bouquet to <code class="code-font text-slate-300">/etc/enigma2/</code> and register it in <code class="code-font text-slate-300">bouquets.tv</code>.</span></li>
+                            <li class="flex gap-2"><span class="text-blue-400 font-bold">4.</span><span>If generated, merge <code class="code-font text-slate-300">SoftCam.Key</code> and replace the dummy BISS keys.</span></li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-2 text-center">
+        <span class="inline-flex flex-wrap items-center justify-center gap-2 text-[11px] font-semibold text-slate-600">
+            <i class="fa-solid fa-satellite-dish text-blue-500/60"></i>
+            Hispasat 30.0°W · Abertis &amp; Cellnex DX Suite · browser port of Abertis_DX_Suite.py
+        </span>
+    </footer>
+
+    <script src="dx-suite.js"></script>
+    <script>
+        function dxApp() {
+            const defaults = DXSuite.defaults();
+            const blankSource = { state: 'idle', label: 'Not loaded', detail: '' };
+            return {
+                form: {
+                    sourceMode: 'url',
+                    url: defaults.url,
+                    outDir: defaults.outDir,
+                    lamedbMode: defaults.lamedbMode,
+                    lamedbFormat: defaults.lamedbFormat,
+                    bouquetName: defaults.bouquetName,
+                    position: defaults.position,
+                    relayHost: defaults.relayHost,
+                    relayPort: defaults.relayPort,
+                    outHost: defaults.outHost,
+                    httpPort: defaults.httpPort,
+                    relayScript: defaults.relayScript,
+                    t2miPlp: defaults.t2miPlp,
+                    t2miPnr: defaults.t2miPnr,
+                    softcamEnabled: defaults.softcamEnabled,
+                    softcamPath: defaults.softcamPath
+                },
+                data: null,
+                jsonFileName: '',
+                source: Object.assign({}, blankSource),
+                lamedbText: '',
+                lamedbName: '',
+                lamedb: { state: 'idle', label: 'No file loaded' },
+                result: null,
+                busy: false,
+                loadingSource: false,
+                loadingLamedb: false,
+                error: '',
+                activeFile: 0,
+                copied: false,
+                commandCopied: false,
+
+                init() {
+                    this.loadSource();
+                },
+
+                get positionLabel() {
+                    return DXSuite.positionLabel(this.form.position);
+                },
+
+                get namespaceHex() {
+                    const n = parseInt(this.form.position, 10);
+                    if (Number.isNaN(n)) return '????????';
+                    return DXSuite.namespaceFor(n).toString(16).toUpperCase().padStart(8, '0');
+                },
+
+                get activeFileObj() {
+                    if (!this.result || !this.result.ok) return null;
+                    return this.result.files[this.activeFile] || this.result.files[0] || null;
+                },
+
+                get logSummary() {
+                    if (!this.result) return '—';
+                    const logs = this.result.logs || [];
+                    const warns = logs.filter(l => l.level === 'warn').length;
+                    const errors = logs.filter(l => l.level === 'error').length;
+                    if (errors) return errors + ' error' + (errors === 1 ? '' : 's');
+                    if (warns) return warns + ' warning' + (warns === 1 ? '' : 's');
+                    return 'Clean';
+                },
+
+                get cliCommand() {
+                    const q = value => {
+                        const s = String(value == null ? '' : value);
+                        return /^[A-Za-z0-9_.,:\/+=@%-]+$/.test(s) ? s : "'" + s.replace(/'/g, "'\\''") + "'";
+                    };
+                    const parts = ['python3', 'scripts/Abertis_DX_Suite.py'];
+                    if (this.form.sourceMode === 'file') parts.push('--file', q(this.jsonFileName || 'sat_data.json'));
+                    else if (this.form.url.trim() && this.form.url.trim() !== DXSuite.DEFAULT_JSON_URL) parts.push('--url', q(this.form.url.trim()));
+                    parts.push('--out-dir', q(this.form.outDir.trim() || '.'));
+                    if (this.form.lamedbMode === 'merge') parts.push('--merge-lamedb', '/etc/enigma2/lamedb');
+                    if (this.form.lamedbMode === 'edit') parts.push('--edit-lamedb', '/etc/enigma2/lamedb');
+                    parts.push('--position', q(String(this.form.position).trim() || '-300'));
+                    parts.push('--relay-host', q(this.form.relayHost.trim() || 'localhost'));
+                    parts.push('--relay-port', q(String(this.form.relayPort).trim() || '8001'));
+                    parts.push('--out-host', q(this.form.outHost.trim() || '0.0.0.0'));
+                    parts.push('--http-port', q(String(this.form.httpPort).trim() || '9999'));
+                    if (String(this.form.relayScript || '').trim()) parts.push('--relay-script', q(this.form.relayScript.trim()));
+                    if (String(this.form.t2miPlp || '').trim()) parts.push('--t2mi-plp', q(String(this.form.t2miPlp).trim()));
+                    if (String(this.form.t2miPnr || '').trim()) parts.push('--t2mi-pnr', q(String(this.form.t2miPnr).trim()));
+                    parts.push('--bouquet', q(this.form.bouquetName.trim() || 'userbouquet.abertis.tv'));
+                    if (this.form.softcamEnabled) {
+                        parts.push('--softcam-key');
+                        if (String(this.form.softcamPath || '').trim()) parts.push(q(this.form.softcamPath.trim()));
+                    }
+                    return parts.join(' ');
+                },
+
+                setSourceState(state, label, detail) {
+                    this.source = { state: state, label: label, detail: detail || '' };
+                },
+
+                async loadSource() {
+                    const url = String(this.form.url || '').trim();
+                    if (!url) {
+                        this.setSourceState('error', 'No URL');
+                        this.error = 'The JSON URL is empty.';
+                        return;
+                    }
+                    this.loadingSource = true;
+                    this.error = '';
+                    this.setSourceState('loading', 'Loading…');
+                    try {
+                        const response = await fetch(url, { cache: 'no-store' });
+                        if (!response.ok) throw new Error('HTTP ' + response.status + ' ' + response.statusText);
+                        const json = await response.json();
+                        if (!Array.isArray(json)) throw new Error('Unexpected JSON layout - expected a list of transponders.');
+                        this.data = json;
+                        const txps = json.length;
+                        const streams = json.reduce((sum, t) => sum + ((t && Array.isArray(t.streams)) ? t.streams.filter(s => /Stream\s+\d+/i.test((s && s.title) || '')).length : 0), 0);
+                        this.setSourceState('ok', 'Data ready', txps + ' transponders · ' + streams + ' streams');
+                    } catch (err) {
+                        this.data = null;
+                        this.setSourceState('error', 'Load failed');
+                        this.error = 'Cannot load ' + url + ': ' + err.message +
+                            '. Use "Upload JSON" with a local copy if the server blocks browser requests.';
+                    } finally {
+                        this.loadingSource = false;
+                    }
+                },
+
+                async readJsonFile(event) {
+                    const file = event.target.files && event.target.files[0];
+                    if (!file) return;
+                    this.error = '';
+                    this.loadingSource = true;
+                    this.setSourceState('loading', 'Reading…');
+                    try {
+                        const text = await file.text();
+                        const json = JSON.parse(text);
+                        if (!Array.isArray(json)) throw new Error('Unexpected JSON layout - expected a list of transponders.');
+                        this.data = json;
+                        this.jsonFileName = file.name;
+                        this.form.sourceMode = 'file';
+                        const streams = json.reduce((sum, t) => sum + ((t && Array.isArray(t.streams)) ? t.streams.filter(s => /Stream\s+\d+/i.test((s && s.title) || '')).length : 0), 0);
+                        this.setSourceState('ok', 'Data ready', file.name + ' · ' + json.length + ' transponders · ' + streams + ' streams');
+                    } catch (err) {
+                        this.data = null;
+                        this.setSourceState('error', 'Invalid file');
+                        this.error = 'Cannot read ' + file.name + ': ' + err.message;
+                    } finally {
+                        this.loadingSource = false;
+                    }
+                },
+
+                async readLamedbFile(event) {
+                    const file = event.target.files && event.target.files[0];
+                    if (!file) return;
+                    await this.setLamedbFile(file, file.name, 'Uploaded');
+                },
+
+                async loadSiteLamedb() {
+                    this.loadingLamedb = true;
+                    this.error = '';
+                    try {
+                        const response = await fetch('lamedb', { cache: 'no-store' });
+                        if (!response.ok) throw new Error('HTTP ' + response.status);
+                        const text = await response.text();
+                        if (text.indexOf('eDVB services') !== 0) throw new Error('not an Enigma2 lamedb');
+                        this.lamedbText = text;
+                        this.lamedbName = 'lamedb';
+                        this.lamedb = { state: 'ok', label: 'Site lamedb loaded' };
+                    } catch (err) {
+                        this.lamedbText = '';
+                        this.lamedb = { state: 'error', label: 'Load failed' };
+                        this.error = 'Cannot load the site lamedb: ' + err.message + '. Upload your own copy instead.';
+                    } finally {
+                        this.loadingLamedb = false;
+                    }
+                },
+
+                async setLamedbFile(file, name, verb) {
+                    try {
+                        const text = await file.text();
+                        if (text.indexOf('eDVB services') !== 0) throw new Error('not an Enigma2 lamedb');
+                        if (text.indexOf('/4/') === -1) throw new Error('only v4 /4/ lamedb files are supported');
+                        this.lamedbText = text;
+                        this.lamedbName = name;
+                        this.lamedb = { state: 'ok', label: verb + ' · ' + name };
+                        this.error = '';
+                    } catch (err) {
+                        this.lamedbText = '';
+                        this.lamedbName = '';
+                        this.lamedb = { state: 'error', label: 'Invalid file' };
+                        this.error = 'Cannot use ' + name + ': ' + err.message;
+                    }
+                },
+
+                resetForm() {
+                    this.form = {
+                        sourceMode: 'url',
+                        url: defaults.url,
+                        outDir: defaults.outDir,
+                        lamedbMode: defaults.lamedbMode,
+                        lamedbFormat: defaults.lamedbFormat,
+                        bouquetName: defaults.bouquetName,
+                        position: defaults.position,
+                        relayHost: defaults.relayHost,
+                        relayPort: defaults.relayPort,
+                        outHost: defaults.outHost,
+                        httpPort: defaults.httpPort,
+                        relayScript: defaults.relayScript,
+                        t2miPlp: defaults.t2miPlp,
+                        t2miPnr: defaults.t2miPnr,
+                        softcamEnabled: defaults.softcamEnabled,
+                        softcamPath: defaults.softcamPath
+                    };
+                    this.result = null;
+                    this.error = '';
+                    this.activeFile = 0;
+                },
+
+                async run() {
+                    if (this.busy) return;
+                    this.busy = true;
+                    this.error = '';
+                    this.copied = false;
+                    try {
+                        if (!this.data) {
+                            if (this.form.sourceMode === 'url') await this.loadSource();
+                            if (!this.data) {
+                                this.error = 'Load the channel database first (Live URL or Upload JSON).';
+                                return;
+                            }
+                        }
+
+                        const options = Object.assign({}, this.form);
+                        options.data = this.data;
+                        if (this.form.lamedbMode !== 'standalone') {
+                            options.lamedbText = this.lamedbText;
+                            options.lamedbName = this.lamedbName || 'lamedb';
+                            if (!this.lamedbText) {
+                                this.error = 'Select an existing lamedb for ' + this.form.lamedbMode +
+                                    ' mode (upload it or load the site copy).';
+                                return;
+                            }
+                        }
+
+                        const result = DXSuite.generate(options);
+                        this.result = result;
+                        this.activeFile = 0;
+                        if (!result.ok) this.error = result.error || 'Generation failed.';
+                        this.$nextTick(() => {
+                            const section = document.querySelectorAll('main section');
+                            const target = section[section.length - 1];
+                            if (target && target.scrollIntoView) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                        });
+                    } catch (err) {
+                        this.error = err && err.message ? err.message : String(err);
+                    } finally {
+                        this.busy = false;
+                    }
+                },
+
+                fileIcon(name) {
+                    if (/lamedb/.test(name)) return 'fa-database';
+                    if (/astra\.conf/.test(name)) return 'fa-diagram-project';
+                    if (/SoftCam/i.test(name)) return 'fa-key';
+                    return 'fa-list';
+                },
+
+                formatBytes(bytes) {
+                    if (bytes < 1024) return bytes + ' B';
+                    if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
+                    return (bytes / (1024 * 1024)).toFixed(1) + ' MB';
+                },
+
+                saveBlob(blob, filename) {
+                    const url = URL.createObjectURL(blob);
+                    const link = document.createElement('a');
+                    link.href = url;
+                    link.download = filename.split(/[\\/]/).pop() || 'download';
+                    document.body.appendChild(link);
+                    link.click();
+                    link.remove();
+                    setTimeout(() => URL.revokeObjectURL(url), 1500);
+                },
+
+                downloadActive() {
+                    const file = this.activeFileObj;
+                    if (!file) return;
+                    this.saveBlob(new Blob([file.content], { type: 'text/plain;charset=utf-8' }), file.name);
+                },
+
+                async downloadAll() {
+                    if (!this.result || !this.result.ok) return;
+                    if (typeof JSZip === 'undefined') {
+                        this.result.files.forEach((file, index) => {
+                            setTimeout(() => {
+                                this.saveBlob(new Blob([file.content], { type: 'text/plain;charset=utf-8' }), file.name);
+                            }, index * 350);
+                        });
+                        return;
+                    }
+                    try {
+                        const zip = new JSZip();
+                        this.result.files.forEach(file => zip.file(file.path, file.content));
+                        const blob = await zip.generateAsync({ type: 'blob' });
+                        this.saveBlob(blob, 'abertis-dx-suite.zip');
+                    } catch (err) {
+                        this.error = 'Cannot build the ZIP: ' + (err && err.message ? err.message : err);
+                    }
+                },
+
+                async copyText(text) {
+                    try {
+                        await navigator.clipboard.writeText(text);
+                        return true;
+                    } catch (err) {
+                        const area = document.createElement('textarea');
+                        area.value = text;
+                        area.style.position = 'fixed';
+                        area.style.opacity = '0';
+                        document.body.appendChild(area);
+                        area.select();
+                        let ok = false;
+                        try { ok = document.execCommand('copy'); } catch (e) { ok = false; }
+                        area.remove();
+                        return ok;
+                    }
+                },
+
+                async copyActive() {
+                    const file = this.activeFileObj;
+                    if (!file) return;
+                    this.copied = await this.copyText(file.content);
+                    setTimeout(() => { this.copied = false; }, 1600);
+                },
+
+                async copyCommand() {
+                    this.commandCopied = await this.copyText(this.cliCommand);
+                    setTimeout(() => { this.commandCopied = false; }, 1600);
+                }
+            };
+        }
+    </script>
+</body>
+</html>
