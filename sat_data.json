@@ -1,5 +1,76 @@
 [
     {
+        "txp_no": "190",
+        "freq_pol_mode": "12599.76 V DVB-S2/8PSK",
+        "provider": "Abertis DTT",
+        "sr_fec": "10200 3/4",
+        "onid_nid_tid": "-/60000/60009",
+        "date": "21.11.2026",
+        "streams": [
+            {
+                "title": "Stream 8009 - (HS190c) - TDT TENERIFE",
+                "pid_info": "8916-5802--12592",
+                "encryption": "BISS",
+                "sid": "1009",
+                "cpid": "5009",
+                "t2mi_pid": "N/A",
+                "t2mi_plp": "N/A",
+                "changed_by": "ahmedmoselhi",
+                "changes": "+6 ch: TV Canaria, Canarias Radio La Autonomica, Radio Marca Regional + 3 more; -3 ch: La 1 HD, RNE Extremadura, Radio 5 RNE; stream retitled (RGE Extremadura -> TDT TENE...",
+                "channels": [
+                    {
+                        "type": "HD",
+                        "name": "TV Canaria",
+                        "system": "MPEG-4",
+                        "sid": "10645",
+                        "vpid": "501",
+                        "apid_lang": "503 Spa 504 org 505 Spa"
+                    },
+                    {
+                        "type": "HD",
+                        "name": "Atlántico Televisión",
+                        "system": "MPEG-4",
+                        "sid": "10660",
+                        "vpid": "301",
+                        "apid_lang": "303 Spa"
+                    },
+                    {
+                        "type": "HD",
+                        "name": "Mirame Canarias",
+                        "system": "MPEG-4",
+                        "sid": "10662",
+                        "vpid": "601",
+                        "apid_lang": "602 Spa"
+                    },
+                    {
+                        "type": "Radio",
+                        "name": "Canarias Radio La Autonomica",
+                        "system": "",
+                        "sid": "10646",
+                        "vpid": "",
+                        "apid_lang": "701 Spa"
+                    },
+                    {
+                        "type": "Radio",
+                        "name": "Radio Marca Regional",
+                        "system": "",
+                        "sid": "10647",
+                        "vpid": "",
+                        "apid_lang": "711 Spa"
+                    },
+                    {
+                        "type": "Radio",
+                        "name": "Atlántico Radio",
+                        "system": "",
+                        "sid": "10661",
+                        "vpid": "",
+                        "apid_lang": "721 Spa"
+                    }
+                ]
+            }
+        ]
+    },
+    {
         "txp_no": "125",
         "freq_pol_mode": "11222.00 H DVB-S2/8PSK",
         "provider": "Abertis DTT",
