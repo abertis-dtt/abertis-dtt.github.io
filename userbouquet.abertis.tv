@@ -465,3 +465,17 @@
 #DESCRIPTION (TV) RNE Accesible
 #SERVICE 1:0:1:A031:2D85:12D:0:0:0:0:http%3A//0.0.0.0%3A9999/abertis/aber8008_pid4096plp0:(TV) Telecinco UHD
 #DESCRIPTION (TV) Telecinco UHD
+#SERVICE 1:64:1F49:0:0:0:0:0:0:0::##### Abertis PID 8009 #####
+#DESCRIPTION ##### Abertis@12599V10200 PID 8009 #####
+#SERVICE 1:0:1:2995:2D85:12D:0:0:0:0:http%3A//0.0.0.0%3A9999/abertis/pid8009:(TV) TV CANARIA
+#DESCRIPTION (TV) TV CANARIA
+#SERVICE 1:0:1:29A4:2D85:12D:0:0:0:0:http%3A//0.0.0.0%3A9999/abertis/pid8009:(TV) Atlántico Televisión HD
+#DESCRIPTION (TV) Atlántico Televisión HD
+#SERVICE 1:0:1:29A6:2D85:12D:0:0:0:0:http%3A//0.0.0.0%3A9999/abertis/pid8009:(TV) Mírame Canarias HD
+#DESCRIPTION (TV) Mírame Canarias HD
+#SERVICE 1:0:2:2996:2D85:12D:0:0:0:0:http%3A//0.0.0.0%3A9999/abertis/pid8009:(RADIO) Canarias Radio La Autonomica
+#DESCRIPTION (RADIO) Canarias Radio La Autonomica
+#SERVICE 1:0:2:2997:2D85:12D:0:0:0:0:http%3A//0.0.0.0%3A9999/abertis/pid8009:(RADIO) Radio Marca Regional
+#DESCRIPTION (RADIO) Radio Marca Regional
+#SERVICE 1:0:2:29A5:2D85:12D:0:0:0:0:http%3A//0.0.0.0%3A9999/abertis/pid8009:(RADIO) Atlántico Radio
+#DESCRIPTION (RADIO) Atlántico Radio

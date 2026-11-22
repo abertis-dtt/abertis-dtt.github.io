@@ -2831,15 +2831,15 @@
                 "channels": [
                     {
                         "type": "HD",
-                        "name": "TV Canaria",
+                        "name": "TV CANARIA",
                         "system": "MPEG-4",
                         "sid": "10645",
                         "vpid": "501",
-                        "apid_lang": "503 Spa 504 org 505 Spa"
+                        "apid_lang": "503 Spa 504 N/A 505 Spa"
                     },
                     {
                         "type": "HD",
-                        "name": "Atlántico Televisión",
+                        "name": "Atlántico Televisión HD",
                         "system": "MPEG-4",
                         "sid": "10660",
                         "vpid": "301",
@@ -2847,7 +2847,7 @@
                     },
                     {
                         "type": "HD",
-                        "name": "Mirame Canarias",
+                        "name": "Mírame Canarias HD",
                         "system": "MPEG-4",
                         "sid": "10662",
                         "vpid": "601",

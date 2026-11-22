@@ -5,7 +5,7 @@
         "provider": "Abertis DTT",
         "sr_fec": "30000 3/4",
         "onid_nid_tid": "1/60000/60020",
-        "date": "5.11.2026",
+        "date": "11.11.2026",
         "streams": [
             {
                 "title": "Stream 2025 - (HS125.25) - RGE Extremadura",
@@ -539,7 +539,7 @@
         "provider": "Abertis DTT",
         "sr_fec": "20858 3/4",
         "onid_nid_tid": "-/60000/60023",
-        "date": "24.04.2026",
+        "date": "11.11.2026",
         "streams": [
             {
                 "title": "Stream 2302 - (HS128.2) - TDT Extremadura",
@@ -597,7 +597,7 @@
                         "system": "MPEG-4",
                         "sid": "10225",
                         "vpid": "1020",
-                        "apid_lang": "1021 Spa 1022 orig 1023 N/A"
+                        "apid_lang": "1021 Spa 1022 org 1023 Spa"
                     },
                     {
                         "type": "Radio",
@@ -605,7 +605,7 @@
                         "system": "",
                         "sid": "10234",
                         "vpid": "",
-                        "apid_lang": "1051 SPA"
+                        "apid_lang": "1051 Spa"
                     },
                     {
                         "type": "Radio",
@@ -613,7 +613,7 @@
                         "system": "",
                         "sid": "10235",
                         "vpid": "",
-                        "apid_lang": "1041 SPA"
+                        "apid_lang": "1041 Spa"
                     }
                 ]
             },
@@ -755,7 +755,7 @@
         "provider": "Abertis DTT",
         "sr_fec": "30000 3/4",
         "onid_nid_tid": "1/60000/60025",
-        "date": "5.11.2026",
+        "date": "11.11.2026",
         "streams": [
             {
                 "title": "Stream 2520 - (HS129.20) - RGE N/Ac",
@@ -1243,7 +1243,7 @@
         "provider": "Abertis DTT",
         "sr_fec": "10200 3/4",
         "onid_nid_tid": "-/60000/60028",
-        "date": "24.04.2026",
+        "date": "11.11.2026",
         "streams": [
             {
                 "title": "Stream 801 - (HS199.1) - Asturias TDT",
@@ -1299,7 +1299,7 @@
         "provider": "Abertis DTT",
         "sr_fec": "19680 3/4",
         "onid_nid_tid": "-/60000/60003",
-        "date": "5.11.2026",
+        "date": "11.11.2026",
         "streams": [
             {
                 "title": "Stream 301 - (HSA-88L.1) - RGE Canarias",
@@ -1473,7 +1473,7 @@
         "provider": "Abertis DTT",
         "sr_fec": "15750 3/4",
         "onid_nid_tid": "-/60000/60004",
-        "date": "5.11.2026",
+        "date": "11.11.2026",
         "streams": [
             {
                 "title": "Stream 420 - (HS88U.20) - RGE Nac",
@@ -1765,7 +1765,7 @@
         "provider": "Abertis DTT",
         "sr_fec": "29600 3/4",
         "onid_nid_tid": "-/60000/60007",
-        "date": "5.11.2026",
+        "date": "11.11.2026",
         "streams": [
             {
                 "title": "Stream 701 - (HSA-65U1) - MPE1",
@@ -1977,7 +1977,7 @@
         "provider": "Abertis DTT",
         "sr_fec": "16900 3/4",
         "onid_nid_tid": "-/60000/60008",
-        "date": "5.11.2026",
+        "date": "11.11.2026",
         "streams": [
             {
                 "title": "Stream 8008 - (HS190.1) - RGE2",
@@ -2036,12 +2036,84 @@
         ]
     },
     {
+        "txp_no": "190",
+        "freq_pol_mode": "12599.76 V DVB-S2/8PSK",
+        "provider": "Abertis DTT",
+        "sr_fec": "10200 3/4",
+        "onid_nid_tid": "-/60000/60009",
+        "date": "21.11.2026",
+        "streams": [
+            {
+                "title": "Stream 8009 - (HS190c) - TDT TENERIFE",
+                "pid_info": "8916-5802--12592",
+                "encryption": "BISS",
+                "sid": "1009",
+                "cpid": "5009",
+                "t2mi_pid": "N/A",
+                "t2mi_plp": "N/A",
+                "pid": 8009,
+                "tsid": "5802",
+                "bitrate_kbps": 20833,
+                "channels": [
+                    {
+                        "type": "HD",
+                        "name": "TV CANARIA",
+                        "system": "MPEG-4",
+                        "sid": "10645",
+                        "vpid": "501",
+                        "apid_lang": "503 Spa 504 N/A 505 Spa"
+                    },
+                    {
+                        "type": "Radio",
+                        "name": "Canarias Radio La Autonomica",
+                        "system": "",
+                        "sid": "10646",
+                        "vpid": "",
+                        "apid_lang": "701 Spa"
+                    },
+                    {
+                        "type": "Radio",
+                        "name": "Radio Marca Regional",
+                        "system": "",
+                        "sid": "10647",
+                        "vpid": "",
+                        "apid_lang": "711 Spa"
+                    },
+                    {
+                        "type": "HD",
+                        "name": "Atlántico Televisión HD",
+                        "system": "MPEG-4",
+                        "sid": "10660",
+                        "vpid": "301",
+                        "apid_lang": "303 Spa"
+                    },
+                    {
+                        "type": "Radio",
+                        "name": "Atlántico Radio",
+                        "system": "",
+                        "sid": "10661",
+                        "vpid": "",
+                        "apid_lang": "721 Spa"
+                    },
+                    {
+                        "type": "HD",
+                        "name": "Mírame Canarias HD",
+                        "system": "MPEG-4",
+                        "sid": "10662",
+                        "vpid": "601",
+                        "apid_lang": "602 Spa"
+                    }
+                ]
+            }
+        ]
+    },
+    {
         "txp_no": "191",
         "freq_pol_mode": "12631.00 V DVB-S2/8PSK",
         "provider": "Abertis DTT",
         "sr_fec": "30000 3/4",
         "onid_nid_tid": "-/60000/60002",
-        "date": "5.11.2026",
+        "date": "11.11.2026",
         "streams": [
             {
                 "title": "Stream 8001 - (HSA-67.1) - RGE Madrid",
@@ -2293,7 +2365,7 @@
         "provider": "Abertis DTT",
         "sr_fec": "30000 3/4",
         "onid_nid_tid": "-/60000/60001",
-        "date": "5.11.2026",
+        "date": "11.11.2026",
         "streams": [
             {
                 "title": "Stream 8000 - (HSA-68.0) - Cellnex",

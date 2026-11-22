@@ -1,0 +1,103 @@
+Nov 22 20:02:42: INFO: Starting Astra SM 0.2
+Nov 22 20:02:43: INFO: PAT: tsid: 5802
+Nov 22 20:02:43: INFO: PAT: pid: 16 NIT
+Nov 22 20:02:43: INFO: PAT: pid: 500 PMT pnr: 10645
+Nov 22 20:02:43: INFO: PAT: pid: 700 PMT pnr: 10646
+Nov 22 20:02:43: INFO: PAT: pid: 710 PMT pnr: 10647
+Nov 22 20:02:43: INFO: PAT: pid: 300 PMT pnr: 10660
+Nov 22 20:02:43: INFO: PAT: pid: 720 PMT pnr: 10661
+Nov 22 20:02:43: INFO: PAT: pid: 600 PMT pnr: 10662
+Nov 22 20:02:43: INFO: PAT: crc32: 0x443E325C
+Nov 22 20:02:43: INFO: PMT: pnr: 10662
+Nov 22 20:02:43: INFO: PMT: pid: 601 PCR
+Nov 22 20:02:43: INFO: VIDEO: pid: 601 type: MPEG-4 AVC/H.264, ISO/IEC 14496-10 (0x1B)
+Nov 22 20:02:43: INFO: VIDEO: descriptor: 0x28046400283F
+Nov 22 20:02:43: INFO: VIDEO: descriptor: 0x2A02FEFF
+Nov 22 20:02:43: INFO: AUDIO: pid: 602 type: MPEG-1 audio, ISO/IEC 11172-3 (0x03)
+Nov 22 20:02:43: INFO: AUDIO: Language: spa
+Nov 22 20:02:43: INFO: PMT: crc32: 0x44F1A542
+Nov 22 20:02:43: INFO: PMT: pnr: 10660
+Nov 22 20:02:43: INFO: PMT: pid: 301 PCR
+Nov 22 20:02:43: INFO: VIDEO: pid: 301 type: MPEG-4 AVC/H.264, ISO/IEC 14496-10 (0x1B)
+Nov 22 20:02:43: INFO: VIDEO: Stream ID: 1
+Nov 22 20:02:43: INFO: VIDEO: descriptor: 0x28044D40283F
+Nov 22 20:02:43: INFO: VIDEO: descriptor: 0x2A02FEFF
+Nov 22 20:02:43: INFO: AUDIO: pid: 303 type: MPEG-1 audio, ISO/IEC 11172-3 (0x03)
+Nov 22 20:02:43: INFO: AUDIO: Language: spa
+Nov 22 20:02:43: INFO: PMT: crc32: 0x7E015117
+Nov 22 20:02:43: INFO: PMT: pnr: 10646
+Nov 22 20:02:43: INFO: PMT: pid: 701 PCR
+Nov 22 20:02:43: INFO: AUDIO: pid: 701 type: MPEG-1 audio, ISO/IEC 11172-3 (0x03)
+Nov 22 20:02:43: INFO: AUDIO: descriptor: 0x6B0140
+Nov 22 20:02:43: INFO: AUDIO: Language: spa
+Nov 22 20:02:43: INFO: AUDIO: Stream ID: 1
+Nov 22 20:02:43: INFO: AUDIO: Maximum bitrate: 480
+Nov 22 20:02:43: INFO: AUDIO: descriptor: 0x030127
+Nov 22 20:02:43: INFO: DATA: pid: 715 type: Private sections, ISO/IEC 13818-1 (0x05)
+Nov 22 20:02:43: INFO: DATA: descriptor: 0x6F030010E0
+Nov 22 20:02:43: INFO: PMT: crc32: 0xBED0CA96
+Nov 22 20:02:43: INFO: Bitrate: 9695 Kbit/s
+Nov 22 20:02:43: INFO: PMT: pnr: 10661
+Nov 22 20:02:43: INFO: PMT: pid: 721 PCR
+Nov 22 20:02:43: INFO: AUDIO: pid: 721 type: MPEG-1 audio, ISO/IEC 11172-3 (0x03)
+Nov 22 20:02:43: INFO: AUDIO: Language: spa
+Nov 22 20:02:43: INFO: PMT: crc32: 0x4B927702
+Nov 22 20:02:43: INFO: PMT: pnr: 10645
+Nov 22 20:02:43: INFO: PMT: pid: 501 PCR
+Nov 22 20:02:43: INFO: SUB: pid: 202 type: Private PES, ISO/IEC 13818-1 (0x06)
+Nov 22 20:02:43: INFO: SUB: type: teletext
+Nov 22 20:02:43: INFO: SUB:    page: 100 (initial page), language: spa
+Nov 22 20:02:43: INFO: SUB:    page: 088 (subtitle page), language: spa
+Nov 22 20:02:43: INFO: VIDEO: pid: 501 type: MPEG-4 AVC/H.264, ISO/IEC 14496-10 (0x1B)
+Nov 22 20:02:43: INFO: VIDEO: descriptor: 0x28046400283F
+Nov 22 20:02:43: INFO: AUDIO: pid: 503 type: MPEG-1 audio, ISO/IEC 11172-3 (0x03)
+Nov 22 20:02:43: INFO: AUDIO: Language: spa
+Nov 22 20:02:43: INFO: AUDIO: pid: 504 type: MPEG-1 audio, ISO/IEC 11172-3 (0x03)
+Nov 22 20:02:43: INFO: AUDIO: Language: und
+Nov 22 20:02:43: INFO: AUDIO: pid: 505 type: MPEG-1 audio, ISO/IEC 11172-3 (0x03)
+Nov 22 20:02:43: INFO: AUDIO: Language: spa
+Nov 22 20:02:43: INFO: DATA: pid: 515 type: Private sections, ISO/IEC 13818-1 (0x05)
+Nov 22 20:02:43: INFO: DATA: descriptor: 0x6F030010E0
+Nov 22 20:02:43: INFO: DATA: descriptor: 0x6F00
+Nov 22 20:02:43: INFO: PMT: crc32: 0x97613A73
+Nov 22 20:02:43: INFO: PMT: pnr: 10647
+Nov 22 20:02:43: INFO: PMT: pid: 711 PCR
+Nov 22 20:02:43: INFO: AUDIO: pid: 711 type: MPEG-1 audio, ISO/IEC 11172-3 (0x03)
+Nov 22 20:02:43: INFO: AUDIO: Language: spa
+Nov 22 20:02:43: INFO: PMT: crc32: 0x7CE008AD
+Nov 22 20:02:44: INFO: Bitrate: 19555 Kbit/s
+Nov 22 20:02:44: ERROR: CC: PID:202=1 PID:500=1 PID:501=1 PID:503=1 PID:504=1 PID:515=1 PID:710=1 PID:711=1 PID:715=1 PID:720=1 PID:721=1 
+Nov 22 20:02:45: INFO: SDT: tsid: 5802
+Nov 22 20:02:45: INFO: SDT: sid: 10645
+Nov 22 20:02:45: INFO: SDT:    Service: TV CANARIA
+Nov 22 20:02:45: INFO: SDT:    Provider: CELLNEX
+Nov 22 20:02:45: INFO: SDT: sid: 10646
+Nov 22 20:02:45: INFO: SDT:    Service: Canarias Radio La Autonomica
+Nov 22 20:02:45: INFO: SDT:    Provider: CELLNEX
+Nov 22 20:02:45: INFO: SDT: sid: 10647
+Nov 22 20:02:45: INFO: SDT:    Service: Radio Marca Regional
+Nov 22 20:02:45: INFO: SDT:    Provider: CELLNEX
+Nov 22 20:02:45: INFO: SDT: sid: 10660
+Nov 22 20:02:45: INFO: SDT:    Service: Atlántico Televisión HD
+Nov 22 20:02:45: INFO: SDT:    Provider: TDT CANARIAS-LAS PALMAS
+Nov 22 20:02:45: INFO: SDT: sid: 10661
+Nov 22 20:02:45: INFO: SDT:    Service: Atlántico Radio
+Nov 22 20:02:45: INFO: SDT:    Provider: TDT CANARIAS-LAS PALMAS
+Nov 22 20:02:45: INFO: SDT: sid: 10662
+Nov 22 20:02:45: INFO: SDT:    Service: Mírame Canarias HD
+Nov 22 20:02:45: INFO: SDT:    Provider: Mí­rame Canarias HD
+Nov 22 20:02:45: INFO: SDT: crc32: 0x17126BE8
+Nov 22 20:02:45: INFO: Bitrate: 20242 Kbit/s
+Nov 22 20:02:46: INFO: Bitrate: 19196 Kbit/s
+Nov 22 20:02:47: INFO: Bitrate: 20833 Kbit/s
+Nov 22 20:02:48: INFO: Bitrate: 19980 Kbit/s
+Nov 22 20:02:49: INFO: Bitrate: 19230 Kbit/s
+Nov 22 20:02:50: INFO: Bitrate: 20341 Kbit/s
+Nov 22 20:02:51: INFO: Bitrate: 19296 Kbit/s
+Nov 22 20:02:52: INFO: Bitrate: 20308 Kbit/s
+Nov 22 20:02:53: INFO: Bitrate: 19358 Kbit/s
+Nov 22 20:02:53: ERROR: CC: PID:16=1 
+Nov 22 20:02:54: INFO: Bitrate: 20672 Kbit/s
+Nov 22 20:02:55: INFO: Bitrate: 19787 Kbit/s
+Nov 22 20:02:56: INFO: Bitrate: 19260 Kbit/s
+Nov 22 20:02:57: INFO: [main] shutting down
